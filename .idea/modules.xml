@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/apps/dronify/melos_dronify.iml" filepath="$PROJECT_DIR$/apps/dronify/melos_dronify.iml" />
+      <module fileurl="file://$PROJECT_DIR$/apps/dronify_mngmt/melos_dronify_mngmt.iml" filepath="$PROJECT_DIR$/apps/dronify_mngmt/melos_dronify_mngmt.iml" />
       <module fileurl="file://$PROJECT_DIR$/melos_dronify.iml" filepath="$PROJECT_DIR$/melos_dronify.iml" />
     </modules>
   </component>
