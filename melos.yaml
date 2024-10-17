@@ -1,0 +1,5 @@
+name: dronify
+
+packages:
+  - apps/**
+  - packages/**
