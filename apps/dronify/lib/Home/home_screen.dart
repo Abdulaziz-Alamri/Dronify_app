@@ -138,9 +138,9 @@ class HomeScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 10),
                   SingleChildScrollView(
-                    child: Row(
-                      //                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      // crossAxisCount: 2),
+                    child: GridView(
+                                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,childAspectRatio: 1,),
                       children: [
                         ServiceCard(
                           imageUrl: 'assets/clean.png',
