@@ -30,7 +30,7 @@ class SpecialOfferCard extends StatelessWidget {
       child: Stack(
         clipBehavior: Clip.none,
         children: [
-          Positioned(left: 160, bottom: 100, child: Image.asset(imageUrl)),
+          Positioned(left: 160, bottom: 120, child: Image.asset(imageUrl)),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
