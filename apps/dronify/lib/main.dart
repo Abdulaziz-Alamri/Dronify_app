@@ -1,4 +1,5 @@
 import 'package:dronify/Auth/sginin.dart';
+import 'package:dronify/Home/home_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -10,6 +11,6 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: SignIn());
+    return MaterialApp(debugShowCheckedModeBanner: false, home: HomeScreen());
   }
 }
