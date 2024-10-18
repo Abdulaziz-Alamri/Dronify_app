@@ -13,8 +13,7 @@ class SpecialOfferCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 160,
-      width: 290,
+      width: 270,
       margin: EdgeInsets.only(right: 10),
       decoration: BoxDecoration(
         color: Color(0xffEAF6EF),
@@ -30,7 +29,7 @@ class SpecialOfferCard extends StatelessWidget {
       child: Stack(
         clipBehavior: Clip.none,
         children: [
-          Positioned(left: 160, bottom: 120, child: Image.asset(imageUrl)),
+          Positioned(left: 140, bottom: 100, child: Image.asset(imageUrl)),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
@@ -48,7 +47,7 @@ class SpecialOfferCard extends StatelessWidget {
                 Text(
                   description,
                   style: TextStyle(
-                    fontSize: 48,
+                    fontSize: 36,
                     fontWeight: FontWeight.bold,
                     color: Color(0xff33383F),
                   ),

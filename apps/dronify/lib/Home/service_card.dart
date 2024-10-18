@@ -15,7 +15,7 @@ class ServiceCard extends StatelessWidget {
         borderRadius: const BorderRadius.all(Radius.circular(10)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.3), 
+            color: Colors.black.withOpacity(0.3),
             spreadRadius: 2,
             blurRadius: 5,
             offset: const Offset(0, 3),
@@ -26,8 +26,8 @@ class ServiceCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            height: 160,
-            width: 140,
+            height: 120,
+            // width: 100,
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage(imageUrl),
