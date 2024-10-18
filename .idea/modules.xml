@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/apps/dronify/melos_dronify.iml" filepath="$PROJECT_DIR$/apps/dronify/melos_dronify.iml" />
       <module fileurl="file://$PROJECT_DIR$/apps/dronify_mngmt/melos_dronify_mngmt.iml" filepath="$PROJECT_DIR$/apps/dronify_mngmt/melos_dronify_mngmt.iml" />
+      <module fileurl="file://$PROJECT_DIR$/packages/dronify_package/melos_dronify_package.iml" filepath="$PROJECT_DIR$/packages/dronify_package/melos_dronify_package.iml" />
       <module fileurl="file://$PROJECT_DIR$/melos_dronify.iml" filepath="$PROJECT_DIR$/melos_dronify.iml" />
     </modules>
   </component>
