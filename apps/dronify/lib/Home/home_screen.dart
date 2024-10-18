@@ -106,35 +106,29 @@ class HomeScreen extends StatelessWidget {
                     SizedBox(
                       height: 10,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: SizedBox(
-                        height: 470,
-                        child: GridView(
-                          padding: EdgeInsets.zero,
-                          physics: const NeverScrollableScrollPhysics(),
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            childAspectRatio: 1,
-                          ),
-                          children: const [
-                            ServiceCard(
-                              imageUrl: 'assets/clean.png',
-                              title: 'Building Cleaning',
-                            ),
-                            ServiceCard(
-                              imageUrl: 'assets/nano.jpg',
-                              title: 'Nano Protection',
-                            ),
-                            ServiceCard(
-                              imageUrl: 'assets/spot.jpg',
-                              title: 'Spot Painting',
-                            ),
-                          ],
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ServiceCard(
+                          imageUrl: 'assets/nano.jpg',
+                          title: 'Nano Protection',
                         ),
-                      ),
+                        ServiceCard(
+                          imageUrl: 'assets/clean.png',
+                          title: 'Building Cleaning',
+                        ),
+                      ],
                     ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 41),
+                      child: ServiceCard(
+                        imageUrl: 'assets/spot.jpg',
+                        title: 'Spot Painting',
+                      ),
+                    )
                   ],
                 ),
               ),
