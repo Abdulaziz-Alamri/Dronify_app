@@ -6,6 +6,7 @@ class OrderScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         leading: BackButton(
           onPressed: () {
@@ -19,7 +20,24 @@ class OrderScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          
+          Container(
+            decoration: BoxDecoration(
+                color: Colors.white, borderRadius: BorderRadius.circular(16)),
+            child: ListTile(
+              
+              tileColor: Colors.white,
+              leading: CircleAvatar(
+                backgroundImage: AssetImage('assets/pfp.png'),
+              ),
+              title: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('data'),
+                  Text('data'),
+                ],
+              ),
+            ),
+          )
         ],
       ),
     );
