@@ -113,17 +113,17 @@ class HomeScreen extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: SizedBox(
-                        height: 470,
+                        height: 500,
                         child: GridView(
-                          padding: EdgeInsets.zero,
+                          padding: EdgeInsets.symmetric(horizontal: 8),
                           physics: const NeverScrollableScrollPhysics(),
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            childAspectRatio: 1,
-                            mainAxisSpacing: 20,
-                            crossAxisSpacing: 20,
-                          ),
+                                  crossAxisCount: 2,
+                                  childAspectRatio: 1,
+                                  mainAxisSpacing: 20,
+                                  crossAxisSpacing: 40,
+                                  mainAxisExtent: 220),
                           children: const [
                             ServiceCard(
                               imageUrl: 'assets/clean.png',

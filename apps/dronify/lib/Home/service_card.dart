@@ -26,7 +26,7 @@ class ServiceCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            height: 120,
+            height: 160,
             // width: 100,
             decoration: BoxDecoration(
               image: DecorationImage(
