@@ -1,6 +1,7 @@
 import 'package:dronify/Order/custom_image_cards.dart';
 import 'package:dronify/Order/custom_order_card.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class OrderScreen extends StatelessWidget {
   const OrderScreen({super.key});
@@ -8,15 +9,15 @@ class OrderScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffF5F5F7),
+      backgroundColor: const Color(0xffF5F5F7),
       appBar: AppBar(
-        backgroundColor: Color(0xffF5F5F7),
+        backgroundColor: const Color(0xffF5F5F7),
         leading: BackButton(
           onPressed: () {
             Navigator.pop(context);
           },
         ),
-        title: Text(
+        title: const Text(
           'Order',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
@@ -26,7 +27,7 @@ class OrderScreen extends StatelessWidget {
           children: [
             Center(
               child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
                   height: 75,
                   width: 345,
                   decoration: BoxDecoration(
@@ -40,17 +41,17 @@ class OrderScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  child: CustomOrderCard(
+                  child: const CustomOrderCard(
                       imageUrl: 'assets/drone12.png',
                       title: 'Customer Name',
                       subTitle: '0512341234')),
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-              height: 380,
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+              height: 400,
               width: 345,
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -72,19 +73,19 @@ class OrderScreen extends StatelessWidget {
                           'Date: ${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}',
                       subTitle:
                           'Time: ${DateTime.now().hour}:${DateTime.now().minute}'),
-                  Divider(
+                  const Divider(
                     color: Color(0xffEDEDED),
                     height: 20,
                   ),
-                  Text(
+                  const Text(
                     'Price: 350 SAR',
                     style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
                   ),
-                  Divider(
+                  const Divider(
                     color: Color(0xffEDEDED),
                     height: 20,
                   ),
-                  Column(
+                  const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
@@ -101,27 +102,27 @@ class OrderScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Divider(
+                  const Divider(
                     color: Color(0xffEDEDED),
                     height: 20,
                   ),
                   Row(
                     children: [
                       Image.asset('assets/drone_icon.png'),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
-                      Text(
+                      const Text(
                         'Cleaning',
                         style: TextStyle(
                             fontSize: 12, fontWeight: FontWeight.bold),
                       )
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
-                  Row(
+                  const Row(
                     children: [
                       Icon(
                         Icons.track_changes_outlined,
@@ -137,10 +138,10 @@ class OrderScreen extends StatelessWidget {
                       )
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
-                  Row(
+                  const Row(
                     children: [
                       Icon(
                         Icons.access_time_filled_outlined,
@@ -156,10 +157,10 @@ class OrderScreen extends StatelessWidget {
                       )
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
-                  Row(
+                  const Row(
                     children: [
                       Icon(
                         Icons.account_balance_wallet,
@@ -178,11 +179,12 @@ class OrderScreen extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             Container(
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                 height: 100,
                 width: 345,
                 decoration: BoxDecoration(
@@ -196,8 +198,8 @@ class OrderScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                child: CustomImageCards()),
-            SizedBox(
+                child: const CustomImageCards()),
+            const SizedBox(
               height: 15,
             ),
             Container(
@@ -212,7 +214,7 @@ class OrderScreen extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             Center(
@@ -252,9 +254,7 @@ class OrderScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(
-              height: 15,
-            )
+            SizedBox(height: 10.h),
           ],
         ),
       ),

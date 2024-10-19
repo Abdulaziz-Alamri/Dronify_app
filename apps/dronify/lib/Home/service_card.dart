@@ -1,19 +1,35 @@
+import 'package:dronify/Services/services.dart';
 import 'package:flutter/material.dart';
 
 class ServiceCard extends StatelessWidget {
   final String imageUrl;
   final String title;
+  final String description;
+  final String iconPath;
 
-  const ServiceCard({super.key, required this.imageUrl, required this.title});
+  const ServiceCard({
+    super.key,
+    required this.imageUrl,
+    required this.title,
+    required this.description,
+    required this.iconPath,
+  });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
         Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => const SecondRoute()),
-  );
+          context,
+          MaterialPageRoute(
+            builder: (context) => Services(
+              imageUrl: imageUrl,
+              title: title,
+              description: description,
+              iconPath: iconPath,
+            ),
+          ),
+        );
       },
       child: Container(
         margin: const EdgeInsets.all(8),
@@ -34,7 +50,6 @@ class ServiceCard extends StatelessWidget {
           children: [
             Container(
               height: 160,
-              // width: 100,
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage(imageUrl),
