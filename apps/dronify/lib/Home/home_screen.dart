@@ -2,6 +2,7 @@ import 'package:dronify/Home/service_card.dart';
 import 'package:dronify/Home/special_offer_card.dart';
 import 'package:dronify/Home/welcome_card.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -128,19 +129,29 @@ class HomeScreen extends StatelessWidget {
                             ServiceCard(
                               imageUrl: 'assets/clean.png',
                               title: 'Building Cleaning',
+                              description:
+                                  'Professional cleaning service for tall buildings using advanced drones.',
+                              iconPath: 'assets/Vector (12).png',
                             ),
                             ServiceCard(
                               imageUrl: 'assets/nano.jpg',
                               title: 'Nano Protection',
+                              description:
+                                  'Nano-coating protection for windows, shields from dirt and weather damage.',
+                              iconPath: 'assets/Group (1).png',
                             ),
                             ServiceCard(
                               imageUrl: 'assets/spot.jpg',
                               title: 'Spot Painting',
+                              description:
+                                  'Spot painting services for building exteriors.',
+                              iconPath: 'assets/Group (2).png',
                             ),
                           ],
                         ),
                       ),
                     ),
+                    SizedBox(height: 10.h),
                   ],
                 ),
               ),
