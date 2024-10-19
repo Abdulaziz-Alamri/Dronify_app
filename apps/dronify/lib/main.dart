@@ -1,6 +1,7 @@
 import 'package:dronify/Auth/otp_Screan.dart';
 import 'package:dronify/Auth/sginin.dart';
 import 'package:dronify/Bottom_Nav/bottom_nav.dart';
+import 'package:dronify/Cart/cart_screen.dart';
 import 'package:dronify/Home/home_screen.dart';
 import 'package:dronify/Order/order_screen.dart';
 import 'package:flutter/material.dart';
