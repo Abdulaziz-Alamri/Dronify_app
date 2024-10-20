@@ -1,5 +1,6 @@
-import 'package:dronify/Order/custom_image_cards.dart';
-import 'package:dronify/Order/custom_order_card.dart';
+import 'package:dronify_mngmt/Order/custom_custmer_wedget.dart';
+import 'package:dronify_mngmt/Order/custom_image_cards.dart';
+import 'package:dronify_mngmt/Order/custom_order_card.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -25,26 +26,10 @@ class OrderScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Center(
-              child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  height: 75,
-                  width: 345,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.05),
-                        blurRadius: 3,
-                        offset: const Offset(0, 1),
-                      ),
-                    ],
-                  ),
-                  child: const CustomOrderCard(
-                      imageUrl: 'assets/drone12.png',
-                      title: 'Customer Name',
-                      subTitle: '0512341234')),
+            CustomCustmerWedget(
+              ordernumber: '1086',
+              title: 'Jone',
+              subTitle: '0966 5789033',
             ),
             const SizedBox(
               height: 15,
@@ -73,14 +58,6 @@ class OrderScreen extends StatelessWidget {
                           'Date: ${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}',
                       subTitle:
                           'Time: ${DateTime.now().hour}:${DateTime.now().minute}'),
-                  const Divider(
-                    color: Color(0xffEDEDED),
-                    height: 20,
-                  ),
-                  const Text(
-                    'Price: 350 SAR',
-                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
-                  ),
                   const Divider(
                     color: Color(0xffEDEDED),
                     height: 20,

@@ -84,7 +84,6 @@ class EmployeeHome extends StatelessWidget {
                             ),
                           ],
                         ),
-                        child: ,
                       )
                     ],
                   )
