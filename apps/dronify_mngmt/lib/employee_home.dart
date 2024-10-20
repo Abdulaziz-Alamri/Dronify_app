@@ -1,11 +1,24 @@
+import 'package:dronify_mngmt/order_card.dart';
 import 'package:flutter/material.dart';
 
-class EmployeeHome extends StatelessWidget {
+class EmployeeHome extends StatefulWidget {
   const EmployeeHome({super.key});
 
   @override
+  State<EmployeeHome> createState() => _EmployeeHomeState();
+}
+
+class _EmployeeHomeState extends State<EmployeeHome> with SingleTickerProviderStateMixin{
+  late TabController tabController;
+
+  @override
+  void initState() {
+    tabController = TabController(length: 2, vsync: this);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    // TabController tabController = TabController(length: 2, vsync: vsync);
     return Scaffold(
       backgroundColor: const Color(0xffF5F5F7),
       body: CustomScrollView(
@@ -52,42 +65,25 @@ class EmployeeHome extends StatelessWidget {
                   SizedBox(
                     height: 20,
                   ),
-                  DefaultTabController(
-                    length: 2,
-                    child: TabBar(tabs: [
-                      Tab(
-                        text: 'Complete',
-                      ),
-                      Tab(
-                        text: 'Incomplete',
-                      )
-                    ]),
-                  ),
-                  Column(
-                    children: [
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                        height: 117,
-                        width: 311,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(16),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.25),
-                              blurRadius: 2,
-                              offset: const Offset(0, 2),
-                            ),
-                          ],
-                        ),
-                        child: ,
-                      )
-                    ],
-                  )
+                  TabBar(
+                    controller: tabController,
+                    tabs: [
+                    Tab(
+                      text: 'Complete',
+                    ),
+                    Tab(
+                      text: 'Incomplete',
+                    )
+                  ]),
+                   SizedBox(
+                    height: MediaQuery.of(context).size.height,
+                     child: TabBarView(
+                          controller: tabController,
+                          children: [ 
+                          OrderCard(),
+                          OrderCard(),
+                          ]),
+                   )
                 ],
               ),
             ),
