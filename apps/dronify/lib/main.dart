@@ -5,6 +5,7 @@ import 'package:dronify/Cart/cart_screen.dart';
 import 'package:dronify/Home/home_screen.dart';
 import 'package:dronify/Order/order_screen.dart';
 import 'package:dronify/Subscription/subscription_screen.dart';
+import 'package:dronify/wallet/wallet.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -20,7 +21,7 @@ class MainApp extends StatelessWidget {
     return Sizer(
       builder: (context, orientation, deviceType) {
         return const MaterialApp(
-            debugShowCheckedModeBanner: false, home: BottomNav());
+            debugShowCheckedModeBanner: false, home: Wallet());
       },
     );
   }
