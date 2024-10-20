@@ -2,6 +2,7 @@ import 'package:dronify/Home/service_card.dart';
 import 'package:dronify/Home/special_offer_card.dart';
 import 'package:dronify/Home/welcome_card.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -44,9 +45,9 @@ class HomeScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Align(
+                    const Align(
                         alignment: Alignment.topCenter,
-                        child: const WelcomeCard()),
+                        child: WelcomeCard()),
                     const SizedBox(height: 10),
                     const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 16),
@@ -107,7 +108,7 @@ class HomeScreen extends StatelessWidget {
                             color: Color(0xff172B4D)),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Padding(
@@ -115,7 +116,7 @@ class HomeScreen extends StatelessWidget {
                       child: SizedBox(
                         height: 500,
                         child: GridView(
-                          padding: EdgeInsets.symmetric(horizontal: 8),
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
                           physics: const NeverScrollableScrollPhysics(),
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(
@@ -128,19 +129,29 @@ class HomeScreen extends StatelessWidget {
                             ServiceCard(
                               imageUrl: 'assets/clean.png',
                               title: 'Building Cleaning',
+                              description:
+                                  'Professional cleaning service for tall buildings using advanced drones.',
+                              iconPath: 'assets/Vector (12).png',
                             ),
                             ServiceCard(
                               imageUrl: 'assets/nano.jpg',
                               title: 'Nano Protection',
+                              description:
+                                  'Nano-coating protection for windows, shields from dirt and weather damage.',
+                              iconPath: 'assets/Group (1).png',
                             ),
                             ServiceCard(
                               imageUrl: 'assets/spot.jpg',
                               title: 'Spot Painting',
+                              description:
+                                  'Spot painting services for building exteriors.',
+                              iconPath: 'assets/Group (2).png',
                             ),
                           ],
                         ),
                       ),
                     ),
+                    SizedBox(height: 10.h),
                   ],
                 ),
               ),

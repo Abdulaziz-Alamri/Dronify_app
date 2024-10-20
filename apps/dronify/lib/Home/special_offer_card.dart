@@ -14,15 +14,15 @@ class SpecialOfferCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 270,
-      margin: EdgeInsets.only(right: 10),
+      margin: const EdgeInsets.only(right: 10),
       decoration: BoxDecoration(
-        color: Color(0xffEAF6EF),
+        color: const Color(0xffEAF6EF),
         borderRadius: BorderRadius.circular(15),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.25),
             blurRadius: 4,
-            offset: Offset(0, 4),
+            offset: const Offset(0, 4),
           ),
         ],
       ),
@@ -37,22 +37,22 @@ class SpecialOfferCard extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 14,
                     color: Color(0xff33383F),
                   ),
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                 Text(
                   description,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 36,
                     fontWeight: FontWeight.bold,
                     color: Color(0xff33383F),
                   ),
                 ),
-                ElevatedButton(onPressed: () {}, child: Text('Grab offer'))
+                ElevatedButton(onPressed: () {}, child: const Text('Grab offer'))
               ],
             ),
           ),
