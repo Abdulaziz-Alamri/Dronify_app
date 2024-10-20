@@ -1,4 +1,5 @@
 import 'package:dronify/profile/Profile_Item.dart';
+import 'package:dronify/wallet/wallet.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -105,7 +106,12 @@ class ProfileScreen extends StatelessWidget {
                         child: ListTile(
                           leading: const Icon(Icons.wallet),
                           title: const Text('Wallet'),
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => Wallet()),
+                            );
+                          },
                         ),
                       ),
                       const SizedBox(height: 20),
