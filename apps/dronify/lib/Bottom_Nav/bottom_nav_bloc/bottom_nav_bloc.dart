@@ -4,13 +4,19 @@ import 'package:bloc/bloc.dart';
 import 'package:dronify/Cart/cart_screen.dart';
 import 'package:dronify/Home/home_screen.dart';
 import 'package:dronify/Order/order_screen.dart';
+import 'package:dronify/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 
 part 'bottom_nav_event.dart';
 part 'bottom_nav_state.dart';
 
 class BottomNavBloc extends Bloc<BottomNavEvent, BottomNavState> {
-  List<Widget> views = [HomeScreen(), OrderScreen(), CartScreen()];
+  List<Widget> views = [
+    HomeScreen(),
+    OrderScreen(),
+    CartScreen(),
+    ProfileScreen()
+  ];
 
   int currentIndex = 0;
 
