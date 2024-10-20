@@ -7,8 +7,8 @@ class OrderCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        height: 117,
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        height: 130,
         width: 400,
         decoration: BoxDecoration(
           color: Colors.white,
@@ -23,6 +23,7 @@ class OrderCard extends StatelessWidget {
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
@@ -56,33 +57,26 @@ class OrderCard extends StatelessWidget {
                     SizedBox(
                       height: 5,
                     ),
-                    Text(
-                      'description of the services',
-                      style: TextStyle(fontSize: 12, color: Color(0xffA4A4AA)),
+                    SizedBox(
+                      width: 250,
+                      child: Text(
+                        'description of the services',
+                        softWrap: true,
+                        style:
+                            TextStyle(fontSize: 12, color: Color(0xffA4A4AA)),
+                      ),
                     )
                   ],
                 ),
               ],
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Price: 350 SAR',
-                  style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xff072D6F)),
-                ),
-                Icon(
-                  Icons.delete_outline,
-                  color: Color(0xff072D6F),
-                )
-              ],
+            Text(
+              'Price: 350 SAR',
+              style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xff072D6F)),
             ),
-            SizedBox(
-              height: 15,
-            )
           ],
         ),
       ),
