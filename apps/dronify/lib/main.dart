@@ -1,5 +1,5 @@
 
-import 'package:dronify/Subscription/subscription_screen.dart';
+import 'package:dronify/Bottom_Nav/bottom_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
