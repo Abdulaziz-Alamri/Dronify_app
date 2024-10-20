@@ -9,7 +9,7 @@ class CartItemCard extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         height: 117,
-        width: 300,
+        width: 400,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(16),
