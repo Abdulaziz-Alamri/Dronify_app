@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class CartItemCard extends StatelessWidget {
-  const CartItemCard({super.key});
+class OrderCard extends StatelessWidget {
+  const OrderCard({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         height: 117,
         width: 400,
         decoration: BoxDecoration(
@@ -42,10 +42,10 @@ class CartItemCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(
+                SizedBox(
                   width: 15,
                 ),
-                const Column(
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
@@ -64,7 +64,7 @@ class CartItemCard extends StatelessWidget {
                 ),
               ],
             ),
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
@@ -80,6 +80,9 @@ class CartItemCard extends StatelessWidget {
                 )
               ],
             ),
+            SizedBox(
+              height: 15,
+            )
           ],
         ),
       ),

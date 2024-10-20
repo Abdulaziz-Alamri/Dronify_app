@@ -17,13 +17,13 @@ class SubscriptionScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Color(0xffF5F5F7),
+        backgroundColor: const Color(0xffF5F5F7),
         leading: BackButton(
           onPressed: () {
             Navigator.pop(context);
           },
         ),
-        title: Text(
+        title: const Text(
           'subscription',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
@@ -31,24 +31,24 @@ class SubscriptionScreen extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 SizedBox(
                   height: 4.h,
                 ),
-                CustomSubCard(
+                const CustomSubCard(
                     duration: 3,
                     description:
                         'Includes 6 visits (two visits each month) to maintain your building’s appearance.',
                     price: 1500),
-                CustomSubCard(
+                const CustomSubCard(
                     duration: 6,
                     description:
                         'Includes 12 visits (two visits each month), perfect for ongoing cleanliness with fewer subscriptions.',
                     price: 1500),
-                CustomSubCard(
+                const CustomSubCard(
                     duration: 9,
                     description:
                         'Includes 18 visits (two visits each month), an excellent choice for those needing consistent maintenance at a great value.',
@@ -106,7 +106,7 @@ class SubscriptionScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 16,
                 ),
                 Container(
@@ -190,7 +190,7 @@ class SubscriptionScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         Text(
                           '1',
                           style: TextStyle(
@@ -198,7 +198,7 @@ class SubscriptionScreen extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         GestureDetector(
                           onTapDown: (_) {
                             // setState(() {
@@ -209,11 +209,11 @@ class SubscriptionScreen extends StatelessWidget {
                             width: 40,
                             height: 40,
                             decoration: BoxDecoration(
-                              color: Color(0xff072D6F),
+                              color: const Color(0xff072D6F),
                               borderRadius: BorderRadius.circular(10),
                               border: Border.all(color: Colors.grey),
                             ),
-                            child: Icon(
+                            child: const Icon(
                               Icons.add,
                               color: Colors.white,
                             ),
@@ -241,11 +241,11 @@ class SubscriptionScreen extends StatelessWidget {
                   child: TextFormField(
                     decoration: InputDecoration(
                       filled: true,
-                      fillColor: Color(0xffF5F5F5),
+                      fillColor: const Color(0xffF5F5F5),
                       border: InputBorder.none,
                       hintText: 'Enter square area',
                       suffixIcon: IconButton(
-                        icon: Icon(Icons.help_outline),
+                        icon: const Icon(Icons.help_outline),
                         onPressed: () {
                           // setState(() {
                           //   showInfo = !showInfo;

@@ -16,7 +16,7 @@ class CustomSubCard extends StatelessWidget {
     return Column(
       children: [
         Container(
-          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           height: 67,
           width: 308,
           decoration: BoxDecoration(
@@ -35,13 +35,13 @@ class CustomSubCard extends StatelessWidget {
               Radio(
                   value: false,
                   groupValue: true,
-                  activeColor: Color(0xff072D6F),
+                  activeColor: const Color(0xff072D6F),
                   onChanged: (value) {}),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('$duration-Months',
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w900,
                           color: Color(0xff072D6F))),
@@ -50,24 +50,24 @@ class CustomSubCard extends StatelessWidget {
                     child: Text(
                       description,
                       softWrap: true,
-                      style: TextStyle(fontSize: 7, color: Color(0xff072D6F)),
+                      style: const TextStyle(fontSize: 7, color: Color(0xff072D6F)),
                     ),
                   ),
                 ],
               ),
-              VerticalDivider(),
+              const VerticalDivider(),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     'SAR $price',
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 10,
                         fontWeight: FontWeight.bold,
                         color: Color(0xff072D6F)),
                   ),
                   Text('/ $duration months',
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 8,
                           fontWeight: FontWeight.bold,
                           color: Color(0xff072D6F)))

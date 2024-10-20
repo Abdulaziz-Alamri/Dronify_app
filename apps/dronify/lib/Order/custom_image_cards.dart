@@ -30,7 +30,7 @@ class CustomImageCards extends StatelessWidget {
           height: 67,
           width: 70,
           child: Card(
-              surfaceTintColor: Color(0xff5669FF).withOpacity(0.6),
+              surfaceTintColor: const Color(0xff5669FF).withOpacity(0.6),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
               ),
@@ -44,7 +44,7 @@ class CustomImageCards extends StatelessWidget {
                     'assets/drone.png',
                     fit: BoxFit.cover,
                   ),
-                  Center(
+                  const Center(
                     child: Text(
                       '+12',
                       style: TextStyle(

@@ -58,7 +58,7 @@ class _ServicesState extends State<Services> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -84,7 +84,7 @@ class _ServicesState extends State<Services> {
                     ),
                   ],
                 ),
-                Divider(
+                const Divider(
                   color: Color(0xffCDCDCD),
                   indent: 30,
                   endIndent: 30,
@@ -96,7 +96,7 @@ class _ServicesState extends State<Services> {
                   width: 360,
                   height: 130,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(
+                    borderRadius: const BorderRadius.all(
                       Radius.circular(20),
                     ),
                     image: DecorationImage(
@@ -113,17 +113,17 @@ class _ServicesState extends State<Services> {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 15.sp,
-                      color: Color(0xffA4A4AA),
+                      color: const Color(0xffA4A4AA),
                       fontWeight: FontWeight.w500,
                     ),
                   ),
                 ),
-                Divider(
+                const Divider(
                   color: Color(0xffCDCDCD),
                   indent: 30,
                   endIndent: 30,
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
@@ -158,7 +158,7 @@ class _ServicesState extends State<Services> {
                         File(_image!.path),
                         height: 100,
                       )
-                    : Text('No image selected'),
+                    : const Text('No image selected'),
                 SizedBox(height: 2.h),
                 Align(
                   alignment: Alignment.centerLeft,
@@ -171,7 +171,7 @@ class _ServicesState extends State<Services> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 16,
                 ),
                 Container(
@@ -220,7 +220,7 @@ class _ServicesState extends State<Services> {
                         'Selected date: $_selectedDate',
                         style: TextStyle(fontSize: 16.sp, color: Colors.black),
                       )
-                    : Text('No date selected'),
+                    : const Text('No date selected'),
                 SizedBox(height: 4.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -255,7 +255,7 @@ class _ServicesState extends State<Services> {
                             ),
                           ),
                         ),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         Text(
                           '$windowCount',
                           style: TextStyle(
@@ -263,7 +263,7 @@ class _ServicesState extends State<Services> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         GestureDetector(
                           onTapDown: (_) {
                             setState(() {
@@ -274,11 +274,11 @@ class _ServicesState extends State<Services> {
                             width: 40,
                             height: 40,
                             decoration: BoxDecoration(
-                              color: Color(0xff072D6F),
+                              color: const Color(0xff072D6F),
                               borderRadius: BorderRadius.circular(10),
                               border: Border.all(color: Colors.grey),
                             ),
-                            child: Icon(
+                            child: const Icon(
                               Icons.add,
                               color: Colors.white,
                             ),
@@ -306,11 +306,11 @@ class _ServicesState extends State<Services> {
                   child: TextFormField(
                     decoration: InputDecoration(
                       filled: true,
-                      fillColor: Color(0xffF5F5F5),
+                      fillColor: const Color(0xffF5F5F5),
                       border: InputBorder.none,
                       hintText: 'Enter square area',
                       suffixIcon: IconButton(
-                        icon: Icon(Icons.help_outline),
+                        icon: const Icon(Icons.help_outline),
                         onPressed: () {
                           setState(() {
                             showInfo = !showInfo;

@@ -45,9 +45,9 @@ class HomeScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Align(
+                    const Align(
                         alignment: Alignment.topCenter,
-                        child: const WelcomeCard()),
+                        child: WelcomeCard()),
                     const SizedBox(height: 10),
                     const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 16),
@@ -108,7 +108,7 @@ class HomeScreen extends StatelessWidget {
                             color: Color(0xff172B4D)),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Padding(
@@ -116,7 +116,7 @@ class HomeScreen extends StatelessWidget {
                       child: SizedBox(
                         height: 500,
                         child: GridView(
-                          padding: EdgeInsets.symmetric(horizontal: 8),
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
                           physics: const NeverScrollableScrollPhysics(),
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(
