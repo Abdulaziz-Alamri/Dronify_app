@@ -15,7 +15,7 @@ class MainApp extends StatelessWidget {
     return Sizer(
       builder: (context, orientation, deviceType) {
         return const MaterialApp(
-            debugShowCheckedModeBanner: false, home: SubscriptionScreen());
+            debugShowCheckedModeBanner: false, home: BottomNav());
       },
     );
   }
