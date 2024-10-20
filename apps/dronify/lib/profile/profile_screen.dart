@@ -46,10 +46,10 @@ class ProfileScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
                     children: [
-                      const SizedBox(height: 20),
-                      const Text(
-                        'WELCOME JONE',
-                        style: TextStyle(
+                      SizedBox(height: 20),
+                      Text(
+                        'WELCOME $userName',
+                        style: const TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
                         ),
