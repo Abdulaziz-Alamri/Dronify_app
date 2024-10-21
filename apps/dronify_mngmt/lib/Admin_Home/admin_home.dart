@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:dronify_mngmt/Admin_Home/custom_barchart.dart';
 import 'package:dronify_mngmt/Admin_Home/custom_stat_card.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,6 @@ class AdminHome extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xffF5F5F7),
       body: CustomScrollView(
-        physics: NeverScrollableScrollPhysics(),
         slivers: [
           SliverAppBar(
             expandedHeight: 80.0,
@@ -63,7 +63,7 @@ class AdminHome extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 16, vertical: 16),
                     height: 300,
-                    width: 337,
+                    width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(16),
@@ -147,42 +147,14 @@ class AdminHome extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 16),
-                    height: 160,
-                    width: 337,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(16),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.05),
-                          blurRadius: 3,
-                          offset: const Offset(0, 1),
-                        ),
-                      ],
-                    ),
-                    child: BarChart(BarChartData(barGroups: [
-                      BarChartGroupData(x: 1, barRods: [
-                        BarChartRodData(toY: 5.5),
-                      ]),
-                      BarChartGroupData(x: 1, barRods: [
-                        BarChartRodData(toY: 2.5),
-                      ]),
-                      BarChartGroupData(x: 1, barRods: [
-                        BarChartRodData(toY: 3.5),
-                      ]),
-                      BarChartGroupData(x: 1, barRods: [
-                        BarChartRodData(toY: 8.5),
-                      ]),
-                    ])),
+                  SizedBox(
+                    height: 10,
                   ),
                   Container(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 16, vertical: 16),
                     height: 160,
-                    width: 337,
+                    width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(16),
@@ -194,20 +166,85 @@ class AdminHome extends StatelessWidget {
                         ),
                       ],
                     ),
-                    child: BarChart(BarChartData(barGroups: [
-                      BarChartGroupData(x: 1, barRods: [
-                        BarChartRodData(toY: 5.5),
-                      ]),
-                      BarChartGroupData(x: 1, barRods: [
-                        BarChartRodData(toY: 2.5),
-                      ]),
-                      BarChartGroupData(x: 1, barRods: [
-                        BarChartRodData(toY: 3.5),
-                      ]),
-                      BarChartGroupData(x: 1, barRods: [
-                        BarChartRodData(toY: 8.5),
-                      ]),
-                    ])),
+                    child: BarChart(BarChartData(
+                        borderData: FlBorderData(show: false),
+                        barGroups: [
+                          BarChartGroupData(
+                            x: 1,
+                            barRods: [
+                              BarChartRodData(
+                                  toY: 5.5,
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      Color(0xff072D6F),
+                                      Color(0xff0D56D5),
+                                    ],
+                                    begin: FractionalOffset.bottomCenter,
+                                    end: FractionalOffset.topCenter,
+                                  )),
+                            ],
+                          ),
+                          BarChartGroupData(x: 1, barRods: [
+                            BarChartRodData(
+                                toY: 2.5,
+                                gradient: LinearGradient(
+                                  colors: [
+                                    Color(0xff072D6F),
+                                    Color(0xff0D56D5),
+                                  ],
+                                  begin: FractionalOffset.bottomCenter,
+                                  end: FractionalOffset.topCenter,
+                                )),
+                          ]),
+                          BarChartGroupData(x: 1, barRods: [
+                            BarChartRodData(
+                                toY: 3.5,
+                                gradient: LinearGradient(
+                                  colors: [
+                                    Color(0xff072D6F),
+                                    Color(0xff0D56D5),
+                                  ],
+                                  begin: FractionalOffset.bottomCenter,
+                                  end: FractionalOffset.topCenter,
+                                )),
+                          ]),
+                          BarChartGroupData(x: 1, barRods: [
+                            BarChartRodData(
+                                toY: 8.5,
+                                gradient: LinearGradient(
+                                  colors: [
+                                    Color(0xff072D6F),
+                                    Color(0xff0D56D5),
+                                  ],
+                                  begin: FractionalOffset.bottomCenter,
+                                  end: FractionalOffset.topCenter,
+                                )),
+                          ]),
+                        ])),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 16),
+                    height: 380,
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.05),
+                          blurRadius: 3,
+                          offset: const Offset(0, 1),
+                        ),
+                      ],
+                    ),
+                    child: CustomBarchart(),
+                  ),
+                  SizedBox(
+                    height: 70,
                   ),
                 ],
               ),
