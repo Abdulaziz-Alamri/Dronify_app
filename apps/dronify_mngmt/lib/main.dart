@@ -1,4 +1,5 @@
 import 'package:dronify_mngmt/Admin_Home/admin_home.dart';
+import 'package:dronify_mngmt/Admin_Profile/profile_screen.dart';
 import 'package:dronify_mngmt/Bottom_Nav/bottom_nav.dart';
 import 'package:dronify_mngmt/Employee_Home/employee_home.dart';
 import 'package:dronify_mngmt/Order/confirm_screen.dart';
@@ -17,8 +18,8 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Sizer(
       builder: (context, orientation, deviceType) {
-        return const MaterialApp(
-            debugShowCheckedModeBanner: false, home: BottomNav());
+        return  MaterialApp(
+            debugShowCheckedModeBanner: false, home: ProfileScreen());
       },
     );
   }
