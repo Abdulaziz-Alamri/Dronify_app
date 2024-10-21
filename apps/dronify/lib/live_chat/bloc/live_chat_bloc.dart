@@ -35,7 +35,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         id: 'random_id_${Random().nextInt(1000)}',
         text: event.message,
       );
-
+      
       emit(ChatLoaded([newMessage, ...currentState.messages]));
     }
   }

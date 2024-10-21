@@ -13,7 +13,7 @@ class ChatScreen extends StatelessWidget {
     return BlocProvider(
       create: (_) => ChatBloc()..add(LoadMessagesEvent()),
       child: Scaffold(
-        appBar: buildAppBar(),
+        appBar: buildAppBar(context), // Pass context here
         body: BlocBuilder<ChatBloc, custom_state.ChatState>(
           builder: (context, state) {
             if (state is custom_state.ChatLoading) {
@@ -31,21 +31,50 @@ class ChatScreen extends StatelessWidget {
     );
   }
 
-  /// Method to build the AppBar with custom styling.
-  PreferredSize buildAppBar() {
+  /// Method to build the AppBar with a Back Button and custom styling.
+  PreferredSize buildAppBar(BuildContext context) {
     return PreferredSize(
       preferredSize: const Size.fromHeight(150),
-      child: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/appbar1.png'),
-            fit: BoxFit.cover,
+      child: Stack(
+        children: [
+          // Background image
+          Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/appbar1.png'),
+                fit: BoxFit.cover,
+              ),
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(20),
+                bottomRight: Radius.circular(20),
+              ),
+            ),
           ),
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(20),
-            bottomRight: Radius.circular(20),
+          // Title overlay
+          const Positioned(
+            left: 70,
+            bottom: 30,
+            child: Text(
+              'Live Chat',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
-        ),
+          // Back Button
+          Positioned(
+            left: 10,
+            top: 10,
+            child: BackButton(
+              color: Colors.white, // Back button color
+              onPressed: () {
+                Navigator.pop(context); // Navigate back to the previous screen
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -69,7 +98,7 @@ class ChatScreen extends StatelessWidget {
           color: Colors.black,
           fontSize: 16,
         ),
-        inputTextColor: Colors.black,
+        inputTextColor: Color.fromARGB(255, 138, 135, 135),
       ),
     );
   }
