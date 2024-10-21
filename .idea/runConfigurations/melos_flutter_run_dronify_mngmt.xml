@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Flutter Run -&gt; 'dronify_mngmt'" type="FlutterRunConfigurationType" factoryName="Flutter">
-    <option name="filePath" value="$PROJECT_DIR$/apps/dronify_mngmt/lib/main.dart" />
+    <option name="filePath" value="$PROJECT_DIR$/apps\\dronify_mngmt\lib\main.dart" />
     <method v="2" />
   </configuration>
 </component>

@@ -3,7 +3,11 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+<<<<<<< HEAD
   file_selector_windows
+=======
+  url_launcher_windows
+>>>>>>> rawan
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST
