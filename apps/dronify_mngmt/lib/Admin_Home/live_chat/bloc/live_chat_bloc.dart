@@ -8,7 +8,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   ChatBloc() : super(ChatInitial()) {
     on<LoadMessagesEvent>(_onLoadMessages);
     on<SendMessageEvent>(_onSendMessage);
-  }
+  } 
 
   void _onLoadMessages(
       LoadMessagesEvent event, Emitter<ChatState> emit) {

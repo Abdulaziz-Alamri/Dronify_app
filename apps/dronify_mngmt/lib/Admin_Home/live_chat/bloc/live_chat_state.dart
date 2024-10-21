@@ -10,7 +10,7 @@ class ChatLoaded extends ChatState {
   final List<types.Message> messages;
 
   ChatLoaded(this.messages);
-}
+} 
 
 class ChatError extends ChatState {
   final String error;
