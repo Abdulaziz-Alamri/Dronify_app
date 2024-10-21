@@ -42,6 +42,7 @@ class _EmployeeHomeState extends State<EmployeeHome>
                   ),
                 ),
               ),
+              centerTitle: true,
               title: Text(
                 'Welcome Back Emp 👋',
                 style: TextStyle(
