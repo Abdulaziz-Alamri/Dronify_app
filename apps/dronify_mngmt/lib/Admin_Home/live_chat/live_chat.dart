@@ -53,7 +53,7 @@ class ChatScreen extends StatelessWidget {
                   } else if (state is custom_state.ChatError) {
                     return Center(child: Text('Error: ${state.error}'));
                   } else {
-                    return const Center(child: Text('No messages yet.'));
+                    return const Center(child: Text('No messages yet'));
                   }
                 },
               ),
