@@ -19,7 +19,7 @@ class MainApp extends StatelessWidget {
     return Sizer(
       builder: (context, orientation, deviceType) {
         return  MaterialApp(
-            debugShowCheckedModeBanner: false, home: ProfileScreen());
+            debugShowCheckedModeBanner: false, home: EmployeeHome());
       },
     );
   }
