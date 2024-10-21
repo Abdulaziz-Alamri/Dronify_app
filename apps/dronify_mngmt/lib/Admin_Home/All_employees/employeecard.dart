@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
+
 class EmployeeCardWidget extends StatelessWidget {
   final String name;
   final String phone;
@@ -17,27 +18,49 @@ class EmployeeCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: CircleAvatar(
-        backgroundImage: AssetImage(image),
-        radius: 30,
-      ),
-      title: Text(
-        name,
-        style: const TextStyle(fontWeight: FontWeight.bold),
-      ),
-      subtitle: Text(phone),
-      trailing: RatingBarIndicator(
-        rating: rating,
-        itemBuilder: (context, index) => const Icon(
-          Icons.star,
-          color: Colors.amber,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: Card(
+        elevation: 6, // Adjusted shadow elevation
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
         ),
-        itemCount: 5,
-        itemSize: 20.0,
-        direction: Axis.horizontal,
+        shadowColor: Colors.black.withOpacity(0.25), // Darker shadow color
+        color: Colors.white, // Set background to white
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            children: [
+              CircleAvatar(
+                backgroundImage: AssetImage(image),
+                radius: 30,
+              ),
+              const SizedBox(width: 16),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    name,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  Text(phone),
+                ],
+              ),
+              const Spacer(),
+              RatingBarIndicator(
+                rating: rating,
+                itemBuilder: (context, index) => const Icon(
+                  Icons.star,
+                  color: Colors.amber,
+                ),
+                itemCount: 5,
+                itemSize: 20.0,
+                direction: Axis.horizontal,
+              ),
+            ],
+          ),
+        ),
       ),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
     );
   }
 }

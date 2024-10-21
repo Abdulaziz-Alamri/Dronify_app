@@ -1,3 +1,4 @@
+import 'package:dronify_mngmt/Admin_Home/All_employees/EmployeeDetails/employee.dart';
 import 'package:dronify_mngmt/Admin_Home/All_employees/employeecard.dart';
 import 'package:flutter/material.dart';
 
@@ -34,7 +35,7 @@ class AllEmp extends StatelessWidget {
               ),
               centerTitle: true,
             ),
-            backgroundColor: Colors.transparent,
+            backgroundColor: Colors.white,
             pinned: false,
           ),
           SliverList(
@@ -50,17 +51,31 @@ class AllEmp extends StatelessWidget {
                   },
                 );
 
-                // Access employee data
                 final employee = employees[index];
 
-                return EmployeeCardWidget(
-                  name: employee['name']!,
-                  phone: employee['phone']!,
-                  rating: employee['rating']!,
-                  image: employee['image']!,
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => EmployeeDetailsPage(
+                          name: employee['name']!,
+                          phone: employee['phone']!,
+                          rating: employee['rating']!,
+                          image: employee['image']!,
+                        ),
+                      ),
+                    );
+                  },
+                  child: EmployeeCardWidget(
+                    name: employee['name']!,
+                    phone: employee['phone']!,
+                    rating: employee['rating']!,
+                    image: employee['image']!,
+                  ),
                 );
               },
-              childCount: 10,
+              childCount: 5,
             ),
           ),
         ],
@@ -68,3 +83,5 @@ class AllEmp extends StatelessWidget {
     );
   }
 }
+
+// Custom widget for employee card
