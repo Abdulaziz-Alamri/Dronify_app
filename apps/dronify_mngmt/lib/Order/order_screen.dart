@@ -1,3 +1,4 @@
+import 'package:dronify_mngmt/Order/confirm_screen.dart';
 import 'package:dronify_mngmt/Order/custom_custmer_wedget.dart';
 import 'package:dronify_mngmt/Order/custom_image_cards.dart';
 import 'package:dronify_mngmt/Order/custom_order_card.dart';
@@ -230,9 +231,8 @@ class _OrderScreenState extends State<OrderScreen> {
                       color: Colors.grey[500],
                       fontSize: 14,
                     ),
-                    border: InputBorder.none, 
-                    contentPadding:
-                        const EdgeInsets.all(12), 
+                    border: InputBorder.none,
+                    contentPadding: const EdgeInsets.all(12),
                   ),
                 ),
               ),
@@ -294,7 +294,13 @@ class _OrderScreenState extends State<OrderScreen> {
                   ),
                 ),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ConfirmScreen()),
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.transparent,
                     shadowColor: Colors.transparent,
