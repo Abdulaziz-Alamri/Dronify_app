@@ -10,6 +10,8 @@ dependencies:
   flutter:
     sdk: flutter
   sizer: ^3.0.4
+  graphic: ^2.5.0
+  fl_chart: ^0.69.0 
 
 dev_dependencies:
   flutter_test:
