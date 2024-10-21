@@ -1,4 +1,5 @@
 import 'package:dronify/Bottom_Nav/bottom_nav.dart';
+import 'package:dronify/live_chat/live_chat.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -13,8 +14,8 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Sizer(
       builder: (context, orientation, deviceType) {
-        return const MaterialApp(
-            debugShowCheckedModeBanner: false, home: BottomNav());
+        return MaterialApp(
+            debugShowCheckedModeBanner: false, home: ChatScreen());
       },
     );
   }
