@@ -18,6 +18,7 @@ dependencies:
   flutter_bloc: ^8.1.6
   font_awesome_flutter: ^10.7.0
   flutter_rating_bar: ^4.0.1
+  flutter_chat_types: ^3.6.2
 
 dev_dependencies:
   flutter_test:
