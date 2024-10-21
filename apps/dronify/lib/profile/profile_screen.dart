@@ -2,6 +2,8 @@ import 'package:dronify/profile/Profile_Item.dart';
 import 'package:dronify/wallet/wallet.dart';
 import 'package:flutter/material.dart';
 
+import '../edit_profile/edit_profile.dart';
+
 class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -57,7 +59,13 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 10),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => EditProfile(),
+                              ));
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
                               const Color(0xFF072D6F), // Custom blue color

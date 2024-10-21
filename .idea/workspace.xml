@@ -5,21 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="27f966a0-ae13-49f7-9a91-21fee5995a59" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.dart_tool/extension_discovery/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/extension_discovery/devtools.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/package_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/package_config.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/package_config_subset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/version" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/melos_bootstrap.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/melos_bootstrap.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/melos_clean.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/melos_clean.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/melos_flutter_run_dronify.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/melos_flutter_run_dronify.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/melos_flutter_run_dronify_mngmt.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/melos_flutter_run_dronify_mngmt.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/dronify/lib/edit_profile/edit_profile.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dronify/android/app/src/main/res/drawable/launch_background.xml" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dronify/android/app/src/main/res/drawable/launch_background.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/dronify/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dronify/lib/main.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/dronify/lib/profile/profile_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dronify/lib/profile/profile_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/dronify/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dronify/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/melos_dronify.iml" beforeDir="false" afterPath="$PROJECT_DIR$/melos_dronify.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,29 +24,29 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 1
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
   <component name="ProjectId" id="2nhiJHOIgppAO1LMX0WUogDNsgb" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "RunOnceActivity.readMode.enableVisualFormatting": "true",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "rawan",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/rawan.MSI/Downloads/dart/flutter/Dronify_app",
-    "show.migrate.to.gradle.popup": "false"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;rawan&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/rawan.MSI/Downloads/dart/flutter/Dronify_app&quot;,
+    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Flutter.Flutter Run -&gt; 'dronify'" />
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
