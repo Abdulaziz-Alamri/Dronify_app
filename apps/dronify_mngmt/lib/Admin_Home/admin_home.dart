@@ -15,7 +15,6 @@ class AdminHome extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xffF5F5F7),
       body: CustomScrollView(
-        physics: NeverScrollableScrollPhysics(),
         slivers: [
           SliverAppBar(
             expandedHeight: 80.0,
