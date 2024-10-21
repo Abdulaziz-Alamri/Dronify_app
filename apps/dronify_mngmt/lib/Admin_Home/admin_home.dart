@@ -62,46 +62,6 @@ class AdminHome extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 16, vertical: 16),
-                    height: 160,
-                    width: 337,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(16),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.05),
-                          blurRadius: 3,
-                          offset: const Offset(0, 1),
-                        ),
-                      ],
-                    ),
-                    child: Chart(
-                      data: [
-                        {'genre': 'Sports', 'sold': 275},
-                        {'genre': 'Strategy', 'sold': 115},
-                        {'genre': 'Action', 'sold': 120},
-                        {'genre': 'Shooter', 'sold': 350},
-                        {'genre': 'Other', 'sold': 150},
-                      ],
-                      variables: {
-                        'genre': Variable(
-                          accessor: (Map map) => map['genre'] as String,
-                        ),
-                        'sold': Variable(
-                          accessor: (Map map) => map['sold'] as num,
-                        ),
-                      },
-                      marks: [IntervalMark()],
-                      axes: [
-                        Defaults.horizontalAxis,
-                        Defaults.verticalAxis,
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 16),
                     height: 300,
                     width: 337,
                     decoration: BoxDecoration(
@@ -217,7 +177,38 @@ class AdminHome extends StatelessWidget {
                         BarChartRodData(toY: 8.5),
                       ]),
                     ])),
-                  )
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 16),
+                    height: 160,
+                    width: 337,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.05),
+                          blurRadius: 3,
+                          offset: const Offset(0, 1),
+                        ),
+                      ],
+                    ),
+                    child: BarChart(BarChartData(barGroups: [
+                      BarChartGroupData(x: 1, barRods: [
+                        BarChartRodData(toY: 5.5),
+                      ]),
+                      BarChartGroupData(x: 1, barRods: [
+                        BarChartRodData(toY: 2.5),
+                      ]),
+                      BarChartGroupData(x: 1, barRods: [
+                        BarChartRodData(toY: 3.5),
+                      ]),
+                      BarChartGroupData(x: 1, barRods: [
+                        BarChartRodData(toY: 8.5),
+                      ]),
+                    ])),
+                  ),
                 ],
               ),
             ),
