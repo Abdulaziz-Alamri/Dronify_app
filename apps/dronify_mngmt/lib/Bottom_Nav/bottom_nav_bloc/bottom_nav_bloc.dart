@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:dronify_mngmt/Admin_Home/All_employees/all_emp.dart';
 import 'package:dronify_mngmt/Admin_Home/Orders/all_orders.dart';
 import 'package:dronify_mngmt/Admin_Home/admin_home.dart';
 
@@ -10,7 +11,7 @@ part 'bottom_nav_event.dart';
 part 'bottom_nav_state.dart';
 
 class BottomNavBloc extends Bloc<BottomNavEvent, BottomNavState> {
-  List<Widget> views = [AdminHome(), AllOrders()];
+  List<Widget> views = [AdminHome(), AllOrders(),AllEmp()];
 
   int currentIndex = 0;
 
