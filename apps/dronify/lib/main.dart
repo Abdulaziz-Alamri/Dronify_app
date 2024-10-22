@@ -1,4 +1,4 @@
-import 'package:dronify/src/view/splash/FutureBasedSplash.dart';
+import 'package:dronify/splash/splas_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
