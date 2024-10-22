@@ -4,13 +4,13 @@ class OrderModel {
   final String? employeeId;
   final int serviceId;
   final List<String> images;
-  final String address;
+  final List<String> address;
   final double squareMeters;
   final DateTime reservationDate;
   final DateTime reservationTime;
   final double totalPrice;
   final DateTime orderDate;
-  final String status;
+  String status;
   final double? orderRating;
 
   OrderModel({
