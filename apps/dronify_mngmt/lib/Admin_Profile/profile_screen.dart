@@ -1,5 +1,7 @@
 import 'package:dronify_mngmt/Admin_Profile/Profile_Item.dart';
+import 'package:dronify_mngmt/Admin_edit_profile/edit_profile.dart';
 import 'package:flutter/material.dart';
+
 
 class ProfileScreen extends StatelessWidget {
   @override
@@ -56,7 +58,13 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 10),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => EditProfile(),
+                              ));
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
                               const Color(0xFF072D6F), // Custom blue color
@@ -97,7 +105,6 @@ class ProfileScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 10),
-                      
                       const SizedBox(height: 20),
                       ElevatedButton(
                         onPressed: () {},
