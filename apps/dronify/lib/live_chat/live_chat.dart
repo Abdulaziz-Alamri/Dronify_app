@@ -13,57 +13,73 @@ class ChatScreen extends StatelessWidget {
     return BlocProvider(
       create: (_) => ChatBloc()..add(LoadMessagesEvent()),
       child: Scaffold(
-        body: CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              expandedHeight: 80.0,
-              flexibleSpace: FlexibleSpaceBar(
-                background: Container(
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/appbar1.png'),
-                      fit: BoxFit.cover,
-                    ),
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(20),
-                      bottomRight: Radius.circular(20),
-                    ),
-                  ),
-                ),
-                title: const Text(
-                  'Chat',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                centerTitle: true,
-              ),
-              backgroundColor: Colors.transparent,
-              pinned: true,
-            ),
-            SliverFillRemaining(
-              child: BlocBuilder<ChatBloc, custom_state.ChatState>(
-                builder: (context, state) {
-                  if (state is custom_state.ChatLoading) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else if (state is custom_state.ChatLoaded) {
-                    return buildChat(context, state.messages);
-                  } else if (state is custom_state.ChatError) {
-                    return Center(child: Text('Error: ${state.error}'));
-                  } else {
-                    return const Center(child: Text('No messages yet.'));
-                  }
-                },
-              ),
-            ),
-          ],
+        appBar: buildAppBar(context), // Pass context here
+        body: BlocBuilder<ChatBloc, custom_state.ChatState>(
+          builder: (context, state) {
+            if (state is custom_state.ChatLoading) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (state is custom_state.ChatLoaded) {
+              return buildChat(context, state.messages);
+            } else if (state is custom_state.ChatError) {
+              return Center(child: Text('Error: ${state.error}'));
+            } else {
+              return const Center(child: Text('No messages yet.'));
+            }
+          },
         ),
       ),
     );
   }
 
+  /// Method to build the AppBar with a Back Button and custom styling.
+  PreferredSize buildAppBar(BuildContext context) {
+    return PreferredSize(
+      preferredSize: const Size.fromHeight(150),
+      child: Stack(
+        children: [
+          // Background image
+          Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/appbar1.png'),
+                fit: BoxFit.cover,
+              ),
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(20),
+                bottomRight: Radius.circular(20),
+              ),
+            ),
+          ),
+          // Title overlay
+          const Positioned(
+            left: 70,
+            bottom: 30,
+            child: Text(
+              'Live Chat',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          // Back Button
+          Positioned(
+            left: 10,
+            top: 10,
+            child: BackButton(
+              color: Colors.white, // Back button color
+              onPressed: () {
+                Navigator.pop(context); // Navigate back to the previous screen
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Method to build the Chat UI with messages.
   Widget buildChat(BuildContext context, List<types.Message> messages) {
     return Chat(
       messages: messages,
@@ -82,8 +98,7 @@ class ChatScreen extends StatelessWidget {
           color: Colors.black,
           fontSize: 16,
         ),
-        inputTextColor: Colors.black,
-        inputBackgroundColor: Color(0xfff5f5f7),
+        inputTextColor: Color.fromARGB(255, 138, 135, 135),
       ),
     );
   }
