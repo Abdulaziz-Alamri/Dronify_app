@@ -1,4 +1,4 @@
-import 'package:dronify/Bottom_Nav/bottom_nav.dart';
+import 'package:dronify/src/view/splash/FutureBasedSplash.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -14,7 +14,7 @@ class MainApp extends StatelessWidget {
     return Sizer(
       builder: (context, orientation, deviceType) {
         return MaterialApp(
-            debugShowCheckedModeBanner: false, home: BottomNav());
+            debugShowCheckedModeBanner: false, home: SplashScreen());
       },
     );
   }
