@@ -18,8 +18,8 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Sizer(
       builder: (context, orientation, deviceType) {
-        return  MaterialApp(
-            debugShowCheckedModeBanner: false, home: EmployeeHome());
+        return MaterialApp(
+            debugShowCheckedModeBanner: false, home: BottomNav());
       },
     );
   }
