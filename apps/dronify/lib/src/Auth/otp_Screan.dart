@@ -1,5 +1,5 @@
-import 'package:dronify/Auth/verify_cubit/verify_cubit.dart';
-import 'package:dronify/Bottom_Nav/bottom_nav.dart';
+import 'package:dronify/src/Auth/verify_cubit/verify_cubit.dart';
+import 'package:dronify/src/Bottom_Nav/bottom_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinput/pinput.dart';

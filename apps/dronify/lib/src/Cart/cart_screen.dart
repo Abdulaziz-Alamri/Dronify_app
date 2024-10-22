@@ -1,4 +1,4 @@
-import 'package:dronify/Cart/cart_item_card.dart';
+import 'package:dronify/src/Cart/cart_item_card.dart';
 import 'package:flutter/material.dart';
 
 class CartScreen extends StatelessWidget {

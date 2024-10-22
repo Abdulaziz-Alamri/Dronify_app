@@ -1,11 +1,13 @@
+import 'package:dronify/src/Auth/signup.dart';
 import 'package:flutter/material.dart';
 
-class Signup extends StatelessWidget {
-  const Signup({super.key});
+class SignIn extends StatelessWidget {
+  const SignIn({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: Stack(
         children: [
           Container(
@@ -25,7 +27,7 @@ class Signup extends StatelessWidget {
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              height: MediaQuery.of(context).size.height * 0.78,
+              height: MediaQuery.of(context).size.height * 0.7,
               decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
@@ -41,49 +43,10 @@ class Signup extends StatelessWidget {
                   children: [
                     Center(child: Image.asset('assets/5 7.png')),
                     const Text(
-                      'Sign Up',
+                      'Sign in',
                       style: TextStyle(
                         fontSize: 32,
                         fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    const Text(
-                      'User Name',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    TextField(
-                      decoration: InputDecoration(
-                        fillColor: const Color(0XFFF5F5F5),
-                        filled: true,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide.none,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    const Text(
-                      'Phone Number',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    TextField(
-                      keyboardType: TextInputType.phone,
-                      decoration: InputDecoration(
-                        fillColor: const Color(0XFFF5F5F5),
-                        filled: true,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide.none,
-                        ),
                       ),
                     ),
                     const SizedBox(height: 20),
@@ -96,7 +59,6 @@ class Signup extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                     TextField(
-                      keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
                         fillColor: const Color(0XFFF5F5F5),
                         filled: true,
@@ -116,7 +78,6 @@ class Signup extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                     TextField(
-                      obscureText: true,
                       decoration: InputDecoration(
                         fillColor: const Color(0XFFF5F5F5),
                         filled: true,
@@ -125,8 +86,23 @@ class Signup extends StatelessWidget {
                           borderSide: BorderSide.none,
                         ),
                       ),
+                      obscureText: true,
                     ),
-                    const SizedBox(height: 40),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton(
+                        onPressed: () {},
+                        child: const Text(
+                          'Forgot Password?',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.blue,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 26),
                     Center(
                       child: Container(
                         width: double.infinity,
@@ -154,7 +130,7 @@ class Signup extends StatelessWidget {
                             ),
                           ),
                           child: const Text(
-                            'Sign Up',
+                            'Sign In',
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -162,6 +138,39 @@ class Signup extends StatelessWidget {
                             ),
                           ),
                         ),
+                      ),
+                    ),
+                    Center(
+                      child: Column(
+                        children: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const Signup()),
+                              );
+                            },
+                            child: RichText(
+                              text: const TextSpan(
+                                text: "Don't have an account? ",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text: 'Sign up',
+                                    style: TextStyle(
+                                      color: Colors.blue,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],

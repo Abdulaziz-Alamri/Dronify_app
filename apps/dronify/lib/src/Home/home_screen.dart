@@ -1,6 +1,6 @@
-import 'package:dronify/Home/service_card.dart';
-import 'package:dronify/Home/special_offer_card.dart';
-import 'package:dronify/Home/welcome_card.dart';
+import 'package:dronify/src/Home/service_card.dart';
+import 'package:dronify/src/Home/special_offer_card.dart';
+import 'package:dronify/src/Home/welcome_card.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 

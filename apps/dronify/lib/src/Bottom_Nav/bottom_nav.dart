@@ -1,6 +1,6 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
-import 'package:dronify/Bottom_Nav/bottom_nav_bloc/bottom_nav_bloc.dart';
-import 'package:dronify/live_chat/live_chat.dart';
+import 'package:dronify/src/Bottom_Nav/bottom_nav_bloc/bottom_nav_bloc.dart';
+import 'package:dronify/src/live_chat/live_chat.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

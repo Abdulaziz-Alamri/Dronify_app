@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:dronify/Cart/cart_screen.dart';
-import 'package:dronify/Home/home_screen.dart';
-import 'package:dronify/Order/order_screen.dart';
-import 'package:dronify/profile/profile_screen.dart';
+import 'package:dronify/src/Cart/cart_screen.dart';
+import 'package:dronify/src/Home/home_screen.dart';
+import 'package:dronify/src/Order/order_screen.dart';
+import 'package:dronify/src/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 
 part 'bottom_nav_event.dart';
