@@ -41,20 +41,85 @@ class ChatScreen extends StatelessWidget {
               (BuildContext context, int index) {
                 return Column(
                   children: [
+                    SizedBox(
+                      height: 15,
+                    ),
                     ...List.generate(5, (index) {
-                      return Container(
-                        height: 10,
-                        width: 300,
-                        child: ,
+                      return Column(
+                        children: [
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            height: 75,
+                            width: 345,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(16),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.25),
+                                  blurRadius: 3,
+                                  offset: const Offset(0, 1),
+                                ),
+                              ],
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Chat Number/ID',
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xff072D6F)),
+                                ),
+                                Container(
+                                  width: 80,
+                                  height: 30,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12),
+                                    gradient: const LinearGradient(
+                                      colors: [
+                                        Color(0xFF072D6F),
+                                        Color(0xFF0A3F9A),
+                                        Color(0xFF0A43A4),
+                                        Color(0xFF0D56D5),
+                                      ],
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                    ),
+                                  ),
+                                  child: ElevatedButton(
+                                    onPressed: () {},
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.transparent,
+                                      shadowColor: Colors.transparent,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                    ),
+                                    child: const Text(
+                                      'Chat',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
                       );
                     }),
-                    SizedBox(
-                      height: 10,
-                    )
                   ],
                 );
               },
-              childCount: 5,
+              childCount: 1,
             ),
           ),
         ],

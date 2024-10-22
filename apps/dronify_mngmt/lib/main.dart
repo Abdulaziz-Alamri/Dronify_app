@@ -20,7 +20,7 @@ class MainApp extends StatelessWidget {
     return Sizer(
       builder: (context, orientation, deviceType) {
         return const MaterialApp(
-            debugShowCheckedModeBanner: false, home: ChatScreen());
+            debugShowCheckedModeBanner: false, home: BottomNav());
       },
     );
   }
