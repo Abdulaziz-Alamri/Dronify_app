@@ -3,8 +3,8 @@ import 'package:dronify_mngmt/Employee_Order/custom_custmer_wedget.dart';
 import 'package:dronify_mngmt/Employee_Order/custom_image_cards.dart';
 import 'package:dronify_mngmt/Employee_Order/custom_order_card.dart';
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:sizer/sizer.dart';
 import 'dart:io';
 
 class OrderScreen extends StatefulWidget {
