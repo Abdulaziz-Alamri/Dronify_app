@@ -4,17 +4,14 @@ packages:
   - apps/**
   - packages/**
 
-scripts:
-  # Commands for generating the splash screen for a specific app
-  app:splash:
-    description: "Generate splash screen for the app"
-    run: flutter pub run flutter_native_splash:create
+# scripts:
+ 
 
-  # Example commands for running apps
-  app:android:
-    description: "Run the Flutter app on Android"
-    run: flutter run -d android
+#   # Example commands for running apps
+#   app:android:
+#     description: "Run the Flutter app on Android"
+#     run: flutter run -d android
 
-  app:ios:
-    description: "Run the Flutter app on iOS"
-    run: flutter run -d ios
+#   app:ios:
+#     description: "Run the Flutter app on iOS"
+#     run: flutter run -d ios
