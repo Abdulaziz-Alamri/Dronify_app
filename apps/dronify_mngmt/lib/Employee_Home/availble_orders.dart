@@ -1,4 +1,4 @@
-import 'package:dronify_mngmt/Order/order_screen.dart';
+import 'package:dronify_mngmt/Employee_Order/order_screen.dart';
 import 'package:flutter/material.dart';
 
 class AvailbleOrders extends StatelessWidget {

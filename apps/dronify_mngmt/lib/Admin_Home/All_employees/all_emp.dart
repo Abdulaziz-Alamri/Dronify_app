@@ -83,5 +83,3 @@ class AllEmp extends StatelessWidget {
     );
   }
 }
-
-// Custom widget for employee card
