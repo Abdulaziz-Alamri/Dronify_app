@@ -16,10 +16,33 @@ class SplashContent extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Image.asset(
-          imagePath,
-          height: 300,
-          width: 300,
+        Container(
+          child: Stack(
+            clipBehavior: Clip.none,
+            children: [
+              Center(
+                child: Image.asset(
+                  'assets/splash_shape.png',
+                ),
+              ),
+              if (imagePath != 'assets/splash_drone2.png')
+                Positioned(
+                  bottom: 120,
+                  right: 40,
+                  child: Center(
+                    child: Image.asset(
+                      imagePath,
+                    ),
+                  ),
+                )
+              else
+                Center(
+                  child: Image.asset(
+                    imagePath,
+                  ),
+                ),
+            ],
+          ),
         ),
         SizedBox(height: 20),
         Text(

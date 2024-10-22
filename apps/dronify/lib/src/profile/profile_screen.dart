@@ -1,5 +1,5 @@
-import 'package:dronify/profile/Profile_Item.dart';
-import 'package:dronify/wallet/wallet.dart';
+import 'package:dronify/src/profile/Profile_Item.dart';
+import 'package:dronify/src/wallet/wallet.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatelessWidget {

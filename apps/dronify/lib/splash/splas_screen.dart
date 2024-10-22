@@ -1,5 +1,5 @@
+import 'package:dronify/src/Bottom_Nav/bottom_nav.dart';
 import 'package:flutter/material.dart';
-import 'package:dronify/Bottom_Nav/bottom_nav.dart';
 
 class SplashScreen extends StatefulWidget {
   @override

@@ -1,4 +1,4 @@
-import 'package:dronify/Subscription/custom_sub_card.dart';
+import 'package:dronify/src/Subscription/custom_sub_card.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sizer/sizer.dart';

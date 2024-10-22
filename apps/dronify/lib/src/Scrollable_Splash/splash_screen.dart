@@ -1,4 +1,4 @@
-import 'package:dronify/Scrollable_Splash/splash_content.dart';
+import 'package:dronify/src/Scrollable_Splash/splash_content.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -45,18 +45,18 @@ class _SplashScreenState extends State<SplashScreen> {
             },
             children: [
               SplashContent(
-                imagePath: 'assets/drone.png',
+                imagePath: 'assets/splash_drone.png',
                 title: 'Clean your Building',
                 description:
                     'Lorem ipsum is a placeholder text commonly used to demonstrate the visual.',
               ),
               SplashContent(
-                imagePath: 'assets/drone.png',
+                imagePath: 'assets/splash_drone2.png',
                 title: 'Nano Protection',
                 description: 'Keep your building protected for the long term.',
               ),
               SplashContent(
-                imagePath: 'assets/drone.png',
+                imagePath: 'assets/splash_drone.png',
                 title: 'Drone Services',
                 description:
                     'Automated and safe solutions for facade cleaning.',
