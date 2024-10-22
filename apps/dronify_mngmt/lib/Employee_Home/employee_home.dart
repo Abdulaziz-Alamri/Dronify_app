@@ -1,3 +1,4 @@
+import 'package:dronify_mngmt/Employee_Home/availble_orders.dart';
 import 'package:dronify_mngmt/Employee_Home/order_card.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
@@ -15,7 +16,7 @@ class _EmployeeHomeState extends State<EmployeeHome>
 
   @override
   void initState() {
-    tabController = TabController(length: 2, vsync: this);
+    tabController = TabController(length: 3, vsync: this);
     super.initState();
   }
 
@@ -41,6 +42,7 @@ class _EmployeeHomeState extends State<EmployeeHome>
                   ),
                 ),
               ),
+              centerTitle: true,
               title: Text(
                 'Welcome Back Emp 👋',
                 style: TextStyle(
@@ -165,6 +167,28 @@ class _EmployeeHomeState extends State<EmployeeHome>
                           ),
                         ),
                       ),
+                      Tab(
+                        child: Container(
+                          height: 7.h,
+                          width: 40.w,
+                          decoration: BoxDecoration(
+                            color: Colors.transparent,
+                            border: Border.all(
+                              color: Color(0xff072D6F),
+                              width: 2,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          alignment: Alignment.center,
+                          child: Text(
+                            'Available',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                   SizedBox(
@@ -198,6 +222,21 @@ class _EmployeeHomeState extends State<EmployeeHome>
                                 return Column(
                                   children: [
                                     OrderCard(),
+                                    SizedBox(height: 15),
+                                  ],
+                                );
+                              })
+                            ],
+                          ),
+                        ),
+                        SingleChildScrollView(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              ...List.generate(3, (index) {
+                                return Column(
+                                  children: [
+                                    AvailbleOrders(),
                                     SizedBox(height: 15),
                                   ],
                                 );

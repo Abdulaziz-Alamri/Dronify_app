@@ -1,11 +1,32 @@
+import 'package:dronify_mngmt/Order/confirm_screen.dart';
 import 'package:dronify_mngmt/Order/custom_custmer_wedget.dart';
 import 'package:dronify_mngmt/Order/custom_image_cards.dart';
 import 'package:dronify_mngmt/Order/custom_order_card.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:sizer/sizer.dart';
+import 'dart:io';
 
-class OrderScreen extends StatelessWidget {
+class OrderScreen extends StatefulWidget {
   const OrderScreen({super.key});
+
+  @override
+  State<OrderScreen> createState() => _OrderScreenState();
+}
+
+class _OrderScreenState extends State<OrderScreen> {
+  XFile? _image;
+  final ImagePicker _picker = ImagePicker();
+  String? _selectedDate;
+  int windowCount = 1;
+  bool showInfo = false;
+
+  Future<void> _pickImage() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      _image = pickedFile;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +57,7 @@ class OrderScreen extends StatelessWidget {
             ),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-              height: 400,
+              height: 700,
               width: 345,
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -131,27 +152,43 @@ class OrderScreen extends StatelessWidget {
                         '19:00',
                         style: TextStyle(
                             fontSize: 12, fontWeight: FontWeight.bold),
-                      )
+                      ),
                     ],
                   ),
                   const SizedBox(
                     height: 10,
                   ),
-                  const Row(
-                    children: [
-                      Icon(
-                        Icons.account_balance_wallet,
-                        color: Color(0xff072D6F),
+                  Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 16),
+                      height: 100,
+                      width: 345,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(16),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.05),
+                            blurRadius: 3,
+                            offset: const Offset(0, 1),
+                          ),
+                        ],
                       ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        'Cash - payment method',
-                        style: TextStyle(
-                            fontSize: 12, fontWeight: FontWeight.bold),
-                      )
-                    ],
+                      child: const CustomImageCards()),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Container(
+                    height: 210,
+                    width: 345,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Image.asset(
+                      'assets/map.png',
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ],
               ),
@@ -159,41 +196,86 @@ class OrderScreen extends StatelessWidget {
             const SizedBox(
               height: 15,
             ),
-            Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                height: 100,
-                width: 345,
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  '* Description :',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Container(
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(12),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
-                      blurRadius: 3,
-                      offset: const Offset(0, 1),
+                      color: Colors.black.withOpacity(0.05), // Light shadow
+                      blurRadius: 4,
+                      offset: const Offset(0, 2),
                     ),
                   ],
                 ),
-                child: const CustomImageCards()),
-            const SizedBox(
-              height: 15,
-            ),
-            Container(
-              height: 210,
-              width: 345,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Image.asset(
-                'assets/map.png',
-                fit: BoxFit.cover,
+                child: TextField(
+                  maxLines: 4,
+                  decoration: InputDecoration(
+                    hintText: 'Enter description here...',
+                    hintStyle: TextStyle(
+                      color: Colors.grey[500],
+                      fontSize: 14,
+                    ),
+                    border: InputBorder.none,
+                    contentPadding: const EdgeInsets.all(12),
+                  ),
+                ),
               ),
             ),
-            const SizedBox(
-              height: 15,
+            const SizedBox(height: 15),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Upload images',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
             ),
+            SizedBox(height: 2.h),
+            GestureDetector(
+              onTap: _pickImage,
+              child: Container(
+                width: 60,
+                height: 60,
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Icon(
+                  Icons.add,
+                  size: 30,
+                  color: Colors.grey[700],
+                ),
+              ),
+            ),
+            SizedBox(height: 2.h),
+            _image != null
+                ? Image.file(
+                    File(_image!.path),
+                    height: 100,
+                  )
+                : const Text('No image selected'),
+            const SizedBox(height: 15),
             Center(
               child: Container(
                 width: 335,
@@ -212,7 +294,13 @@ class OrderScreen extends StatelessWidget {
                   ),
                 ),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ConfirmScreen()),
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.transparent,
                     shadowColor: Colors.transparent,
@@ -221,7 +309,7 @@ class OrderScreen extends StatelessWidget {
                     ),
                   ),
                   child: const Text(
-                    'Payment',
+                    'Add description',
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,

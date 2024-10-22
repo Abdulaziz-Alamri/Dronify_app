@@ -4,101 +4,91 @@ class EditProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white, // Set the background color to white
-      appBar: 
-      gitbuildAppBar(context), // Pass context here
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 16),
-            const Text(
-              'User Name',
-              style: TextStyle(fontWeight: FontWeight.bold),
+      backgroundColor: Colors.white, // Set background color to white
+      body: CustomScrollView(
+        slivers: [
+          _buildSliverAppBar(context), // Add SliverAppBar here
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 16),
+                  const Text(
+                    'User Name',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 8),
+                  buildTextField(hint: 'Your name here'),
+                  const SizedBox(height: 16),
+                  const Text(
+                    'Phone Number',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 8),
+                  buildTextField(
+                    hint: '0966 5xx xxx xxx',
+                    readOnly: true,
+                  ),
+                  const SizedBox(height: 16),
+                  const Text(
+                    'Location',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 8),
+                  buildTextField(hint: 'Your location here'),
+                  const SizedBox(height: 16),
+                  const Text(
+                    'Date of Birth',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 8),
+                  buildTextField(hint: 'dd/mm/yy', readOnly: true),
+                ],
+              ),
             ),
-            const SizedBox(height: 8),
-            buildTextField(
-              hint: 'your name here',
-            ),
-            const SizedBox(height: 16),
-            const Text(
-              'Phone Number',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            buildTextField(
-              hint: '0966 5xx xxx xxx',
-              readOnly: true,
-            ),
-            const SizedBox(height: 16),
-            const Text(
-              'Location',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            buildTextField(
-              hint: 'your location here',
-            ),
-            const SizedBox(height: 16),
-            const Text(
-              'Date of Birth',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            buildTextField(hint: 'dd/mm/yy', readOnly: true),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 
-  /// Method to build the AppBar with a back button and title
-  PreferredSizeWidget 
-  gitbuildAppBar(BuildContext context) {
-    return PreferredSize(
-      preferredSize: const Size.fromHeight(150),
-      child: Stack(
-        children: [
-          // Background image
-          Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(
-                    'assets/appbar1.png'), // Ensure the image is in assets
-                fit: BoxFit.cover,
-              ),
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(20),
-                bottomRight: Radius.circular(20),
-              ),
+  /// SliverAppBar with background image and back button
+  Widget _buildSliverAppBar(BuildContext context) {
+    return SliverAppBar(
+      expandedHeight: 150.0,
+      floating: false,
+      pinned: true,
+      flexibleSpace: FlexibleSpaceBar(
+        background: Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image:
+                  AssetImage('assets/appbar1.png'), // Ensure the image exists
+              fit: BoxFit.cover,
+            ),
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(20),
+              bottomRight: Radius.circular(20),
             ),
           ),
-          // Back Button and Title
-          Positioned(
-            left: 10,
-            top: 40,
-            child: Row(
-              children: [
-                BackButton(
-                  color: Colors.white,
-                  onPressed: () {
-                    Navigator.pop(context); // Navigate back
-                  },
-                ),
-                const SizedBox(width: 8),
-                const Text(
-                  'Profile',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
+        ),
+        titlePadding: const EdgeInsets.only(left: 56, bottom: 16),
+        title: const Text(
+          'Profile',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
           ),
-        ],
+        ),
+      ),
+      leading: BackButton(
+        color: Colors.white,
+        onPressed: () {
+          Navigator.pop(context); // Navigate back
+        },
       ),
     );
   }
@@ -122,16 +112,14 @@ class EditProfile extends StatelessWidget {
         decoration: InputDecoration(
           hintText: hint,
           hintStyle: const TextStyle(
-            // Custom hint text color and style
-            color: Colors.grey, // Set the desired hint text color
-            fontSize: 16, // Set the font size of the hint text
+            color: Colors.grey, // Custom hint text color
+            fontSize: 16,
           ),
           filled: true,
-          fillColor:
-              const Color(0xffF5F5F7), // Background color for the TextField
+          fillColor: const Color(0xffF5F5F7), // Background color for TextField
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
-            borderSide: BorderSide.none, // No visible border
+            borderSide: BorderSide.none,
           ),
         ),
       ),

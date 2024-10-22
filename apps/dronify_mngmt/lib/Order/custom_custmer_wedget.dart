@@ -20,7 +20,7 @@ class CustomCustmerWedget extends StatelessWidget {
           width: 350,
           child: Card(
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(16),
             ),
             elevation: 5,
             shadowColor: Colors.black,

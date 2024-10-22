@@ -13,44 +13,57 @@ class ChatScreen extends StatelessWidget {
     return BlocProvider(
       create: (_) => ChatBloc()..add(LoadMessagesEvent()),
       child: Scaffold(
-        appBar: buildAppBar(),
-        body: BlocBuilder<ChatBloc, custom_state.ChatState>(
-          builder: (context, state) {
-            if (state is custom_state.ChatLoading) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (state is custom_state.ChatLoaded) {
-              return buildChat(context, state.messages);
-            } else if (state is custom_state.ChatError) {
-              return Center(child: Text('Error: ${state.error}'));
-            } else {
-              return const Center(child: Text('No messages yet.'));
-            }
-          },
+        body: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              expandedHeight: 80.0,
+              flexibleSpace: FlexibleSpaceBar(
+                background: Container(
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/appbar1.png'),
+                      fit: BoxFit.cover,
+                    ),
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(20),
+                      bottomRight: Radius.circular(20),
+                    ),
+                  ),
+                ),
+                title: const Text(
+                  'Chat',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                centerTitle: true,
+              ),
+              backgroundColor: Colors.transparent,
+              pinned: true,
+            ),
+            SliverFillRemaining(
+              child: BlocBuilder<ChatBloc, custom_state.ChatState>(
+                builder: (context, state) {
+                  if (state is custom_state.ChatLoading) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (state is custom_state.ChatLoaded) {
+                    return buildChat(context, state.messages);
+                  } else if (state is custom_state.ChatError) {
+                    return Center(child: Text('Error: ${state.error}'));
+                  } else {
+                    return const Center(child: Text('No messages yet.'));
+                  }
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 
-  /// Method to build the AppBar with custom styling.
-  PreferredSize buildAppBar() {
-    return PreferredSize(
-      preferredSize: const Size.fromHeight(150),
-      child: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/appbar1.png'),
-            fit: BoxFit.cover,
-          ),
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(20),
-            bottomRight: Radius.circular(20),
-          ),
-        ),
-      ),
-    );
-  }
-
-  /// Method to build the Chat UI with messages.
   Widget buildChat(BuildContext context, List<types.Message> messages) {
     return Chat(
       messages: messages,
@@ -70,6 +83,7 @@ class ChatScreen extends StatelessWidget {
           fontSize: 16,
         ),
         inputTextColor: Colors.black,
+        inputBackgroundColor: Color(0xfff5f5f7),
       ),
     );
   }
