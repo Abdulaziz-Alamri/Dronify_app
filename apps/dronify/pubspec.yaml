@@ -21,6 +21,8 @@ dependencies:
   get_it: ^8.0.1
   flutter_dotenv: ^5.2.1
   supabase_flutter: ^2.8.0
+  moyasar: ^2.0.13
+  get_storage: ^2.1.1
 
 
 dev_dependencies:
