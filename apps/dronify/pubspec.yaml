@@ -19,6 +19,9 @@ dependencies:
   flutter_chat_ui: ^1.6.15
   flutter_chat_types: ^3.6.2
   get_it: ^8.0.1
+  flutter_map: ^7.0.2
+  geolocator: ^13.0.1
+  latlong2: ^0.9.1
 
 
 dev_dependencies:
