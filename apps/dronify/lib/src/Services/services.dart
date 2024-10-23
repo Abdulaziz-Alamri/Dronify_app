@@ -27,21 +27,19 @@ class Services extends StatefulWidget {
 }
 
 class _ServicesState extends State<Services> {
-  List<XFile>? _images = []; // List to store up to 4 images
+  List<XFile>? _images = [];
   final ImagePicker _picker = ImagePicker();
   String? _selectedDate;
   int windowCount = 1;
   bool showInfo = false;
   LatLng? currentLocation;
-  LatLng? selectedLocation; // متغير لحفظ الإحداثيات المختارة
-  bool isFromRiyadh = false; // Checkbox variable
-  final _formKey = GlobalKey<FormState>(); // Form key
-  TextEditingController squareAreaController =
-      TextEditingController(); // Text controller
+  LatLng? selectedLocation;
+  bool isFromRiyadh = false;
+  final _formKey = GlobalKey<FormState>();
+  TextEditingController squareAreaController = TextEditingController();
 
   Future<void> _pickImage() async {
     if (_images!.length < 4) {
-      // Ensure only up to 4 images can be added
       final pickedFile = await _picker.pickMultiImage(limit: 4);
       setState(() {
         if (pickedFile != null) {
@@ -270,7 +268,7 @@ class _ServicesState extends State<Services> {
                             onTap: (tapPosition, point) {
                               setState(() {
                                 selectedLocation =
-                                    point; // حفظ الإحداثيات عند الضغط
+                                    point; 
                               });
 
                               ScaffoldMessenger.of(context).showSnackBar(
@@ -284,7 +282,7 @@ class _ServicesState extends State<Services> {
                           children: [
                             TileLayer(
                               urlTemplate:
-                                  "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                                  "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
                               subdomains: const ['a', 'b', 'c'],
                             ),
                             if (selectedLocation != null)
