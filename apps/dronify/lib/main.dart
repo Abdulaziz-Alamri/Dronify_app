@@ -1,4 +1,3 @@
-import 'package:dronify/splash/splash_screen.dart';
 import 'package:dronify/src/Order/order_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';

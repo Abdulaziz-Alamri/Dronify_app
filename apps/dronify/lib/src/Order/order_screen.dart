@@ -5,6 +5,7 @@ import 'package:dronify/src/Order/custom_order_card.dart';
 import 'package:dronify/utils/payment.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:moyasar/moyasar.dart';
 import 'package:sizer/sizer.dart';
 
 class OrderScreen extends StatelessWidget {
@@ -240,7 +241,33 @@ class OrderScreen extends StatelessWidget {
                 ),
                 child: ElevatedButton(
                   onPressed: () {
-                    // pay(totalPrice: 1000, orderId: 232413);
+                    showModalBottomSheet(
+                      context: context,
+                      backgroundColor: Colors.white,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(25.0),
+                        ),
+                      ),
+                      builder: (BuildContext context) {
+                        return Padding(
+                          padding: const EdgeInsets.all(12),
+                          child: CreditCard(
+                            config: pay(totalPrice: 1000, orderId: 2321213),
+                            onPaymentResult: (result) async {
+                              onPaymentResult(result, context);
+                              Navigator.pop(context, 'Payment successful');
+                            },
+                          ),
+                        );
+                      },
+                    ).then((value) async {
+                      if (value == 'Payment successful') {
+                        await Future.delayed(const Duration(seconds: 5));
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text('The payment is done successfully')));
+                      }
+                    });
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.transparent,
