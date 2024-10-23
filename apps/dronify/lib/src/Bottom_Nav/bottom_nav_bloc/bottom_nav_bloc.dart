@@ -11,12 +11,7 @@ part 'bottom_nav_event.dart';
 part 'bottom_nav_state.dart';
 
 class BottomNavBloc extends Bloc<BottomNavEvent, BottomNavState> {
-  List<Widget> views = [
-    HomeScreen(),
-    OrderScreen(),
-    CartScreen(),
-    ProfileScreen()
-  ];
+  List<Widget> views = [HomeScreen(), CartScreen(), ProfileScreen()];
 
   int currentIndex = 0;
 

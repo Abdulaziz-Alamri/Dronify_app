@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:dronify/models/order_model.dart';
 import 'package:dronify/src/Order/order_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
@@ -95,6 +96,15 @@ class _ServicesState extends State<Services> {
     setState(() {
       currentLocation = LatLng(position.latitude, position.longitude);
     });
+  }
+
+  String convertToDMS(double coordinate) {
+    int degrees = coordinate.floor();
+    double minutesWithDecimal = (coordinate - degrees) * 60;
+    int minutes = minutesWithDecimal.floor();
+    double seconds = (minutesWithDecimal - minutes) * 60;
+
+    return '$degrees° $minutes\' ${seconds.toStringAsFixed(2)}"';
   }
 
   @override
@@ -267,21 +277,21 @@ class _ServicesState extends State<Services> {
                             maxZoom: 15.0,
                             onTap: (tapPosition, point) {
                               setState(() {
-                                selectedLocation =
-                                    point; 
+                                selectedLocation = point;
                               });
 
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(
-                                      'Selected Location: Latitude: ${point.latitude}, Longitude: ${point.longitude}'),
+                                      'Selected Location: Latitude: ${convertToDMS(point.latitude)}, Longitude: ${convertToDMS(point.longitude)}'),
                                 ),
                               );
                             },
                           ),
                           children: [
                             TileLayer(
-                            urlTemplate: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                              urlTemplate:
+                                  "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
                               subdomains: const ['a', 'b', 'c'],
                             ),
                             if (selectedLocation != null)
@@ -503,7 +513,34 @@ class _ServicesState extends State<Services> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const OrderScreen()),
+                              builder: (context) => OrderScreen(
+                                order: OrderModel(
+                                  orderId: null,
+                                  customerId: "some_customer_id",
+                                  serviceId: 1,
+                                  images: _images != null
+                                      ? _images!.map((e) => e.path).toList()
+                                      : [],
+                                  address: [
+                                    convertToDMS(
+                                        selectedLocation?.latitude ?? 0.0),
+                                    convertToDMS(
+                                        selectedLocation?.longitude ?? 0.0)
+                                  ],
+                                  squareMeters: double.tryParse(
+                                          squareAreaController.text) ??
+                                      0.0,
+                                  reservationDate:
+                                      DateTime.parse(_selectedDate!),
+                                  reservationTime: DateTime.now(),
+                                  totalPrice:
+                                      double.parse(squareAreaController.text) *
+                                          3,
+                                  orderDate: DateTime.now(),
+                                  status: "pending",
+                                ),
+                              ),
+                            ),
                           );
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
