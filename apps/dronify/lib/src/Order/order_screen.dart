@@ -1,13 +1,44 @@
+import 'package:dronify/models/order_model.dart';
+import 'package:dronify/models/service_model.dart';
 import 'package:dronify/src/Order/custom_image_cards.dart';
 import 'package:dronify/src/Order/custom_order_card.dart';
+import 'package:dronify/utils/payment.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:moyasar/moyasar.dart';
 import 'package:sizer/sizer.dart';
 
 class OrderScreen extends StatelessWidget {
+  // final OrderModel order;
+  // final ServiceModel service;
   const OrderScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final OrderModel order = OrderModel(
+        orderId: 1,
+        customerId: '1',
+        serviceId: 1,
+        images: [
+          'assets/drone.png',
+          'assets/drone.png',
+          'assets/drone.png',
+          'assets/drone.png'
+        ],
+        address: ['11111111', '222222222'],
+        squareMeters: 123.25,
+        reservationDate: DateTime.now(),
+        reservationTime: DateTime.now(),
+        totalPrice: 1500,
+        orderDate: DateTime.now(),
+        status: 'pending');
+    final ServiceModel service = ServiceModel(
+        serviceId: 1,
+        name: 'Building Cleaning',
+        description:
+            'A competitive type of auction in which participants compete for a contract, offering each time a price lower than that of competitors',
+        mainImage: 'assets/drone.png',
+        pricePerSqm: 3);
     return Scaffold(
       backgroundColor: const Color(0xffF5F5F7),
       appBar: AppBar(
@@ -25,6 +56,9 @@ class OrderScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            const SizedBox(
+              height: 20,
+            ),
             Center(
               child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -70,26 +104,26 @@ class OrderScreen extends StatelessWidget {
                   CustomOrderCard(
                       imageUrl: 'assets/drone.png',
                       title:
-                          'Date: ${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}',
+                          'Date: ${DateFormat.yMMMd().format(order.reservationDate)}',
                       subTitle:
-                          'Time: ${DateTime.now().hour}:${DateTime.now().minute}'),
+                          'Time: ${order.reservationTime.hour}:${order.reservationTime.minute}'),
                   const Divider(
                     color: Color(0xffEDEDED),
-                    height: 20,
+                    height: 30,
                   ),
-                  const Text(
-                    'Price: 350 SAR',
+                  Text(
+                    'Price: ${order.totalPrice} SAR',
                     style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
                   ),
                   const Divider(
                     color: Color(0xffEDEDED),
-                    height: 20,
+                    height: 30,
                   ),
-                  const Column(
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Building Cleaning',
+                        service.name,
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold),
                       ),
@@ -97,14 +131,14 @@ class OrderScreen extends StatelessWidget {
                         height: 5,
                       ),
                       Text(
-                        'A competitive type of auction in which participants compete for a contract, offering each time a price lower than that of competitors',
+                        service.description,
                         style: TextStyle(color: Color(0xffA4A4AA)),
                       ),
                     ],
                   ),
                   const Divider(
                     color: Color(0xffEDEDED),
-                    height: 20,
+                    height: 30,
                   ),
                   Row(
                     children: [
@@ -112,8 +146,8 @@ class OrderScreen extends StatelessWidget {
                       const SizedBox(
                         width: 10,
                       ),
-                      const Text(
-                        'Cleaning',
+                      Text(
+                        service.name,
                         style: TextStyle(
                             fontSize: 12, fontWeight: FontWeight.bold),
                       )
@@ -122,7 +156,7 @@ class OrderScreen extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
-                  const Row(
+                  Row(
                     children: [
                       Icon(
                         Icons.track_changes_outlined,
@@ -132,7 +166,7 @@ class OrderScreen extends StatelessWidget {
                         width: 10,
                       ),
                       Text(
-                        'Westpoint, JBR, room 4',
+                        '${order.address}',
                         style: TextStyle(
                             fontSize: 12, fontWeight: FontWeight.bold),
                       )
@@ -141,7 +175,7 @@ class OrderScreen extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
-                  const Row(
+                  Row(
                     children: [
                       Icon(
                         Icons.access_time_filled_outlined,
@@ -151,7 +185,7 @@ class OrderScreen extends StatelessWidget {
                         width: 10,
                       ),
                       Text(
-                        '19:00',
+                        '${order.reservationTime.hour}:${order.reservationTime.minute}',
                         style: TextStyle(
                             fontSize: 12, fontWeight: FontWeight.bold),
                       )
@@ -159,22 +193,6 @@ class OrderScreen extends StatelessWidget {
                   ),
                   const SizedBox(
                     height: 10,
-                  ),
-                  const Row(
-                    children: [
-                      Icon(
-                        Icons.account_balance_wallet,
-                        color: Color(0xff072D6F),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        'Cash - payment method',
-                        style: TextStyle(
-                            fontSize: 12, fontWeight: FontWeight.bold),
-                      )
-                    ],
                   ),
                 ],
               ),
@@ -198,24 +216,11 @@ class OrderScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                child: const CustomImageCards()),
+                child: CustomImageCards(
+                  images: order.images,
+                )),
             const SizedBox(
-              height: 15,
-            ),
-            Container(
-              height: 210,
-              width: 345,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Image.asset(
-                'assets/map.png',
-                fit: BoxFit.cover,
-              ),
-            ),
-            const SizedBox(
-              height: 15,
+              height: 40,
             ),
             Center(
               child: Container(
@@ -235,7 +240,35 @@ class OrderScreen extends StatelessWidget {
                   ),
                 ),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    showModalBottomSheet(
+                      context: context,
+                      backgroundColor: Colors.white,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(25.0),
+                        ),
+                      ),
+                      builder: (BuildContext context) {
+                        return Padding(
+                          padding: const EdgeInsets.all(12),
+                          child: CreditCard(
+                            config: pay(totalPrice: 1000, orderId: 2321213),
+                            onPaymentResult: (result) async {
+                              onPaymentResult(result, context);
+                              Navigator.pop(context, 'Payment successful');
+                            },
+                          ),
+                        );
+                      },
+                    ).then((value) async {
+                      if (value == 'Payment successful') {
+                        await Future.delayed(const Duration(seconds: 5));
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text('The payment is done successfully')));
+                      }
+                    });
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.transparent,
                     shadowColor: Colors.transparent,

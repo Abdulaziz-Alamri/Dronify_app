@@ -1,7 +1,4 @@
-import 'package:dronify/src/Bottom_Nav/bottom_nav.dart';
-import 'package:dronify/src/Scrollable_Splash/splash_screen.dart';
-import 'package:dronify/src/live_chat/live_chat.dart';
-import 'package:dronify/test.dart';
+import 'package:dronify/src/Order/order_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -17,7 +14,7 @@ class MainApp extends StatelessWidget {
     return Sizer(
       builder: (context, orientation, deviceType) {
         return MaterialApp(
-            debugShowCheckedModeBanner: false, home: BottomNav());
+            debugShowCheckedModeBanner: false, home: OrderScreen());
       },
     );
   }
