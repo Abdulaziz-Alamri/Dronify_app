@@ -281,8 +281,7 @@ class _ServicesState extends State<Services> {
                           ),
                           children: [
                             TileLayer(
-                              urlTemplate:
-                                  "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                            urlTemplate: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
                               subdomains: const ['a', 'b', 'c'],
                             ),
                             if (selectedLocation != null)

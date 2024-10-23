@@ -104,9 +104,9 @@ class OrderScreen extends StatelessWidget {
                   CustomOrderCard(
                       imageUrl: 'assets/drone.png',
                       title:
-                          'Date: ${DateFormat.yMMMd().format(order.reservationDate)}',
+                          'Date: ${DateFormat.yMMMd().format(order.reservationDate!)}',
                       subTitle:
-                          'Time: ${order.reservationTime.hour}:${order.reservationTime.minute}'),
+                          'Time: ${order.reservationTime!.hour}:${order.reservationTime!.minute}'),
                   const Divider(
                     color: Color(0xffEDEDED),
                     height: 30,
@@ -185,7 +185,7 @@ class OrderScreen extends StatelessWidget {
                         width: 10,
                       ),
                       Text(
-                        '${order.reservationTime.hour}:${order.reservationTime.minute}',
+                        '${order.reservationTime!.hour}:${order.reservationTime!.minute}',
                         style: TextStyle(
                             fontSize: 12, fontWeight: FontWeight.bold),
                       )
@@ -217,7 +217,7 @@ class OrderScreen extends StatelessWidget {
                   ],
                 ),
                 child: CustomImageCards(
-                  images: order.images,
+                  images: order.images!,
                 )),
             const SizedBox(
               height: 40,

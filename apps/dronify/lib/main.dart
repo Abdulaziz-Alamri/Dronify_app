@@ -1,9 +1,11 @@
 import 'package:dronify/src/Bottom_Nav/bottom_nav.dart';
-import 'package:dronify/src/Order/order_screen.dart';
+import 'package:dronify/utils/setup.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await setup();
   runApp(const MainApp());
 }
 
