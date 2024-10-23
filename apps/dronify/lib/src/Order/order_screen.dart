@@ -9,29 +9,12 @@ import 'package:moyasar/moyasar.dart';
 import 'package:sizer/sizer.dart';
 
 class OrderScreen extends StatelessWidget {
-  // final OrderModel order;
+  final OrderModel order;
   // final ServiceModel service;
-  const OrderScreen({super.key});
+  const OrderScreen({super.key, required this.order});
 
   @override
   Widget build(BuildContext context) {
-    final OrderModel order = OrderModel(
-        orderId: 1,
-        customerId: '1',
-        serviceId: 1,
-        images: [
-          'assets/drone.png',
-          'assets/drone.png',
-          'assets/drone.png',
-          'assets/drone.png'
-        ],
-        address: ['11111111', '222222222'],
-        squareMeters: 123.25,
-        reservationDate: DateTime.now(),
-        reservationTime: DateTime.now(),
-        totalPrice: 1500,
-        orderDate: DateTime.now(),
-        status: 'pending');
     final ServiceModel service = ServiceModel(
         serviceId: 1,
         name: 'Building Cleaning',
@@ -85,7 +68,7 @@ class OrderScreen extends StatelessWidget {
             ),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-              height: 400,
+              height: 420,
               width: 345,
               decoration: BoxDecoration(
                 color: Colors.white,
