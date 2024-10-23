@@ -1,14 +1,14 @@
 import 'package:dronify/src/Scrollable_Splash/splash_content.dart';
 import 'package:flutter/material.dart';
 
-class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
+class ScrollableSplashScreen extends StatefulWidget {
+  const ScrollableSplashScreen({super.key});
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
+  State<ScrollableSplashScreen> createState() => _ScrollableSplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _ScrollableSplashScreenState extends State<ScrollableSplashScreen> {
   PageController pageController = PageController();
   int currentIndex = 0;
 
