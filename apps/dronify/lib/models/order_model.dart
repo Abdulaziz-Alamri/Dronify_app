@@ -1,16 +1,16 @@
 class OrderModel {
-  final int orderId;
-  final String customerId;
+  final int? orderId;
+  final String? customerId;
   final String? employeeId;
-  final int serviceId;
-  final List<String> images;
-  final List<String> address;
-  final double squareMeters;
-  final DateTime reservationDate;
-  final DateTime reservationTime;
-  final double totalPrice;
-  final DateTime orderDate;
-  String status;
+  final int? serviceId;
+  final List<String>? images;
+  final List<String>? address;
+  final double? squareMeters;
+  final DateTime? reservationDate;
+  final DateTime? reservationTime;
+  final double? totalPrice;
+  final DateTime? orderDate;
+  String? status;
   final double? orderRating;
 
   OrderModel({
@@ -56,10 +56,10 @@ class OrderModel {
       'images': images,
       'address': address,
       'square_meters': squareMeters,
-      'reservation_date': reservationDate.toIso8601String(),
-      'reservation_time': reservationTime.toIso8601String(),
+      'reservation_date': reservationDate!.toIso8601String(),
+      'reservation_time': reservationTime!.toIso8601String(),
       'total_price': totalPrice,
-      'order_date': orderDate.toIso8601String(),
+      'order_date': orderDate!.toIso8601String(),
       'status': status,
       'order_rating': orderRating,
     };
