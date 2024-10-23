@@ -8,10 +8,10 @@ final locator = GetIt.instance;
 setup() async {
   // await GetStorage.init();
   await dotenv.load(fileName: ".env");
-  await Supabase.initialize(
-    url: '${dotenv.env['supabase_url']}',
-    anonKey: '${dotenv.env['anon_key']}',
-  );
+  // await Supabase.initialize(
+  //   url: '${dotenv.env['supabase_url']}',
+  //   anonKey: '${dotenv.env['anon_key']}',
+  // );
 
   locator.registerSingleton<DataLayer>(DataLayer());
 
