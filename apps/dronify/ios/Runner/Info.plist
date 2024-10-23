@@ -4,6 +4,11 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+<string>We need access to your location to provide a better service experience.</string>
+<key>NSLocationAlwaysUsageDescription</key>
+<string>We need access to your location even when the app is in the background.</string>
+
 	<key>CFBundleDisplayName</key>
 	<string>Dronify</string>
 	<key>CFBundleExecutable</key>
@@ -41,6 +46,10 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSPhotoLibraryUsageDescription</key>
+<string>Choose photo from gallery</string>
+<key>NSMicrophoneUsageDescription</key>
+<string>Used to capture audio for image picker plugin</string>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>

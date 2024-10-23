@@ -1,8 +1,12 @@
 import 'dart:io';
+import 'package:dronify/src/Order/order_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
+import 'package:geolocator/geolocator.dart';
 
 class Services extends StatefulWidget {
   final String imageUrl;
@@ -23,17 +27,32 @@ class Services extends StatefulWidget {
 }
 
 class _ServicesState extends State<Services> {
-  XFile? _image;
+  List<XFile>? _images = []; // List to store up to 4 images
   final ImagePicker _picker = ImagePicker();
   String? _selectedDate;
   int windowCount = 1;
   bool showInfo = false;
+  LatLng? currentLocation;
+  LatLng? selectedLocation; // متغير لحفظ الإحداثيات المختارة
+  bool isFromRiyadh = false; // Checkbox variable
+  final _formKey = GlobalKey<FormState>(); // Form key
+  TextEditingController squareAreaController =
+      TextEditingController(); // Text controller
 
   Future<void> _pickImage() async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-    setState(() {
-      _image = pickedFile;
-    });
+    if (_images!.length < 4) {
+      // Ensure only up to 4 images can be added
+      final pickedFile = await _picker.pickMultiImage(limit: 4);
+      setState(() {
+        if (pickedFile != null) {
+          _images = pickedFile;
+        }
+      });
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('You can upload up to 4 images only.')),
+      );
+    }
   }
 
   Future<void> _pickDate() async {
@@ -51,6 +70,41 @@ class _ServicesState extends State<Services> {
     }
   }
 
+  Future<void> _getCurrentLocation() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      return Future.error('Location permissions are permanently denied.');
+    }
+
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+
+    setState(() {
+      currentLocation = LatLng(position.latitude, position.longitude);
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getCurrentLocation();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,9 +116,7 @@ class _ServicesState extends State<Services> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(
-                  height: 4.h,
-                ),
+                SizedBox(height: 4.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -72,9 +124,7 @@ class _ServicesState extends State<Services> {
                       widget.iconPath,
                       height: 18.sp,
                     ),
-                    SizedBox(
-                      width: 1.h,
-                    ),
+                    SizedBox(width: 1.h),
                     Text(
                       widget.title,
                       style: TextStyle(
@@ -89,9 +139,7 @@ class _ServicesState extends State<Services> {
                   indent: 30,
                   endIndent: 30,
                 ),
-                SizedBox(
-                  height: 1.h,
-                ),
+                SizedBox(height: 1.h),
                 Container(
                   width: 360,
                   height: 130,
@@ -153,12 +201,47 @@ class _ServicesState extends State<Services> {
                   ),
                 ),
                 SizedBox(height: 2.h),
-                _image != null
-                    ? Image.file(
-                        File(_image!.path),
+
+                // عرض الصور المرفوعة
+                _images!.isNotEmpty
+                    ? SizedBox(
                         height: 100,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: _images!.length,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Stack(
+                                children: [
+                                  Image.file(
+                                    File(_images![index].path),
+                                    height: 100,
+                                    width: 100,
+                                  ),
+                                  Positioned(
+                                    right: 0,
+                                    top: 0,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          _images!.removeAt(index);
+                                        });
+                                      },
+                                      child: Icon(
+                                        Icons.remove_circle,
+                                        color: Colors.red,
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            );
+                          },
+                        ),
                       )
-                    : const Text('No image selected'),
+                    : const Text('No images selected'),
+
                 SizedBox(height: 2.h),
                 Align(
                   alignment: Alignment.centerLeft,
@@ -171,21 +254,58 @@ class _ServicesState extends State<Services> {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 16,
-                ),
-                Container(
-                  height: 210,
-                  width: 345,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: Image.asset(
-                    'assets/map.png',
-                    fit: BoxFit.cover,
-                  ),
-                ),
+                const SizedBox(height: 16),
+                currentLocation != null
+                    ? Container(
+                        height: 300,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: FlutterMap(
+                          options: MapOptions(
+                            initialCenter: currentLocation!,
+                            maxZoom: 15.0,
+                            onTap: (tapPosition, point) {
+                              setState(() {
+                                selectedLocation =
+                                    point; // حفظ الإحداثيات عند الضغط
+                              });
+
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                      'Selected Location: Latitude: ${point.latitude}, Longitude: ${point.longitude}'),
+                                ),
+                              );
+                            },
+                          ),
+                          children: [
+                            TileLayer(
+                              urlTemplate:
+                                  "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                              subdomains: const ['a', 'b', 'c'],
+                            ),
+                            if (selectedLocation != null)
+                              MarkerLayer(
+                                markers: [
+                                  Marker(
+                                    point: selectedLocation!,
+                                    width: 80.0,
+                                    height: 80.0,
+                                    child: Icon(
+                                      Icons.location_on,
+                                      color: Colors.red,
+                                      size: 40,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                          ],
+                        ),
+                      )
+                    : const Center(child: CircularProgressIndicator()),
                 SizedBox(height: 2.h),
                 Align(
                   alignment: Alignment.centerLeft,
@@ -289,47 +409,77 @@ class _ServicesState extends State<Services> {
                   ],
                 ),
                 SizedBox(height: 4.h),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Square area',
-                    style: TextStyle(
-                      fontSize: 16.sp,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 1.h),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 5.w),
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: const Color(0xffF5F5F5),
-                      border: InputBorder.none,
-                      hintText: 'Enter square area',
-                      suffixIcon: IconButton(
-                        icon: const Icon(Icons.help_outline),
-                        onPressed: () {
-                          setState(() {
-                            showInfo = !showInfo;
-                          });
-                        },
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Square area',
+                          style: TextStyle(
+                            fontSize: 16.sp,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
-                    ),
+                      SizedBox(height: 1.h),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 5.w),
+                        child: TextFormField(
+                          controller: squareAreaController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter the square area';
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: const Color(0xffF5F5F5),
+                            border: InputBorder.none,
+                            hintText: 'Enter square area',
+                            suffixIcon: IconButton(
+                              icon: const Icon(Icons.help_outline),
+                              onPressed: () {
+                                setState(() {
+                                  showInfo = !showInfo;
+                                });
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
+                      if (showInfo)
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 5.w),
+                          child: Text(
+                            'Please enter the total square area of the windows.',
+                            style: TextStyle(
+                                fontSize: 12.sp, color: Colors.grey[600]),
+                          ),
+                        ),
+                    ],
                   ),
                 ),
-                if (showInfo)
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 5.w),
-                    child: Text(
-                      'Please enter the total square area of the windows.',
-                      style:
-                          TextStyle(fontSize: 12.sp, color: Colors.grey[600]),
+                SizedBox(height: 2.h),
+                Row(
+                  children: [
+                    Checkbox(
+                      value: isFromRiyadh,
+                      onChanged: (value) {
+                        setState(() {
+                          isFromRiyadh = value!;
+                        });
+                      },
                     ),
-                  ),
-                SizedBox(height: 4.h),
+                    Text(
+                      'Are you from Riyadh?',
+                      style: TextStyle(fontSize: 14.sp),
+                    ),
+                  ],
+                ),
                 Center(
                   child: Container(
                     width: double.infinity,
@@ -349,7 +499,23 @@ class _ServicesState extends State<Services> {
                       ),
                     ),
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        if (_formKey.currentState!.validate() &&
+                            isFromRiyadh &&
+                            selectedLocation != null) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const OrderScreen()),
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content:
+                                    Text('Please fill in all required fields')),
+                          );
+                        }
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.transparent,
                         shadowColor: Colors.transparent,
