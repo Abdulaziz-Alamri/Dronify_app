@@ -24,7 +24,7 @@ Future<void> saveOrder(
     final orderResponse = await supabase
         .from('orders')
         .insert({
-          'customer_id': customerId,
+          'user_id': customerId,
           'employee_id': employeeId,
           'service_id': serviceId,
           'square_meters': squareMeters,

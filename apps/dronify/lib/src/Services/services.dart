@@ -517,7 +517,8 @@ class _ServicesState extends State<Services> {
                                 images: _images!,
                                 order: OrderModel(
                                   orderId: 41221,
-                                  customerId: "4252d26b-19f6-4f98-9f5a-a3ddc18f2fdd",
+                                  customerId:
+                                  "4252d26b-19f6-4f98-9f5a-a3ddc18f2fdd",
                                   employeeId: '4252d26b-19f6-4f98-9f5a-a3ddc18f2fdd',
                                   serviceId: 1,
                                   images: _images != null
