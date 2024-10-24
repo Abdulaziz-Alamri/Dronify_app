@@ -2,16 +2,19 @@ import 'package:dronify/models/order_model.dart';
 import 'package:dronify/models/service_model.dart';
 import 'package:dronify/src/Order/custom_image_cards.dart';
 import 'package:dronify/src/Order/custom_order_card.dart';
+import 'package:dronify/utils/db_operations.dart';
 import 'package:dronify/utils/payment.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:moyasar/moyasar.dart';
 import 'package:sizer/sizer.dart';
 
 class OrderScreen extends StatelessWidget {
   final OrderModel order;
+  final List<XFile> images;
   // final ServiceModel service;
-  const OrderScreen({super.key, required this.order});
+  const OrderScreen({super.key, required this.order, required this.images});
 
   @override
   Widget build(BuildContext context) {
@@ -224,33 +227,45 @@ class OrderScreen extends StatelessWidget {
                 ),
                 child: ElevatedButton(
                   onPressed: () {
-                    showModalBottomSheet(
-                      context: context,
-                      backgroundColor: Colors.white,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.vertical(
-                          top: Radius.circular(25.0),
-                        ),
-                      ),
-                      builder: (BuildContext context) {
-                        return Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: CreditCard(
-                            config: pay(totalPrice: 1000, orderId: 2321213),
-                            onPaymentResult: (result) async {
-                              onPaymentResult(result, context);
-                              Navigator.pop(context, 'Payment successful');
-                            },
-                          ),
-                        );
-                      },
-                    ).then((value) async {
-                      if (value == 'Payment successful') {
-                        await Future.delayed(const Duration(seconds: 5));
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text('The payment is done successfully')));
-                      }
-                    });
+                    saveOrder(
+                        customerId: order.customerId!,
+                        employeeId: order.employeeId!,
+                        serviceId: order.serviceId!,
+                        squareMeters: order.squareMeters!,
+                        reservationDate: order.reservationDate!,
+                        reservationTime: TimeOfDay.now(),
+                        totalPrice: order.totalPrice!,
+                        imageUrls: [],
+                        latitude: order.address![0],
+                        longitude: order.address![1],
+                        imageFiles: images);
+                    // showModalBottomSheet(
+                    //   context: context,
+                    //   backgroundColor: Colors.white,
+                    //   shape: const RoundedRectangleBorder(
+                    //     borderRadius: BorderRadius.vertical(
+                    //       top: Radius.circular(25.0),
+                    //     ),
+                    //   ),
+                    //   builder: (BuildContext context) {
+                    //     return Padding(
+                    //       padding: const EdgeInsets.all(12),
+                    //       child: CreditCard(
+                    //         config: pay(totalPrice: 1000, orderId: 2321213),
+                    //         onPaymentResult: (result) async {
+                    //           onPaymentResult(result, context);
+                    //           Navigator.pop(context, 'Payment successful');
+                    //         },
+                    //       ),
+                    //     );
+                    //   },
+                    // ).then((value) async {
+                    //   if (value == 'Payment successful') {
+                    //     await Future.delayed(const Duration(seconds: 5));
+                    //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    //         content: Text('The payment is done successfully')));
+                    //   }
+                    // });
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.transparent,

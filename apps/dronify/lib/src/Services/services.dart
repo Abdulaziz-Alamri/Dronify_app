@@ -514,9 +514,11 @@ class _ServicesState extends State<Services> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => OrderScreen(
+                                images: _images!,
                                 order: OrderModel(
-                                  orderId: null,
-                                  customerId: "some_customer_id",
+                                  orderId: 41221,
+                                  customerId: "4252d26b-19f6-4f98-9f5a-a3ddc18f2fdd",
+                                  employeeId: '4252d26b-19f6-4f98-9f5a-a3ddc18f2fdd',
                                   serviceId: 1,
                                   images: _images != null
                                       ? _images!.map((e) => e.path).toList()
