@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
 class OrderCard extends StatelessWidget {
-  const OrderCard({super.key});
+  final Map<String, dynamic>? order; 
+  
+
+  const OrderCard({super.key, required this.order});
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +53,7 @@ class OrderCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Building Cleaning',
+                      order?['service']?['name'] ?? 'Service Name',
                       style:
                           TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                     ),
@@ -60,18 +63,19 @@ class OrderCard extends StatelessWidget {
                     SizedBox(
                       width: 250,
                       child: Text(
-                        'description of the services',
+                        order?['service']?['description'] ??
+                            'Service Description',
                         softWrap: true,
                         style:
                             TextStyle(fontSize: 12, color: Color(0xffA4A4AA)),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ],
             ),
             Text(
-              'Price: 350 SAR',
+              'Price: ${order?['total_price'] ?? 'N/A'} SAR',
               style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,

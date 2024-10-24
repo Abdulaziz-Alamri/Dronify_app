@@ -2,7 +2,9 @@ import 'package:dronify_mngmt/Employee_Order/order_screen.dart';
 import 'package:flutter/material.dart';
 
 class AvailbleOrders extends StatelessWidget {
-  const AvailbleOrders({super.key});
+  final Map<String, dynamic> order;
+
+  const AvailbleOrders({super.key, required this.order});
 
   @override
   Widget build(BuildContext context) {

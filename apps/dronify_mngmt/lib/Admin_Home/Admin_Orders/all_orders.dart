@@ -154,7 +154,7 @@ class _AllOrdersState extends State<AllOrders>
                               ...List.generate(10, (index) {
                                 return Column(
                                   children: [
-                                    OrderCard(),
+                                    //  OrderCard(),
                                     SizedBox(height: 15),
                                   ],
                                 );
@@ -169,7 +169,7 @@ class _AllOrdersState extends State<AllOrders>
                               ...List.generate(3, (index) {
                                 return Column(
                                   children: [
-                                    OrderCard(),
+                                    //   OrderCard(),
                                     SizedBox(height: 15),
                                   ],
                                 );
@@ -184,7 +184,7 @@ class _AllOrdersState extends State<AllOrders>
                               ...List.generate(3, (index) {
                                 return Column(
                                   children: [
-                                    AvailbleOrders(),
+                                    //   AvailbleOrders(),
                                     SizedBox(height: 15),
                                   ],
                                 );
