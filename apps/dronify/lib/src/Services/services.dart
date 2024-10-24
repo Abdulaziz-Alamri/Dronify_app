@@ -210,7 +210,6 @@ class _ServicesState extends State<Services> {
                 ),
                 SizedBox(height: 2.h),
 
-                // عرض الصور المرفوعة
                 _images!.isNotEmpty
                     ? SizedBox(
                         height: 100,
