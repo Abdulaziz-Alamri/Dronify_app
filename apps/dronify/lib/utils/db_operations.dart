@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -80,5 +81,29 @@ Future<void> saveOrder({
   } catch (error) {
     print("Error saving order: $error");
     throw error;
+  }
+}
+
+checkChat({required String chatId}) async {
+  final response = await supabase
+      .from('live_chat')
+      .select('chat_id')
+      .eq('user_id', '4252d26b-19f6-4f98-9f5a-a3ddc18f2fdd')
+      .maybeSingle();
+
+  if (response != null) {
+    return response['chat_id'].toString();
+  } else {
+    await supabase.from('live_chat').insert({
+      'chat_id': chatId,
+      'user_id': '4252d26b-19f6-4f98-9f5a-a3ddc18f2fdd',
+      'admin_id': 'a581cd5e-c67c-4522-a4bb-01b795c43387',
+    });
+     await supabase.from('chat_message').insert({
+      'chat_id': chatId,
+      'sender_id': 'a581cd5e-c67c-4522-a4bb-01b795c43387',
+      'message': 'How may I assist you?',
+    });
+    return chatId;
   }
 }

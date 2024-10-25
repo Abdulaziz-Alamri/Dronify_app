@@ -8,13 +8,22 @@ import 'bloc/live_chat_event.dart';
 import 'bloc/live_chat_state.dart' as custom_state;
 
 class ChatScreen extends StatelessWidget {
+  final String chatId;
+  const ChatScreen({super.key, required this.chatId});
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => ChatBloc()..add(LoadMessagesEvent()),
+      create: (_) => ChatBloc(chatId)..add(LoadMessagesEvent(chatId: chatId)),
       child: Scaffold(
-        appBar: buildAppBar(context), // Pass context here
-        body: BlocBuilder<ChatBloc, custom_state.ChatState>(
+        appBar: buildAppBar(context),
+        body: BlocConsumer<ChatBloc, custom_state.ChatState>(
+          listener: (context, state) {
+            if (state is custom_state.ChatError) {
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(SnackBar(content: Text(state.error)));
+            }
+          },
           builder: (context, state) {
             if (state is custom_state.ChatLoading) {
               return const Center(child: CircularProgressIndicator());
@@ -31,13 +40,11 @@ class ChatScreen extends StatelessWidget {
     );
   }
 
-  /// Method to build the AppBar with a Back Button and custom styling.
   PreferredSize buildAppBar(BuildContext context) {
     return PreferredSize(
       preferredSize: const Size.fromHeight(150),
       child: Stack(
         children: [
-          // Background image
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
@@ -50,7 +57,6 @@ class ChatScreen extends StatelessWidget {
               ),
             ),
           ),
-          // Title overlay
           const Positioned(
             left: 70,
             bottom: 30,
@@ -63,14 +69,13 @@ class ChatScreen extends StatelessWidget {
               ),
             ),
           ),
-          // Back Button
           Positioned(
             left: 10,
             top: 10,
             child: BackButton(
-              color: Colors.white, // Back button color
+              color: Colors.white,
               onPressed: () {
-                Navigator.pop(context); // Navigate back to the previous screen
+                Navigator.pop(context);
               },
             ),
           ),
@@ -79,14 +84,19 @@ class ChatScreen extends StatelessWidget {
     );
   }
 
-  /// Method to build the Chat UI with messages.
   Widget buildChat(BuildContext context, List<types.Message> messages) {
+    final currentUserId = '4252d26b-19f6-4f98-9f5a-a3ddc18f2fdd';
+
     return Chat(
       messages: messages,
       onSendPressed: (partialText) {
-        context.read<ChatBloc>().add(SendMessageEvent(partialText.text));
+        context.read<ChatBloc>().add(SendMessageEvent(
+              message: partialText.text,
+              chatId: chatId,
+              userId: currentUserId,
+            ));
       },
-      user: const types.User(id: 'user1'),
+      user: types.User(id: currentUserId),
       theme: const DefaultChatTheme(
         primaryColor: Color.fromARGB(255, 102, 196, 255),
         backgroundColor: Colors.white,
