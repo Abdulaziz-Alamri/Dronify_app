@@ -1,4 +1,7 @@
+import 'package:dronify_mngmt/Admin/live_chat/admin_chat_bloc/admin_chat_bloc.dart';
+import 'package:dronify_mngmt/Admin/live_chat/chat_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ChatScreen extends StatelessWidget {
   const ChatScreen({super.key});
@@ -6,123 +9,66 @@ class ChatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            expandedHeight: 80.0,
-            flexibleSpace: FlexibleSpaceBar(
-              background: Container(
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/appbar1.png'),
-                    fit: BoxFit.cover,
-                  ),
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(20),
-                    bottomRight: Radius.circular(20),
-                  ),
-                ),
-              ),
-              title: const Text(
-                'Chat Support',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              centerTitle: true,
-            ),
-            backgroundColor: Colors.white,
-            pinned: false,
-          ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                return Column(
-                  children: [
-                    SizedBox(
-                      height: 15,
+      body: BlocProvider(
+        create: (context) => AdminChatBloc()..add(LoadChatsEvent()),
+        child: Builder(
+          builder: (context) {
+            return CustomScrollView(
+              slivers: [
+                SliverAppBar(
+                  expandedHeight: 80.0,
+                  flexibleSpace: FlexibleSpaceBar(
+                    background: Container(
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('assets/appbar1.png'),
+                          fit: BoxFit.cover,
+                        ),
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(20),
+                          bottomRight: Radius.circular(20),
+                        ),
+                      ),
                     ),
-                    ...List.generate(5, (index) {
-                      return Column(
-                        children: [
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
-                            height: 75,
-                            width: 345,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(16),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.25),
-                                  blurRadius: 3,
-                                  offset: const Offset(0, 1),
-                                ),
-                              ],
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Chat Number/ID',
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xff072D6F)),
-                                ),
-                                Container(
-                                  width: 80,
-                                  height: 30,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12),
-                                    gradient: const LinearGradient(
-                                      colors: [
-                                        Color(0xFF072D6F),
-                                        Color(0xFF0A3F9A),
-                                        Color(0xFF0A43A4),
-                                        Color(0xFF0D56D5),
-                                      ],
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                    ),
-                                  ),
-                                  child: ElevatedButton(
-                                    onPressed: () {},
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.transparent,
-                                      shadowColor: Colors.transparent,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                    ),
-                                    child: const Text(
-                                      'Chat',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ],
+                    title: const Text(
+                      'Chat Support',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    centerTitle: true,
+                  ),
+                  backgroundColor: Colors.white,
+                  pinned: false,
+                ),
+                BlocBuilder<AdminChatBloc, AdminChatState>(
+                  builder: (context, state) {
+                    if (state is ChatsLoaded) {
+                      return SliverList(
+                        delegate: SliverChildBuilderDelegate(
+                          (BuildContext context, int index) {
+                            final chat = state.chats[index];
+                            return ChatItem(chatId: chat['chat_id'].toString());
+                          },
+                          childCount: state.chats.length,
+                        ),
                       );
-                    }),
-                  ],
-                );
-              },
-              childCount: 1,
-            ),
-          ),
-        ],
+                    } else if (state is ChatError) {
+                      return SliverToBoxAdapter(
+                        child: Center(child: Text(state.message)),
+                      );
+                    }
+                    return SliverToBoxAdapter(
+                      child: Center(child: CircularProgressIndicator()),
+                    );
+                  },
+                ),
+              ],
+            );
+          }
+        ),
       ),
     );
   }

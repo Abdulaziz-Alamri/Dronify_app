@@ -1,4 +1,6 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
+import 'package:dronify_mngmt/Admin/live_chat/chat_screen.dart';
+import 'package:dronify_mngmt/Admin/live_chat/live_chat.dart';
 import 'package:dronify_mngmt/Bottom_Nav/bottom_nav_bloc/bottom_nav_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,7 +39,10 @@ class BottomNav extends StatelessWidget {
             },
           ),
           floatingActionButton: FloatingActionButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => ChatScreen()));
+            },
             backgroundColor: Colors.black,
             child: const Icon(Icons.message, size: 25, color: Colors.white),
           ),
