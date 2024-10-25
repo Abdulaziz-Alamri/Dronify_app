@@ -1,5 +1,4 @@
-import 'package:dronify_mngmt/Admin_Profile/Profile_Item.dart';
-import 'package:dronify_mngmt/Admin_edit_profile/edit_profile.dart';
+import 'package:dronify_mngmt/Admin/Admin_edit_profile/edit_profile.dart';
 import 'package:flutter/material.dart';
 
 

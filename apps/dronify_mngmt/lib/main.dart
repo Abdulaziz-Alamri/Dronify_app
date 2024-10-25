@@ -1,6 +1,6 @@
-import 'package:dronify_mngmt/Admin_Home/All_employees/all_emp.dart';
-import 'package:dronify_mngmt/Admin_Home/admin_home.dart';
-import 'package:dronify_mngmt/Admin_Home/live_chat/chat_screen.dart';
+import 'package:dronify_mngmt/Admin/All_employees/all_emp.dart';
+import 'package:dronify_mngmt/Admin/Admin_Home/admin_home.dart';
+import 'package:dronify_mngmt/Admin/live_chat/chat_screen.dart';
 import 'package:dronify_mngmt/Bottom_Nav/bottom_nav.dart';
 import 'package:dronify_mngmt/Employee_Home/employee_home.dart';
 import 'package:dronify_mngmt/Employee_Order/confirm_screen.dart';
@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 void main() async{
-   WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
   await setup();
   runApp(const MainApp());
 }
@@ -23,7 +23,7 @@ class MainApp extends StatelessWidget {
     return Sizer(
       builder: (context, orientation, deviceType) {
         return MaterialApp(
-            debugShowCheckedModeBanner: false, home: EmployeeHome());
+            debugShowCheckedModeBanner: false, home: BottomNav());
       },
     );
   }

@@ -13,7 +13,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   void _onLoadMessages(
       LoadMessagesEvent event, Emitter<ChatState> emit) {
     emit(ChatLoading());
-
+    
     var initialMessage = types.TextMessage(
       author: const types.User(id: 'user2'),
       createdAt: DateTime.now().millisecondsSinceEpoch,

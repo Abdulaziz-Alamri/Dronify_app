@@ -1,5 +1,5 @@
-import 'package:dronify_mngmt/Admin_Home/All_employees/EmployeeDetails/employee.dart';
-import 'package:dronify_mngmt/Admin_Home/All_employees/employeecard.dart';
+import 'package:dronify_mngmt/Admin/EmployeeDetails/employee.dart';
+import 'package:dronify_mngmt/Admin/All_employees/employeecard.dart';
 import 'package:flutter/material.dart';
 
 class AllEmp extends StatelessWidget {

@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:dronify_mngmt/Admin_Home/All_employees/all_emp.dart';
-import 'package:dronify_mngmt/Admin_Home/Admin_Orders/all_orders.dart';
-import 'package:dronify_mngmt/Admin_Home/admin_home.dart';
-import 'package:dronify_mngmt/Admin_Profile/profile_screen.dart';
+import 'package:dronify_mngmt/Admin/All_employees/all_emp.dart';
+import 'package:dronify_mngmt/Admin/Admin_Orders/all_orders.dart';
+import 'package:dronify_mngmt/Admin/Admin_Home/admin_home.dart';
+import 'package:dronify_mngmt/Admin/Admin_Profile/profile_screen.dart';
 
 import 'package:flutter/material.dart';
 
