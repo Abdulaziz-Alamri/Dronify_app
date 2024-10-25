@@ -29,8 +29,20 @@ class ChatMessageBloc extends Bloc<ChatMessageEvent, ChatMessageState> {
           schema: 'public',
           table: 'chat_message',
           callback: (payload) async {
-            print('${payload.newRecord}');
-            add(NewMessageReceivedEvent(newMessage: payload.newRecord));
+            final messageId = payload.newRecord['message_id'];
+
+            // Fetch new message
+            final response = await supabase
+                .from('chat_message')
+                .select('*')
+                .eq('message_id', messageId)
+                .neq('sender_id', 'a581cd5e-c67c-4522-a4bb-01b795c43387')
+                .maybeSingle();
+
+            if (response != null) {
+              await Future.delayed(const Duration(seconds: 1));
+              add(NewMessageReceivedEvent(newMessage: response));
+            }
           },
         )
         .subscribe();

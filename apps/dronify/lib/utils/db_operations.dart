@@ -89,6 +89,7 @@ checkChat({required String chatId}) async {
       .from('live_chat')
       .select('chat_id')
       .eq('user_id', '4252d26b-19f6-4f98-9f5a-a3ddc18f2fdd')
+      .eq('status', 'started')
       .maybeSingle();
 
   if (response != null) {
@@ -99,11 +100,17 @@ checkChat({required String chatId}) async {
       'user_id': '4252d26b-19f6-4f98-9f5a-a3ddc18f2fdd',
       'admin_id': 'a581cd5e-c67c-4522-a4bb-01b795c43387',
     });
-     await supabase.from('chat_message').insert({
+    await supabase.from('chat_message').insert({
       'chat_id': chatId,
       'sender_id': 'a581cd5e-c67c-4522-a4bb-01b795c43387',
       'message': 'How may I assist you?',
     });
     return chatId;
   }
+}
+
+endChat({required String chatId}) async {
+  await supabase
+      .from('live_chat')
+      .update({'status': 'ended'}).eq('chat_id', chatId);
 }

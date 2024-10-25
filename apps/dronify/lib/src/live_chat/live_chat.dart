@@ -1,3 +1,4 @@
+import 'package:dronify/utils/db_operations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
@@ -42,7 +43,7 @@ class ChatScreen extends StatelessWidget {
 
   PreferredSize buildAppBar(BuildContext context) {
     return PreferredSize(
-      preferredSize: const Size.fromHeight(150),
+      preferredSize: const Size.fromHeight(120),
       child: Stack(
         children: [
           Container(
@@ -77,6 +78,27 @@ class ChatScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.pop(context);
               },
+            ),
+          ),
+          Positioned(
+            top: 70,
+            right: 10,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.black,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              onPressed: () async {
+                await endChat(chatId: chatId);
+                Navigator.pop(context);
+              },
+              child: const Text(
+                'End Chat',
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              ),
             ),
           ),
         ],

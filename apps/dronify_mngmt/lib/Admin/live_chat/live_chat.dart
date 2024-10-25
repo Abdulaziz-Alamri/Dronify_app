@@ -1,4 +1,3 @@
-
 import 'package:dronify_mngmt/Admin/live_chat/chat_message_bloc/chat_message_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,7 +11,7 @@ class LiveChat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => ChatMessageBloc( chatId: chatId)..add(LoadMessagesEvent()),
+      create: (_) => ChatMessageBloc(chatId: chatId)..add(LoadMessagesEvent()),
       child: Scaffold(
         appBar: buildAppBar(context),
         body: BlocConsumer<ChatMessageBloc, ChatMessageState>(
@@ -37,7 +36,7 @@ class LiveChat extends StatelessWidget {
 
   PreferredSize buildAppBar(BuildContext context) {
     return PreferredSize(
-      preferredSize: const Size.fromHeight(150),
+      preferredSize: const Size.fromHeight(120),
       child: Stack(
         children: [
           Container(
@@ -65,8 +64,8 @@ class LiveChat extends StatelessWidget {
             ),
           ),
           Positioned(
+            top: 30,
             left: 10,
-            top: 10,
             child: BackButton(
               color: Colors.white,
               onPressed: () {
