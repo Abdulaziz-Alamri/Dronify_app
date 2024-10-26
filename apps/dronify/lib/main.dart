@@ -1,5 +1,4 @@
 import 'package:dronify/src/Bottom_Nav/bottom_nav.dart';
-import 'package:dronify/utils/db_operations.dart';
 import 'package:dronify/utils/setup.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';

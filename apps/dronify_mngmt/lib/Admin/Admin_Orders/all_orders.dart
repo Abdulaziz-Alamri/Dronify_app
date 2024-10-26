@@ -42,7 +42,7 @@ class _AllOrdersState extends State<AllOrders>
                 ),
               ),
               centerTitle: true,
-              title: Text(
+              title: const Text(
                 'All Orders',
                 style: TextStyle(
                     fontSize: 20,
@@ -55,20 +55,20 @@ class _AllOrdersState extends State<AllOrders>
           ),
           SliverToBoxAdapter(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   TabBar(
                     controller: tabController,
                     indicator: BoxDecoration(
-                      color: Color(0xff072D6F),
+                      color: const Color(0xff072D6F),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     labelColor: Colors.white,
-                    unselectedLabelColor: Color(0xff072D6F),
+                    unselectedLabelColor: const Color(0xff072D6F),
                     dividerColor: Colors.transparent,
                     tabs: [
                       Tab(
@@ -78,13 +78,13 @@ class _AllOrdersState extends State<AllOrders>
                           decoration: BoxDecoration(
                             color: Colors.transparent,
                             border: Border.all(
-                              color: Color(0xff072D6F),
+                              color: const Color(0xff072D6F),
                               width: 2,
                             ),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           alignment: Alignment.center,
-                          child: Text(
+                          child: const Text(
                             'Complete',
                             style: TextStyle(
                               fontSize: 16,
@@ -100,13 +100,13 @@ class _AllOrdersState extends State<AllOrders>
                           decoration: BoxDecoration(
                             color: Colors.transparent,
                             border: Border.all(
-                              color: Color(0xff072D6F),
+                              color: const Color(0xff072D6F),
                               width: 2,
                             ),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           alignment: Alignment.center,
-                          child: Text(
+                          child: const Text(
                             'Incomplete',
                             style: TextStyle(
                               fontSize: 16,
@@ -122,13 +122,13 @@ class _AllOrdersState extends State<AllOrders>
                           decoration: BoxDecoration(
                             color: Colors.transparent,
                             border: Border.all(
-                              color: Color(0xff072D6F),
+                              color: const Color(0xff072D6F),
                               width: 2,
                             ),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           alignment: Alignment.center,
-                          child: Text(
+                          child: const Text(
                             'Available',
                             style: TextStyle(
                               fontSize: 16,
@@ -139,7 +139,7 @@ class _AllOrdersState extends State<AllOrders>
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   SizedBox(
@@ -152,7 +152,7 @@ class _AllOrdersState extends State<AllOrders>
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               ...List.generate(10, (index) {
-                                return Column(
+                                return const Column(
                                   children: [
                                     //  OrderCard(),
                                     SizedBox(height: 15),
@@ -167,7 +167,7 @@ class _AllOrdersState extends State<AllOrders>
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               ...List.generate(3, (index) {
-                                return Column(
+                                return const Column(
                                   children: [
                                     //   OrderCard(),
                                     SizedBox(height: 15),
@@ -182,7 +182,7 @@ class _AllOrdersState extends State<AllOrders>
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               ...List.generate(3, (index) {
-                                return Column(
+                                return const Column(
                                   children: [
                                     //   AvailbleOrders(),
                                     SizedBox(height: 15),
