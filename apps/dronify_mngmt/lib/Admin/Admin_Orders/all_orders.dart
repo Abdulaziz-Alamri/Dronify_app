@@ -55,7 +55,7 @@ class _AllOrdersState extends State<AllOrders>
           ),
           SliverToBoxAdapter(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
+              padding: EdgeInsets.symmetric(horizontal: 8),
               child: Column(
                 children: [
                   SizedBox(

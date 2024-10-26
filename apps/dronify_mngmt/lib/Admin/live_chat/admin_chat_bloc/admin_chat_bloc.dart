@@ -28,10 +28,6 @@ class AdminChatBloc extends Bloc<AdminChatEvent, AdminChatState> {
           table: 'live_chat',
           callback: (payload) async {
             if (payload.newRecord.isNotEmpty) {
-              // final chatId = payload.newRecord['chat_id'].toString();
-              // final userId = payload.newRecord['user_id'].toString();
-              // add(NewChatEvent(chatId: chatId, userId: userId));
-
               add(NewChatEvent(
                 newChat: payload.newRecord,
               ));
@@ -43,11 +39,14 @@ class AdminChatBloc extends Bloc<AdminChatEvent, AdminChatState> {
 
   FutureOr<void> loadChats(
       LoadChatsEvent event, Emitter<AdminChatState> emit) async {
-    final response = await supabase.from('live_chat').select('*');
+    final response = await supabase
+        .from('live_chat')
+        .select('*')
+        .order('created_at', ascending: false);
     if (response.isNotEmpty) {
       emit(ChatsLoaded(chats: response));
     } else {
-      print('No chats');
+      emit(NoChatsState());
     }
   }
 
@@ -60,7 +59,7 @@ class AdminChatBloc extends Bloc<AdminChatEvent, AdminChatState> {
       emit(ChatsLoaded(chats: updatedChats));
     }
   }
-  
+
   @override
   Future<void> close() {
     channel.unsubscribe();
