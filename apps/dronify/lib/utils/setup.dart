@@ -11,6 +11,7 @@ setup() async {
   await Supabase.initialize(
     url: '${dotenv.env['supabase_url']}',
     anonKey: '${dotenv.env['anon_key']}',
+    
   );
 
   locator.registerSingleton<DataLayer>(DataLayer());

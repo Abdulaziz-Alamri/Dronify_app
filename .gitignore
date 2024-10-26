@@ -1,0 +1,5 @@
+/.dart_tool
+/.idea
+/packages/dronify_package/pubspec.lock
+/apps/dronify_mngmt/pubspec.lock
+/apps/dronify/pubspec.lock

@@ -23,7 +23,9 @@ dependencies:
   supabase_flutter: ^2.8.0
   moyasar: ^2.0.13
   get_storage: ^2.1.1
-
+  flutter_map: ^7.0.2
+  geolocator: ^13.0.1
+  latlong2: ^0.9.1
 
 dev_dependencies:
   flutter_test:
@@ -37,4 +39,3 @@ flutter:
   assets:
     - assets/
     - .env
-   

@@ -32,7 +32,7 @@ class AdminHome extends StatelessWidget {
                 ),
               ),
               centerTitle: true,
-              title: Text(
+              title: const Text(
                 'Welcome Back Admin 👋',
                 style: TextStyle(
                     fontSize: 20,
@@ -45,11 +45,11 @@ class AdminHome extends StatelessWidget {
           ),
           SliverToBoxAdapter(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
                 children: [
-                  SizedBox(height: 15),
-                  Row(
+                  const SizedBox(height: 15),
+                  const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       CustomStatCard(title: 'Users', value: '10K'),
@@ -57,7 +57,7 @@ class AdminHome extends StatelessWidget {
                       CustomStatCard(title: 'Profits', value: '10K'),
                     ],
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Container(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 16, vertical: 16),
@@ -114,10 +114,10 @@ class AdminHome extends StatelessWidget {
                               },
                             ),
                           ),
-                          topTitles: AxisTitles(
+                          topTitles: const AxisTitles(
                             sideTitles: SideTitles(showTitles: false),
                           ),
-                          rightTitles: AxisTitles(
+                          rightTitles: const AxisTitles(
                             sideTitles: SideTitles(showTitles: false),
                           ),
                         ),
@@ -131,22 +131,22 @@ class AdminHome extends StatelessWidget {
                             }).toList(),
                             isCurved: true,
                             color: Colors.blue,
-                            dotData: FlDotData(show: true),
+                            dotData: const FlDotData(show: true),
                             belowBarData: BarAreaData(
                               show: true,
-                              gradient: LinearGradient(colors: [
+                              gradient: const LinearGradient(colors: [
                                 Color(0xff73DDFF),
                                 Color(0xff072D6F),
                               ]),
                             ),
                           ),
                         ],
-                        gridData: FlGridData(show: true),
+                        gridData: const FlGridData(show: true),
                         borderData: FlBorderData(show: false),
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Container(
@@ -173,7 +173,7 @@ class AdminHome extends StatelessWidget {
                             barRods: [
                               BarChartRodData(
                                   toY: 5.5,
-                                  gradient: LinearGradient(
+                                  gradient: const LinearGradient(
                                     colors: [
                                       Color(0xff072D6F),
                                       Color(0xff0D56D5),
@@ -186,7 +186,7 @@ class AdminHome extends StatelessWidget {
                           BarChartGroupData(x: 1, barRods: [
                             BarChartRodData(
                                 toY: 2.5,
-                                gradient: LinearGradient(
+                                gradient: const LinearGradient(
                                   colors: [
                                     Color(0xff072D6F),
                                     Color(0xff0D56D5),
@@ -198,7 +198,7 @@ class AdminHome extends StatelessWidget {
                           BarChartGroupData(x: 1, barRods: [
                             BarChartRodData(
                                 toY: 3.5,
-                                gradient: LinearGradient(
+                                gradient: const LinearGradient(
                                   colors: [
                                     Color(0xff072D6F),
                                     Color(0xff0D56D5),
@@ -210,7 +210,7 @@ class AdminHome extends StatelessWidget {
                           BarChartGroupData(x: 1, barRods: [
                             BarChartRodData(
                                 toY: 8.5,
-                                gradient: LinearGradient(
+                                gradient: const LinearGradient(
                                   colors: [
                                     Color(0xff072D6F),
                                     Color(0xff0D56D5),
@@ -221,7 +221,7 @@ class AdminHome extends StatelessWidget {
                           ]),
                         ])),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Container(
@@ -242,7 +242,7 @@ class AdminHome extends StatelessWidget {
                     ),
                     child: CustomBarchart(),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 70,
                   ),
                 ],

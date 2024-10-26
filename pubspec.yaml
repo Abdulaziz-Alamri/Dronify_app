@@ -6,4 +6,5 @@ dev_dependencies:
   melos: ^6.1.0
 dependencies:
   flutter_chat_ui: ^1.6.15
+  flutter_dotenv: ^5.2.1
 
