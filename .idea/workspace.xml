@@ -5,21 +5,70 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="27f966a0-ae13-49f7-9a91-21fee5995a59" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/dronify/lib/repository/auth_repository.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/dronify/lib/src/Auth/bloc/auth_bloc.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/dronify/lib/src/Auth/bloc/auth_event.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/dronify/lib/src/Auth/bloc/auth_state.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/dronify/lib/utils/db_operations.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.dart_tool/extension_discovery/README.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.dart_tool/extension_discovery/devtools.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.dart_tool/package_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/package_config.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/package_config_subset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/version" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/melos_bootstrap.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/melos_bootstrap.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/melos_clean.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/melos_clean.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/melos_flutter_run_dronify.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/melos_flutter_run_dronify.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/melos_flutter_run_dronify_mngmt.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/melos_flutter_run_dronify_mngmt.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/package_config_subset" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/package_config_subset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/pub/bin/flutter_native_splash/create.dart-3.5.2.snapshot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/pub/bin/melos/melos.dart-3.5.2.snapshot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/version" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/version" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.flutter-plugins" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dronify/android/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dronify/android/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dronify/android/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dronify/android/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dronify/android/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dronify/android/gradle.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dronify/lib/Data_layer/data_layer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dronify/lib/Data_layer/data_layer.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/dronify/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dronify/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/dronify/lib/profile/profile_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dronify/lib/profile/profile_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dronify/lib/splash/splash_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dronify/lib/splash/splash_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dronify/lib/src/Auth/sginin.dart" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dronify/lib/src/Auth/sginin.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dronify/lib/src/Auth/signup.dart" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dronify/lib/src/Auth/signup.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dronify/lib/src/Bottom_Nav/bottom_nav_bloc/bottom_nav_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dronify/lib/src/Bottom_Nav/bottom_nav_bloc/bottom_nav_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dronify/lib/src/Cart/cart_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dronify/lib/src/Cart/cart_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dronify/lib/src/Order/order_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dronify/lib/src/Order/order_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dronify/lib/src/Scrollable_Splash/scrollable_splash_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dronify/lib/src/Scrollable_Splash/scrollable_splash_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dronify/lib/src/Scrollable_Splash/splash_content.dart" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dronify/lib/src/Scrollable_Splash/splash_content.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dronify/lib/src/Services/services.dart" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dronify/lib/src/Services/services.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dronify/lib/src/live_chat/bloc/live_chat_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dronify/lib/src/live_chat/bloc/live_chat_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dronify/lib/src/live_chat/live_chat.dart" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dronify/lib/src/live_chat/live_chat.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dronify/lib/src/profile/Profile_Item.dart" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dronify/lib/src/profile/Profile_Item.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dronify/lib/src/profile/profile_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dronify/lib/src/profile/profile_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dronify/lib/src/wallet/wallet.dart" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dronify/lib/src/wallet/wallet.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dronify/lib/utils/setup.dart" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dronify/lib/utils/setup.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dronify/macos/Flutter/GeneratedPluginRegistrant.swift" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dronify/macos/Flutter/GeneratedPluginRegistrant.swift" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/dronify/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dronify/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dronify/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dronify/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dronify_mngmt/lib/Admin_Home/Admin_Orders/all_orders.dart" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dronify_mngmt/lib/Admin_Home/Admin_Orders/all_orders.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dronify_mngmt/lib/Admin_Home/admin_home.dart" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dronify_mngmt/lib/Admin_Home/admin_home.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dronify_mngmt/lib/Admin_Home/custom_barchart.dart" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dronify_mngmt/lib/Admin_Home/custom_barchart.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dronify_mngmt/lib/Admin_Home/custom_stat_card.dart" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dronify_mngmt/lib/Admin_Home/custom_stat_card.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dronify_mngmt/lib/Admin_Home/live_chat/bloc/live_chat_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dronify_mngmt/lib/Admin_Home/live_chat/bloc/live_chat_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dronify_mngmt/lib/Admin_Home/live_chat/chat_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dronify_mngmt/lib/Admin_Home/live_chat/chat_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dronify_mngmt/lib/Admin_Home/live_chat/live_chat.dart" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dronify_mngmt/lib/Admin_Home/live_chat/live_chat.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dronify_mngmt/lib/Admin_Profile/profile_item.dart" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dronify_mngmt/lib/Admin_Profile/profile_item.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dronify_mngmt/lib/Admin_Profile/profile_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dronify_mngmt/lib/Admin_Profile/profile_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dronify_mngmt/lib/Admin_edit_profile/edit_profile.dart" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dronify_mngmt/lib/Admin_edit_profile/edit_profile.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dronify_mngmt/lib/Bottom_Nav/bottom_nav_bloc/bottom_nav_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dronify_mngmt/lib/Bottom_Nav/bottom_nav_bloc/bottom_nav_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dronify_mngmt/lib/Employee_Home/availble_orders.dart" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dronify_mngmt/lib/Employee_Home/availble_orders.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dronify_mngmt/lib/Employee_Home/employee_home.dart" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dronify_mngmt/lib/Employee_Home/employee_home.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dronify_mngmt/lib/Employee_Home/order_card.dart" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dronify_mngmt/lib/Employee_Home/order_card.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dronify_mngmt/lib/Employee_Order/confirm_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dronify_mngmt/lib/Employee_Order/confirm_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dronify_mngmt/lib/Employee_Order/custom_image_cards.dart" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dronify_mngmt/lib/Employee_Order/custom_image_cards.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dronify_mngmt/lib/Employee_Order/custom_order_card.dart" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dronify_mngmt/lib/Employee_Order/custom_order_card.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dronify_mngmt/lib/Employee_Order/order_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dronify_mngmt/lib/Employee_Order/order_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/dronify_mngmt/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/apps/dronify_mngmt/lib/main.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/melos_dronify.iml" beforeDir="false" afterPath="$PROJECT_DIR$/melos_dronify.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,9 +84,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 1
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
   <component name="ProjectId" id="2nhiJHOIgppAO1LMX0WUogDNsgb" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -45,6 +94,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Flutter.main.dart.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
@@ -53,12 +103,24 @@
     "cidr.known.project.marker": "true",
     "dart.analysis.tool.window.visible": "false",
     "git-widget-placeholder": "rawan",
+    "io.flutter.reload.alreadyRun": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/rawan.MSI/Downloads/dart/flutter/Dronify_app",
+    "last_opened_file_path": "C:/Gradle",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
     "show.migrate.to.gradle.popup": "false"
   }
 }]]></component>
-  <component name="RunManager" selected="Flutter.Flutter Run -&gt; 'dronify'" />
+  <component name="RunManager" selected="Flutter.main.dart">
+    <configuration name="main.dart" type="FlutterRunConfigurationType" factoryName="Flutter" temporary="true" nameIsGenerated="true">
+      <option name="filePath" value="$PROJECT_DIR$/apps/dronify/lib/main.dart" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Flutter.main.dart" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
