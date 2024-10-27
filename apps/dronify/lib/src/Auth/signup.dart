@@ -2,6 +2,7 @@ import 'package:dronify/repository/auth_repository.dart';
 import 'package:dronify/src/Auth/bloc/auth_bloc.dart';
 import 'package:dronify/src/Auth/bloc/auth_event.dart';
 import 'package:dronify/src/Auth/bloc/auth_state.dart';
+import 'package:dronify/src/Auth/otp_Screan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -69,6 +70,11 @@ class Signup extends StatelessWidget {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('Sign-up successful!')),
               );
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          OtpScreen(email: emailController.text)));
             }
           },
           builder: (context, state) {

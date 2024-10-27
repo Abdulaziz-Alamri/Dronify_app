@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 class SignIn extends StatelessWidget {
   test() async {
     var user = await AuthRepository().getCurrentUser();
-    
   }
 
   const SignIn({super.key});

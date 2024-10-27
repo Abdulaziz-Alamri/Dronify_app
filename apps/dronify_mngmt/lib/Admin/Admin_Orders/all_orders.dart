@@ -1,7 +1,9 @@
+import 'package:dronify_mngmt/Admin/Admin_Orders/admin_available_card.dart';
+import 'package:dronify_mngmt/Employee_Home/availble_orders.dart';
+import 'package:dronify_mngmt/Employee_Home/employee_home.dart';
+import 'package:dronify_mngmt/Employee_Home/order_card.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-import 'package:dronify_mngmt/Employee_Home/availble_orders.dart';
-import 'package:dronify_mngmt/Employee_Home/order_card.dart';
 
 class AllOrders extends StatefulWidget {
   const AllOrders({super.key});
@@ -13,11 +15,41 @@ class AllOrders extends StatefulWidget {
 class _AllOrdersState extends State<AllOrders>
     with SingleTickerProviderStateMixin {
   late TabController tabController;
+  List<dynamic> completeOrders = [];
+  List<dynamic> incompleteOrders = [];
+  List<dynamic> availableOrders = [];
 
   @override
   void initState() {
     tabController = TabController(length: 3, vsync: this);
+    fetchOrders();
     super.initState();
+  }
+
+  Future<void> fetchOrders() async {
+    try {
+      final completeOrdersResponse = await supabase
+          .from('orders')
+          .select('*, app_user!inner(name, phone), service(name)')
+          .eq('status', 'complete');
+      completeOrders = completeOrdersResponse as List<dynamic>;
+
+      final incompleteOrdersResponse = await supabase
+          .from('orders')
+          .select('*, app_user!inner(name, phone), service(name)')
+          .eq('status', 'confirmed');
+      incompleteOrders = incompleteOrdersResponse as List<dynamic>;
+
+      final availableOrdersResponse = await supabase
+          .from('orders')
+          .select('*, app_user!inner(name, phone), service(name)')
+          .eq('status', 'pending');
+      availableOrders = availableOrdersResponse as List<dynamic>;
+
+      setState(() {});
+    } catch (error) {
+      print("Error fetching orders: $error");
+    }
   }
 
   @override
@@ -147,49 +179,46 @@ class _AllOrdersState extends State<AllOrders>
                     child: TabBarView(
                       controller: tabController,
                       children: [
+                        // Complete Orders Tab
                         SingleChildScrollView(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              ...List.generate(10, (index) {
-                                return const Column(
-                                  children: [
-                                    //  OrderCard(),
-                                    SizedBox(height: 15),
-                                  ],
-                                );
-                              })
-                            ],
+                            children: completeOrders.map((order) {
+                              return Column(
+                                children: [
+                                  OrderCard(order: order),
+                                  SizedBox(height: 15),
+                                ],
+                              );
+                            }).toList(),
                           ),
                         ),
+                        // Incomplete Orders Tab
                         SingleChildScrollView(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              ...List.generate(3, (index) {
-                                return const Column(
-                                  children: [
-                                    //   OrderCard(),
-                                    SizedBox(height: 15),
-                                  ],
-                                );
-                              })
-                            ],
+                            children: incompleteOrders.map((order) {
+                              return Column(
+                                children: [
+                                  OrderCard(order: order),
+                                  SizedBox(height: 15),
+                                ],
+                              );
+                            }).toList(),
                           ),
                         ),
+                        // Available Orders Tab
                         SingleChildScrollView(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              ...List.generate(3, (index) {
-                                return const Column(
-                                  children: [
-                                    //   AvailbleOrders(),
-                                    SizedBox(height: 15),
-                                  ],
-                                );
-                              })
-                            ],
+                            children: availableOrders.map((order) {
+                              return Column(
+                                children: [
+                                  AdminAvailableCard(order: order),
+                                  SizedBox(height: 15),
+                                ],
+                              );
+                            }).toList(),
                           ),
                         ),
                       ],

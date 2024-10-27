@@ -82,3 +82,7 @@ Future<void> saveOrder({
     throw error;
   }
 }
+
+cancelOrder(){
+
+}
