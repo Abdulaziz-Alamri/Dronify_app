@@ -1,6 +1,5 @@
-import 'package:dronify_mngmt/Employee_Order/order_screen.dart';
 import 'package:dronify_mngmt/utils/db_operations.dart';
-import 'package:dronify_mngmt/utils/order_model.dart';
+import 'package:dronify_mngmt/models/order_model.dart';
 import 'package:flutter/material.dart';
 
 class AdminAvailableCard extends StatelessWidget {

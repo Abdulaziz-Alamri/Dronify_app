@@ -32,8 +32,8 @@ class OrderModel {
   factory OrderModel.fromJson(Map<String, dynamic> json) {
     return OrderModel(
       orderId: json['order_id'],
-      customerId: json['customer_id'],
-      employeeId: json['employee_id'],
+      customerId: json['user_id'],
+      employeeId: json['employee_id'] ?? null,
       serviceId: json['service_id'],
       images: List<String>.from(json['images']),
       address: json['address'],

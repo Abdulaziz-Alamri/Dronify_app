@@ -1,11 +1,9 @@
 import 'dart:developer';
 
 import 'package:dronify_mngmt/Admin/Admin_Orders/admin_available_card.dart';
-import 'package:dronify_mngmt/Employee_Home/availble_orders.dart';
 import 'package:dronify_mngmt/Employee_Home/bloc/orders_bloc_bloc.dart';
-import 'package:dronify_mngmt/Employee_Home/employee_home.dart';
 import 'package:dronify_mngmt/Employee_Home/order_card.dart';
-import 'package:dronify_mngmt/utils/order_model.dart';
+import 'package:dronify_mngmt/models/order_model.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -19,9 +17,9 @@ class AllOrders extends StatefulWidget {
 class _AllOrdersState extends State<AllOrders>
     with SingleTickerProviderStateMixin {
   late TabController tabController;
-  List<dynamic> completeOrders = [];
-  List<dynamic> incompleteOrders = [];
-  List<dynamic> availableOrders = [];
+  List<OrderModel> completeOrders = [];
+  List<OrderModel> incompleteOrders = [];
+  List<OrderModel> availableOrders = [];
 
   @override
   void initState() {
@@ -32,55 +30,42 @@ class _AllOrdersState extends State<AllOrders>
 
   Future<void> fetchOrders() async {
     try {
-
-      var data = <Future>[];
-
-      
       final completeOrdersResponse = await supabase
           .from('orders')
           .select('*, app_user!inner(name, phone), service(name)')
           .eq('status', 'complete');
 
-      if (completeOrdersResponse.isNotEmpty) {
-        for (var object in completeOrdersResponse) {
-          final order = OrderModel.fromJson(object);
-          completeOrders.add(order);
-        }
+      for (var element in completeOrdersResponse) {
+        OrderModel order = OrderModel.fromJson(element);
+        completeOrders.add(order);
       }
 
-      log('complete: $completeOrders');
+      // log('$completeOrders');
 
       final incompleteOrdersResponse = await supabase
           .from('orders')
           .select('*, app_user!inner(name, phone), service(name)')
           .eq('status', 'confirmed');
 
-          if(incompleteOrdersResponse.isNotEmpty){
-
-
-      for (var object in incompleteOrdersResponse) {
-        final order = OrderModel.fromJson(object as Map<String, dynamic>);
+      for (var element in incompleteOrdersResponse) {
+        OrderModel order = OrderModel.fromJson(element);
         incompleteOrders.add(order);
       }
-          }
-
-      log('incomplete: $incompleteOrders');
+      // log('$incompleteOrders');
 
       final availableOrdersResponse = await supabase
           .from('orders')
           .select('*, app_user!inner(name, phone), service(name)')
           .eq('status', 'pending');
 
-          if(availableOrdersResponse.isNotEmpty){
-
-      for (var object in availableOrdersResponse) {
-        final order = OrderModel.fromJson(object);
+      for (var element in availableOrdersResponse) {
+        log('here');
+        OrderModel order = OrderModel.fromJson(element);
+        log('message');
         availableOrders.add(order);
+        log('1');
       }
-          }
-
-
-      log('available: $availableOrders');
+      log('$availableOrders');
 
       setState(() {});
     } catch (error) {

@@ -1,16 +1,14 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:path/path.dart'; // Import path package for file name operations
+import 'package:path/path.dart';
 
 final supabase = Supabase.instance.client;
 
 Future<void> saveOrder({
   required String customerId,
-  required String employeeId,
   required int serviceId,
   required double squareMeters,
   required DateTime reservationDate,
@@ -26,7 +24,6 @@ Future<void> saveOrder({
         .from('orders')
         .insert({
           'user_id': customerId,
-          'employee_id': employeeId,
           'service_id': serviceId,
           'square_meters': squareMeters,
           'reservation_date': reservationDate.toIso8601String(),
@@ -61,6 +58,7 @@ Future<void> saveOrder({
           await supabase.from('images').insert({
             'order_id': orderId,
             'image_url': imageUrl,
+            'type': 'before'
           });
         } catch (error) {
           throw Exception('Failed to upload image: $error');
