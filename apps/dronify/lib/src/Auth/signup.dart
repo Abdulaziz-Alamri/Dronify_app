@@ -1,8 +1,5 @@
-import 'package:dronify/repository/auth_repository.dart';
 import 'package:dronify/src/Auth/bloc/auth_bloc.dart';
-import 'package:dronify/src/Auth/bloc/auth_event.dart';
-import 'package:dronify/src/Auth/bloc/auth_state.dart';
-import 'package:dronify/src/Auth/otp_Screan.dart';
+import 'package:dronify/src/Auth/otp_screan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -10,25 +7,19 @@ class Signup extends StatelessWidget {
   Signup({super.key});
 
   final TextEditingController emailController = TextEditingController();
-
   final TextEditingController passwordController = TextEditingController();
-
   final TextEditingController nameController = TextEditingController();
-
   final TextEditingController phoneController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AuthBloc(AuthRepository()),
-      child: Scaffold(
-        resizeToAvoidBottomInset: true,
-        body: Stack(
-          children: [
-            _buildHeader(),
-            _buildForm(context),
-          ],
-        ),
+    return Scaffold(
+      resizeToAvoidBottomInset: true,
+      body: Stack(
+        children: [
+          _buildHeader(),
+          _buildForm(context),
+        ],
       ),
     );
   }
@@ -70,11 +61,15 @@ class Signup extends StatelessWidget {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('Sign-up successful!')),
               );
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          OtpScreen(email: emailController.text)));
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => OtpScreen(
+                    email: emailController.text.trim(),
+               
+                  ),
+                ),
+              );
             }
           },
           builder: (context, state) {
@@ -87,6 +82,7 @@ class Signup extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Center(child: Image.asset('assets/5 7.png')),
+                  const SizedBox(height: 10),
                   const Text(
                     'Sign Up',
                     style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
@@ -98,6 +94,7 @@ class Signup extends StatelessWidget {
                     'Phone Number',
                     phoneController,
                     false,
+                    inputType: TextInputType.phone,
                   ),
                   const SizedBox(height: 10),
                   _buildTextField('Email', emailController, false,
@@ -166,22 +163,21 @@ class Signup extends StatelessWidget {
         ),
         child: ElevatedButton(
           onPressed: () {
-            final email = emailController.text;
-            final password = passwordController.text;
-            final username = nameController.text; // Corrected controller
-            final phone = phoneController.text; // Corrected controller
+            final email = emailController.text.trim();
+            final password = passwordController.text.trim();
+            final username = nameController.text.trim();
+            final phone = phoneController.text.trim();
 
-            // Add validation if necessary
-            // if (email.isEmpty ||
-            //     password.isEmpty ||
-            //     username.isEmpty ||
-            //     phone.isEmpty) {
-            //   ScaffoldMessenger.of(context).showSnackBar(
-            //     const SnackBar(content: Text('All fields are required!')),
-            //   );
-            //   return;
-            // }
+            // Add validation
+            if (email.isEmpty || password.isEmpty || 
+                username.isEmpty || phone.isEmpty) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('All fields are required!')),
+              );
+              return;
+            }
 
+            // Trigger SignUpEvent
             context.read<AuthBloc>().add(
                   SignUpEvent(
                     email: email,
