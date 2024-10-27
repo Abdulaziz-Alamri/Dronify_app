@@ -1,4 +1,5 @@
 import 'package:dronify/repository/auth_repository.dart';
+import 'package:dronify/splash/splash_screen.dart';
 import 'package:dronify/src/Auth/bloc/auth_bloc.dart';
 import 'package:dronify/src/Auth/sginin.dart';
 import 'package:dronify/utils/setup.dart';
