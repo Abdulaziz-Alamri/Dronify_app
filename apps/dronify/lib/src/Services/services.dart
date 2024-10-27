@@ -91,6 +91,7 @@ class _ServicesState extends State<Services> {
     }
 
     Position position = await Geolocator.getCurrentPosition(
+        // ignore: deprecated_member_use
         desiredAccuracy: LocationAccuracy.high);
 
     setState(() {

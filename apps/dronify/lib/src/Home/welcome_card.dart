@@ -1,3 +1,4 @@
+import 'package:dronify/src/Subscription/subscription_screen.dart';
 import 'package:flutter/material.dart';
 
 class WelcomeCard extends StatelessWidget {
@@ -42,17 +43,25 @@ class WelcomeCard extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          Container(
-            height: 50,
-            decoration: BoxDecoration(
-                border: Border.all(color: const Color(0xff072D6F)),
-                borderRadius: BorderRadius.circular(360),
-                color: const Color(0xff072D6F).withOpacity(0.28)),
-            child: const Center(
-              child: Text(
-                'subscribe for Flexible Cleaning Schedules and Exclusive Pricing',
-                style: TextStyle(fontSize: 12, color: Color(0xff072D6F)),
-                textAlign: TextAlign.center,
+          InkWell(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => SubscriptionScreen()));
+            },
+            child: Container(
+              height: 50,
+              decoration: BoxDecoration(
+                  border: Border.all(color: const Color(0xff072D6F)),
+                  borderRadius: BorderRadius.circular(360),
+                  color: const Color(0xff072D6F).withOpacity(0.28)),
+              child: const Center(
+                child: Text(
+                  'subscribe for Flexible Cleaning Schedules and Exclusive Pricing',
+                  style: TextStyle(fontSize: 12, color: Color(0xff072D6F)),
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
           )

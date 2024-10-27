@@ -111,7 +111,11 @@
     },
     {
       "name": "flutter_dotenv",
+<<<<<<< HEAD
       "rootUri": "file:///C:/Users/rawan.MSI/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_dotenv-5.2.1",
+=======
+      "rootUri": "file:///Users/muhannad/.pub-cache/hosted/pub.dev/flutter_dotenv-5.2.1",
+>>>>>>> 068074f9e2d6a68aaa1c4a821f03a25d4aa26ff9
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -434,7 +438,11 @@
       "languageVersion": "3.0"
     }
   ],
+<<<<<<< HEAD
   "generated": "2024-10-26T14:27:02.661128Z",
+=======
+  "generated": "2024-10-27T08:01:44.781176Z",
+>>>>>>> 068074f9e2d6a68aaa1c4a821f03a25d4aa26ff9
   "generator": "pub",
   "generatorVersion": "3.5.4",
   "flutterRoot": "file:///C:/Users/rawan.MSI/flutter",

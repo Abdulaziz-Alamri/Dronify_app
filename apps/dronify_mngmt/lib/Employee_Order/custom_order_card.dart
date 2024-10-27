@@ -5,7 +5,7 @@ class CustomOrderCard extends StatelessWidget {
   final String title;
   final String subTitle;
 
-  const CustomOrderCard(
+  CustomOrderCard(
       {super.key,
       required this.imageUrl,
       required this.title,

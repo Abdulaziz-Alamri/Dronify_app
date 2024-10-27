@@ -9,6 +9,8 @@ class ChatsLoaded extends AdminChatState {
   final List<Map<String, dynamic>> chats;
   ChatsLoaded({required this.chats});
 }
+class NoChatsState extends AdminChatState {
+}
 
 class NewChatState extends AdminChatState {
   final String chatId;

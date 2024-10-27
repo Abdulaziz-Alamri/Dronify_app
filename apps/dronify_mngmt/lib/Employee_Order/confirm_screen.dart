@@ -53,7 +53,9 @@ class ConfirmScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    child: const CustomImageCards()),
+                    child: CustomImageCards(
+                      imageUrls: [],
+                    )),
               ),
               SizedBox(
                 height: 50,

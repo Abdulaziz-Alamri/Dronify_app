@@ -14,7 +14,7 @@ class BottomNav extends StatelessWidget {
     final List<IconData> iconList = [
       FontAwesomeIcons.house,
       FontAwesomeIcons.rectangleList,
-      Icons.calendar_month,
+      FontAwesomeIcons.users,
       Icons.person,
     ];
 

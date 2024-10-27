@@ -1,11 +1,17 @@
+import 'package:dronify_mngmt/Employee_Home/bloc/orders_bloc_bloc.dart';
+import 'package:dronify_mngmt/Employee_Home/bloc/orders_bloc_event.dart';
 import 'package:dronify_mngmt/Employee_Order/order_screen.dart';
 import 'package:flutter/material.dart';
 
 class AvailbleOrders extends StatelessWidget {
-  final Map<String, dynamic> order;
+  final Map<String, dynamic>? order;
+  final OrdersBloc ordersBloc;
 
-  const AvailbleOrders({super.key, required this.order});
-
+  const AvailbleOrders({
+    super.key,
+    required this.order,
+    required this.ordersBloc,
+  });
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -50,30 +56,29 @@ class AvailbleOrders extends StatelessWidget {
                   width: 15,
                 ),
                 Expanded(
-                  // Use Expanded to allow the button to fit properly
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'Building Cleaning',
+                      Text(
+                        order?['service']?['name'] ?? 'Service Name',
                         style: TextStyle(
                             fontSize: 14, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(
                         height: 5,
                       ),
-                      const Text(
-                        'Description of the services',
+                      Text(
+                        order?['service']?['description'] ??
+                            'Service Description',
                         softWrap: true,
-                        style:
-                            TextStyle(fontSize: 12, color: Color(0xffA4A4AA)),
+                        style: const TextStyle(
+                            fontSize: 12, color: Color(0xffA4A4AA)),
                       ),
                     ],
                   ),
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    // Show dialog when button is pressed
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
@@ -84,22 +89,36 @@ class AvailbleOrders extends StatelessWidget {
                           actions: [
                             TextButton(
                               onPressed: () {
-                                Navigator.of(context).pop(); // Close the dialog
-                              },
-                              child: const Text('No'),
-                            ),
-                            TextButton(
-                              onPressed: () {
+                                ordersBloc.add(
+                                  UpdateOrderStatus(
+                                      orderId: order?['order_id'],
+                                      newStatus: 'confirmed'),
+                                );
                                 Navigator.of(context).pop();
-                                // Navigate to OrderScreen
+
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => OrderScreen(),
+                                    builder: (context) =>
+                                        OrderScreen(orderId: order!['order_id']),
                                   ),
                                 );
                               },
                               child: const Text('Yes'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => OrderScreen(
+                                      orderId: order!['order_id'],
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: const Text('No'),
                             ),
                           ],
                         );
@@ -119,8 +138,8 @@ class AvailbleOrders extends StatelessWidget {
                 ),
               ],
             ),
-            const Text(
-              'Price: 350 SAR',
+            Text(
+              'Price: ${order!['total_price'] ?? 'N/A'} SAR',
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.bold,

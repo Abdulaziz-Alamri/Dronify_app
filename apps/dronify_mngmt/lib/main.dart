@@ -9,7 +9,7 @@ import 'package:dronify_mngmt/utils/setup.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await setup();
   runApp(const MainApp());
@@ -23,7 +23,7 @@ class MainApp extends StatelessWidget {
     return Sizer(
       builder: (context, orientation, deviceType) {
         return MaterialApp(
-            debugShowCheckedModeBanner: false, home: BottomNav());
+            debugShowCheckedModeBanner: false, home: EmployeeHome());
       },
     );
   }
