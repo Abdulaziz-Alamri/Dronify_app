@@ -110,6 +110,12 @@
       "languageVersion": "2.19"
     },
     {
+      "name": "flutter_dotenv",
+      "rootUri": "file:///Users/muhannad/.pub-cache/hosted/pub.dev/flutter_dotenv-5.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "flutter_link_previewer",
       "rootUri": "file:///Users/muhannad/.pub-cache/hosted/pub.dev/flutter_link_previewer-3.2.2",
       "packageUri": "lib/",
@@ -428,7 +434,7 @@
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2024-10-27T03:25:56.371972Z",
+  "generated": "2024-10-27T08:01:44.781176Z",
   "generator": "pub",
   "generatorVersion": "3.5.2",
   "flutterRoot": "file:///Users/muhannad/development/flutter",
