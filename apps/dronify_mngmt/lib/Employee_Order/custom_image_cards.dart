@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class CustomImageCards extends StatelessWidget {
-  const CustomImageCards({super.key});
+  final List<String> imageUrls;
+
+  CustomImageCards({super.key, required this.imageUrls});
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +21,12 @@ class CustomImageCards extends StatelessWidget {
               elevation: 5,
               shadowColor: Colors.black,
               color: Colors.white,
-              child: Image.asset(
-                'assets/drone.png',
+              child: Image.network(
+                imageUrls[index], // جلب الصورة من الرابط
                 fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Icon(Icons.broken_image);
+                },
               ),
             ),
           );
@@ -40,13 +45,16 @@ class CustomImageCards extends StatelessWidget {
               child: Stack(
                 clipBehavior: Clip.none,
                 children: [
-                  Image.asset(
-                    'assets/drone.png',
+                  Image.network(
+                    imageUrls[3], // استخدم صورة إضافية
                     fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Icon(Icons.broken_image);
+                    },
                   ),
                   Center(
                     child: Text(
-                      '+12',
+                      '+${imageUrls.length - 3}', // عرض العدد المتبقي من الصور
                       style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
