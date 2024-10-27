@@ -227,21 +227,18 @@ class OrderScreen extends StatelessWidget {
                 ),
                 child: ElevatedButton(
                   onPressed: () {
-
-                    // Navigator.
-
-                    // saveOrder(
-                    //     customerId: order.customerId!,
-                    //     employeeId: order.employeeId!,
-                    //     serviceId: order.serviceId!,
-                    //     squareMeters: order.squareMeters!,
-                    //     reservationDate: order.reservationDate!,
-                    //     reservationTime: TimeOfDay.now(),
-                    //     totalPrice: order.totalPrice!,
-                    //     imageUrls: [],
-                    //     latitude: order.address![0],
-                    //     longitude: order.address![1],
-                    //     imageFiles: images);
+                    saveOrder(
+                        customerId: order.customerId!,
+                        employeeId: order.employeeId!,
+                        serviceId: order.serviceId!,
+                        squareMeters: order.squareMeters!,
+                        reservationDate: order.reservationDate!,
+                        reservationTime: TimeOfDay.now(),
+                        totalPrice: order.totalPrice!,
+                        imageUrls: [],
+                        latitude: order.address![0],
+                        longitude: order.address![1],
+                        imageFiles: images);
 
                     // showModalBottomSheet(
                     //   context: context,
