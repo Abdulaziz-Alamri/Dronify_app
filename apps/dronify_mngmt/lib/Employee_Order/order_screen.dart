@@ -12,6 +12,7 @@ import 'package:sizer/sizer.dart';
 import 'dart:io';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:maps_launcher/maps_launcher.dart';
 
 class OrderScreen extends StatefulWidget {
   final int orderId;
@@ -24,10 +25,10 @@ class OrderScreen extends StatefulWidget {
 
 class _OrderScreenState extends State<OrderScreen> {
   final supabase = Supabase.instance.client;
-  XFile? _image;
   final ImagePicker _picker = ImagePicker();
   OrderModel? orderData;
   LatLng? currentLocation;
+  List<XFile> _selectedImages = [];
 
   @override
   void initState() {
@@ -38,29 +39,26 @@ class _OrderScreenState extends State<OrderScreen> {
 
   double? _dmsToDecimal(String dms) {
     final dmsPattern =
-        RegExp(r'''(\d+)[°\s]*(\d+)\'\s*(\d+\.?\d*)"?\s*([NSEW]?)''');
+        RegExp(r"""(-?\d+)[°]\s*(\d+)[']\s*(\d+\.?\d*)["]\s*([NSEW]?)""");
     final match = dmsPattern.firstMatch(dms);
 
-    if (match == null) {
-      print("Invalid DMS format: $dms");
+    if (match != null) {
+      final degrees = double.parse(match.group(1)!);
+      final minutes = double.parse(match.group(2)!);
+      final seconds = double.parse(match.group(3)!);
+      final direction = match.group(4);
+
+      double decimal = degrees + (minutes / 60) + (seconds / 3600);
+
+      if (direction == 'S' || direction == 'W') {
+        decimal = -decimal;
+      }
+
+      return decimal;
+    } else {
+      print('Invalid DMS format: $dms');
       return null;
     }
-
-    // استخراج الدرجات والدقائق والثواني والاتجاه
-    final degrees = double.tryParse(match.group(1)!) ?? 0.0;
-    final minutes = double.tryParse(match.group(2)!) ?? 0.0;
-    final seconds = double.tryParse(match.group(3)!) ?? 0.0;
-    final direction = match.group(4);
-
-    // حساب الدرجة العشرية
-    double decimal = degrees + (minutes / 60) + (seconds / 3600);
-
-    // تحويل الاتجاه إلى سالب إذا كان الاتجاه جنوب أو غرب
-    if (direction == 'S' || direction == 'W') {
-      decimal = -decimal;
-    }
-
-    return decimal;
   }
 
   Future<void> _getCurrentLocation() async {
@@ -82,7 +80,6 @@ class _OrderScreenState extends State<OrderScreen> {
         throw 'Location permissions are permanently denied.';
       }
 
-      // الحصول على الموقع الحالي إذا كانت الأذونات مفعلة
       Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high,
       );
@@ -121,11 +118,30 @@ class _OrderScreenState extends State<OrderScreen> {
     }
   }
 
-  Future<void> _pickImage() async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-    setState(() {
-      _image = pickedFile;
-    });
+  Future<void> _pickImages() async {
+    final pickedFiles = await _picker.pickMultiImage();
+    if (pickedFiles != null) {
+      setState(() {
+        _selectedImages = pickedFiles.take(4).toList();
+      });
+    }
+  }
+
+  void zoom(BuildContext context, File imageFile) {
+    showDialog(
+      context: context,
+      builder: (context) => Dialog(
+        child: GestureDetector(
+          onTap: () => Navigator.of(context).pop(),
+          child: InteractiveViewer(
+            child: Image.file(
+              imageFile,
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   @override
@@ -256,9 +272,13 @@ class _OrderScreenState extends State<OrderScreen> {
                               ),
                             ],
                           ),
-                          child: CustomImageCards(
-                            imageUrls: orderData!.images ?? ['s'],
-                          ),
+                          child: (orderData!.images != null &&
+                                  orderData!.images!.isNotEmpty)
+                              ? CustomImageCards(
+                                  imageUrls: orderData!.images!,
+                                )
+                              : const Center(
+                                  child: Text('No images available')),
                         ),
                         const SizedBox(height: 15),
                         Container(
@@ -366,7 +386,7 @@ class _OrderScreenState extends State<OrderScreen> {
                   ),
                   const SizedBox(height: 15),
                   GestureDetector(
-                    onTap: _pickImage,
+                    onTap: _pickImages,
                     child: Container(
                       width: 60,
                       height: 60,
@@ -381,13 +401,55 @@ class _OrderScreenState extends State<OrderScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 2.h),
-                  _image != null
-                      ? Image.file(
-                          File(_image!.path),
+                  const SizedBox(height: 15),
+                  _selectedImages.isNotEmpty
+                      ? Container(
                           height: 100,
+                          width: 345,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(16),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.05),
+                                blurRadius: 3,
+                                offset: const Offset(0, 1),
+                              ),
+                            ],
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: _selectedImages.map((image) {
+                              return GestureDetector(
+                                onTap: () => zoom(context, File(image.path)),
+                                child: SizedBox(
+                                  height: 67,
+                                  width: 70,
+                                  child: Card(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    elevation: 5,
+                                    shadowColor: Colors.black,
+                                    color: Colors.white,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(8),
+                                      child: Image.file(
+                                        File(image.path),
+                                        fit: BoxFit.cover,
+                                        errorBuilder:
+                                            (context, error, stackTrace) {
+                                          return Icon(Icons.broken_image);
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                          ),
                         )
-                      : const Text('No image selected'),
+                      : const Text('No images selected'),
                   const SizedBox(height: 15),
                   Center(
                     child: Container(
@@ -407,14 +469,26 @@ class _OrderScreenState extends State<OrderScreen> {
                         ),
                       ),
                       child: ElevatedButton(
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) =>
+                        //     //const ConfirmScreen(),
+                        //   ),
+                        // );
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const ConfirmScreen(),
-                            ),
-                          );
+                          if (currentLocation != null) {
+                            final latitude = _dmsToDecimal(
+                                    orderData?.address?[0]['latitude']) ??
+                                currentLocation!.latitude;
+                            final longitude = _dmsToDecimal(
+                                    orderData?.address?[0]['longitude']) ??
+                                currentLocation!.longitude;
+
+                            MapsLauncher.launchCoordinates(latitude, longitude);
+                          }
                         },
+
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.transparent,
                           shadowColor: Colors.transparent,

@@ -121,7 +121,7 @@ class _EmployeeHomeState extends State<EmployeeHome>
                     ),
                     SliverToBoxAdapter(
                       child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 16),
+                        padding: const EdgeInsets.all(8.0),
                         child: Column(
                           children: [
                             CircleAvatar(
@@ -290,9 +290,7 @@ class _EmployeeHomeState extends State<EmployeeHome>
                                   ),
                                   // Available Orders Tab
                                   SingleChildScrollView(
-                                    
                                     child: state.isAvailableOrdersEmpty
-                                    
                                         ? Center(
                                             child: Text(
                                                 'No available orders at the moment.'))
