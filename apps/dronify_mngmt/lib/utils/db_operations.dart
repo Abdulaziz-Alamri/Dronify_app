@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dronify_mngmt/utils/order_model.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -83,6 +84,6 @@ Future<void> saveOrder({
   }
 }
 
-cancelOrder(){
-
+cancelOrder({required OrderModel order}) async {
+  await supabase.from('orders').delete().eq('order_id', order.orderId!);
 }

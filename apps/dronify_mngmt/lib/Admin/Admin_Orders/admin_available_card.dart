@@ -1,8 +1,10 @@
 import 'package:dronify_mngmt/Employee_Order/order_screen.dart';
+import 'package:dronify_mngmt/utils/db_operations.dart';
+import 'package:dronify_mngmt/utils/order_model.dart';
 import 'package:flutter/material.dart';
 
 class AdminAvailableCard extends StatelessWidget {
-  final Map<String, dynamic> order;
+  final OrderModel order;
 
   const AdminAvailableCard({super.key, required this.order});
 
@@ -89,7 +91,7 @@ class AdminAvailableCard extends StatelessWidget {
                             TextButton(
                               onPressed: () {
                                 Navigator.of(context).pop();
-                                cancelOrder();
+                                cancelOrder(order: order);
                               },
                               child: const Text('Yes'),
                             ),

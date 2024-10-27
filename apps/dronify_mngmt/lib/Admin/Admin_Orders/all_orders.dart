@@ -2,6 +2,7 @@ import 'package:dronify_mngmt/Admin/Admin_Orders/admin_available_card.dart';
 import 'package:dronify_mngmt/Employee_Home/availble_orders.dart';
 import 'package:dronify_mngmt/Employee_Home/employee_home.dart';
 import 'package:dronify_mngmt/Employee_Home/order_card.dart';
+import 'package:dronify_mngmt/utils/order_model.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -32,19 +33,31 @@ class _AllOrdersState extends State<AllOrders>
           .from('orders')
           .select('*, app_user!inner(name, phone), service(name)')
           .eq('status', 'complete');
-      completeOrders = completeOrdersResponse as List<dynamic>;
+
+      for (var object in completeOrdersResponse) {
+        final order = OrderModel.fromJson(object);
+        completeOrders.add(order);
+      }
 
       final incompleteOrdersResponse = await supabase
           .from('orders')
           .select('*, app_user!inner(name, phone), service(name)')
           .eq('status', 'confirmed');
-      incompleteOrders = incompleteOrdersResponse as List<dynamic>;
+
+       for (var object in incompleteOrdersResponse) {
+        final order = OrderModel.fromJson(object);
+        incompleteOrders.add(order);
+      }
 
       final availableOrdersResponse = await supabase
           .from('orders')
           .select('*, app_user!inner(name, phone), service(name)')
           .eq('status', 'pending');
-      availableOrders = availableOrdersResponse as List<dynamic>;
+
+          for (var object in availableOrdersResponse) {
+        final order = OrderModel.fromJson(object);
+        availableOrders.add(order);
+      }
 
       setState(() {});
     } catch (error) {
