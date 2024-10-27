@@ -1,7 +1,13 @@
+import 'package:dronify/repository/auth_repository.dart';
 import 'package:dronify/src/Auth/signup.dart';
 import 'package:flutter/material.dart';
 
 class SignIn extends StatelessWidget {
+  test() async {
+    var user = await AuthRepository().getCurrentUser();
+    
+  }
+
   const SignIn({super.key});
 
   @override
@@ -148,7 +154,7 @@ class SignIn extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const Signup()),
+                                    builder: (context) =>  Signup()),
                               );
                             },
                             child: RichText(

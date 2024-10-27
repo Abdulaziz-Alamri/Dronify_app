@@ -15,7 +15,7 @@ class BottomNav extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<IconData> iconList = [
       FontAwesomeIcons.house,
-      FontAwesomeIcons.rectangleList,
+      FontAwesomeIcons.cartShopping,
       Icons.calendar_month,
       Icons.person,
     ];
@@ -42,8 +42,9 @@ class BottomNav extends StatelessWidget {
           ),
           floatingActionButton: FloatingActionButton(
             onPressed: () async {
-             String chatId = await checkChat(chatId:  Random().nextInt(999999999).toString());
-             
+              String chatId = await checkChat(
+                  chatId: Random().nextInt(999999999).toString());
+
               Navigator.push(
                 context,
                 MaterialPageRoute(

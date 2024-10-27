@@ -1,3 +1,15 @@
+// Configure the Gradle buildscript dependencies
+buildscript {
+    repositories {
+        google()  // Google's Maven repository
+        mavenCentral()  // Central Maven repository
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.2.0'  // Android Gradle Plugin
+    }
+}
+
+// Configure repositories for all subprojects/modules
 allprojects {
     repositories {
         google()
@@ -5,14 +17,16 @@ allprojects {
     }
 }
 
+// Customize the root project build directory
 rootProject.buildDir = "../build"
+
+// Configure subprojects with custom build directories
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
-}
-subprojects {
     project.evaluationDependsOn(":app")
 }
 
+// Clean task to remove the build directory
 tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }
