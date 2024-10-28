@@ -1,21 +1,49 @@
+import 'dart:developer';
+
+import 'package:dronify_mngmt/Employee_Home/bloc/orders_bloc_bloc.dart';
 import 'package:dronify_mngmt/models/employee_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:sizer/sizer.dart';
 
-class EmployeeDetailsPage extends StatelessWidget {
-    final EmployeeModel employee;
+class EmployeeDetailsScreen extends StatefulWidget {
+  final EmployeeModel employee;
 
-  const EmployeeDetailsPage({
-    super.key,
-    required this.employee
-  });
+  const EmployeeDetailsScreen({super.key, required this.employee});
+
+  @override
+  State<EmployeeDetailsScreen> createState() => _EmployeeDetailsScreenState();
+}
+
+class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
+  double? percentage;
+  @override
+  void initState() {
+    getCompletedPercentage(employeeId: widget.employee.employeeId);
+    super.initState();
+  }
+
+  getCompletedPercentage({required String employeeId}) async {
+    try {
+      final response = await supabase.from('orders').select('''
+          (COUNT(*) FILTER (WHERE status = 'complete')::FLOAT / NULLIF(COUNT(*), 0)) * 100 AS completed_percentage
+        ''').eq('employee_id', employeeId).maybeSingle();
+
+      log('$response');
+
+      // Parse the response
+      percentage = response!['completed_percentage'] as double? ?? 0.0;
+      log('$percentage');
+    } catch (error) {
+      print("Error fetching completed orders percentage: $error");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(employee.name),
+        title: Text(widget.employee.name),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -39,7 +67,8 @@ class EmployeeDetailsPage extends StatelessWidget {
                 child: Row(
                   children: [
                     CircleAvatar(
-                      backgroundImage: AssetImage(employee.imageUrl ?? 'assets/pfp_emp.png'),
+                      backgroundImage: AssetImage(
+                          widget.employee.imageUrl ?? 'assets/pfp_emp.png'),
                       radius: 50,
                     ),
                     const SizedBox(width: 20),
@@ -48,13 +77,13 @@ class EmployeeDetailsPage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Name: ${employee.name}',
+                            'Name: ${widget.employee.name}',
                             style: const TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(height: 10),
                           Text(
-                            'Phone: ${employee.phone}',
+                            'Phone: ${widget.employee.phone}',
                             style: const TextStyle(
                                 fontSize: 16, color: Colors.grey),
                           ),
@@ -66,7 +95,7 @@ class EmployeeDetailsPage extends StatelessWidget {
                                 style: TextStyle(fontSize: 18),
                               ),
                               RatingBarIndicator(
-                                rating: employee.rating ?? 0,
+                                rating: widget.employee.rating ?? 0,
                                 itemBuilder: (context, index) => const Icon(
                                   Icons.star,
                                   color: Colors.amber,
@@ -101,7 +130,7 @@ class EmployeeDetailsPage extends StatelessWidget {
                 ),
                 child: LinearProgressIndicator(
                   minHeight: 2.5.h,
-                  value: 0.75,
+                  value: percentage,
                   borderRadius: BorderRadius.circular(25),
                   backgroundColor: Colors.white,
                   valueColor:

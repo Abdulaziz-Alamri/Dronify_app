@@ -76,7 +76,6 @@ class AdminDataLayer {
         EmployeeModel emp = EmployeeModel.fromJson(element);
         allEmployees.add(emp);
       }
-           log('$allEmployees');
     } catch (error) {
       print("Error fetching employees: $error");
     }

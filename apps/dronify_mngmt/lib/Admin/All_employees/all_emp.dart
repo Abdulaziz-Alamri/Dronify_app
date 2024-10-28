@@ -1,4 +1,4 @@
-import 'package:dronify_mngmt/Admin/EmployeeDetails/employee.dart';
+import 'package:dronify_mngmt/Admin/EmployeeDetails/employee_details_screen.dart';
 import 'package:dronify_mngmt/Admin/All_employees/employeecard.dart';
 import 'package:dronify_mngmt/Admin/admin_datalayer/admin_data_layer.dart';
 import 'package:dronify_mngmt/utils/setup.dart';
@@ -43,32 +43,19 @@ class AllEmp extends StatelessWidget {
           SliverList(
             delegate: SliverChildBuilderDelegate(
               (BuildContext context, int index) {
-                // final List<Map<String, dynamic>> employees = List.generate(
-                //   10,
-                //   (index) => {
-                //     'name': 'Employee ${index + 1}',
-                //     'phone': '0966 ${9000 + index}',
-                //     'rating': (index % 5 + 1).toDouble(),
-                //     'image': 'assets/Avatar.png',
-                //   },
-                // );
-
-                final employee = locator.get<AdminDataLayer>().allEmployees[index];
-
+                final employee =
+                    locator.get<AdminDataLayer>().allEmployees[index];
                 return GestureDetector(
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => EmployeeDetailsPage(
-                          employee:employee
-                        ),
+                        builder: (context) =>
+                            EmployeeDetailsScreen(employee: employee),
                       ),
                     );
                   },
-                  child: EmployeeCardWidget(
-                   employee:employee
-                  ),
+                  child: EmployeeCardWidget(employee: employee),
                 );
               },
               childCount: locator.get<AdminDataLayer>().allEmployees.length,

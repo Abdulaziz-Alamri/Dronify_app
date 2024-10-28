@@ -1,7 +1,9 @@
 import 'package:dronify_mngmt/Employee_Home/bloc/orders_bloc_bloc.dart';
 import 'package:dronify_mngmt/Employee_Home/bloc/orders_bloc_event.dart';
 import 'package:dronify_mngmt/Employee_Order/order_screen.dart';
+import 'package:dronify_mngmt/utils/db_operations.dart';
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AvailbleOrders extends StatelessWidget {
   final Map<String, dynamic>? order;
@@ -92,15 +94,16 @@ class AvailbleOrders extends StatelessWidget {
                                 ordersBloc.add(
                                   UpdateOrderStatus(
                                       orderId: order?['order_id'],
-                                      newStatus: 'confirmed'),
+                                      newStatus: 'confirmed',
+                                      employeeId: Supabase.instance.client.auth.currentUser!.id
+                                      ),
                                 );
                                 Navigator.of(context).pop();
-
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) =>
-                                        OrderScreen(orderId: order!['order_id']),
+                                    builder: (context) => OrderScreen(
+                                        orderId: order!['order_id']),
                                   ),
                                 );
                               },

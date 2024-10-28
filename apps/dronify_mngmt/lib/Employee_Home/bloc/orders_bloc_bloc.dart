@@ -47,7 +47,9 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
 
       await supabase
           .from('orders')
-          .update({'status': event.newStatus})
+          .update({
+            'employee_id':event.employeeId,
+            'status': event.newStatus})
           .eq('order_id', event.orderId);
 
       add(FetchOrders());
