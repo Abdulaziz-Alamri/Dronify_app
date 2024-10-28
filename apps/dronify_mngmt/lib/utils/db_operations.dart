@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:path/path.dart'; // Import path package for file name operations
+import 'package:path/path.dart';
+import 'package:supabase_flutter/supabase_flutter.dart'; // Import path package for file name operations
 
 final supabase = Supabase.instance.client;
 
