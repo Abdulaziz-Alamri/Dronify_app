@@ -12,19 +12,12 @@ import 'package:sizer/sizer.dart';
 
 class OrderScreen extends StatelessWidget {
   final OrderModel order;
+  final ServiceModel service;
   final List<XFile> images;
-  // final ServiceModel service;
-  const OrderScreen({super.key, required this.order, required this.images});
+  const OrderScreen({super.key, required this.order, required this.images, required this.service});
 
   @override
   Widget build(BuildContext context) {
-    final ServiceModel service = ServiceModel(
-        serviceId: 1,
-        name: 'Building Cleaning',
-        description:
-            'A competitive type of auction in which participants compete for a contract, offering each time a price lower than that of competitors',
-        mainImage: 'assets/drone.png',
-        pricePerSqm: 3);
     return Scaffold(
       backgroundColor: const Color(0xffF5F5F7),
       appBar: AppBar(
@@ -227,21 +220,17 @@ class OrderScreen extends StatelessWidget {
                 ),
                 child: ElevatedButton(
                   onPressed: () {
-
-                    // Navigator.
-
-                    // saveOrder(
-                    //     customerId: order.customerId!,
-                    //     employeeId: order.employeeId!,
-                    //     serviceId: order.serviceId!,
-                    //     squareMeters: order.squareMeters!,
-                    //     reservationDate: order.reservationDate!,
-                    //     reservationTime: TimeOfDay.now(),
-                    //     totalPrice: order.totalPrice!,
-                    //     imageUrls: [],
-                    //     latitude: order.address![0],
-                    //     longitude: order.address![1],
-                    //     imageFiles: images);
+                    saveOrder(
+                        customerId: order.customerId!,
+                        serviceId: order.serviceId!,
+                        squareMeters: order.squareMeters!,
+                        reservationDate: order.reservationDate!,
+                        reservationTime: TimeOfDay.now(),
+                        totalPrice: order.totalPrice!,
+                        imageUrls: [],
+                        latitude: order.address![0],
+                        longitude: order.address![1],
+                        imageFiles: images);
 
                     // showModalBottomSheet(
                     //   context: context,

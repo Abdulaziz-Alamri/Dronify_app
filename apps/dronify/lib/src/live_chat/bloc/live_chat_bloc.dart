@@ -34,6 +34,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
                   .select('*')
                   .eq('message_id', messageId)
                   .eq('sender_id', 'a581cd5e-c67c-4522-a4bb-01b795c43387')
+                  .eq('chat_id', chatId)
                   .maybeSingle();
 
               if (response != null) {
@@ -74,7 +75,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
           text: message['message'],
         );
       }).toList();
-
+      
       emit(ChatLoaded(messages));
     } catch (error) {
       emit(ChatError('Failed to load messages'));

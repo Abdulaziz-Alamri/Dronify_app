@@ -1,7 +1,9 @@
+import 'package:dronify_mngmt/Admin/Admin_Orders/admin_available_card.dart';
+import 'package:dronify_mngmt/Admin/admin_datalayer/admin_data_layer.dart';
+import 'package:dronify_mngmt/Employee_Home/order_card.dart';
+import 'package:dronify_mngmt/utils/setup.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-import 'package:dronify_mngmt/Employee_Home/availble_orders.dart';
-import 'package:dronify_mngmt/Employee_Home/order_card.dart';
 
 class AllOrders extends StatefulWidget {
   const AllOrders({super.key});
@@ -147,49 +149,52 @@ class _AllOrdersState extends State<AllOrders>
                     child: TabBarView(
                       controller: tabController,
                       children: [
+                        // Complete Orders Tab
                         SingleChildScrollView(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              ...List.generate(10, (index) {
-                                return const Column(
-                                  children: [
-                                    //  OrderCard(),
-                                    SizedBox(height: 15),
-                                  ],
-                                );
-                              })
-                            ],
+                            children: locator.get<AdminDataLayer>().completeOrders.map((order) {
+                              return Column(
+                                children: [
+                                  OrderCard(
+                                    order: order,
+                                    isAdmin: true,
+                                  ),
+                                  SizedBox(height: 15),
+                                ],
+                              );
+                            }).toList(),
                           ),
                         ),
+                        // Incomplete Orders Tab
                         SingleChildScrollView(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              ...List.generate(3, (index) {
-                                return const Column(
-                                  children: [
-                                    //   OrderCard(),
-                                    SizedBox(height: 15),
-                                  ],
-                                );
-                              })
-                            ],
+                            children: locator.get<AdminDataLayer>().incompleteOrders.map((order) {
+                              return Column(
+                                children: [
+                                  OrderCard(
+                                    order: order,
+                                    isAdmin: true,
+                                  ),
+                                  SizedBox(height: 15),
+                                ],
+                              );
+                            }).toList(),
                           ),
                         ),
+                        // Available Orders Tab
                         SingleChildScrollView(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              ...List.generate(3, (index) {
-                                return const Column(
-                                  children: [
-                                    //   AvailbleOrders(),
-                                    SizedBox(height: 15),
-                                  ],
-                                );
-                              })
-                            ],
+                            children: locator.get<AdminDataLayer>().availableOrders.map((order) {
+                              return Column(
+                                children: [
+                                  AdminAvailableCard(order: order),
+                                  SizedBox(height: 15),
+                                ],
+                              );
+                            }).toList(),
                           ),
                         ),
                       ],

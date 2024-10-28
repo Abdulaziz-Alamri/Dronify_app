@@ -39,11 +39,9 @@ class OrderModel {
           : null,
       employeeId: json['employee_id'] ?? '',
       serviceId: json['service_id'] ?? 0,
-      images: json['images'] != null
-          ? List<String>.from(json['images'].map((image) => image['image_url']))
-          : [],
+      images: json['images'] != null ? List<String>.from(json['images']) : [],
       address: json['address'] != null
-          ? List<Map<String, dynamic>>.from(json['address'])
+          ? List.from(json['address'])
           : [],
       squareMeters: (json['square_meters'] ?? 0).toDouble(),
       reservationDate: json['reservation_date'] != null

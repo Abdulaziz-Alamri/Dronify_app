@@ -1,9 +1,10 @@
 import 'dart:io';
 
+import 'package:dronify_mngmt/models/order_model.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:path/path.dart';
-import 'package:supabase_flutter/supabase_flutter.dart'; // Import path package for file name operations
 
 final supabase = Supabase.instance.client;
 
@@ -81,4 +82,8 @@ Future<void> saveOrder({
     print("Error saving order: $error");
     throw error;
   }
+}
+
+cancelOrder({required OrderModel order}) async {
+  await supabase.from('orders').delete().eq('order_id', order.orderId!);
 }

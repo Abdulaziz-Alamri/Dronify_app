@@ -1,7 +1,9 @@
+import 'package:dronify/models/service_model.dart';
 import 'package:dronify/src/Services/services.dart';
 import 'package:flutter/material.dart';
 
 class ServiceCard extends StatelessWidget {
+  final int serviceId;
   final String imageUrl;
   final String title;
   final String description;
@@ -9,6 +11,7 @@ class ServiceCard extends StatelessWidget {
 
   const ServiceCard({
     super.key,
+    required this.serviceId,
     required this.imageUrl,
     required this.title,
     required this.description,
@@ -23,10 +26,15 @@ class ServiceCard extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) => Services(
-              imageUrl: imageUrl,
-              title: title,
-              description: description,
-              iconPath: iconPath,
+              service: ServiceModel.fromJson({
+              'service_id': serviceId,
+      'name': title,
+      'description': description,
+      'main_image': imageUrl,
+      'price_per_sqm': 3,
+      'icon_path': iconPath,
+              }),
+              
             ),
           ),
         );

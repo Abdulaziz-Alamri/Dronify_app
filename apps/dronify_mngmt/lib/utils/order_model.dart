@@ -33,7 +33,7 @@ class OrderModel {
     return OrderModel(
       orderId: json['order_id'],
       customerId: json['user_id'],
-      employeeId: json['employee_id'] ?? null,
+      employeeId: json['employee_id']?? null,
       serviceId: json['service_id'],
       images: List<String>.from(json['images']),
       address: json['address'],

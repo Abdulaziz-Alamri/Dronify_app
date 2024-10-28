@@ -1,21 +1,38 @@
+import 'package:dronify_mngmt/Admin/Admin_Orders/admin_order_card.dart';
+import 'package:dronify_mngmt/Admin/admin_datalayer/admin_data_layer.dart';
 import 'package:dronify_mngmt/Employee_Order/order_screen.dart';
+import 'package:dronify_mngmt/models/order_model.dart';
+import 'package:dronify_mngmt/models/service_model.dart';
+import 'package:dronify_mngmt/utils/setup.dart';
 import 'package:flutter/material.dart';
 
 class OrderCard extends StatelessWidget {
-  final Map<String, dynamic>? order;
+  final OrderModel order;
+  final bool isAdmin;
 
-  const OrderCard({super.key, required this.order});
+  const OrderCard({super.key, required this.order, this.isAdmin = false});
 
   @override
   Widget build(BuildContext context) {
+    ServiceModel service =
+        locator.get<AdminDataLayer>().allServices[order.serviceId! - 1];
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => OrderScreen(orderId: order!['order_id']),
-          ),
-        );
+        if (isAdmin) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AdminOrderCard(order: order, service: service,),
+            ),
+          );
+        } else {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => OrderScreen(orderId: order.orderId!),
+            ),
+          );
+        }
       },
       child: Center(
         child: Container(
@@ -62,7 +79,7 @@ class OrderCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        order?['service']?['name'] ?? 'Service Name',
+                        service.name,
                         style: TextStyle(
                             fontSize: 14, fontWeight: FontWeight.bold),
                       ),
@@ -72,8 +89,7 @@ class OrderCard extends StatelessWidget {
                       SizedBox(
                         width: 250,
                         child: Text(
-                          order?['service']?['description'] ??
-                              'Service Description',
+                          service.description,
                           softWrap: true,
                           style:
                               TextStyle(fontSize: 12, color: Color(0xffA4A4AA)),
@@ -84,7 +100,7 @@ class OrderCard extends StatelessWidget {
                 ],
               ),
               Text(
-                'Price: ${order?['total_price'] ?? 'N/A'} SAR',
+                'Price: ${order.totalPrice} SAR',
                 style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
