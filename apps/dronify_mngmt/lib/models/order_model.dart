@@ -39,9 +39,7 @@ class OrderModel {
           : null,
       employeeId: json['employee_id'] ?? '',
       serviceId: json['service_id'] ?? 0,
-      images: json['images'] != null
-          ? List<String>.from(json['images'].map((image) => image['image_url']))
-          : [],
+      images: json['images'] != null ? List<String>.from(json['images']) : [],
       address: json['address'] != null
           ? List.from(json['address'])
           : [],
