@@ -43,6 +43,7 @@ class AdminChatBloc extends Bloc<AdminChatEvent, AdminChatState> {
     final response = await supabase
         .from('live_chat')
         .select('*')
+        .eq('status', 'started')
         .order('created_at', ascending: false);
     if (response.isNotEmpty) {
       emit(ChatsLoaded(chats: response));

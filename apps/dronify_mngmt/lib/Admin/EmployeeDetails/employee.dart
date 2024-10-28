@@ -1,26 +1,21 @@
+import 'package:dronify_mngmt/models/employee_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:sizer/sizer.dart';
 
 class EmployeeDetailsPage extends StatelessWidget {
-  final String name;
-  final String phone;
-  final double rating;
-  final String image;
+    final EmployeeModel employee;
 
   const EmployeeDetailsPage({
     super.key,
-    required this.name,
-    required this.phone,
-    required this.rating,
-    required this.image,
+    required this.employee
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(name),
+        title: Text(employee.name),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -44,7 +39,7 @@ class EmployeeDetailsPage extends StatelessWidget {
                 child: Row(
                   children: [
                     CircleAvatar(
-                      backgroundImage: AssetImage(image),
+                      backgroundImage: AssetImage(employee.imageUrl ?? 'assets/pfp_emp.png'),
                       radius: 50,
                     ),
                     const SizedBox(width: 20),
@@ -53,13 +48,13 @@ class EmployeeDetailsPage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Name: $name',
+                            'Name: ${employee.name}',
                             style: const TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(height: 10),
                           Text(
-                            'Phone: $phone',
+                            'Phone: ${employee.phone}',
                             style: const TextStyle(
                                 fontSize: 16, color: Colors.grey),
                           ),
@@ -71,7 +66,7 @@ class EmployeeDetailsPage extends StatelessWidget {
                                 style: TextStyle(fontSize: 18),
                               ),
                               RatingBarIndicator(
-                                rating: rating,
+                                rating: employee.rating ?? 0,
                                 itemBuilder: (context, index) => const Icon(
                                   Icons.star,
                                   color: Colors.amber,

@@ -1,5 +1,7 @@
 import 'package:dronify_mngmt/Admin/EmployeeDetails/employee.dart';
 import 'package:dronify_mngmt/Admin/All_employees/employeecard.dart';
+import 'package:dronify_mngmt/Admin/admin_datalayer/admin_data_layer.dart';
+import 'package:dronify_mngmt/utils/setup.dart';
 import 'package:flutter/material.dart';
 
 class AllEmp extends StatelessWidget {
@@ -41,17 +43,17 @@ class AllEmp extends StatelessWidget {
           SliverList(
             delegate: SliverChildBuilderDelegate(
               (BuildContext context, int index) {
-                final List<Map<String, dynamic>> employees = List.generate(
-                  10,
-                  (index) => {
-                    'name': 'Employee ${index + 1}',
-                    'phone': '0966 578${9000 + index}',
-                    'rating': (index % 5 + 1).toDouble(),
-                    'image': 'assets/Avatar.png',
-                  },
-                );
+                // final List<Map<String, dynamic>> employees = List.generate(
+                //   10,
+                //   (index) => {
+                //     'name': 'Employee ${index + 1}',
+                //     'phone': '0966 ${9000 + index}',
+                //     'rating': (index % 5 + 1).toDouble(),
+                //     'image': 'assets/Avatar.png',
+                //   },
+                // );
 
-                final employee = employees[index];
+                final employee = locator.get<AdminDataLayer>().allEmployees[index];
 
                 return GestureDetector(
                   onTap: () {
@@ -59,23 +61,17 @@ class AllEmp extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) => EmployeeDetailsPage(
-                          name: employee['name']!,
-                          phone: employee['phone']!,
-                          rating: employee['rating']!,
-                          image: employee['image']!,
+                          employee:employee
                         ),
                       ),
                     );
                   },
                   child: EmployeeCardWidget(
-                    name: employee['name']!,
-                    phone: employee['phone']!,
-                    rating: employee['rating']!,
-                    image: employee['image']!,
+                   employee:employee
                   ),
                 );
               },
-              childCount: 5,
+              childCount: locator.get<AdminDataLayer>().allEmployees.length,
             ),
           ),
         ],

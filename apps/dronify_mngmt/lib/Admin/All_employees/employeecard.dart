@@ -1,19 +1,13 @@
+import 'package:dronify_mngmt/models/employee_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-
 class EmployeeCardWidget extends StatelessWidget {
-  final String name;
-  final String phone;
-  final double rating;
-  final String image;
+  final EmployeeModel employee;
 
   const EmployeeCardWidget({
     super.key,
-    required this.name,
-    required this.phone,
-    required this.rating,
-    required this.image,
+   required this.employee
   });
 
   @override
@@ -32,7 +26,7 @@ class EmployeeCardWidget extends StatelessWidget {
           child: Row(
             children: [
               CircleAvatar(
-                backgroundImage: AssetImage(image),
+                backgroundImage: AssetImage(employee.imageUrl ?? 'assets/pfp_emp.png'),
                 radius: 30,
               ),
               const SizedBox(width: 16),
@@ -40,15 +34,15 @@ class EmployeeCardWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    name,
+                    employee.name,
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  Text(phone),
+                  Text(employee.phone),
                 ],
               ),
               const Spacer(),
               RatingBarIndicator(
-                rating: rating,
+                rating: employee.rating ?? 0,
                 itemBuilder: (context, index) => const Icon(
                   Icons.star,
                   color: Colors.amber,
