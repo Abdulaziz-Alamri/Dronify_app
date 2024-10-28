@@ -16,7 +16,7 @@ class BottomNav extends StatelessWidget {
     final List<IconData> iconList = [
       FontAwesomeIcons.house,
       FontAwesomeIcons.cartShopping,
-      Icons.person,
+      FontAwesomeIcons.solidUser,
     ];
 
     return BlocProvider(
@@ -68,8 +68,8 @@ class BottomNav extends StatelessWidget {
                 decoration: const BoxDecoration(
                   color: Colors.black,
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(32),
-                    topRight: Radius.circular(32),
+                    topLeft: Radius.circular(50),
+                    topRight: Radius.circular(50),
                   ),
                 ),
                 child: AnimatedBottomNavigationBar.builder(
@@ -80,10 +80,13 @@ class BottomNav extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(
-                          iconList[index],
-                          size: 30,
-                          color: color,
+                        Padding(
+                          padding: EdgeInsets.only(top: 15),
+                          child: Icon(
+                            iconList[index],
+                            size: 23,
+                            color: color,
+                          ),
                         ),
                         if (isActive)
                           Container(
@@ -103,7 +106,7 @@ class BottomNav extends StatelessWidget {
                   activeIndex: currentPageIndex,
                   gapLocation: GapLocation.end,
                   gapWidth: 40,
-                  leftCornerRadius: 32,
+                  leftCornerRadius: 30,
                   rightCornerRadius: 0,
                   splashRadius: 30,
                   notchSmoothness: NotchSmoothness.softEdge,
