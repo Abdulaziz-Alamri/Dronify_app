@@ -1,9 +1,7 @@
-import 'dart:developer';
-
 import 'package:dronify_mngmt/Admin/Admin_Orders/admin_available_card.dart';
-import 'package:dronify_mngmt/Employee_Home/bloc/orders_bloc_bloc.dart';
+import 'package:dronify_mngmt/Admin/admin_datalayer/admin_data_layer.dart';
 import 'package:dronify_mngmt/Employee_Home/order_card.dart';
-import 'package:dronify_mngmt/models/order_model.dart';
+import 'package:dronify_mngmt/utils/setup.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -17,60 +15,11 @@ class AllOrders extends StatefulWidget {
 class _AllOrdersState extends State<AllOrders>
     with SingleTickerProviderStateMixin {
   late TabController tabController;
-  List<OrderModel> completeOrders = [];
-  List<OrderModel> incompleteOrders = [];
-  List<OrderModel> availableOrders = [];
 
   @override
   void initState() {
     tabController = TabController(length: 3, vsync: this);
-    fetchOrders();
     super.initState();
-  }
-
-  Future<void> fetchOrders() async {
-    try {
-      final completeOrdersResponse = await supabase
-          .from('orders')
-          .select('*, app_user!inner(name, phone), service(name)')
-          .eq('status', 'complete');
-
-      for (var element in completeOrdersResponse) {
-        OrderModel order = OrderModel.fromJson(element);
-        completeOrders.add(order);
-      }
-
-      // log('$completeOrders');
-
-      final incompleteOrdersResponse = await supabase
-          .from('orders')
-          .select('*, app_user!inner(name, phone), service(name)')
-          .eq('status', 'confirmed');
-
-      for (var element in incompleteOrdersResponse) {
-        OrderModel order = OrderModel.fromJson(element);
-        incompleteOrders.add(order);
-      }
-      // log('$incompleteOrders');
-
-      final availableOrdersResponse = await supabase
-          .from('orders')
-          .select('*, app_user!inner(name, phone), service(name)')
-          .eq('status', 'pending');
-
-      for (var element in availableOrdersResponse) {
-        log('here');
-        OrderModel order = OrderModel.fromJson(element);
-        log('message');
-        availableOrders.add(order);
-        log('1');
-      }
-      log('$availableOrders');
-
-      setState(() {});
-    } catch (error) {
-      print("Error fetching orders: $error");
-    }
   }
 
   @override
@@ -204,10 +153,13 @@ class _AllOrdersState extends State<AllOrders>
                         SingleChildScrollView(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
-                            children: completeOrders.map((order) {
+                            children: locator.get<AdminDataLayer>().completeOrders.map((order) {
                               return Column(
                                 children: [
-                                  OrderCard(order: order),
+                                  OrderCard(
+                                    order: order,
+                                    isAdmin: true,
+                                  ),
                                   SizedBox(height: 15),
                                 ],
                               );
@@ -218,10 +170,13 @@ class _AllOrdersState extends State<AllOrders>
                         SingleChildScrollView(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
-                            children: incompleteOrders.map((order) {
+                            children: locator.get<AdminDataLayer>().incompleteOrders.map((order) {
                               return Column(
                                 children: [
-                                  OrderCard(order: order),
+                                  OrderCard(
+                                    order: order,
+                                    isAdmin: true,
+                                  ),
                                   SizedBox(height: 15),
                                 ],
                               );
@@ -232,7 +187,7 @@ class _AllOrdersState extends State<AllOrders>
                         SingleChildScrollView(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
-                            children: availableOrders.map((order) {
+                            children: locator.get<AdminDataLayer>().availableOrders.map((order) {
                               return Column(
                                 children: [
                                   AdminAvailableCard(order: order),

@@ -55,11 +55,8 @@ Future<void> saveOrder({
           imageUrls.add(imageUrl);
 
           // Insert image details into the database
-          await supabase.from('images').insert({
-            'order_id': orderId,
-            'image_url': imageUrl,
-            'type': 'before'
-          });
+          await supabase.from('images').insert(
+              {'order_id': orderId, 'image_url': imageUrl, 'type': 'before'});
         } catch (error) {
           throw Exception('Failed to upload image: $error');
         }
@@ -86,7 +83,7 @@ checkChat({required String chatId}) async {
   final response = await supabase
       .from('live_chat')
       .select('chat_id')
-      .eq('user_id', '4252d26b-19f6-4f98-9f5a-a3ddc18f2fdd')
+      .eq('user_id', supabase.auth.currentUser!.id)
       .eq('status', 'started')
       .maybeSingle();
 
@@ -95,7 +92,7 @@ checkChat({required String chatId}) async {
   } else {
     await supabase.from('live_chat').insert({
       'chat_id': chatId,
-      'user_id': '4252d26b-19f6-4f98-9f5a-a3ddc18f2fdd',
+      'user_id': supabase.auth.currentUser!.id,
       'admin_id': 'a581cd5e-c67c-4522-a4bb-01b795c43387',
     });
     await supabase.from('chat_message').insert({
