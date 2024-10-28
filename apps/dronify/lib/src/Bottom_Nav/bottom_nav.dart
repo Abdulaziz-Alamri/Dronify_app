@@ -16,7 +16,6 @@ class BottomNav extends StatelessWidget {
     final List<IconData> iconList = [
       FontAwesomeIcons.house,
       FontAwesomeIcons.cartShopping,
-      Icons.calendar_month,
       Icons.person,
     ];
 
@@ -102,10 +101,10 @@ class BottomNav extends StatelessWidget {
                   backgroundColor: Colors.transparent,
                   height: 50,
                   activeIndex: currentPageIndex,
-                  gapLocation: GapLocation.center,
+                  gapLocation: GapLocation.end,
                   gapWidth: 40,
                   leftCornerRadius: 32,
-                  rightCornerRadius: 32,
+                  rightCornerRadius: 0,
                   splashRadius: 30,
                   notchSmoothness: NotchSmoothness.softEdge,
                   onTap: (index) {
