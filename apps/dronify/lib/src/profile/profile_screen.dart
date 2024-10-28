@@ -1,3 +1,5 @@
+import 'package:dronify/repository/auth_repository.dart';
+import 'package:dronify/src/Auth/sginin.dart';
 import 'package:dronify/src/profile/Profile_Item.dart';
 import 'package:dronify/src/wallet/wallet.dart';
 import 'package:flutter/material.dart';
@@ -116,7 +118,9 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 20),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          await handleLogout(context);
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFF072D6F),
                         ),
@@ -131,6 +135,26 @@ class ProfileScreen extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+//+
+// ... previous code remains the same//+
+Future<void> handleLogout(BuildContext context) async {
+  try {
+    await AuthRepository().logout(); // Create an instance and call logout
+
+    // Navigate to Login Screen (or any other screen)
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+          builder: (context) =>
+              SignIn()), // Replace with your login screen widget
+    );
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Logout failed: ${e.toString()}')),
     );
   }
 }
