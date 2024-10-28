@@ -1,5 +1,5 @@
-import 'package:dronify/src/Auth/otp_screan.dart';
 import 'package:dronify/src/Auth/signup.dart';
+import 'package:dronify/src/Bottom_Nav/bottom_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -34,8 +34,7 @@ class SignIn extends StatelessWidget {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) =>
-                    OtpScreen(email: emailController.text.trim() ),
+                builder: (context) => BottomNav(),
               ),
             );
           } else if (state is AuthError) {
