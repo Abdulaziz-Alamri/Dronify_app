@@ -1,8 +1,7 @@
-import 'package:dronify/src/Auth/sginin.dart';
 import 'package:dronify/src/Bottom_Nav/bottom_nav.dart';
+import 'package:dronify/src/Scrollable_Splash/scrollable_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
 
 class FirstScreen extends StatelessWidget {
   const FirstScreen({Key? key}) : super(key: key);
@@ -35,7 +34,8 @@ class FirstScreen extends StatelessWidget {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) =>  SignIn()),
+                MaterialPageRoute(
+                    builder: (context) => ScrollableSplashScreen()),
               );
             });
           }

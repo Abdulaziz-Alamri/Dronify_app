@@ -1,4 +1,5 @@
 import 'package:dronify/repository/auth_repository.dart';
+import 'package:dronify/splash/splash_screen.dart';
 import 'package:dronify/src/Auth/bloc/auth_bloc.dart';
 import 'package:dronify/src/Auth/first_screen.dart';
 import 'package:dronify/utils/setup.dart';
@@ -41,8 +42,8 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Sizer(
       builder: (context, orientation, deviceType) {
-        return const MaterialApp(
-            debugShowCheckedModeBanner: false, home: FirstScreen());
+        return MaterialApp(
+            debugShowCheckedModeBanner: false, home: SplashScreen());
       },
     );
   }

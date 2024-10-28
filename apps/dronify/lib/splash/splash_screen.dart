@@ -1,4 +1,4 @@
-import 'package:dronify/src/Bottom_Nav/bottom_nav.dart';
+import 'package:dronify/src/Auth/first_screen.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -18,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
     await Future.delayed(Duration(seconds: 4));
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
-        builder: (context) => BottomNav(),
+        builder: (context) => FirstScreen(),
       ),
     );
   }
