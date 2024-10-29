@@ -101,8 +101,8 @@ class AuthRepository {
   }) async {
     try {
       final response = await supabase.auth.verifyOTP(
-        token: otp,
         type: OtpType.signup,
+        token: otp,
         email: email,
       );
 

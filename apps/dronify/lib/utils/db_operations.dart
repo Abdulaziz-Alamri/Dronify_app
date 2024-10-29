@@ -109,3 +109,78 @@ endChat({required String chatId}) async {
       .from('live_chat')
       .update({'status': 'ended'}).eq('chat_id', chatId);
 }
+
+saveSubscription({
+  required int duration,
+  required double squareMeters,
+  required DateTime reservationDate,
+  required double totalPrice,
+  required List<XFile> imageFiles,
+  required String latitude,
+  required String longitude,
+}) async {
+  try {
+    final subscriptionResponse = await supabase
+        .from('subscriptions')
+        .insert({
+          'user_id': supabase.auth.currentUser?.id,
+          'duration': duration,
+          'square_meters': squareMeters,
+          'reservation_date': reservationDate.toString(),
+          'total_price': totalPrice,
+          'ending_at': DateTime(
+            reservationDate.year,
+            reservationDate.month + duration,
+            reservationDate.day,
+          ).toString()
+        })
+        .select('sub_id')
+        .single();
+
+    if (subscriptionResponse['sub_id'] != null) {
+      final subId = subscriptionResponse['sub_id'];
+
+      List<String> imageUrls = [];
+      for (var imageFile in imageFiles) {
+        final fileName =
+            '${DateTime.now().millisecondsSinceEpoch}_${basename(imageFile.path)}';
+        final storagePath = 'subscriptions/$subId/$fileName';
+
+        try {
+          await supabase.storage.from('subscription_images').upload(
+                storagePath,
+                File(imageFile.path),
+              );
+
+          final imageUrl = supabase.storage
+              .from('subscription_images')
+              .getPublicUrl(storagePath);
+
+          imageUrls.add(imageUrl);
+
+          log('$subId');
+
+          await supabase
+              .from('subscription_images')
+              .insert({'sub_id': subId, 'image_url': imageUrl});
+        } catch (error) {
+          throw Exception('Failed to upload image: $error');
+        }
+      }
+
+      // Insert the address into the database
+      await supabase.from('subscription_address').insert({
+        'sub_id': subId,
+        'latitude': latitude,
+        'longitude': longitude,
+      });
+
+      print("Subscription saved successfully.");
+    } else {
+      throw Exception("Failed to insert the Subscription.");
+    }
+  } catch (error) {
+    print("Error saving Subscription: $error");
+    throw error;
+  }
+}
