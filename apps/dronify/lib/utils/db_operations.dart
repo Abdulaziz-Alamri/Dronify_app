@@ -21,6 +21,7 @@ Future<void> saveOrder({
   required List<XFile> imageFiles,
 }) async {
   try {
+    log('im here');
     final orderResponse = await supabase
         .from('orders')
         .insert({
