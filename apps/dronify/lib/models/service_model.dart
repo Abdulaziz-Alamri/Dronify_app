@@ -4,7 +4,6 @@ class ServiceModel {
   final String description;
   final String mainImage;
   final double pricePerSqm;
-  final String iconPath;
 
   ServiceModel({
     required this.serviceId,
@@ -12,7 +11,6 @@ class ServiceModel {
     required this.description,
     required this.mainImage,
     required this.pricePerSqm,
-    required this.iconPath
   });
 
   factory ServiceModel.fromJson(Map<String, dynamic> json) {
@@ -22,7 +20,6 @@ class ServiceModel {
       description: json['description'],
       mainImage: json['main_image'],
       pricePerSqm: json['price_per_sqm'].toDouble(),
-      iconPath: json['icon_path']
     );
   }
 
@@ -33,7 +30,6 @@ class ServiceModel {
       'description': description,
       'main_image': mainImage,
       'price_per_sqm': pricePerSqm,
-      'icon_path': iconPath,
     };
   }
 }
