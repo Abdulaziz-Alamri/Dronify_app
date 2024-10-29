@@ -61,6 +61,7 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(widget.employee.name),
       ),
@@ -212,17 +213,19 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
                     return Text('Error loading data');
                   } else {
                     return Column(
-                      children: List.generate(snapshot.data?.completedOrders.length ?? 0, (index) {
+                      children: List.generate(
+                          snapshot.data?.completedOrders.length ?? 0, (index) {
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 16.0),
                           child: Column(
                             children: [
-                              if(index == 0)
-                              Text(
-                                'Completed Orders',
-                                style:
-                                    TextStyle(fontWeight: FontWeight.bold, fontSize: 18.sp),
-                              ),
+                              if (index == 0)
+                                Text(
+                                  'Completed Orders',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18.sp),
+                                ),
                               Container(
                                 padding: const EdgeInsets.all(16.0),
                                 decoration: BoxDecoration(
@@ -237,7 +240,7 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
                                   ],
                                 ),
                                 child: CompleteOrderCard(
-                                 order: snapshot.data!.completedOrders[index],
+                                  order: snapshot.data!.completedOrders[index],
                                 ),
                               ),
                             ],

@@ -52,6 +52,12 @@ final class IsFromRiyadhToggledState extends SubscriptionState {
 
 final class SubscriptionSubmittedState extends SubscriptionState {}
 
+final class ShowHintState extends SubscriptionState {
+  final String message;
+
+  ShowHintState({required this.message});
+}
+
 final class SubscriptionErrorState extends SubscriptionState {
   final String message;
 

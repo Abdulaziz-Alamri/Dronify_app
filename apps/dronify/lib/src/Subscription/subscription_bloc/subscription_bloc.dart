@@ -22,6 +22,7 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
   LatLng? selectedLocation;
   List<XFile>? images = [];
   String? selectedDate;
+  bool isHintShow = false;
 
   SubscriptionBloc() : super(SubscriptionInitial()) {
     on<SelectRadioEvent>(selectRadio);
@@ -33,6 +34,7 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
     on<SetUnitCountEvent>(setUnitCount);
     on<ToggleIsFromRiyadhEvent>(toggleSwitch);
     on<SubmitSubscriptionEvent>(subscribe);
+    on<ShowHintEvent>(showHint);
   }
 
   FutureOr<void> selectRadio(
@@ -128,5 +130,11 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
       emit(SubscriptionErrorState(
           message: "Please fill in all required details."));
     }
+  }
+
+  FutureOr<void> showHint(
+      ShowHintEvent event, Emitter<SubscriptionState> emit) {
+    isHintShow = true;
+    emit(ShowHintState(message: event.message));
   }
 }

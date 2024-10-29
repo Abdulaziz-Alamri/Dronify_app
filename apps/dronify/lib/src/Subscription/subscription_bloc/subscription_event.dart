@@ -41,6 +41,18 @@ final class SetUnitCountEvent extends SubscriptionEvent {
   SetUnitCountEvent({required this.count});
 }
 
+final class ShowHintEvent extends SubscriptionEvent {
+  final String message;
+
+  ShowHintEvent({required this.message});
+}
+
+final class SetAreaEvent extends SubscriptionEvent {
+  final double area;
+
+  SetAreaEvent({required this.area});
+}
+
 final class ToggleIsFromRiyadhEvent extends SubscriptionEvent {}
 
 final class SubmitSubscriptionEvent extends SubscriptionEvent {}

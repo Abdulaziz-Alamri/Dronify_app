@@ -89,8 +89,32 @@ class AdminAvailableCard extends StatelessWidget {
                             ),
                             TextButton(
                               onPressed: () {
-                                Navigator.of(context).pop();
-                                cancelOrder(order: order);
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: const Text('Confirm'),
+                                      content: const Text(
+                                          'Do you want to accept the order?'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                            cancelOrder(order: order);
+                                          },
+                                          child: const Text('Yes'),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                            cancelOrder(order: order);
+                                          },
+                                          child: const Text('No'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
                               },
                               child: const Text('Yes'),
                             ),
