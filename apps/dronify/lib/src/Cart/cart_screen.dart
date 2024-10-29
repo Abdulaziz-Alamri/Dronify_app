@@ -92,9 +92,9 @@ class CartScreen extends StatelessWidget {
                                 children: [
                                   ...state.cart.items.map((item) {
                                     final service = (item.serviceId != null &&
-                                            item.serviceId! <
+                                            item.serviceId! <=
                                                 allServices.length)
-                                        ? allServices[item.serviceId!]
+                                        ? allServices[item.serviceId!-1]
                                         : null;
 
                                     return Column(
