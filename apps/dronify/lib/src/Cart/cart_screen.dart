@@ -1,25 +1,23 @@
 import 'dart:developer';
-
 import 'package:dronify/Data_layer/data_layer.dart';
-import 'package:dronify/models/cart_model.dart';
 import 'package:dronify/models/service_model.dart';
+import 'package:dronify/src/Bottom_Nav/bottom_nav.dart';
 import 'package:dronify/src/Cart/bloc/cart_bloc.dart';
 import 'package:dronify/src/Cart/bloc/cart_event.dart';
 import 'package:dronify/src/Cart/bloc/cart_state.dart';
 import 'package:dronify/src/Cart/cart_item_card.dart';
-import 'package:dronify/src/Home/home_screen.dart';
 import 'package:dronify/utils/setup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moyasar/moyasar.dart';
 
 class CartScreen extends StatelessWidget {
-  final cart = CartModel();
-  CartScreen({super.key});
+  const CartScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     List<ServiceModel> allServices = locator.get<DataLayer>().allServices;
+
     return BlocProvider(
       create: (context) => CartBloc()..add(LoadCartItemsEvent()),
       child: BlocListener<CartBloc, CartState>(
@@ -89,12 +87,13 @@ class CartScreen extends StatelessWidget {
                             if (state is CartLoading) {
                               return const CircularProgressIndicator();
                             } else if (state is CartUpdated) {
+                              log('Items in cart: ${state.cart.items}'); // التحقق من العناصر
                               return Column(
                                 children: [
                                   ...state.cart.items.map((item) {
-                                    log('hbhbbnjnbjinj $item ');
-                                    final service = item.serviceId != null &&
-                                            item.serviceId! < allServices.length
+                                    final service = (item.serviceId != null &&
+                                            item.serviceId! <
+                                                allServices.length)
                                         ? allServices[item.serviceId!]
                                         : null;
 
@@ -197,7 +196,7 @@ class CartScreen extends StatelessWidget {
                                         Row(
                                           children: [
                                             Text(
-                                              '${state.cart.totalPrice} SAR',
+                                              '${state.cart.totalPrice ?? 0} SAR',
                                               style: const TextStyle(
                                                 fontSize: 12,
                                                 fontWeight: FontWeight.bold,
@@ -248,7 +247,8 @@ class CartScreen extends StatelessWidget {
                                                             bloc.onPaymentResult(
                                                                 result,
                                                                 context,
-                                                                cart.items);
+                                                                state.cart
+                                                                    .items);
                                                             Navigator.pop(
                                                                 context,
                                                                 'Payment successful');
@@ -266,7 +266,7 @@ class CartScreen extends StatelessWidget {
                                                         context,
                                                         MaterialPageRoute(
                                                             builder: (context) =>
-                                                                const HomeScreen()),
+                                                                const BottomNav()),
                                                       );
                                                     }
                                                   });

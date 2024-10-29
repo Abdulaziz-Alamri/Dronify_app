@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -20,6 +21,7 @@ Future<void> saveOrder({
   required List<XFile> imageFiles,
 }) async {
   try {
+    log('im here');
     final orderResponse = await supabase
         .from('orders')
         .insert({
