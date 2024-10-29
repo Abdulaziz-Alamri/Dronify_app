@@ -129,7 +129,7 @@ class _ServicesState extends State<Services> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Image.asset(
-                      widget.service.iconPath,
+                      widget.service.mainImage,
                       height: 18.sp,
                     ),
                     SizedBox(width: 1.h),
@@ -209,7 +209,6 @@ class _ServicesState extends State<Services> {
                   ),
                 ),
                 SizedBox(height: 2.h),
-
                 _images!.isNotEmpty
                     ? SizedBox(
                         height: 100,
@@ -248,7 +247,6 @@ class _ServicesState extends State<Services> {
                         ),
                       )
                     : const Text('No images selected'),
-
                 SizedBox(height: 2.h),
                 Align(
                   alignment: Alignment.centerLeft,
@@ -517,8 +515,7 @@ class _ServicesState extends State<Services> {
                                 order: OrderModel(
                                   orderId: 41221,
                                   customerId:
-                                  "4252d26b-19f6-4f98-9f5a-a3ddc18f2fdd",
-                                  employeeId: '4252d26b-19f6-4f98-9f5a-a3ddc18f2fdd',
+                                      "4252d26b-19f6-4f98-9f5a-a3ddc18f2fdd",
                                   serviceId: 1,
                                   images: _images != null
                                       ? _images!.map((e) => e.path).toList()

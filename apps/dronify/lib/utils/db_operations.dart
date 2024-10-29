@@ -43,7 +43,6 @@ Future<void> saveOrder({
         final storagePath = 'orders/$orderId/$fileName';
 
         try {
-          // Upload image to Supabase storage
           await supabase.storage.from('order_images').upload(
                 storagePath,
                 File(imageFile.path),
@@ -54,7 +53,6 @@ Future<void> saveOrder({
 
           imageUrls.add(imageUrl);
 
-          // Insert image details into the database
           await supabase.from('images').insert(
               {'order_id': orderId, 'image_url': imageUrl, 'type': 'before'});
         } catch (error) {
