@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:dronify/Data_layer/data_layer.dart';
+import 'package:dronify/models/cart_model.dart';
 import 'package:dronify/models/order_model.dart';
 import 'package:dronify/src/Cart/bloc/cart_event.dart';
 import 'package:dronify/src/Cart/bloc/cart_state.dart';
@@ -14,6 +15,7 @@ import 'package:moyasar/moyasar.dart';
 
 class CartBloc extends Bloc<CartEvent, CartState> {
   final DataLayer dataLayer = GetIt.instance<DataLayer>();
+  CartModel cart = CartModel();
 
   CartBloc() : super(CartLoading()) {
     on<LoadCartItemsEvent>((event, emit) => _loadCartItems(emit));
@@ -29,6 +31,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
   void _addItemToCart(OrderModel order, Emitter<CartState> emit) {
     dataLayer.cart.addItem(item: order);
+    cart = dataLayer.cart;
     emit(CartUpdated(cart: dataLayer.cart));
   }
 
@@ -36,8 +39,9 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       dataLayer.cart.items.fold(0, (sum, item) => sum + (item.totalPrice ?? 0));
 
   PaymentConfig pay() {
+    log('0');
     final paymentConfig = PaymentConfig(
-      publishableApiKey: dotenv.env['MOYASAR_TEST_KEY']!,
+      publishableApiKey: dotenv.env['moyasar_test_key']!,
       amount: (totalPrice * 100).toInt(),
       description: 'Dronify Order',
       metadata: {'orderId': '1', 'customer': 'customer'},
@@ -46,12 +50,25 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     return paymentConfig;
   }
 
-  void onPaymentResult(result, BuildContext context, List<OrderModel> order) {
+  void onPaymentResult(result, BuildContext context, OrderModel order) {
     if (result is PaymentResponse) {
       switch (result.status) {
         case PaymentStatus.paid:
-          order.map((ord) => _handleSuccessfulPayment(context, ord));
-
+          log('1');
+          saveOrder(
+              customerId: order.customerId!,
+              serviceId: order.serviceId!,
+              squareMeters: order.squareMeters!,
+              reservationDate: order.reservationDate!,
+              reservationTime: TimeOfDay.now(),
+              totalPrice: order.totalPrice!,
+              imageUrls: [],
+              latitude: order.address![0],
+              longitude: order.address![1],
+              imageFiles: order.images!.map((image) => XFile(image)).toList());
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('Payment successful!'),
+          ));
           break;
         case PaymentStatus.failed:
           _showSnackBar(context, 'Payment failed. Please try again.');
@@ -64,10 +81,10 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     }
   }
 
-  void _handleSuccessfulPayment(BuildContext context, OrderModel order) {
-    log('jdsgsjndfgjksdn ${order.images}');
+  void _handleSuccessfulPayment(BuildContext context, OrderModel order) async {
+    log('2');
     List<XFile> images = order.images!.map((path) => XFile(path)).toList();
-    saveOrder(
+    await saveOrder(
         customerId: order.customerId!,
         serviceId: order.serviceId!,
         squareMeters: order.squareMeters!,
@@ -78,7 +95,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         latitude: order.address![0],
         longitude: order.address![1],
         imageFiles: images);
-    dataLayer.cart.clearCart();
+    // dataLayer.cart.clearCart();
     add(LoadCartItemsEvent());
     _showSnackBar(context, 'Payment successful!');
   }

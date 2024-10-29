@@ -14,7 +14,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moyasar/moyasar.dart';
 
 class CartScreen extends StatelessWidget {
-  final cart = CartModel();
   CartScreen({super.key});
 
   @override
@@ -223,6 +222,7 @@ class CartScreen extends StatelessWidget {
                                               ),
                                               child: ElevatedButton(
                                                 onPressed: () {
+                                                  log('${bloc.cart.items}');
                                                   showModalBottomSheet(
                                                     context: context,
                                                     backgroundColor:
@@ -248,7 +248,7 @@ class CartScreen extends StatelessWidget {
                                                             bloc.onPaymentResult(
                                                                 result,
                                                                 context,
-                                                                cart.items);
+                                                                bloc.cart.items[0]);
                                                             Navigator.pop(
                                                                 context,
                                                                 'Payment successful');
@@ -262,12 +262,12 @@ class CartScreen extends StatelessWidget {
                                                       await Future.delayed(
                                                           const Duration(
                                                               seconds: 5));
-                                                      Navigator.pushReplacement(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                const HomeScreen()),
-                                                      );
+                                                      // Navigator.pushReplacement(
+                                                      //   context,
+                                                      //   MaterialPageRoute(
+                                                      //       builder: (context) =>
+                                                      //           const HomeScreen()),
+                                                      // );
                                                     }
                                                   });
                                                 },
