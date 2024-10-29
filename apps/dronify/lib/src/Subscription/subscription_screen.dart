@@ -5,14 +5,18 @@ import 'package:dronify/src/Subscription/subscription_bloc/subscription_bloc.dar
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:moyasar/moyasar.dart';
 import 'package:sizer/sizer.dart';
 
-class SubscriptionScreen extends StatelessWidget {
+class SubscriptionScreen extends StatefulWidget {
   const SubscriptionScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    List months = [3, 6, 9];
+  State<SubscriptionScreen> createState() => _SubscriptionScreenState();
+}
+
+class _SubscriptionScreenState extends State<SubscriptionScreen> {
+      List months = [3, 6, 9];
     List descriptions = [
       'Includes 6 visits (two visits each month) to maintain your building’s appearance.',
       'Includes 12 visits (two visits each month), perfect for ongoing cleanliness with fewer subscriptions.',
@@ -21,7 +25,8 @@ class SubscriptionScreen extends StatelessWidget {
     List<double> prices = [1500, 2500, 4000];
     TextEditingController squareAreaController = TextEditingController();
     final _formKey = GlobalKey<FormState>();
-
+  @override
+  Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => SubscriptionBloc()..add(FetchLocationEvent()),
       child: Builder(builder: (context) {
@@ -366,7 +371,7 @@ class SubscriptionScreen extends StatelessWidget {
                                 if (value == null || value.isEmpty) {
                                   return 'Please enter the square area';
                                 }
-                                return null;
+                                return value;
                               },
                               decoration: InputDecoration(
                                 filled: true,
@@ -384,23 +389,22 @@ class SubscriptionScreen extends StatelessWidget {
                               ),
                             ),
                           ),
-                            BlocBuilder<SubscriptionBloc, SubscriptionState>(
-                              builder: (context, state) {
-                                if (bloc.isHintShow)
-                                if (state is ShowHintState)
-                                  return Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 5.w),
-                                    child: Text(
-                                      'Please enter the total square area of the windows.',
-                                      style: TextStyle(
-                                          fontSize: 12.sp,
-                                          color: Colors.grey[600]),
-                                    ),
-                                  );
-                                return SizedBox.shrink();
-                              },
-                            ),
+                          BlocBuilder<SubscriptionBloc, SubscriptionState>(
+                            builder: (context, state) {
+                              if (bloc.isHintShow) if (state is ShowHintState)
+                                return Padding(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 5.w),
+                                  child: Text(
+                                    'Please enter the total square area of the windows.',
+                                    style: TextStyle(
+                                        fontSize: 12.sp,
+                                        color: Colors.grey[600]),
+                                  ),
+                                );
+                              return SizedBox.shrink();
+                            },
+                          ),
                         ],
                       ),
                     ),
@@ -443,33 +447,63 @@ class SubscriptionScreen extends StatelessWidget {
                             end: Alignment.bottomRight,
                           ),
                         ),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            if (_formKey.currentState!.validate() &&
-                                bloc.isFromRiyadh &&
-                                bloc.currentLocation != null) {
-                              // show success messaage
-                            } else {
+                        child:
+                            BlocListener<SubscriptionBloc, SubscriptionState>(
+                          listener: (context, state) {
+                            if (state is SubscriptionSubmittedState) {
+                              showModalBottomSheet(
+                                context: context,
+                                backgroundColor: Colors.white,
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(25.0),
+                                  ),
+                                ),
+                                builder: (BuildContext context) {
+                                  return Padding(
+                                    padding: const EdgeInsets.all(12),
+                                    child: CreditCard(
+                                      config: bloc.pay(),
+                                      onPaymentResult: (result) async {
+                                        bloc.onPaymentResult(result, context);
+                                        Navigator.pop(
+                                            context, 'Payment successful');
+                                      },
+                                    ),
+                                  );
+                                },
+                              ).then((value) async {
+                                if (value == 'Payment successful') {
+                                  await Future.delayed(
+                                      const Duration(seconds: 5));
+                                }
+                              });
+                            }
+                            if (state is SubscriptionErrorState) {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text(
-                                        'Please fill in all required fields')),
-                              );
+                                  SnackBar(content: Text(state.message)));
                             }
                           },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.transparent,
-                            shadowColor: Colors.transparent,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              bloc.squareMeters =
+                                  double.parse(squareAreaController.text);
+                              bloc.add(SubmitSubscriptionEvent());
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.transparent,
+                              shadowColor: Colors.transparent,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
                             ),
-                          ),
-                          child: const Text(
-                            'Subscribe',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
+                            child: const Text(
+                              'Subscribe',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                         ),

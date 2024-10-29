@@ -1,6 +1,5 @@
 import 'package:dronify/models/service_model.dart';
 import 'package:dronify/utils/db_operations.dart';
-import 'package:get_it/get_it.dart';
 import 'package:dronify/models/order_model.dart';
 import 'package:dronify/models/cart_model.dart';
 
