@@ -1,9 +1,16 @@
+import 'dart:io';
 import 'package:dronify_mngmt/Employee_Order/custom_image_cards.dart';
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
 
 class ConfirmScreen extends StatelessWidget {
-  const ConfirmScreen({super.key});
+  final List<File> images;
+  final String description;
+
+  const ConfirmScreen({
+    super.key,
+    required this.images,
+    required this.description,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -33,33 +40,51 @@ class ConfirmScreen extends StatelessWidget {
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
               ),
-              const SizedBox(
-                height: 15,
-              ),
-              Center(
-                child: Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 16),
-                    height: 100,
-                    width: 345,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(16),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.25),
-                          blurRadius: 3,
-                          offset: const Offset(0, 1),
-                        ),
-                      ],
+              const SizedBox(height: 15),
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                height: 100,
+                width: 345,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(16),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.25),
+                      blurRadius: 3,
+                      offset: const Offset(0, 1),
                     ),
-                    child: CustomImageCards(
-                      imageUrls: [],
-                    )),
+                  ],
+                ),
+                child: images.isNotEmpty
+                    ? ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: images.length,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 4.0),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: Image.file(
+                                images[index],
+                                width: 80,
+                                height: 80,
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Icon(Icons.broken_image);
+                                },
+                              ),
+                            ),
+                          );
+                        },
+                      )
+                    : const Center(
+                        child: Text('No images available'),
+                      ),
               ),
-              SizedBox(
-                height: 50,
-              ),
+              const SizedBox(height: 50),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
@@ -67,33 +92,30 @@ class ConfirmScreen extends StatelessWidget {
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
               ),
-              const SizedBox(
-                height: 15,
-              ),
-              Center(
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                  height: 200,
-                  width: 345,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.25),
-                        blurRadius: 3,
-                        offset: const Offset(0, 1),
-                      ),
-                    ],
-                  ),
-                  child: SingleChildScrollView(
-                    child: Text(
-                      'arabee is an award-winning educational programme that teaches young minds to speak, read, write and listen to Arabic with ease. This unique multi-functional platform is a fun way of learning Arabic in any environment.',
-                      style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          color: Color(0xffA4A4AA)),
+              const SizedBox(height: 15),
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                height: 200,
+                width: 345,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(16),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.25),
+                      blurRadius: 3,
+                      offset: const Offset(0, 1),
+                    ),
+                  ],
+                ),
+                child: SingleChildScrollView(
+                  child: Text(
+                    description,
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                      color: Color(0xffA4A4AA),
                     ),
                   ),
                 ),
@@ -121,7 +143,8 @@ class ConfirmScreen extends StatelessWidget {
             ),
           ),
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.transparent,
               shadowColor: Colors.transparent,

@@ -127,6 +127,7 @@ class HomeScreen extends StatelessWidget {
                                   mainAxisExtent: 220),
                           children: const [
                             ServiceCard(
+                              serviceId: 1,
                               imageUrl: 'assets/clean.png',
                               title: 'Building Cleaning',
                               description:
@@ -134,6 +135,7 @@ class HomeScreen extends StatelessWidget {
                               iconPath: 'assets/Vector (12).png',
                             ),
                             ServiceCard(
+                              serviceId: 2,
                               imageUrl: 'assets/nano.jpg',
                               title: 'Nano Protection',
                               description:
@@ -141,6 +143,7 @@ class HomeScreen extends StatelessWidget {
                               iconPath: 'assets/Group (1).png',
                             ),
                             ServiceCard(
+                              serviceId: 3,
                               imageUrl: 'assets/spot.jpg',
                               title: 'Spot Painting',
                               description:

@@ -1,19 +1,12 @@
-import 'package:dronify_mngmt/Employee_Home/bloc/orders_bloc_bloc.dart';
-import 'package:dronify_mngmt/Employee_Home/bloc/orders_bloc_event.dart';
-import 'package:dronify_mngmt/Employee_Order/order_screen.dart';
 import 'package:dronify_mngmt/utils/db_operations.dart';
+import 'package:dronify_mngmt/models/order_model.dart';
 import 'package:flutter/material.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
-class AvailbleOrders extends StatelessWidget {
-  final Map<String, dynamic>? order;
-  final OrdersBloc ordersBloc;
+class AdminAvailableCard extends StatelessWidget {
+  final OrderModel order;
 
-  const AvailbleOrders({
-    super.key,
-    required this.order,
-    required this.ordersBloc,
-  });
+  const AdminAvailableCard({super.key, required this.order});
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -61,20 +54,19 @@ class AvailbleOrders extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        order?['service']?['name'] ?? 'Service Name',
+                      const Text(
+                        'Building Cleaning',
                         style: TextStyle(
                             fontSize: 14, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(
                         height: 5,
                       ),
-                      Text(
-                        order?['service']?['description'] ??
-                            'Service Description',
+                      const Text(
+                        'Description of the services',
                         softWrap: true,
-                        style: const TextStyle(
-                            fontSize: 12, color: Color(0xffA4A4AA)),
+                        style:
+                            TextStyle(fontSize: 12, color: Color(0xffA4A4AA)),
                       ),
                     ],
                   ),
@@ -91,37 +83,16 @@ class AvailbleOrders extends StatelessWidget {
                           actions: [
                             TextButton(
                               onPressed: () {
-                                ordersBloc.add(
-                                  UpdateOrderStatus(
-                                      orderId: order?['order_id'],
-                                      newStatus: 'confirmed',
-                                      employeeId: Supabase.instance.client.auth.currentUser!.id
-                                      ),
-                                );
                                 Navigator.of(context).pop();
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => OrderScreen(
-                                        orderId: order!['order_id']),
-                                  ),
-                                );
                               },
-                              child: const Text('Yes'),
+                              child: const Text('No'),
                             ),
                             TextButton(
                               onPressed: () {
                                 Navigator.of(context).pop();
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => OrderScreen(
-                                      orderId: order!['order_id'],
-                                    ),
-                                  ),
-                                );
+                                cancelOrder(order: order);
                               },
-                              child: const Text('No'),
+                              child: const Text('Yes'),
                             ),
                           ],
                         );
@@ -129,20 +100,20 @@ class AvailbleOrders extends StatelessWidget {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xff072D6F),
+                    backgroundColor: Colors.black,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
                   child: const Text(
-                    'Accept',
+                    'Cancel',
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
               ],
             ),
-            Text(
-              'Price: ${order!['total_price'] ?? 'N/A'} SAR',
+            const Text(
+              'Price: 350 SAR',
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.bold,

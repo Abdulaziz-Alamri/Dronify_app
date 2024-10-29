@@ -1,9 +1,7 @@
 import 'dart:async';
 import 'dart:math';
-
 import 'package:bloc/bloc.dart';
 import 'package:dronify_mngmt/Employee_Home/bloc/orders_bloc_bloc.dart';
-import 'package:dronify_mngmt/Employee_Home/employee_home.dart';
 import 'package:meta/meta.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -19,10 +17,10 @@ class ChatMessageBloc extends Bloc<ChatMessageEvent, ChatMessageState> {
     on<LoadMessagesEvent>(loadMessages);
     on<NewMessageReceivedEvent>(receiveNewMessage);
     on<SendMessageEvent>(sendMessage);
-    initializeListener();
+    initializeListener(chatId: chatId); // remove chatId if it doesn't work
   }
 
-  void initializeListener() {
+  void initializeListener({required String chatId}) {
     supabase
         .channel('public:chat_message')
         .onPostgresChanges(
@@ -38,6 +36,7 @@ class ChatMessageBloc extends Bloc<ChatMessageEvent, ChatMessageState> {
                 .select('*')
                 .eq('message_id', messageId)
                 .neq('sender_id', 'a581cd5e-c67c-4522-a4bb-01b795c43387')
+                .eq('chat_id', chatId)
                 .maybeSingle();
 
             if (response != null) {

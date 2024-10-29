@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:dronify/models/order_model.dart';
+import 'package:dronify/models/service_model.dart';
 import 'package:dronify/src/Order/order_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
@@ -10,17 +11,15 @@ import 'package:latlong2/latlong.dart';
 import 'package:geolocator/geolocator.dart';
 
 class Services extends StatefulWidget {
-  final String imageUrl;
-  final String title;
-  final String description;
-  final String iconPath;
+  final ServiceModel service;
 
   const Services({
     super.key,
-    required this.imageUrl,
-    required this.title,
-    required this.description,
-    required this.iconPath,
+    required this.service,
+    // required this.imageUrl,
+    // required this.title,
+    // required this.description,
+    // required this.iconPath,
   });
 
   @override
@@ -130,12 +129,12 @@ class _ServicesState extends State<Services> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Image.asset(
-                      widget.iconPath,
+                      widget.service.iconPath,
                       height: 18.sp,
                     ),
                     SizedBox(width: 1.h),
                     Text(
-                      widget.title,
+                      widget.service.name,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 15.sp,
@@ -157,7 +156,7 @@ class _ServicesState extends State<Services> {
                       Radius.circular(20),
                     ),
                     image: DecorationImage(
-                      image: AssetImage(widget.imageUrl),
+                      image: AssetImage(widget.service.mainImage),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -166,7 +165,7 @@ class _ServicesState extends State<Services> {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 10.w),
                   child: Text(
-                    widget.description,
+                    widget.service.description,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 15.sp,
@@ -542,6 +541,7 @@ class _ServicesState extends State<Services> {
                                   orderDate: DateTime.now(),
                                   status: "pending",
                                 ),
+                                service: widget.service,
                               ),
                             ),
                           );
