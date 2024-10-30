@@ -39,6 +39,21 @@ class AllEmp extends StatelessWidget {
             ),
             backgroundColor: Colors.white,
             pinned: false,
+            actions: [
+              Padding(
+                padding: const EdgeInsets.only(top: 24),
+                child: IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.add,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                width: 20,
+              ),
+            ],
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate(

@@ -9,7 +9,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class BottomNav extends StatelessWidget {
-  const BottomNav({super.key});
+  final int index;
+  const BottomNav({super.key, this.index=0});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,7 @@ class BottomNav extends StatelessWidget {
     ];
 
     return BlocProvider(
-      create: (context) => BottomNavBloc(),
+      create: (context) => BottomNavBloc()..add(LoadEvent(index: index)),
       child: Builder(builder: (context) {
         return Scaffold(
           extendBody: true,

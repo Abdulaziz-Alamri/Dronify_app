@@ -12,10 +12,10 @@ part 'bottom_nav_state.dart';
 
 class BottomNavBloc extends Bloc<BottomNavEvent, BottomNavState> {
   List<Widget> views = [HomeScreen(), CartScreen(), ProfileScreen()];
-
   int currentIndex = 0;
 
   BottomNavBloc() : super(BottomNavInitial()) {
+    on<LoadEvent>(loadIndex);
     on<ChangeEvent>(changeMethod);
     on<HideBottomNavEvent>((event, emit) => emit(HideBottomNavState()));
     on<ShowBottomNavEvent>((event, emit) => emit(ShowBottomNavState()));
@@ -24,5 +24,12 @@ class BottomNavBloc extends Bloc<BottomNavEvent, BottomNavState> {
   FutureOr<void> changeMethod(ChangeEvent event, Emitter<BottomNavState> emit) {
     currentIndex = event.index;
     emit(SuccessChangeViewState(currentIndex));
+  }
+
+  FutureOr<void> loadIndex(LoadEvent event, Emitter<BottomNavState> emit) {
+    if (event.index == 1) {
+      currentIndex = event.index;
+      emit(LoadedIndex(index: event.index));
+    }
   }
 }

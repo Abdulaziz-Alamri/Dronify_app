@@ -34,7 +34,7 @@ class AdminDataLayer {
     try {
       final completeOrdersResponse = await supabase
           .from('orders')
-          .select('*, app_user!inner(name, phone), service(name)')
+          .select('*, app_user!inner(name, phone), service(name), images(image_url), address(latitude, longitude)')
           .eq('status', 'complete');
 
       for (var element in completeOrdersResponse) {
@@ -45,7 +45,7 @@ class AdminDataLayer {
       final incompleteOrdersResponse = await supabase
           .from('orders')
           .select(
-              '*, app_user!inner(name, phone), service(name), address(latitude, longitude), images(image_url)')
+              '*, app_user!inner(name, phone), service(name), images(image_url), address(latitude, longitude)')
           .eq('status', 'confirmed');
 
       for (var element in incompleteOrdersResponse) {
@@ -55,7 +55,7 @@ class AdminDataLayer {
 
       final availableOrdersResponse = await supabase
           .from('orders')
-          .select('*, app_user!inner(name, phone), service(name)')
+          .select('*, app_user!inner(name, phone), service(name), images(image_url), address(latitude, longitude)')
           .eq('status', 'pending');
 
       for (var element in availableOrdersResponse) {

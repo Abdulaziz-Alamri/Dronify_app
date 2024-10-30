@@ -126,7 +126,7 @@ class AdminOrderCard extends StatelessWidget {
                             color: Color(0xff072D6F)),
                         const SizedBox(width: 10),
                         Text(
-                          '${order.address![0]['latitude'] ?? 'N/A'}, ${order.address![0]['longitude'] ?? 'N/A'}',
+                          '${order.address?[0]['latitude']}, ${order.address![0]['longitude']}',
                           style: const TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
@@ -259,74 +259,6 @@ class AdminOrderCard extends StatelessWidget {
                   ],
                 ),
               const SizedBox(height: 15),
-              // GestureDetector(
-              //   onTap: _pickImage,
-              //   child: Container(
-              //     width: 60,
-              //     height: 60,
-              //     decoration: BoxDecoration(
-              //       color: Colors.grey[200],
-              //       borderRadius: BorderRadius.circular(10),
-              //     ),
-              //     child: Icon(
-              //       Icons.add,
-              //       size: 30,
-              //       color: Colors.grey[700],
-              //     ),
-              //   ),
-              // ),
-              // SizedBox(height: 2.h),
-              // _image != null
-              //     ? Image.file(
-              //         File(_image!.path),
-              //         height: 100,
-              //       )
-              //     : const Text('No image selected'),
-              // const SizedBox(height: 15),
-              // Center(
-              //   child: Container(
-              //     width: 335,
-              //     height: 48,
-              //     decoration: BoxDecoration(
-              //       borderRadius: BorderRadius.circular(12),
-              //       gradient: const LinearGradient(
-              //         colors: [
-              //           Color(0xFF072D6F),
-              //           Color(0xFF0A3F9A),
-              //           Color(0xFF0A43A4),
-              //           Color(0xFF0D56D5),
-              //         ],
-              //         begin: Alignment.topLeft,
-              //         end: Alignment.bottomRight,
-              //       ),
-              //     ),
-              //     child: ElevatedButton(
-              //       onPressed: () {
-              //         Navigator.push(
-              //           context,
-              //           MaterialPageRoute(
-              //             builder: (context) => const ConfirmScreen(),
-              //           ),
-              //         );
-              //       },
-              //       style: ElevatedButton.styleFrom(
-              //         backgroundColor: Colors.transparent,
-              //         shadowColor: Colors.transparent,
-              //         shape: RoundedRectangleBorder(
-              //           borderRadius: BorderRadius.circular(20),
-              //         ),
-              //       ),
-              //       child: const Text(
-              //         'Add description',
-              //         style: TextStyle(
-              //           fontSize: 20,
-              //           fontWeight: FontWeight.bold,
-              //           color: Colors.white,
-              //         ),
-              //       ),
-              //     ),
-              //   ),
-              // ),
               SizedBox(height: 10.h),
             ],
           ),

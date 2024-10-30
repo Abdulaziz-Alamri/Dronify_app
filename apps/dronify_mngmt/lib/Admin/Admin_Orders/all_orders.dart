@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dronify_mngmt/Admin/Admin_Orders/admin_available_card.dart';
 import 'package:dronify_mngmt/Admin/admin_datalayer/admin_data_layer.dart';
 import 'package:dronify_mngmt/Employee_Home/order_card.dart';
@@ -153,7 +155,10 @@ class _AllOrdersState extends State<AllOrders>
                         SingleChildScrollView(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
-                            children: locator.get<AdminDataLayer>().completeOrders.map((order) {
+                            children: locator
+                                .get<AdminDataLayer>()
+                                .completeOrders
+                                .map((order) {
                               return Column(
                                 children: [
                                   OrderCard(
@@ -170,7 +175,10 @@ class _AllOrdersState extends State<AllOrders>
                         SingleChildScrollView(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
-                            children: locator.get<AdminDataLayer>().incompleteOrders.map((order) {
+                            children: locator
+                                .get<AdminDataLayer>()
+                                .incompleteOrders
+                                .map((order) {
                               return Column(
                                 children: [
                                   OrderCard(
@@ -187,7 +195,10 @@ class _AllOrdersState extends State<AllOrders>
                         SingleChildScrollView(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
-                            children: locator.get<AdminDataLayer>().availableOrders.map((order) {
+                            children: locator
+                                .get<AdminDataLayer>()
+                                .availableOrders
+                                .map((order) {
                               return Column(
                                 children: [
                                   AdminAvailableCard(order: order),

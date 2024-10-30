@@ -1,5 +1,6 @@
 import 'package:dronify/Data_layer/data_layer.dart';
 import 'package:dronify/models/cart_model.dart';
+import 'package:dronify/src/Bottom_Nav/bottom_nav.dart';
 import 'package:dronify/utils/setup.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -198,6 +199,7 @@ class OrderScreen extends StatelessWidget {
                     dataLayer.addToCart(order);
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                         content: Text('Order added to cart successfully!')));
+                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>BottomNav(index: 1)));
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.transparent,

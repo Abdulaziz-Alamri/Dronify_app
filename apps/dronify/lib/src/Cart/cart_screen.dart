@@ -195,7 +195,7 @@ class CartScreen extends StatelessWidget {
                                         Row(
                                           children: [
                                             Text(
-                                              '${state.cart.totalPrice ?? 0} SAR',
+                                              '${state.cart.totalPrice} SAR',
                                               style: const TextStyle(
                                                 fontSize: 12,
                                                 fontWeight: FontWeight.bold,
@@ -224,6 +224,8 @@ class CartScreen extends StatelessWidget {
                                                   log('${bloc.cart.items}');
                                                   showModalBottomSheet(
                                                     context: context,
+                                                    isScrollControlled:
+                                                        true,
                                                     backgroundColor:
                                                         Colors.white,
                                                     shape:
@@ -238,21 +240,39 @@ class CartScreen extends StatelessWidget {
                                                         (BuildContext context) {
                                                       return Padding(
                                                         padding:
-                                                            const EdgeInsets
-                                                                .all(12),
-                                                        child: CreditCard(
-                                                          config: bloc.pay(),
-                                                          onPaymentResult:
-                                                              (result) async {
-                                                            bloc.onPaymentResult(
-                                                                result,
-                                                                context,
-                                                                state.cart
-                                                                    .items);
-                                                            Navigator.pop(
-                                                                context,
-                                                                'Payment successful');
-                                                          },
+                                                            EdgeInsets.only(
+                                                          top: 12,
+                                                          left: 12,
+                                                          right: 12,
+                                                          bottom: MediaQuery.of(
+                                                                  context)
+                                                              .viewInsets
+                                                              .bottom,
+                                                        ),
+                                                        child:
+                                                            SingleChildScrollView(
+                                                          child: Column(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .min,
+                                                            children: [
+                                                              CreditCard(
+                                                                config:
+                                                                    bloc.pay(),
+                                                                onPaymentResult:
+                                                                    (result) async {
+                                                                  bloc.onPaymentResult(
+                                                                      result,
+                                                                      context,
+                                                                      state.cart
+                                                                          .items);
+                                                                  Navigator.pop(
+                                                                      context,
+                                                                      'Payment successful');
+                                                                },
+                                                              ),
+                                                            ],
+                                                          ),
                                                         ),
                                                       );
                                                     },

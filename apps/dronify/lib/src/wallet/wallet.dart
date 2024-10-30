@@ -116,26 +116,6 @@ class Wallet extends StatelessWidget {
                             log('$orders');
                           },
                           icon: Icon(Icons.print))
-                      // ListTile(
-                      //   leading: Image.asset('assets/Vector (12).png'),
-                      //   title: Text('Building Cleaning'),
-                      //   subtitle: Text('10 Oct 2024'),
-                      //   trailing: Text('-100 SAR'),
-                      // ),
-                      // const Divider(),
-                      // ListTile(
-                      //   leading: Image.asset('assets/Group (1).png'),
-                      //   title: const Text('Nano Protection'),
-                      //   subtitle: const Text('9 Oct 2024'),
-                      //   trailing: const Text('-50 SAR'),
-                      // ),
-                      // const Divider(),
-                      // ListTile(
-                      //   leading: Image.asset('assets/Group (2).png'),
-                      //   title: Text('Spot Painting'),
-                      //   subtitle: Text('9 Oct 2024'),
-                      //   trailing: Text('-50 SAR'),
-                      // ),
                     ],
                   ),
                 ],
