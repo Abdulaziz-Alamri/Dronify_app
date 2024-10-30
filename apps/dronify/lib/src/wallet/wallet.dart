@@ -1,10 +1,24 @@
+import 'dart:developer';
+
+import 'package:dronify/Data_layer/data_layer.dart';
+import 'package:dronify/utils/setup.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class Wallet extends StatelessWidget {
   const Wallet({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final allServices =
+                            locator.get<DataLayer>().allServices;
+                        final orders =
+                            locator.get<DataLayer>().allCustomerOrders;
+    List<String> iconsPaths = [
+      'assets/Vector (12).png',
+      'assets/Group (1).png',
+      'assets/Group (2).png'
+    ];
     return Scaffold(
       backgroundColor: Colors.white,
       body: CustomScrollView(
@@ -67,7 +81,7 @@ class Wallet extends StatelessWidget {
                       ],
                     ),
                     child: const Text(
-                      'Your balance is: 500 SAR',
+                      'Your balance is: ',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
@@ -85,26 +99,43 @@ class Wallet extends StatelessWidget {
                   const SizedBox(height: 15),
                   Column(
                     children: [
-                      ListTile(
-                        leading: Image.asset('assets/Vector (12).png'),
-                        title: Text('Building Cleaning'),
-                        subtitle: Text('10 Oct 2024'),
-                        trailing: Text('-100 SAR'),
-                      ),
-                      const Divider(),
-                      ListTile(
-                        leading: Image.asset('assets/Group (1).png'),
-                        title: const Text('Nano Protection'),
-                        subtitle: const Text('9 Oct 2024'),
-                        trailing: const Text('-50 SAR'),
-                      ),
-                      const Divider(),
-                      ListTile(
-                        leading: Image.asset('assets/Group (2).png'),
-                        title: Text('Spot Painting'),
-                        subtitle: Text('9 Oct 2024'),
-                        trailing: Text('-50 SAR'),
-                      ),
+                      ...List.generate(
+                          locator.get<DataLayer>().allCustomerOrders.length,
+                          (index) {
+                        return ListTile(
+                          leading: Image.asset(
+                              iconsPaths[orders[index].serviceId! - 1]),
+                          title: Text(allServices[orders[index].serviceId!-1].name),
+                          subtitle: Text(DateFormat('d MMM yyyy')
+                              .format(orders[index].reservationDate!)),
+                          trailing: Text('-${orders[index].totalPrice} SAR'),
+                        );
+                      }),
+                      IconButton(
+                          onPressed: () {
+                            log('$orders');
+                          },
+                          icon: Icon(Icons.print))
+                      // ListTile(
+                      //   leading: Image.asset('assets/Vector (12).png'),
+                      //   title: Text('Building Cleaning'),
+                      //   subtitle: Text('10 Oct 2024'),
+                      //   trailing: Text('-100 SAR'),
+                      // ),
+                      // const Divider(),
+                      // ListTile(
+                      //   leading: Image.asset('assets/Group (1).png'),
+                      //   title: const Text('Nano Protection'),
+                      //   subtitle: const Text('9 Oct 2024'),
+                      //   trailing: const Text('-50 SAR'),
+                      // ),
+                      // const Divider(),
+                      // ListTile(
+                      //   leading: Image.asset('assets/Group (2).png'),
+                      //   title: Text('Spot Painting'),
+                      //   subtitle: Text('9 Oct 2024'),
+                      //   trailing: Text('-50 SAR'),
+                      // ),
                     ],
                   ),
                 ],

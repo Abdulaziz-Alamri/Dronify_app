@@ -69,6 +69,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         // التحقق من وجود بيانات المستخدم وتخزينها في DataLayer
         if (customer != null) {
           locator.get<DataLayer>().saveCustomerData(customer);
+          locator.get<DataLayer>().fetchCustomerOrders();
           emit(AuthSignedIn());
         } else {
           emit(AuthError('User data not found.'));

@@ -59,23 +59,33 @@ class _ServicesState extends State<Services> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    BackButton(onPressed: () => Navigator.pop(context),),
                     SizedBox(height: 4.h),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Image.asset(
-                          widget.service.mainImage,
-                          height: 18.sp,
+                        BackButton(
+                          onPressed: () => Navigator.pop(context),
                         ),
-                        SizedBox(width: 1.h),
-                        Text(
-                          widget.service.name,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15.sp,
-                          ),
+                        Row(
+                          children: [
+                            Image.asset(
+                              widget.service.mainImage,
+                              height: 18.sp,
+                            ),
+                            SizedBox(width: 1.h),
+                            Text(
+                              widget.service.name,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15.sp,
+                              ),
+                            ),
+                          ],
                         ),
+                        Icon(
+                          Icons.circle,
+                          color: Colors.transparent,
+                        )
                       ],
                     ),
                     const Divider(
@@ -488,7 +498,8 @@ class _ServicesState extends State<Services> {
                                     images: bloc.images,
                                     order: OrderModel(
                                       orderId: 41221,
-                                      customerId: '4252d26b-19f6-4f98-9f5a-a3ddc18f2fdd',
+                                      customerId:
+                                          '4252d26b-19f6-4f98-9f5a-a3ddc18f2fdd',
                                       serviceId: widget.service.serviceId,
                                       images: bloc.images
                                           .map((e) => e.path)

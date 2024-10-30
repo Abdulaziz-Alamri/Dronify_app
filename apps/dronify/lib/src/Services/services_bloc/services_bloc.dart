@@ -93,7 +93,7 @@ class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
 
   FutureOr<void> pinLocation(PinLocationEvent event, Emitter<ServicesState> emit) {
     selectedLocation = event.point;
-    emit(PinnedLocationState(location: selectedLocation!));
+    emit(LocationFetchedState(location: selectedLocation!));
   }
 
   FutureOr<void> setUnitCount(SetUnitCountEvent event, Emitter<ServicesState> emit) {

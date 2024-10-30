@@ -8,6 +8,7 @@ import 'package:dronify/repository/auth_repository.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final DataLayer dataLayer;
+  final AuthRepository authRepository = AuthRepository();
 
   ProfileBloc(
     this.dataLayer,
@@ -35,6 +36,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
   Future<void> _onLogout(LogoutEvent event, Emitter<ProfileState> emit) async {
     try {
+      await authRepository.logout();
       emit(ProfileInitial());
     } catch (e) {
       emit(ProfileError('Logout failed: ${e.toString()}'));

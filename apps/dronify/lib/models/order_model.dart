@@ -30,36 +30,39 @@ class OrderModel {
   });
 
   factory OrderModel.fromJson(Map<String, dynamic> json) {
+    DateTime parsedReservationDate = DateTime.parse(json['reservation_date']);
+    DateTime parsedReservationTime = DateTime.parse("${json['reservation_date']}T${json['reservation_time']}");
+
     return OrderModel(
       orderId: json['order_id'],
       customerId: json['user_id'],
-      employeeId: json['employee_id'] ?? null,
+      employeeId: json['employee_id'],
       serviceId: json['service_id'],
-      images: List<String>.from(json['images']),
-      address: json['address'],
-      squareMeters: json['square_meters'].toDouble(),
-      reservationDate: DateTime.parse(json['reservation_date']),
-      reservationTime: DateTime.parse(json['reservation_time']),
-      totalPrice: json['total_price'].toDouble(),
+      images: json['images'] != null ? List<String>.from(json['images']) : [],
+      address: json['address'] != null ? List<String>.from(json['address']) : [],
+      squareMeters: (json['square_meters'] as num).toDouble(),
+      reservationDate: parsedReservationDate,
+      reservationTime: parsedReservationTime,
+      totalPrice: (json['total_price'] as num).toDouble(),
       orderDate: DateTime.parse(json['order_date']),
       status: json['status'],
-      orderRating: json['order_rating']?.toDouble(),
+      orderRating: json['order_rating'] != null ? (json['order_rating'] as num).toDouble() : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
       'order_id': orderId,
-      'customer_id': customerId,
+      'user_id': customerId,
       'employee_id': employeeId,
       'service_id': serviceId,
       'images': images,
       'address': address,
       'square_meters': squareMeters,
-      'reservation_date': reservationDate!.toIso8601String(),
-      'reservation_time': reservationTime!.toIso8601String(),
+      'reservation_date': reservationDate?.toIso8601String(),
+      'reservation_time': reservationTime != null ? reservationTime!.toIso8601String().split('T').last : null,
       'total_price': totalPrice,
-      'order_date': orderDate!.toIso8601String(),
+      'order_date': orderDate?.toIso8601String(),
       'status': status,
       'order_rating': orderRating,
     };

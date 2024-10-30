@@ -87,7 +87,6 @@ class CartScreen extends StatelessWidget {
                             if (state is CartLoading) {
                               return const CircularProgressIndicator();
                             } else if (state is CartUpdated) {
-                              log('Items in cart: ${state.cart.items}');
                               return Column(
                                 children: [
                                   ...state.cart.items.map((item) {

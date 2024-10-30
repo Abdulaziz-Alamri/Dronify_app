@@ -117,32 +117,37 @@ class _ScrollableSplashScreenState extends State<ScrollableSplashScreen> {
                   bottom: 50,
                   left: 50,
                   right: 50,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 50, vertical: 10),
-                      backgroundColor: const Color(0xFF072D6F),
-                    ),
-                    onPressed: () {
-                      if (currentIndex < 2) {
-                        pageController.nextPage(
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.ease,
+                  child: BlocBuilder<ScrollsplashBloc, ScrollsplashState>(
+                    builder: (context, state) {
+                        return ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 50, vertical: 10),
+                            backgroundColor: const Color(0xFF072D6F),
+                          ),
+                          onPressed: () {
+                            if (bloc.currentIndex < 2) {
+                              pageController.nextPage(
+                                duration: const Duration(milliseconds: 300),
+                                curve: Curves.ease,
+                              );
+                            } else {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SignIn()),
+                              );
+                            }
+                          },
+                          child: Text(
+                            bloc.currentIndex == 2 ? 'Get Started' : 'Next',
+                            style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          ),
                         );
-                      } else {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(builder: (context) => SignIn()),
-                        );
-                      }
                     },
-                    child: Text(
-                      currentIndex == 2 ? 'Get Started' : 'Next',
-                      style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
-                    ),
                   ),
                 ),
               ],

@@ -67,7 +67,7 @@ class OtpScreen extends StatelessWidget {
               ),
             );
           } else if (state is AuthSignedIn) {
-            Navigator.pop(context); // Close the loading dialog
+            Navigator.pop(context);
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
@@ -75,7 +75,7 @@ class OtpScreen extends StatelessWidget {
               ),
             );
           } else if (state is AuthError) {
-            Navigator.pop(context); // Close the loading dialog
+            Navigator.pop(context);
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text(state.message)),
             );
