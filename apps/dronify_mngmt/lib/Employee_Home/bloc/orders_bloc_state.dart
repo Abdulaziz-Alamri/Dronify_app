@@ -1,3 +1,4 @@
+import 'package:dronify_mngmt/models/order_model.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class OrdersState {}
@@ -5,9 +6,9 @@ abstract class OrdersState {}
 class OrderLoading extends OrdersState {}
 
 class OrderLoaded extends OrdersState {
-  final List<dynamic> completeOrders;
-  final List<dynamic> incompleteOrders;
-  final List<dynamic> availableOrders;
+  final List<OrderModel> completeOrders;
+  final List<OrderModel> incompleteOrders;
+  final List<OrderModel> availableOrders;
   final bool isCompleteOrdersEmpty;
   final bool isIncompleteOrdersEmpty;
   final bool isAvailableOrdersEmpty;

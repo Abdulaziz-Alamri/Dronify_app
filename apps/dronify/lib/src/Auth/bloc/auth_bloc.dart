@@ -21,7 +21,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<VerifyEvent>(onVerifyOtp);
   }
 
-  // Handle Sign-Up event
   Future<void> onSignUp(SignUpEvent event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
     try {
@@ -33,7 +32,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       );
 
       if (response.user != null) {
-        // إنشاء كائن CustomerModel وتخزينه في قاعدة البيانات
         final customer = CustomerModel(
           customerId: response.user!.id,
           name: event.username,
@@ -41,10 +39,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           phone: event.phone,
         );
 
-        // استدعاء DataLayer لإضافة بيانات المستخدم إلى قاعدة البيانات
         await locator.get<DataLayer>().upsertCustomer(customer);
 
-        // تخزين بيانات المستخدم في DataLayer بعد التسجيل
         locator.get<DataLayer>().saveCustomerData(customer);
         
         emit(AuthSignedUp());

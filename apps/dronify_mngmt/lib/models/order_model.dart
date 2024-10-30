@@ -39,20 +39,20 @@ class OrderModel {
           : null,
       employeeId: json['employee_id'] ?? '',
       serviceId: json['service_id'] ?? 0,
-      images: json['images'] != null
+      images: (json['images'] != null && json['images'] is List)
           ? List<String>.from(json['images'].map((img) => img['image_url']))
           : [],
-      address: json['address'] != null
+      address: (json['address'] != null && json['address'] is List)
           ? List<Map<String, dynamic>>.from(json['address'])
           : [],
       squareMeters: (json['square_meters'] ?? 0).toDouble(),
       reservationDate: json['reservation_date'] != null
-          ? DateTime.parse(json['reservation_date'])
+          ? DateTime.tryParse(json['reservation_date']) ?? DateTime.now()
           : DateTime.now(),
       reservationTime: json['reservation_time'] ?? 'N/A',
       totalPrice: (json['total_price'] ?? 0).toDouble(),
       orderDate: json['order_date'] != null
-          ? DateTime.parse(json['order_date'])
+          ? DateTime.tryParse(json['order_date']) ?? DateTime.now()
           : DateTime.now(),
       status: json['status'] ?? 'unknown',
       orderRating: (json['order_rating'] ?? 0).toDouble(),

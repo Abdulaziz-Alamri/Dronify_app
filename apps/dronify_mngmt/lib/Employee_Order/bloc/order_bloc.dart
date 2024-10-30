@@ -12,7 +12,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
 
   OrderBloc() : super(OrderLoading()) {
     on<FetchOrderData>(_onFetchOrderData);
-    on<PickImages>(_onPickImages); 
+    on<PickImages>(_onPickImages);
   }
 
   Future<void> _onFetchOrderData(
