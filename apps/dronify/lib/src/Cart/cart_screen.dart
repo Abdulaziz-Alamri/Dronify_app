@@ -87,14 +87,14 @@ class CartScreen extends StatelessWidget {
                             if (state is CartLoading) {
                               return const CircularProgressIndicator();
                             } else if (state is CartUpdated) {
-                              log('Items in cart: ${state.cart.items}'); // التحقق من العناصر
+                              log('Items in cart: ${state.cart.items}');
                               return Column(
                                 children: [
                                   ...state.cart.items.map((item) {
                                     final service = (item.serviceId != null &&
-                                            item.serviceId! <
+                                            item.serviceId! <=
                                                 allServices.length)
-                                        ? allServices[item.serviceId!]
+                                        ? allServices[item.serviceId! - 1]
                                         : null;
 
                                     return Column(

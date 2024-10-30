@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:dronify/models/customer_model.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -183,4 +184,39 @@ saveSubscription({
     print("Error saving Subscription: $error");
     throw error;
   }
+  
+  Future<void> upsertCustomer(CustomerModel customer) async {
+    try {
+      final response = await supabase.from('customers').upsert(customer.toJson());
+      if (response.error != null) {
+        throw Exception(response.error!.message);
+      }
+    } catch (e) {
+      print('Error upserting customer: $e');
+    }
+  }
+
+  Future<CustomerModel?> getCustomer(String customerId) async {
+    try {
+      final response = await supabase
+          .from('customers')
+          .select()
+          .eq('customer_id', customerId)
+          .single();
+
+      if (response != null) {
+        throw Exception(response);
+      }
+
+      if (response != null) {
+        return CustomerModel.fromJson(response);
+      }
+      
+      return null;
+    } catch (e) {
+      print('Error fetching customer: $e');
+      return null;
+    }
+  }
+
 }

@@ -88,7 +88,7 @@ class OrderScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CustomOrderCard(
-                    imageUrl: 'assets/drone.png',
+                    imageUrl: '${service.mainImage}',
                     title:
                         'Date: ${DateFormat.yMMMd().format(order.reservationDate!)}',
                     subTitle:

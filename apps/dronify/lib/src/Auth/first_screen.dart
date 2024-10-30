@@ -39,7 +39,7 @@ class FirstScreen extends StatelessWidget {
               );
             });
           }
-          return const SizedBox(); // Return an empty widget while navigation happens.
+          return const SizedBox();
         },
       ),
     );
