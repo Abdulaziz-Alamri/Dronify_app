@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dronify/Data_layer/data_layer.dart';
 import 'package:dronify/repository/auth_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -115,9 +117,27 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
   }
 
-  FutureOr<void> onVerifyOtprecover(
-      VerifycoverEvent event, Emitter<AuthState> emit) async {
-    try {
+  // FutureOr<void> onVerifyOtprecover(
+  //     VerifycoverEvent event, Emitter<AuthState> emit) async {
+  //   try {
+  //     final user = await authRepository.verifyOtprecover(
+  //       email: event.email,
+  //       otp: event.otp,
+  //     );
+
+  //     if (user != null) {
+  //       emit(AuthSignedIn());
+  //     } else {
+  //       emit(AuthError('Invalid OTP. Please try again.'));
+  //     }
+  //   } catch (e) {
+  //     emit(AuthError('Error: ${e.toString()}'));
+  //   }
+  // }
+
+  FutureOr<void> onVerifyOtprecover(VerifycoverEvent event, Emitter<AuthState> emit) async{
+
+     try {
       final user = await authRepository.verifyOtprecover(
         email: event.email,
         otp: event.otp,
@@ -131,5 +151,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     } catch (e) {
       emit(AuthError('Error: ${e.toString()}'));
     }
+
   }
 }
