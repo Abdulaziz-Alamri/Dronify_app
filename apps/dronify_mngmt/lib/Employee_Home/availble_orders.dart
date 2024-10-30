@@ -1,12 +1,15 @@
+import 'package:dronify_mngmt/Admin/admin_datalayer/admin_data_layer.dart';
 import 'package:dronify_mngmt/Employee_Home/bloc/orders_bloc_bloc.dart';
 import 'package:dronify_mngmt/Employee_Home/bloc/orders_bloc_event.dart';
 import 'package:dronify_mngmt/Employee_Order/order_screen.dart';
-import 'package:dronify_mngmt/utils/db_operations.dart';
+import 'package:dronify_mngmt/models/order_model.dart';
+import 'package:dronify_mngmt/models/service_model.dart';
+import 'package:dronify_mngmt/utils/setup.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AvailbleOrders extends StatelessWidget {
-  final Map<String, dynamic>? order;
+  final OrderModel order;
   final OrdersBloc ordersBloc;
 
   const AvailbleOrders({
@@ -14,8 +17,10 @@ class AvailbleOrders extends StatelessWidget {
     required this.order,
     required this.ordersBloc,
   });
+
   @override
   Widget build(BuildContext context) {
+    List<ServiceModel> allServices = locator.get<AdminDataLayer>().allServices;
     return Center(
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
@@ -62,16 +67,15 @@ class AvailbleOrders extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        order?['service']?['name'] ?? 'Service Name',
-                        style: TextStyle(
+                        allServices[order.serviceId!-1].name,
+                        style: const TextStyle(
                             fontSize: 14, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(
                         height: 5,
                       ),
                       Text(
-                        order?['service']?['description'] ??
-                            'Service Description',
+                        allServices[order.serviceId!-1].description ,
                         softWrap: true,
                         style: const TextStyle(
                             fontSize: 12, color: Color(0xffA4A4AA)),
@@ -93,17 +97,18 @@ class AvailbleOrders extends StatelessWidget {
                               onPressed: () {
                                 ordersBloc.add(
                                   UpdateOrderStatus(
-                                      orderId: order?['order_id'],
-                                      newStatus: 'confirmed',
-                                      employeeId: Supabase.instance.client.auth.currentUser!.id
-                                      ),
+                                    orderId: order.orderId!,
+                                    newStatus: 'confirmed',
+                                    employeeId: Supabase
+                                        .instance.client.auth.currentUser!.id,
+                                  ),
                                 );
                                 Navigator.of(context).pop();
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => OrderScreen(
-                                        orderId: order!['order_id']),
+                                    builder: (context) =>
+                                        OrderScreen(orderId: order.orderId!),
                                   ),
                                 );
                               },
@@ -116,7 +121,7 @@ class AvailbleOrders extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => OrderScreen(
-                                      orderId: order!['order_id'],
+                                      orderId: order.orderId!,
                                     ),
                                   ),
                                 );
@@ -142,8 +147,8 @@ class AvailbleOrders extends StatelessWidget {
               ],
             ),
             Text(
-              'Price: ${order!['total_price'] ?? 'N/A'} SAR',
-              style: TextStyle(
+              'Price: ${order.totalPrice?.toString() ?? 'N/A'} SAR',
+              style: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
                 color: Color(0xff072D6F),

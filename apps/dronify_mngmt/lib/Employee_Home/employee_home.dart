@@ -1,6 +1,8 @@
+import 'package:dronify_mngmt/Admin/admin_datalayer/admin_data_layer.dart';
 import 'package:dronify_mngmt/Employee_Home/bloc/orders_bloc_bloc.dart';
 import 'package:dronify_mngmt/Employee_Home/bloc/orders_bloc_event.dart';
 import 'package:dronify_mngmt/Employee_Home/bloc/orders_bloc_state.dart';
+import 'package:dronify_mngmt/utils/setup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
@@ -28,7 +30,8 @@ class _EmployeeHomeState extends State<EmployeeHome>
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => OrdersBloc()..add(FetchOrders()),
+      create: (context) => OrdersBloc(dataLayer: locator.get<AdminDataLayer>())
+        ..add(FetchOrders()),
       child: Builder(builder: (context) {
         return Scaffold(
           backgroundColor: const Color(0xffF5F5F7),
@@ -86,11 +89,9 @@ class _EmployeeHomeState extends State<EmployeeHome>
               if (state is OrderLoading) {
                 return Center(child: CircularProgressIndicator());
               } else if (state is OrderLoaded) {
-                final ordersBloc = BlocProvider.of<OrdersBloc>(
-                    context); // احصل على الـ Bloc هنا
+                final ordersBloc = BlocProvider.of<OrdersBloc>(context);
 
                 return CustomScrollView(
-                  physics: NeverScrollableScrollPhysics(),
                   slivers: [
                     SliverAppBar(
                       expandedHeight: 80.0,
@@ -258,50 +259,54 @@ class _EmployeeHomeState extends State<EmployeeHome>
                               child: TabBarView(
                                 controller: tabController,
                                 children: [
+                                  // Complete Orders Tab
                                   SingleChildScrollView(
                                     child: Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
                                       children:
                                           state.completeOrders.map((order) {
-                                        return Column(
-                                          children: [
-                                            OrderCard(order: order),
-                                            SizedBox(height: 15),
-                                          ],
+                                        return Padding(
+                                          padding:
+                                              const EdgeInsets.only(bottom: 10),
+                                          child: OrderCard(order: order),
                                         );
                                       }).toList(),
                                     ),
                                   ),
+                                  // Incomplete Orders Tab
                                   SingleChildScrollView(
                                     child: Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
                                       children:
                                           state.incompleteOrders.map((order) {
-                                        return Column(
-                                          children: [
-                                            OrderCard(order: order),
-                                            SizedBox(height: 15),
-                                          ],
+                                        return Padding(
+                                          padding:
+                                              const EdgeInsets.only(bottom: 10),
+                                          child: OrderCard(order: order),
                                         );
                                       }).toList(),
                                     ),
                                   ),
-                                  // Available Orders Tab
+                                  // Available Orders Tab with spacing
                                   SingleChildScrollView(
-                                    child: state.isAvailableOrdersEmpty
-                                        ? Center(
-                                            child: Text(
-                                                'No available orders at the moment.'))
-                                        : Column(
-                                            children: state.availableOrders
-                                                .map((order) {
-                                              return AvailbleOrders(
-                                                  order: order,
-                                                  ordersBloc: ordersBloc);
-                                            }).toList(),
-                                          ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 10),
+                                      child: Column(
+                                        children:
+                                            state.availableOrders.map((order) {
+                                          return Padding(
+                                            padding: const EdgeInsets.only(
+                                                bottom: 15),
+                                            child: AvailbleOrders(
+                                                order: order,
+                                                ordersBloc: ordersBloc),
+                                          );
+                                        }).toList(),
+                                      ),
+                                    ),
                                   ),
                                 ],
                               ),
