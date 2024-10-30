@@ -1,3 +1,4 @@
+import 'package:dronify/src/Auth/forget_password.dart';
 import 'package:dronify/src/Auth/signup.dart';
 import 'package:dronify/src/Bottom_Nav/bottom_nav.dart';
 import 'package:flutter/material.dart';
@@ -129,7 +130,13 @@ class SignIn extends StatelessWidget {
                       Align(
                         alignment: Alignment.centerRight,
                         child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ForgetPassword()),
+                            );
+                          },
                           child: const Text(
                             'Forgot Password?',
                             style: TextStyle(

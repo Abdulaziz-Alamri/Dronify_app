@@ -1,8 +1,7 @@
 import 'package:dronify/repository/auth_repository.dart';
 import 'package:dronify/splash/splash_screen.dart';
 import 'package:dronify/src/Auth/bloc/auth_bloc.dart';
-import 'package:dronify/src/Auth/first_screen.dart';
-import 'package:dronify/src/Auth/sginin.dart';
+import 'package:dronify/src/Auth/forget_password.dart';
 import 'package:dronify/utils/setup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,6 +10,7 @@ import 'package:sizer/sizer.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await setup();
+
   runApp(
     MultiBlocProvider(
       providers: [
@@ -31,8 +31,9 @@ class MainApp extends StatelessWidget {
     return Sizer(
       builder: (context, orientation, deviceType) {
         return MaterialApp(
-            debugShowCheckedModeBanner: false, home: FirstScreen());
+            debugShowCheckedModeBanner: false, home: SplashScreen());
       },
     );
   }
 }
+

@@ -94,6 +94,7 @@ class AuthRepository {
   }
   
 
+//============================================
   // Verify OTP function
   Future<User> verifyOtp({
     required String email,
@@ -117,7 +118,31 @@ class AuthRepository {
       throw Exception('OTP verification failed: ${error.toString()}');
     }
   }
+//-------------------------------------------------------------------
 
+ Future<User> verifyOtprecover({
+    required String email,
+    required String otp,
+  }) async {
+    try {
+      final response = await supabase.auth.verifyOTP(
+        token: otp,
+        type: OtpType.recovery,
+        email: email,
+      );
+
+      if (response.user != null) {
+        log('OTP verified successfully for $email');
+        return response.user!;
+      } else {
+        throw Exception('OTP verification failed. Please try again.');
+      }
+    } catch (error) {
+      log('OTP verification failed: $error');
+      throw Exception('OTP verification failed: ${error.toString()}');
+    }
+  }
+  //=======================
   // sign in with email otp
   Future signWithOtp({
     required String email,
@@ -130,6 +155,78 @@ class AuthRepository {
       throw Exception('Email OTP sign-in failed: ${error.toString()}');
     }
   }
+
+
+  // Forgot Password function
+  Future<void> forgotPassword({required String email}) async {
+    try {
+      await supabase.auth.resetPasswordForEmail(email);
+      log('Password reset link sent to $email');
+    } catch (error) {
+      log('Password reset failed: $error');
+      throw Exception('Password reset failed: ${error.toString()}');
+    }
+     // Verify OTP and reset password
+  Future<void> verifyOtpAndResetPassword({
+    required String email,
+    required String otp,
+    required String newPassword,
+  }) async {
+    try {
+      final response = await supabase.auth.verifyOTP(
+        token: otp,
+        type: OtpType.recovery,
+        email: email,
+      );
+
+      if (response.user == null) {
+        throw Exception('Invalid OTP. Please try again.');
+      }
+
+      // Update the user's password
+      await supabase.auth.updateUser(
+        UserAttributes(password: newPassword),
+      );
+
+      log('Password reset successfully');
+    } catch (error) {
+      log('OTP verification failed: $error');
+      throw Exception('OTP verification failed: ${error.toString()}');
+    }
+  }
+
+  //  Update Password
+  Future<void> updatePassword({
+    required String email,
+    // required String otp,
+    required String newPassword,
+  }) async {
+    try {
+   
+
+      // OTP verified successfully, now update the user's password
+      await supabase.auth.updateUser(
+        UserAttributes(password: newPassword), // Set new password
+      );
+
+      log('Password updated successfully for $email');
+    } catch (error) {
+      log('Password update failed: $error');
+      throw Exception('Password update failed: ${error.toString()}');
+    }
+  }
+  }
+
+
+
+
+
+
+
+
+
+
+
 
 }
 
