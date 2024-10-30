@@ -1,83 +1,8 @@
-// import 'package:dronify/repository/auth_repository.dart'; // Adjust path if needed
-// import 'package:flutter_bloc/flutter_bloc.dart';
-
-// part 'auth_event.dart'; // Event declarations (SignUp, SignIn, VerifyOtp, etc.)
-// part 'auth_state.dart'; // State declarations (Loading, Success, Error, etc.)
-
-// class AuthBloc extends Bloc<AuthEvent, AuthState> {
-//   final AuthRepository authRepository;
-
-//   AuthBloc(this.authRepository) : super(AuthInitial()) {
-//     // Event handlers for authentication flows
-//     on<SignUpEvent>(onSignUp);
-//     on<SignInEvent>(onSignIn);
-//     on<VerifyEvent>(onVerifyOtp); // OTP verification handler
-//   }
-
-//   // Handle Sign-Up event
-//   Future<void> onSignUp(SignUpEvent event, Emitter<AuthState> emit) async {
-//     emit(AuthLoading());
-//     try {
-//       final response = await authRepository.signUp(
-//         email: event.email,
-//         password: event.password,
-//         username: event.username,
-//         phone: event.phone,
-//       );
-
-//       if (response.user != null) {
-//         emit(AuthSignedUp());
-//       } else {
-//         emit(AuthError('Sign-up failed. Please try again.'));
-//       }
-//     } catch (e) {
-//       emit(AuthError(e.toString()));
-//     }
-//   }
-
-//   // Handle Sign-In event
-//   Future<void> onSignIn(SignInEvent event, Emitter<AuthState> emit) async {
-//     emit(AuthLoading());
-//     try {
-//       final response = await authRepository.login(
-//         email: event.email,
-//         password: event.password,
-//       );
-
-//       if (response.user != null) {
-//         emit(AuthSignedIn());
-//       } else {
-//         emit(AuthError('Invalid credentials. Please try again.'));
-//       }
-//     } catch (e) {
-//       emit(AuthError(e.toString()));
-//     }
-//   }
-
-//   Future<void> onVerifyOtp(VerifyEvent event, Emitter<AuthState> emit) async {
-//     emit(AuthLoading());
-//     try {
-//       // Call the repository to verify the OTP and get the user
-//       final user = await authRepository.verifyOtp(
-//         email: event.email,
-//         otp: event.otp,
-//       );
-//       print("SUCCEEDED");
-
-//       if (user != null) {
-//         emit(AuthSignedIn()); // Successfully signed in
-//       } else {
-//         emit(AuthError('Invalid OTP. Please try again.'));
-//       }
-//     } catch (e) {
-//       emit(AuthError('Error: ${e.toString()}'));
-//     }
-//   }
-// }
-import 'dart:async';
-
-import 'package:dronify/repository/auth_repository.dart'; // Adjust path if needed
+import 'package:dronify/Data_layer/data_layer.dart';
+import 'package:dronify/repository/auth_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:dronify/models/customer_model.dart';
+import 'package:dronify/utils/setup.dart'; // لضمان الوصول لـ DataLayer
 
 part 'auth_event.dart'; // Event declarations
 part 'auth_state.dart'; // State declarations
@@ -86,12 +11,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthRepository authRepository;
 
   AuthBloc(this.authRepository) : super(AuthInitial()) {
-    // Event handlers for authentication flows
     on<SignUpEvent>(onSignUp);
     on<SignInEvent>(onSignIn);
     on<VerifyEvent>(onVerifyOtp);
     on<VerifycoverEvent>(onVerifyOtprecover);
     on<ForgotPasswordEvent>(onForgotPassword); // Forgot password handler
+    on<VerifyEvent>(onVerifyOtp);
   }
 
   // Handle Sign-Up event
@@ -106,6 +31,20 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       );
 
       if (response.user != null) {
+        // إنشاء كائن CustomerModel وتخزينه في قاعدة البيانات
+        final customer = CustomerModel(
+          customerId: response.user!.id,
+          name: event.username,
+          email: event.email,
+          phone: event.phone,
+        );
+
+        // استدعاء DataLayer لإضافة بيانات المستخدم إلى قاعدة البيانات
+        await locator.get<DataLayer>().upsertCustomer(customer);
+
+        // تخزين بيانات المستخدم في DataLayer بعد التسجيل
+        locator.get<DataLayer>().saveCustomerData(customer);
+        
         emit(AuthSignedUp());
       } else {
         emit(AuthError('Sign-up failed. Please try again.'));
@@ -125,7 +64,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       );
 
       if (response.user != null) {
-        emit(AuthSignedIn());
+        // جلب بيانات المستخدم من قاعدة البيانات
+        final customer = await locator.get<DataLayer>().getCustomer(
+          response.user!.id,
+        );
+
+        // التحقق من وجود بيانات المستخدم وتخزينها في DataLayer
+        if (customer != null) {
+          locator.get<DataLayer>().saveCustomerData(customer);
+          emit(AuthSignedIn());
+        } else {
+          emit(AuthError('User data not found.'));
+        }
       } else {
         emit(AuthError('Invalid credentials. Please try again.'));
       }
@@ -134,26 +84,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
   }
 
-  // Future<void> onVerifyOtprecover(
-  //     VerifyEvent event, Emitter<AuthState> emit) async {
-  //   emit(AuthLoading());
-  //   try {
-  //     final user = await authRepository.verifyOtprecover(
-  //       email: event.email,
-  //       otp: event.otp,
-  //     );
-
-  //     if (user != null) {
-  //       emit(AuthSignedIn()); // OTP verified successfully
-  //     } else {
-  //       emit(AuthError('Invalid OTP. Please try again.'));
-  //     }
-  //   } catch (e) {
-  //     emit(AuthError('Error: ${e.toString()}'));
-  //   }
-  // }
-
-  // Handle OTP Verification
+  // Handle OTP verification event
   Future<void> onVerifyOtp(VerifyEvent event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
     try {
@@ -193,7 +124,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       );
 
       if (user != null) {
-        emit(AuthPasswordResetSuccess()); // OTP verified successfully
+        emit(AuthSignedIn());
       } else {
         emit(AuthError('Invalid OTP. Please try again.'));
       }

@@ -1,23 +1,32 @@
+import 'package:dronify/Data_layer/data_layer.dart';
+import 'package:dronify/models/cart_model.dart';
+import 'package:dronify/utils/setup.dart';
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
+import 'package:sizer/sizer.dart';
+import 'package:get_it/get_it.dart';
+
 import 'package:dronify/models/order_model.dart';
 import 'package:dronify/models/service_model.dart';
 import 'package:dronify/src/Order/custom_image_cards.dart';
 import 'package:dronify/src/Order/custom_order_card.dart';
-import 'package:dronify/utils/db_operations.dart';
-import 'package:dronify/utils/payment.dart';
-import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
-import 'package:moyasar/moyasar.dart';
-import 'package:sizer/sizer.dart';
 
 class OrderScreen extends StatelessWidget {
   final OrderModel order;
   final ServiceModel service;
   final List<XFile> images;
-  const OrderScreen({super.key, required this.order, required this.images, required this.service});
+
+  const OrderScreen(
+      {super.key,
+      required this.order,
+      required this.images,
+      required this.service});
 
   @override
   Widget build(BuildContext context) {
+    final dataLayer = GetIt.instance<DataLayer>();
+
     return Scaffold(
       backgroundColor: const Color(0xffF5F5F7),
       appBar: AppBar(
@@ -35,33 +44,31 @@ class OrderScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
             Center(
               child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  height: 75,
-                  width: 345,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.05),
-                        blurRadius: 3,
-                        offset: const Offset(0, 1),
-                      ),
-                    ],
-                  ),
-                  child: const CustomOrderCard(
-                      imageUrl: 'assets/drone12.png',
-                      title: 'Customer Name',
-                      subTitle: '0512341234')),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                height: 75,
+                width: 345,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(16),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.05),
+                      blurRadius: 3,
+                      offset: const Offset(0, 1),
+                    ),
+                  ],
+                ),
+                child: const CustomOrderCard(
+                  imageUrl: 'assets/drone12.png',
+                  title: 'Customer Name',
+                  subTitle: '0512341234',
+                ),
+              ),
             ),
-            const SizedBox(
-              height: 15,
-            ),
+            const SizedBox(height: 15),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
               height: 420,
@@ -81,23 +88,18 @@ class OrderScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CustomOrderCard(
-                      imageUrl: 'assets/drone.png',
-                      title:
-                          'Date: ${DateFormat.yMMMd().format(order.reservationDate!)}',
-                      subTitle:
-                          'Time: ${order.reservationTime!.hour}:${order.reservationTime!.minute}'),
-                  const Divider(
-                    color: Color(0xffEDEDED),
-                    height: 30,
+                    imageUrl: '${service.mainImage}',
+                    title:
+                        'Date: ${DateFormat.yMMMd().format(order.reservationDate!)}',
+                    subTitle:
+                        'Time: ${order.reservationTime!.hour}:${order.reservationTime!.minute}',
                   ),
+                  const Divider(color: Color(0xffEDEDED), height: 30),
                   Text(
                     'Price: ${order.totalPrice} SAR',
                     style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
                   ),
-                  const Divider(
-                    color: Color(0xffEDEDED),
-                    height: 30,
-                  ),
+                  const Divider(color: Color(0xffEDEDED), height: 30),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -106,101 +108,74 @@ class OrderScreen extends StatelessWidget {
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(
-                        height: 5,
-                      ),
+                      SizedBox(height: 5),
                       Text(
                         service.description,
                         style: TextStyle(color: Color(0xffA4A4AA)),
                       ),
                     ],
                   ),
-                  const Divider(
-                    color: Color(0xffEDEDED),
-                    height: 30,
-                  ),
+                  const Divider(color: Color(0xffEDEDED), height: 30),
                   Row(
                     children: [
                       Image.asset('assets/drone_icon.png'),
-                      const SizedBox(
-                        width: 10,
-                      ),
+                      const SizedBox(width: 10),
                       Text(
                         service.name,
                         style: TextStyle(
                             fontSize: 12, fontWeight: FontWeight.bold),
-                      )
+                      ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  const SizedBox(height: 10),
                   Row(
                     children: [
-                      Icon(
-                        Icons.track_changes_outlined,
-                        color: Color(0xff072D6F),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
+                      Icon(Icons.track_changes_outlined,
+                          color: Color(0xff072D6F)),
+                      SizedBox(width: 10),
                       Text(
                         '${order.address}',
                         style: TextStyle(
                             fontSize: 12, fontWeight: FontWeight.bold),
-                      )
+                      ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  const SizedBox(height: 10),
                   Row(
                     children: [
-                      Icon(
-                        Icons.access_time_filled_outlined,
-                        color: Color(0xff072D6F),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
+                      Icon(Icons.access_time_filled_outlined,
+                          color: Color(0xff072D6F)),
+                      SizedBox(width: 10),
                       Text(
                         '${order.reservationTime!.hour}:${order.reservationTime!.minute}',
                         style: TextStyle(
                             fontSize: 12, fontWeight: FontWeight.bold),
-                      )
+                      ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  const SizedBox(height: 10),
                 ],
               ),
             ),
-            const SizedBox(
-              height: 15,
-            ),
+            const SizedBox(height: 15),
             Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                height: 100,
-                width: 345,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
-                      blurRadius: 3,
-                      offset: const Offset(0, 1),
-                    ),
-                  ],
-                ),
-                child: CustomImageCards(
-                  images: order.images!,
-                )),
-            const SizedBox(
-              height: 40,
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+              height: 100,
+              width: 345,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
+                    blurRadius: 3,
+                    offset: const Offset(0, 1),
+                  ),
+                ],
+              ),
+              child: CustomImageCards(images: order.images!),
             ),
+            const SizedBox(height: 40),
             Center(
               child: Container(
                 width: 335,
@@ -220,45 +195,9 @@ class OrderScreen extends StatelessWidget {
                 ),
                 child: ElevatedButton(
                   onPressed: () {
-                    saveOrder(
-                        customerId: order.customerId!,
-                        serviceId: order.serviceId!,
-                        squareMeters: order.squareMeters!,
-                        reservationDate: order.reservationDate!,
-                        reservationTime: TimeOfDay.now(),
-                        totalPrice: order.totalPrice!,
-                        imageUrls: [],
-                        latitude: order.address![0],
-                        longitude: order.address![1],
-                        imageFiles: images);
-
-                    // showModalBottomSheet(
-                    //   context: context,
-                    //   backgroundColor: Colors.white,
-                    //   shape: const RoundedRectangleBorder(
-                    //     borderRadius: BorderRadius.vertical(
-                    //       top: Radius.circular(25.0),
-                    //     ),
-                    //   ),
-                    //   builder: (BuildContext context) {
-                    //     return Padding(
-                    //       padding: const EdgeInsets.all(12),
-                    //       child: CreditCard(
-                    //         config: pay(totalPrice: 1000, orderId: 2321213),
-                    //         onPaymentResult: (result) async {
-                    //           onPaymentResult(result, context);
-                    //           Navigator.pop(context, 'Payment successful');
-                    //         },
-                    //       ),
-                    //     );
-                    //   },
-                    // ).then((value) async {
-                    //   if (value == 'Payment successful') {
-                    //     await Future.delayed(const Duration(seconds: 5));
-                    //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    //         content: Text('The payment is done successfully')));
-                    //   }
-                    // });
+                    dataLayer.addToCart(order);
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text('Order added to cart successfully!')));
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.transparent,
