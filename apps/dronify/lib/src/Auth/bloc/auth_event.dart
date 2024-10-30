@@ -37,9 +37,33 @@ final class VerifyEvent extends AuthEvent {
      
       required this.otp});
 }
+final class VerifycoverEvent extends AuthEvent {
+  final String email;
+
+  final String otp;
+
+  VerifycoverEvent(
+      {
+      required this.email,
+     
+      required this.otp});
+}
 
 class RequestOtpEmail extends AuthEvent {
   final String email;
 
   RequestOtpEmail(this.email);
+}
+
+class ForgotPasswordEvent extends AuthEvent {
+  final String email;
+
+  ForgotPasswordEvent(this.email);
+}
+
+class ResetPasswordEvent extends AuthEvent {
+  final String email;
+  final String newPassword;
+
+  ResetPasswordEvent({required this.email, required this.newPassword});
 }

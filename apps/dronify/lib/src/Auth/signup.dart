@@ -1,14 +1,22 @@
 import 'package:dronify/src/Auth/bloc/auth_bloc.dart';
-import 'package:dronify/src/Auth/otp_screan.dart';
+import 'package:dronify/src/Auth/otp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class Signup extends StatelessWidget {
+class Signup extends StatefulWidget {
   Signup({super.key});
 
+  @override
+  State<Signup> createState() => _SignupState();
+}
+
+class _SignupState extends State<Signup> {
   final TextEditingController emailController = TextEditingController();
+
   final TextEditingController passwordController = TextEditingController();
+
   final TextEditingController nameController = TextEditingController();
+
   final TextEditingController phoneController = TextEditingController();
 
   @override
@@ -17,14 +25,16 @@ class Signup extends StatelessWidget {
       resizeToAvoidBottomInset: true,
       body: Stack(
         children: [
-          _buildHeader(),
-          _buildForm(context),
+          
+          buildHeader(),
+          buildForm(context),
         ],
       ),
     );
   }
 
-  Widget _buildHeader() {
+  Widget 
+  buildHeader() {
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
@@ -38,7 +48,7 @@ class Signup extends StatelessWidget {
     );
   }
 
-  Widget _buildForm(BuildContext context) {
+  Widget buildForm(BuildContext context) {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
@@ -66,7 +76,6 @@ class Signup extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (context) => OtpScreen(
                     email: emailController.text.trim(),
-               
                   ),
                 ),
               );
@@ -74,7 +83,7 @@ class Signup extends StatelessWidget {
           },
           builder: (context, state) {
             if (state is AuthLoading) {
-              return const Center(child: CircularProgressIndicator());
+              return const Center();
             }
 
             return SingleChildScrollView(
@@ -88,21 +97,23 @@ class Signup extends StatelessWidget {
                     style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 10),
-                  _buildTextField('User Name', nameController, false),
+                  buildTextField('User Name', nameController, false),
                   const SizedBox(height: 10),
-                  _buildTextField(
+                  buildTextField(
                     'Phone Number',
                     phoneController,
                     false,
-                    inputType: TextInputType.phone,
                   ),
                   const SizedBox(height: 10),
-                  _buildTextField('Email', emailController, false,
-                      inputType: TextInputType.emailAddress),
+                  buildTextField(
+                    'Email',
+                    emailController,
+                    false,
+                  ),
                   const SizedBox(height: 10),
-                  _buildTextField('Password', passwordController, true),
+                  buildTextField('Password', passwordController, true),
                   const SizedBox(height: 20),
-                  _buildSignUpButton(context),
+                  buildSignUpButton(context),
                 ],
               ),
             );
@@ -112,7 +123,7 @@ class Signup extends StatelessWidget {
     );
   }
 
-  Widget _buildTextField(
+  Widget buildTextField(
     String label,
     TextEditingController controller,
     bool obscure, {
@@ -129,7 +140,6 @@ class Signup extends StatelessWidget {
         TextField(
           controller: controller,
           obscureText: obscure,
-          keyboardType: inputType,
           decoration: InputDecoration(
             fillColor: const Color(0XFFF5F5F5),
             filled: true,
@@ -143,7 +153,7 @@ class Signup extends StatelessWidget {
     );
   }
 
-  Widget _buildSignUpButton(BuildContext context) {
+  Widget buildSignUpButton(BuildContext context) {
     return Center(
       child: Container(
         width: double.infinity,
@@ -169,8 +179,10 @@ class Signup extends StatelessWidget {
             final phone = phoneController.text.trim();
 
             // Add validation
-            if (email.isEmpty || password.isEmpty || 
-                username.isEmpty || phone.isEmpty) {
+            if (email.isEmpty ||
+                password.isEmpty ||
+                username.isEmpty ||
+                phone.isEmpty) {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('All fields are required!')),
               );
