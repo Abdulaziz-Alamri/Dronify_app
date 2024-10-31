@@ -1,19 +1,17 @@
 import 'package:dronify_mngmt/Auth/bloc/auth_bloc.dart';
-import 'package:dronify_mngmt/Employee_Home/employee_home.dart';
+import 'package:dronify_mngmt/Auth/reset_password_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinput/pinput.dart';
 import 'package:sizer/sizer.dart';
 
-class OtpScreen extends StatelessWidget {
-  const OtpScreen({
+class OtpRestScreen extends StatelessWidget {
+  const OtpRestScreen({
     super.key,
     required this.email,
- 
   });
 
   final String email;
- 
 
   @override
   Widget build(BuildContext context) {
@@ -66,12 +64,14 @@ class OtpScreen extends StatelessWidget {
                 child: CircularProgressIndicator(),
               ),
             );
-          } else if (state is AuthSignedIn) {
+          } else if (state is AuthPasswordResetSuccess) {
             Navigator.pop(context);
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => const EmployeeHome(),
+                builder: (context) => ResetPasswordScreen(
+                  email: email,
+                ),
               ),
             );
           } else if (state is AuthError) {
@@ -132,29 +132,12 @@ class OtpScreen extends StatelessWidget {
                     showCursor: true,
                     onCompleted: (pin) {
                       context.read<AuthBloc>().add(
-                            VerifyEvent(
+                            VerifycoverEvent(
                               email: email,
                               otp: pin,
                             ),
                           );
                     },
-                  ),
-                ),
-              ),
-              SizedBox(height: 5.h),
-              GestureDetector(
-                onTap: () {
-                  context.read<AuthBloc>().add(RequestOtpEmail(email));
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('OTP Resent!')),
-                  );
-                },
-                child: Text(
-                  'Resend OTP',
-                  style: TextStyle(
-                    fontSize: 2.h,
-                    color: const Color(0xff73DDFF),
-                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),

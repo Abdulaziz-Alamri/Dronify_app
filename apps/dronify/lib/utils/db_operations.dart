@@ -39,6 +39,7 @@ Future<void> saveOrder({
 
     if (orderResponse['order_id'] != null) {
       final orderId = orderResponse['order_id'];
+      log('$orderId');
 
       for (var imageFile in imageFiles) {
         final fileName =
@@ -94,11 +95,11 @@ checkChat({required String chatId}) async {
     await supabase.from('live_chat').insert({
       'chat_id': chatId,
       'user_id': supabase.auth.currentUser!.id,
-      'admin_id': 'a581cd5e-c67c-4522-a4bb-01b795c43387',
+      'admin_id': '0cf2efe9-94b7-482b-9c85-de2122e4a675',
     });
     await supabase.from('chat_message').insert({
       'chat_id': chatId,
-      'sender_id': 'a581cd5e-c67c-4522-a4bb-01b795c43387',
+      'sender_id': '0cf2efe9-94b7-482b-9c85-de2122e4a675',
       'message': 'How may I assist you?',
     });
     return chatId;
@@ -184,10 +185,11 @@ saveSubscription({
     print("Error saving Subscription: $error");
     throw error;
   }
-  
+
   Future<void> upsertCustomer(CustomerModel customer) async {
     try {
-      final response = await supabase.from('customers').upsert(customer.toJson());
+      final response =
+          await supabase.from('customers').upsert(customer.toJson());
       if (response.error != null) {
         throw Exception(response.error!.message);
       }
@@ -211,12 +213,15 @@ saveSubscription({
       if (response != null) {
         return CustomerModel.fromJson(response);
       }
-      
+
       return null;
     } catch (e) {
       print('Error fetching customer: $e');
       return null;
     }
   }
+}
 
+updateExternalKey({required String externalKey}) async {
+  await supabase.from('app_user').update({'external_key': externalKey});
 }

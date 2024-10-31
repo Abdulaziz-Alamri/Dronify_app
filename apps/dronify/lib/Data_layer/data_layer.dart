@@ -4,6 +4,8 @@ import 'package:dronify/models/customer_model.dart';
 import 'package:dronify/models/service_model.dart';
 import 'package:dronify/models/order_model.dart';
 import 'package:dronify/models/cart_model.dart';
+import 'package:dronify/utils/db_operations.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class DataLayer {
@@ -11,6 +13,9 @@ class DataLayer {
   List<ServiceModel> allServices = [];
   CustomerModel? customer;
   List<OrderModel> allCustomerOrders = [];
+
+  String? externalKey;
+  final box = GetStorage();
 
   final supabase = Supabase.instance.client;
 
@@ -21,19 +26,29 @@ class DataLayer {
     }
   }
 
+  loadData() async {
+    if (box.hasData('external_key')) {
+      externalKey = box.read('external_key');
+    }
+  }
+
+  saveData() async {
+    await box.write('external_key', externalKey);
+    await updateExternalKey(externalKey: externalKey!);
+  }
+
   fetchCustomerOrders() async {
     final allOrdersResponse = await supabase
         .from('orders')
         .select('*')
-        .eq('user_id', '4252d26b-19f6-4f98-9f5a-a3ddc18f2fdd');
+        .eq('user_id', supabase.auth.currentUser!.id);
     log('$allOrdersResponse');
     if (allOrdersResponse.isNotEmpty)
       for (var map in allOrdersResponse) {
         OrderModel order = OrderModel.fromJson(map);
         allCustomerOrders.add(order);
       }
-          log('$allCustomerOrders');
-
+    log('$allCustomerOrders');
   }
 
   void addToCart(OrderModel order) {

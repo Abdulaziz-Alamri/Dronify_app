@@ -5,6 +5,7 @@ import 'package:dronify_mngmt/Admin/EmployeeDetails/completed_orders_data.dart';
 import 'package:dronify_mngmt/Employee_Home/bloc/orders_bloc_bloc.dart';
 import 'package:dronify_mngmt/models/employee_model.dart';
 import 'package:dronify_mngmt/models/order_model.dart';
+import 'package:dronify_mngmt/utils/db_operations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:sizer/sizer.dart';
@@ -26,36 +27,6 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
     completedOrdersData =
         getCompletedOrdersData(employeeId: widget.employee.employeeId);
     super.initState();
-  }
-
-  Future<CompletedOrdersData> getCompletedOrdersData(
-      {required String employeeId}) async {
-    try {
-      final response =
-          await supabase.from('orders').select().eq('employee_id', employeeId);
-
-      int totalOrders = response.length;
-      int completedOrdersCount =
-          response.where((order) => order['status'] == 'complete').length;
-
-      // Calculate the percentage of completed orders
-      final completedPercentage =
-          totalOrders > 0 ? (completedOrdersCount / totalOrders) : 0.0;
-
-      // Fetch the list of completed orders
-      List<OrderModel> completedOrdersList = response
-          .where((order) => order['status'] == 'complete')
-          .map<OrderModel>((order) => OrderModel.fromJson(order))
-          .toList();
-
-      return CompletedOrdersData(
-        completedPercentage: completedPercentage,
-        completedOrders: completedOrdersList,
-      );
-    } catch (error) {
-      print("Error fetching completed orders data: $error");
-      return CompletedOrdersData(completedPercentage: 0.0, completedOrders: []);
-    }
   }
 
   @override
@@ -190,15 +161,15 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildTextField('Employee Name', 'John Doe'),
+                    _buildTextField('Employee ID', widget.employee.employeeId),
                     const SizedBox(height: 16),
-                    _buildTextField('Email', 'john.doe@example.com'),
+                    _buildTextField('Employee Name', widget.employee.name),
                     const SizedBox(height: 16),
-                    _buildTextField('Gender', 'Male'),
+                    _buildTextField('Email', widget.employee.email),
                     const SizedBox(height: 16),
-                    _buildTextField('Date of Birth', '01/01/1990'),
+                    _buildTextField('Position', widget.employee.position!),
                     const SizedBox(height: 16),
-                    _buildTextField('Phone Number', '0966 5789033'),
+                    _buildTextField('Rating', '${widget.employee.rating}'),
                   ],
                 ),
               ),
@@ -268,17 +239,21 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
               fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
         ),
         const SizedBox(height: 8),
-        TextField(
-          decoration: InputDecoration(
-            hintText: placeholder,
-            filled: true,
-            fillColor: const Color(0xffF5F5F5),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide.none,
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          decoration: BoxDecoration(
+            color: const Color(0xffF5F5F5),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Text(
+            placeholder,
+            style: TextStyle(
+              color: const Color.fromARGB(255, 56, 56, 56),
+              fontSize: 16,
             ),
           ),
-        ),
+        )
       ],
     );
   }

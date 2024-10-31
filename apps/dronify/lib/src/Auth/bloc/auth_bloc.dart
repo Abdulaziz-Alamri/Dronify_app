@@ -17,8 +17,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<SignInEvent>(onSignIn);
     on<VerifyEvent>(onVerifyOtp);
     on<VerifycoverEvent>(onVerifyOtprecover);
-    on<ForgotPasswordEvent>(onForgotPassword); // Forgot password handler
-    on<VerifyEvent>(onVerifyOtp);
+    on<ForgotPasswordEvent>(onForgotPassword);
   }
 
   Future<void> onSignUp(SignUpEvent event, Emitter<AuthState> emit) async {
