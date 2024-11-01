@@ -271,7 +271,7 @@ class _ServicesState extends State<Services> {
                             ),
                           );
                         }
-                        return CircularProgressIndicator();
+                        return Image.asset('assets/custom_loading.gif');
                       },
                     ),
                     SizedBox(height: 2.h),

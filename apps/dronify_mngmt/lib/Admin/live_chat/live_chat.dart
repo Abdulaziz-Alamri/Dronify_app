@@ -27,7 +27,8 @@ class LiveChat extends StatelessWidget {
             } else if (state is ChatError) {
               return Center(child: Text('Error: ${state.error}'));
             }
-            return const Center(child: CircularProgressIndicator());
+            return Center(
+                child: Image.asset('assets/custom_loading.gif'));
           },
         ),
       ),

@@ -107,7 +107,7 @@ class _EmployeeHomeState extends State<EmployeeHome>
             },
             builder: (context, state) {
               if (state is OrderLoading) {
-                return Center(child: CircularProgressIndicator());
+                return Center(child: Image.asset('assets/custom_loading.gif'));
               } else if (state is OrderLoaded) {
                 final ordersBloc = BlocProvider.of<OrdersBloc>(context);
 

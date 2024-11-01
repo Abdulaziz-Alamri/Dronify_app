@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:dronify_mngmt/Admin/admin_datalayer/admin_data_layer.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
@@ -15,7 +17,7 @@ setup() async {
 
   await locator.registerSingleton<AdminDataLayer>(AdminDataLayer());
 
-  // if (locator.get<DataLayer>().externalKey == null) {
-  //   locator.get<DataLayer>().externalKey = Random().nextInt(999999).toString();
-  // }
+  if (locator.get<AdminDataLayer>().externalKey == null) {
+    locator.get<AdminDataLayer>().externalKey = Random().nextInt(999999).toString();
+  }
 }

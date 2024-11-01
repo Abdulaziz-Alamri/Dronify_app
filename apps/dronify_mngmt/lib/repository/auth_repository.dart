@@ -1,5 +1,8 @@
 import 'dart:developer';
 
+import 'package:dronify_mngmt/Admin/admin_datalayer/admin_data_layer.dart';
+import 'package:dronify_mngmt/utils/setup.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthRepository {
@@ -64,6 +67,11 @@ class AuthRepository {
       );
 
       if (response.user != null) {
+        OneSignal.login(locator.get<AdminDataLayer>().externalKey!);
+    await supabase
+        .from('app_user')
+        .update({'external_key': locator.get<AdminDataLayer>().externalKey!}).eq(
+            'user_id', response.user!.id);
         return response;
       } else {
         throw Exception('Login failed: Invalid credentials.');

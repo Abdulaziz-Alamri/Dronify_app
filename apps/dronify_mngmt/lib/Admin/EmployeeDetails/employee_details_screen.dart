@@ -175,7 +175,7 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
                 future: completedOrdersData,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
+                    return Image.asset('assets/custom_loading.gif');
                   } else if (snapshot.hasError) {
                     return Text('Error loading data');
                   } else {

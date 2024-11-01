@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dronify_mngmt/Admin/EmployeeDetails/completed_orders_data.dart';
@@ -85,42 +86,38 @@ Future<void> saveOrder({
   }
 }
 
-setOrderAccepted()async{
-  
-}
+setOrderAccepted() async {}
 
 cancelOrder({required OrderModel order}) async {
-  await supabase.from('address').delete().eq('order_id', order.orderId!);
-  await supabase.from('images').delete().eq('order_id', order.orderId!);
   await supabase.from('orders').delete().eq('order_id', order.orderId!);
 }
 
 Future<CompletedOrdersData> getCompletedOrdersData(
-      {required String employeeId}) async {
-    try {
-      final response =
-          await supabase.from('orders').select().eq('employee_id', employeeId);
+    {required String employeeId}) async {
+  try {
+    final response =
+        await supabase.from('orders').select().eq('employee_id', employeeId);
 
-      int totalOrders = response.length;
-      int completedOrdersCount =
-          response.where((order) => order['status'] == 'complete').length;
+    int totalOrders = response.length;
+    int completedOrdersCount =
+        response.where((order) => order['status'] == 'complete').length;
 
-      // Calculate the percentage of completed orders
-      final completedPercentage =
-          totalOrders > 0 ? (completedOrdersCount / totalOrders) : 0.0;
+    // Calculate the percentage of completed orders
+    final completedPercentage =
+        totalOrders > 0 ? (completedOrdersCount / totalOrders) : 0.0;
 
-      // Fetch the list of completed orders
-      List<OrderModel> completedOrdersList = response
-          .where((order) => order['status'] == 'complete')
-          .map<OrderModel>((order) => OrderModel.fromJson(order))
-          .toList();
+    // Fetch the list of completed orders
+    List<OrderModel> completedOrdersList = response
+        .where((order) => order['status'] == 'complete')
+        .map<OrderModel>((order) => OrderModel.fromJson(order))
+        .toList();
 
-      return CompletedOrdersData(
-        completedPercentage: completedPercentage,
-        completedOrders: completedOrdersList,
-      );
-    } catch (error) {
-      print("Error fetching completed orders data: $error");
-      return CompletedOrdersData(completedPercentage: 0.0, completedOrders: []);
-    }
+    return CompletedOrdersData(
+      completedPercentage: completedPercentage,
+      completedOrders: completedOrdersList,
+    );
+  } catch (error) {
+    print("Error fetching completed orders data: $error");
+    return CompletedOrdersData(completedPercentage: 0.0, completedOrders: []);
   }
+}

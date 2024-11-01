@@ -17,6 +17,7 @@ class AdminDataLayer {
   List<EmployeeModel> allEmployees = [];
 
   EmployeeModel? currentEmployee = null;
+  String? externalKey;
 
   AdminDataLayer() {
     fetchServices();
@@ -44,6 +45,9 @@ class AdminDataLayer {
   }
 
   fetchOrders() async {
+    completeOrders.clear();
+    incompleteOrders.clear();
+    availableOrders.clear();
     try {
       final completeOrdersResponse = await supabase
           .from('orders')

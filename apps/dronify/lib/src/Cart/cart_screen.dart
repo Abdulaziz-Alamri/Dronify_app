@@ -85,7 +85,8 @@ class CartScreen extends StatelessWidget {
                         BlocBuilder<CartBloc, CartState>(
                           builder: (context, state) {
                             if (state is CartLoading) {
-                              return const CircularProgressIndicator();
+                              return  Image.asset(
+                                  'assets/custom_loading.gif');
                             } else if (state is CartUpdated) {
                               return Column(
                                 children: [
@@ -288,7 +289,9 @@ class CartScreen extends StatelessWidget {
                                                         context,
                                                         MaterialPageRoute(
                                                             builder: (context) =>
-                                                                const BottomNav(index: 1,)),
+                                                                const BottomNav(
+                                                                  index: 1,
+                                                                )),
                                                       );
                                                     }
                                                   });

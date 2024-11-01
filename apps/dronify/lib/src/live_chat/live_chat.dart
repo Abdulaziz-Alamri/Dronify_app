@@ -27,7 +27,8 @@ class ChatScreen extends StatelessWidget {
           },
           builder: (context, state) {
             if (state is custom_state.ChatLoading) {
-              return const Center(child: CircularProgressIndicator());
+              return Center(
+                  child: Image.asset('assets/custom_loading.gif'));
             } else if (state is custom_state.ChatLoaded) {
               return buildChat(context, state.messages);
             } else if (state is custom_state.ChatError) {

@@ -24,7 +24,7 @@ class SignIn extends StatelessWidget {
               context: context,
               barrierDismissible: false,
               builder: (context) => Center(
-                child: CircularProgressIndicator(),
+                child: Image.asset('assets/custom_loading.gif'),
               ),
             );
           } else if (state is AuthSignedIn) {
