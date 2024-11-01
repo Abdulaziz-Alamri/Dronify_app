@@ -1,5 +1,8 @@
+import 'package:dronify_mngmt/Admin/admin_datalayer/admin_data_layer.dart';
 import 'package:dronify_mngmt/Auth/bloc/auth_bloc.dart';
 import 'package:dronify_mngmt/Employee_Home/employee_home.dart';
+import 'package:dronify_mngmt/models/employee_model.dart';
+import 'package:dronify_mngmt/utils/setup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pinput/pinput.dart';
@@ -9,11 +12,9 @@ class OtpScreen extends StatelessWidget {
   const OtpScreen({
     super.key,
     required this.email,
- 
   });
 
   final String email;
- 
 
   @override
   Widget build(BuildContext context) {
@@ -67,11 +68,13 @@ class OtpScreen extends StatelessWidget {
               ),
             );
           } else if (state is AuthSignedIn) {
+            locator.get<AdminDataLayer>().fetchEmpOrders();
             Navigator.pop(context);
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => const EmployeeHome(),
+                builder: (context) => EmployeeHome(
+                    employee: locator.get<AdminDataLayer>().currentEmployee!),
               ),
             );
           } else if (state is AuthError) {

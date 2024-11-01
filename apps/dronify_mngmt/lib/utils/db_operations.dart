@@ -85,6 +85,10 @@ Future<void> saveOrder({
   }
 }
 
+setOrderAccepted()async{
+  
+}
+
 cancelOrder({required OrderModel order}) async {
   await supabase.from('address').delete().eq('order_id', order.orderId!);
   await supabase.from('images').delete().eq('order_id', order.orderId!);

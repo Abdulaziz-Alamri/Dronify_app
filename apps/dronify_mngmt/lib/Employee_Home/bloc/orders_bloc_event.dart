@@ -9,5 +9,8 @@ class UpdateOrderStatus extends OrdersEvent {
   final String newStatus;
   final String employeeId;
 
-  UpdateOrderStatus({required this.orderId, required this.newStatus, required this.employeeId});
+  UpdateOrderStatus(
+      {required this.orderId,
+      required this.newStatus,
+      required this.employeeId});
 }

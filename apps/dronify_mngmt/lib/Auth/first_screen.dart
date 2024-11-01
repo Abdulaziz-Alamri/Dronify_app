@@ -1,9 +1,11 @@
 import 'dart:developer';
 
+import 'package:dronify_mngmt/Admin/admin_datalayer/admin_data_layer.dart';
 import 'package:dronify_mngmt/Auth/sginin.dart';
 import 'package:dronify_mngmt/Bottom_Nav/bottom_nav.dart';
 import 'package:dronify_mngmt/Employee_Home/bloc/orders_bloc_bloc.dart';
 import 'package:dronify_mngmt/Employee_Home/employee_home.dart';
+import 'package:dronify_mngmt/utils/setup.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -12,7 +14,7 @@ class FirstScreen extends StatelessWidget {
 
   Future<bool> _isUserLoggedIn() async {
     final user = Supabase.instance.client.auth.currentUser;
-    log('${user != null}');
+    await locator.get<AdminDataLayer>().fetchEmpOrders();
     return user != null;
   }
 
@@ -36,11 +38,14 @@ class FirstScreen extends StatelessWidget {
                     builder: (context) => BottomNav(),
                   ),
                 );
-              } else if (supabase.auth.currentUser!.userMetadata?['role'] == 'employee') {
+              } else if (supabase.auth.currentUser!.userMetadata?['role'] ==
+                  'employee') {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => EmployeeHome(),
+                    builder: (context) => EmployeeHome(
+                      employee: locator.get<AdminDataLayer>().currentEmployee!,
+                    ),
                   ),
                 );
               }

@@ -16,16 +16,19 @@ class AdminDataLayer {
   List<OrderModel> empAvailableOrders = [];
   List<EmployeeModel> allEmployees = [];
 
-  // EmployeeModel currentEmployee;
+  EmployeeModel? currentEmployee = null;
 
   AdminDataLayer() {
     fetchServices();
     fetchOrders();
     fetchEmployees();
 
-    // call after checking if user is employee
-    // initialize employee
-    fetchEmpOrders();
+    if (supabase.auth.currentUser != null) {
+      if (supabase.auth.currentUser!.userMetadata?['role'] == 'employee') {
+        log('fetched');
+        fetchEmpOrders();
+      }
+    }
   }
 
   fetchServices() async {
@@ -80,12 +83,31 @@ class AdminDataLayer {
   }
 
   fetchEmpOrders() async {
+    empCompleteOrders.clear();
+    empIncompleteOrders.clear();
+    empAvailableOrders.clear();
     try {
+      try {
+        if (supabase.auth.currentUser != null) {
+          if (supabase.auth.currentUser!.userMetadata?['role'] == 'employee') {
+            final employeeData = await supabase
+                .from('employee')
+                .select('*, app_user(name, email, phone, role)')
+                .eq('employee_id', supabase.auth.currentUser!.id);
+
+            currentEmployee = EmployeeModel.fromJson(employeeData[0]);
+          }
+        }
+      } catch (e) {
+        print("Error fetching employee: $e");
+      }
+
       final completeOrdersResponse = await supabase
           .from('orders')
-          .select('*, app_user!inner(name, phone), service(name)')
+          .select(
+              '*, app_user!inner(name, phone), service(name),address(latitude, longitude), images(image_url)')
           .eq('status', 'complete')
-          .eq('user_id', supabase.auth.currentUser!.id);
+          .eq('employee_id', supabase.auth.currentUser!.id);
 
       for (var element in completeOrdersResponse) {
         OrderModel order = OrderModel.fromJson(element);
@@ -97,7 +119,7 @@ class AdminDataLayer {
           .select(
               '*, app_user!inner(name, phone), service(name), address(latitude, longitude), images(image_url)')
           .eq('status', 'confirmed')
-          .eq('user_id', supabase.auth.currentUser!.id);
+          .eq('employee_id', supabase.auth.currentUser!.id);
 
       for (var element in incompleteOrdersResponse) {
         OrderModel order = OrderModel.fromJson(element);
@@ -106,7 +128,8 @@ class AdminDataLayer {
 
       final availableOrdersResponse = await supabase
           .from('orders')
-          .select('*, app_user!inner(name, phone), service(name)')
+          .select(
+              '*, app_user!inner(name, phone), service(name),address(latitude, longitude), images(image_url)')
           .eq('status', 'pending');
 
       for (var element in availableOrdersResponse) {

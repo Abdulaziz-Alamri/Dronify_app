@@ -150,7 +150,6 @@ class ProfileScreen extends StatelessWidget {
                       onPressed: () {
                         BlocProvider.of<ProfileBloc>(context)
                             .add(LogoutEvent());
-                            
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(builder: (context) => SignIn()),

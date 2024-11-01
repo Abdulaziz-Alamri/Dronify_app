@@ -1,6 +1,8 @@
+import 'package:dronify_mngmt/Admin/admin_datalayer/admin_data_layer.dart';
 import 'package:dronify_mngmt/Auth/first_screen.dart';
 import 'package:dronify_mngmt/Auth/forget_password.dart';
 import 'package:dronify_mngmt/Auth/otp_Screan.dart';
+import 'package:dronify_mngmt/utils/setup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -36,7 +38,7 @@ class _SignInState extends State<SignIn> {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Sign-in successful!')),
             );
-
+            locator.get<AdminDataLayer>().fetchEmpOrders();
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
