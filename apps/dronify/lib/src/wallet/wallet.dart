@@ -10,10 +10,8 @@ class Wallet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final allServices =
-                            locator.get<DataLayer>().allServices;
-                        final orders =
-                            locator.get<DataLayer>().allCustomerOrders;
+    final allServices = locator.get<DataLayer>().allServices;
+    final orders = locator.get<DataLayer>().allCustomerOrders;
     List<String> iconsPaths = [
       'assets/Vector (12).png',
       'assets/Group (1).png',
@@ -105,7 +103,8 @@ class Wallet extends StatelessWidget {
                         return ListTile(
                           leading: Image.asset(
                               iconsPaths[orders[index].serviceId! - 1]),
-                          title: Text(allServices[orders[index].serviceId!-1].name),
+                          title: Text(
+                              allServices[orders[index].serviceId! - 1].name),
                           subtitle: Text(DateFormat('d MMM yyyy')
                               .format(orders[index].reservationDate!)),
                           trailing: Text('-${orders[index].totalPrice} SAR'),

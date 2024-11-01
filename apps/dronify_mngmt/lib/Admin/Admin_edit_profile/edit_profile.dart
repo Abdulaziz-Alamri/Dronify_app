@@ -4,9 +4,9 @@ class EditProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white, // Set the background color to white
+      backgroundColor: Colors.white,
       appBar: 
-      gitbuildAppBar(context), // Pass context here
+      gitbuildAppBar(context),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

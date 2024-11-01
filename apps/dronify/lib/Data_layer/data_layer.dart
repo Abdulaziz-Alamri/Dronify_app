@@ -38,6 +38,7 @@ class DataLayer {
   }
 
   fetchCustomerOrders() async {
+    allCustomerOrders.clear();
     final allOrdersResponse = await supabase
         .from('orders')
         .select('*')
@@ -48,7 +49,6 @@ class DataLayer {
         OrderModel order = OrderModel.fromJson(map);
         allCustomerOrders.add(order);
       }
-    log('$allCustomerOrders');
   }
 
   void addToCart(OrderModel order) {

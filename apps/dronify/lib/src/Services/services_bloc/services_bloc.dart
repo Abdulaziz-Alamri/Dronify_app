@@ -38,7 +38,7 @@ class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
 
   FutureOr<void> pickImage(PickImageEvent event, Emitter<ServicesState> emit) async {
     emit(Loadedstate());
-    final pickedFiles = await picker.pickMultiImage();
+    final pickedFiles = await picker.pickMultiImage(limit: 4);
     if (pickedFiles.isNotEmpty && pickedFiles.length <= 4) {
       images = pickedFiles;
       emit(ImagesUpdatedState(images: images));

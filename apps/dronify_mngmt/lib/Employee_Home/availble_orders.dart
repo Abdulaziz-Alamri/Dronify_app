@@ -25,7 +25,7 @@ class AvailbleOrders extends StatelessWidget {
     List<ServiceModel> allServices = locator.get<AdminDataLayer>().allServices;
     return InkWell(
       onTap: () {
-       Navigator.push(
+        Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) => AdminOrderCard(

@@ -6,6 +6,7 @@ import 'package:dronify/models/order_model.dart';
 import 'package:dronify/src/Cart/bloc/cart_event.dart';
 import 'package:dronify/src/Cart/bloc/cart_state.dart';
 import 'package:dronify/utils/db_operations.dart';
+import 'package:dronify/utils/setup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
@@ -110,7 +111,9 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   }
 
   void _submitCart(Emitter<CartState> emit) {
+    locator.get<DataLayer>().fetchCustomerOrders();
     dataLayer.cart.clearCart();
+    cart.clearCart();
     emit(CartSubmitted(cart: dataLayer.cart));
   }
 }
