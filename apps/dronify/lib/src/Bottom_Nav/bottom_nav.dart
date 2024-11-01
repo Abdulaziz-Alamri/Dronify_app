@@ -44,17 +44,16 @@ class BottomNav extends StatelessWidget {
           ),
           floatingActionButton: FloatingActionButton(
             onPressed: () async {
-              print('${locator.get<DataLayer>().cart.items}');
-              // String chatId = await checkChat(
-              //     chatId: Random().nextInt(999999999).toString());
+              String chatId = await checkChat(
+                  chatId: Random().nextInt(999999999).toString());
 
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //       builder: (context) => ChatScreen(
-              //             chatId: chatId,
-              //           )),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ChatScreen(
+                          chatId: chatId,
+                        )),
+              );
             },
             backgroundColor: Colors.black,
             child: const Icon(Icons.message, size: 25, color: Colors.white),

@@ -186,9 +186,8 @@ class _ServicesState extends State<Services> {
                                         top: 0,
                                         child: GestureDetector(
                                           onTap: () {
-                                            setState(() {
-                                              state.images.removeAt(index);
-                                            });
+                                            bloc.add(RemovedImageEvent(
+                                                image: bloc.images[index]));
                                           },
                                           child: Icon(
                                             Icons.remove_circle,
@@ -536,9 +535,7 @@ class _ServicesState extends State<Services> {
                             }
                             if (state is ServiceErrorState) {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                 SnackBar(
-                                    content: Text(
-                                        state.message)),
+                                SnackBar(content: Text(state.message)),
                               );
                             }
                           },

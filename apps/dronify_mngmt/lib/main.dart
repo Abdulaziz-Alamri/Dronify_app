@@ -1,9 +1,6 @@
 
 import 'package:dronify_mngmt/Auth/bloc/auth_bloc.dart';
 import 'package:dronify_mngmt/Auth/first_screen.dart';
-import 'package:dronify_mngmt/Bottom_Nav/bottom_nav.dart';
-import 'package:dronify_mngmt/Employee_Home/bloc/orders_bloc_bloc.dart';
-import 'package:dronify_mngmt/Employee_Home/employee_home.dart';
 import 'package:dronify_mngmt/repository/auth_repository.dart';
 
 import 'package:dronify_mngmt/utils/setup.dart';
@@ -15,7 +12,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await setup();
   await Future.delayed(Duration(seconds: 2));
-  await supabase.auth.signOut();
+  // await supabase.auth.signOut();
   runApp(
     MultiBlocProvider(
       providers: [

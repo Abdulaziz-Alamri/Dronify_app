@@ -35,8 +35,8 @@ class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
     on<SubmitServicesEvent>(submitServices);
   }
 
-
-  FutureOr<void> pickImage(PickImageEvent event, Emitter<ServicesState> emit) async {
+  FutureOr<void> pickImage(
+      PickImageEvent event, Emitter<ServicesState> emit) async {
     emit(Loadedstate());
     final pickedFiles = await picker.pickMultiImage(limit: 4);
     if (pickedFiles.isNotEmpty && pickedFiles.length <= 4) {
@@ -47,12 +47,15 @@ class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
     }
   }
 
-  FutureOr<void> removeImage(RemovedImageEvent event, Emitter<ServicesState> emit) {
+  FutureOr<void> removeImage(
+      RemovedImageEvent event, Emitter<ServicesState> emit) {
+    images.remove(event.image);
     emit(Loadedstate());
-    emit(ImagesUpdatedState(images: event.images));
+    emit(ImagesUpdatedState(images: images));
   }
 
-  FutureOr<void> getLocation(FetchLocationEvent event, Emitter<ServicesState> emit) async {
+  FutureOr<void> getLocation(
+      FetchLocationEvent event, Emitter<ServicesState> emit) async {
     if (currentLocation == null) {
       Position position = await getCurrentLocation();
       currentLocation = LatLng(position.latitude, position.longitude);
@@ -72,31 +75,35 @@ class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
         throw Exception('Location permissions are denied');
       }
     }
-    return await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    return await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
   }
 
-  FutureOr<void> pickDate(PickDateEvent event, Emitter<ServicesState> emit) async {
-  DateTime? pickedDate = await showDatePicker(
-    context: event.context,
-    initialDate: DateTime.now(),
-    firstDate: DateTime.now(),
-    lastDate: DateTime(2100),
-  );
+  FutureOr<void> pickDate(
+      PickDateEvent event, Emitter<ServicesState> emit) async {
+    DateTime? pickedDate = await showDatePicker(
+      context: event.context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2100),
+    );
 
-  if (pickedDate != null) {
-    selectedDate = pickedDate.toIso8601String();
-    emit(DateSelectedState(selectedDate: selectedDate!));
-  } else {
-    emit(ServiceErrorState(message: "No date was selected."));
+    if (pickedDate != null) {
+      selectedDate = pickedDate.toIso8601String();
+      emit(DateSelectedState(selectedDate: selectedDate!));
+    } else {
+      emit(ServiceErrorState(message: "No date was selected."));
+    }
   }
-}
 
-  FutureOr<void> pinLocation(PinLocationEvent event, Emitter<ServicesState> emit) {
+  FutureOr<void> pinLocation(
+      PinLocationEvent event, Emitter<ServicesState> emit) {
     selectedLocation = event.point;
     emit(LocationFetchedState(location: selectedLocation!));
   }
 
-  FutureOr<void> setUnitCount(SetUnitCountEvent event, Emitter<ServicesState> emit) {
+  FutureOr<void> setUnitCount(
+      SetUnitCountEvent event, Emitter<ServicesState> emit) {
     unitCount = event.count;
     emit(UnitCountUpdatedState(unitCount: unitCount));
   }
@@ -108,16 +115,21 @@ class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
 
   FutureOr<void> setArea(SetAreaEvent event, Emitter<ServicesState> emit) {
     squareMeters = event.area;
-    emit(AreaSetState(area: event.area));
+    emit(SetAreaState(area: event.area));
   }
 
-  FutureOr<void> toggleSwitch(ToggleIsFromRiyadhEvent event, Emitter<ServicesState> emit) {
+  FutureOr<void> toggleSwitch(
+      ToggleIsFromRiyadhEvent event, Emitter<ServicesState> emit) {
     isFromRiyadh = !isFromRiyadh;
     emit(IsFromRiyadhToggledState(isFromRiyadh: isFromRiyadh));
   }
 
-  FutureOr<void> submitServices(SubmitServicesEvent event, Emitter<ServicesState> emit) async {
-    if (isFromRiyadh && selectedDate != null && selectedLocation != null && images.isNotEmpty) {
+  FutureOr<void> submitServices(
+      SubmitServicesEvent event, Emitter<ServicesState> emit) async {
+    if (isFromRiyadh &&
+        selectedDate != null &&
+        selectedLocation != null &&
+        images.isNotEmpty) {
       emit(ServiceSubmittedState());
     } else {
       emit(ServiceErrorState(message: "Please fill in all required details."));

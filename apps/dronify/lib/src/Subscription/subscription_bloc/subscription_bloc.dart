@@ -204,6 +204,6 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
 
   FutureOr<void> setArea(SetAreaEvent event, Emitter<SubscriptionState> emit) {
     squareMeters = event.area;
-    emit(AreaSetState(area: event.area));
+    emit(SetAreaState(area: event.area));
   }
 }
