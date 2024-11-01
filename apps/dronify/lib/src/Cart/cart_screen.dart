@@ -224,8 +224,7 @@ class CartScreen extends StatelessWidget {
                                                   log('${bloc.cart.items}');
                                                   showModalBottomSheet(
                                                     context: context,
-                                                    isScrollControlled:
-                                                        true,
+                                                    isScrollControlled: true,
                                                     backgroundColor:
                                                         Colors.white,
                                                     shape:
@@ -279,14 +278,17 @@ class CartScreen extends StatelessWidget {
                                                   ).then((value) async {
                                                     if (value ==
                                                         'Payment successful') {
+                                                      bloc.cart.clearCart();
+                                                      bloc.add(
+                                                          LoadCartItemsEvent());
                                                       await Future.delayed(
                                                           const Duration(
-                                                              seconds: 5));
+                                                              seconds: 2));
                                                       Navigator.pushReplacement(
                                                         context,
                                                         MaterialPageRoute(
                                                             builder: (context) =>
-                                                                const BottomNav()),
+                                                                const BottomNav(index: 1,)),
                                                       );
                                                     }
                                                   });

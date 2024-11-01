@@ -37,18 +37,20 @@ class DataLayer {
     await updateExternalKey(externalKey: externalKey!);
   }
 
-  fetchCustomerOrders() async {
+  Future<List<OrderModel>> fetchCustomerOrders() async {
     allCustomerOrders.clear();
     final allOrdersResponse = await supabase
         .from('orders')
         .select('*')
         .eq('user_id', supabase.auth.currentUser!.id);
-    log('$allOrdersResponse');
-    if (allOrdersResponse.isNotEmpty)
+
+    if (allOrdersResponse.isNotEmpty) {
       for (var map in allOrdersResponse) {
         OrderModel order = OrderModel.fromJson(map);
         allCustomerOrders.add(order);
       }
+    }
+    return allCustomerOrders;
   }
 
   void addToCart(OrderModel order) {

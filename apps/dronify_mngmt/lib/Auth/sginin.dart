@@ -46,11 +46,19 @@ class _SignInState extends State<SignIn> {
               ),
             );
           } else if (state is AuthError) {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        OtpScreen(email: emailController.text)));
+            if (state.isCustomer) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(state.message)),
+              );
+              Navigator.pushReplacement(
+                  context, MaterialPageRoute(builder: (context) => SignIn()));
+            } else {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          OtpScreen(email: emailController.text)));
+            }
           }
         },
         child: Stack(

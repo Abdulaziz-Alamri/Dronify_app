@@ -15,7 +15,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await setup();
   await Future.delayed(Duration(seconds: 2));
-  // await supabase.auth.signOut();
+  await supabase.auth.signOut();
   runApp(
     MultiBlocProvider(
       providers: [

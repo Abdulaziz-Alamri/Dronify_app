@@ -1,5 +1,7 @@
 import 'package:dronify_mngmt/Admin/Admin_Profile/profile_item.dart';
 import 'package:dronify_mngmt/Admin/Admin_edit_profile/edit_profile.dart';
+import 'package:dronify_mngmt/Auth/first_screen.dart';
+import 'package:dronify_mngmt/repository/auth_repository.dart';
 import 'package:flutter/material.dart';
 
 
@@ -10,6 +12,8 @@ class ProfileScreen extends StatelessWidget {
     late String userEmaile = 'Jone_test@gmail.com';
     late String userPhone = '0966 5666789';
     late String userLocaition = 'Westpoint, JBR, room 4';
+      final AuthRepository authRepository = AuthRepository();
+
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
       body: CustomScrollView(
@@ -107,7 +111,16 @@ class ProfileScreen extends StatelessWidget {
                       const SizedBox(height: 10),
                       const SizedBox(height: 20),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () async{
+                            await authRepository.logout();
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => FirstScreen(),
+                      ),
+                      (route) => false,
+                    );
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFF072D6F),
                         ),

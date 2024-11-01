@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:dronify_mngmt/Employee_Home/bloc/orders_bloc_bloc.dart';
 import 'package:dronify_mngmt/repository/auth_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -56,17 +57,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       );
 
       if (response.user != null) {
-        // final customer = await locator.get<DataLayer>().getCustomer(
-        //       response.user!.id,
-        //     );
-
-        // if (customer != null) {
-        //   locator.get<DataLayer>().saveCustomerData(customer);
-        //   locator.get<DataLayer>().fetchCustomerOrders();
-          emit(AuthSignedIn());
-        } else {
-          emit(AuthError('User data not found.'));
+        if (response.user!.userMetadata!['role'] == 'customer') {
+          emit(AuthError('You do not have permission to sign in', isCustomer: true));
+          return;
         }
+        emit(AuthSignedIn());
+      } else {
+        emit(AuthError('User data not found.'));
+      }
     } catch (e) {
       emit(AuthError(e.toString()));
     }

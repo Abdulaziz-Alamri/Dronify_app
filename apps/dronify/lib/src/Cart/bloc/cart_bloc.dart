@@ -26,7 +26,8 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   }
 
   void _loadCartItems(Emitter<CartState> emit) {
-    emit(CartUpdated(cart: dataLayer.cart));
+    cart = dataLayer.cart;
+    emit(CartUpdated(cart: cart));
   }
 
   void _addItemToCart(OrderModel order, Emitter<CartState> emit) {
@@ -110,10 +111,11 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     // emit(CartUpdated(cart: dataLayer.cart));
   }
 
-  void _submitCart(Emitter<CartState> emit) {
+  void _submitCart(Emitter<CartState> emit) async {
     locator.get<DataLayer>().fetchCustomerOrders();
     dataLayer.cart.clearCart();
     cart.clearCart();
     emit(CartSubmitted(cart: dataLayer.cart));
+    add(LoadCartItemsEvent());
   }
 }
