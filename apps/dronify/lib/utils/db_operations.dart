@@ -71,6 +71,11 @@ Future<void> saveOrder({
       });
 
       print("Order saved successfully.");
+       await supabase.from('payment').insert({
+        'order_id': orderId,
+        'user_id': customerId,
+        'amount': totalPrice,
+      });
     } else {
       throw Exception("Failed to insert the order.");
     }

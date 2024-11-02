@@ -224,8 +224,7 @@ class CartScreen extends StatelessWidget {
                                                   log('${bloc.cart.items}');
                                                   showModalBottomSheet(
                                                     context: context,
-                                                    isScrollControlled:
-                                                        true,
+                                                    isScrollControlled: true,
                                                     backgroundColor:
                                                         Colors.white,
                                                     shape:

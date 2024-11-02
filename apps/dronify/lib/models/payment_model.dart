@@ -1,23 +1,23 @@
 class PaymentModel {
-  final int paymentId;
+  int? paymentId;
   final int orderId;
-  final String customerId;
+  final String userId; 
   final double amount;
-  final DateTime paymentDate;
+  DateTime? paymentDate;
 
   PaymentModel({
-    required this.paymentId,
+    this.paymentId,
     required this.orderId,
-    required this.customerId,
+    required this.userId, 
     required this.amount,
-    required this.paymentDate,
-  });
+    DateTime? paymentDate,
+  }) : paymentDate = paymentDate ?? DateTime.now();
 
   factory PaymentModel.fromJson(Map<String, dynamic> json) {
     return PaymentModel(
       paymentId: json['payment_id'],
       orderId: json['order_id'],
-      customerId: json['customer_id'],
+      userId: json['user_id'], // تغيير إلى userId
       amount: json['amount'].toDouble(),
       paymentDate: DateTime.parse(json['payment_date']),
     );
@@ -27,9 +27,9 @@ class PaymentModel {
     return {
       'payment_id': paymentId,
       'order_id': orderId,
-      'customer_id': customerId,
+      'user_id': userId, // تغيير إلى userId
       'amount': amount,
-      'payment_date': paymentDate.toIso8601String(),
+      'payment_date': paymentDate?.toIso8601String(),
     };
   }
 }

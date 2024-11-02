@@ -3,6 +3,7 @@ import 'package:bloc/bloc.dart';
 import 'package:dronify/Data_layer/data_layer.dart';
 import 'package:dronify/models/cart_model.dart';
 import 'package:dronify/models/order_model.dart';
+import 'package:dronify/models/payment_model.dart';
 import 'package:dronify/src/Cart/bloc/cart_event.dart';
 import 'package:dronify/src/Cart/bloc/cart_state.dart';
 import 'package:dronify/utils/db_operations.dart';
@@ -11,9 +12,11 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:moyasar/moyasar.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class CartBloc extends Bloc<CartEvent, CartState> {
   final DataLayer dataLayer = GetIt.instance<DataLayer>();
+  final SupabaseClient supabase = Supabase.instance.client;
   CartModel cart = CartModel();
 
   CartBloc() : super(CartLoading()) {
@@ -74,7 +77,8 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     }
   }
 
-  void _handleSuccessfulPayment(BuildContext context, List<OrderModel> orders) {
+  Future<void> _handleSuccessfulPayment(
+      BuildContext context, List<OrderModel> orders) async {
     for (var order in orders) {
       List<XFile> imageFiles =
           order.images?.map((imagePath) => XFile(imagePath)).toList() ?? [];
@@ -91,12 +95,42 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         longitude: order.address![1],
         imageFiles: imageFiles ?? [],
       );
+
+      //   await _savePayment(
+      //       orderId: order.orderId!,
+      //       customerId: order.customerId!,
+      //       amount: order.totalPrice!);
     }
 
-    //  dataLayer.cart.clearCart();
     add(LoadCartItemsEvent());
     _showSnackBar(context, 'Payment successful!');
   }
+
+  // Future<void> _savePayment({
+  //   required int orderId,
+  //   required String customerId,
+  //   required double amount,
+  // }) async {
+  //   try {
+  //     // final payment = PaymentModel(
+  //     //   orderId: orderId,
+  //     //   userId: customerId,
+  //     //   amount: amount,
+  //     // );
+
+  //     // final paymentData = payment.toJson();
+  //     //   paymentData.remove('payment_id');
+  //     //  log('$paymentData');
+  //     await supabase.from('payment').insert({
+  //       'order_id': orderId,
+  //       'user_id': customerId,
+  //       'amount': amount,
+  //     });
+  //     log("Payment saved for order ID: $orderId");
+  //   } catch (error) {
+  //     log("Error saving payment: $error");
+  //   }
+  // }
 
   void _showSnackBar(BuildContext context, String message) {
     ScaffoldMessenger.of(context)
@@ -105,6 +139,9 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
   void _removeItemFromCart(int orderId, Emitter<CartState> emit) {
     dataLayer.cart.removeItem(orderId);
+    log("Item removed with ID: $orderId");
+
+    emit(CartLoading());
     emit(CartUpdated(cart: dataLayer.cart));
   }
 

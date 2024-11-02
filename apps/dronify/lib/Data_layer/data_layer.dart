@@ -1,9 +1,9 @@
 import 'dart:developer';
-
 import 'package:dronify/models/customer_model.dart';
 import 'package:dronify/models/service_model.dart';
 import 'package:dronify/models/order_model.dart';
 import 'package:dronify/models/cart_model.dart';
+import 'package:dronify/models/payment_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class DataLayer {
@@ -32,8 +32,7 @@ class DataLayer {
         OrderModel order = OrderModel.fromJson(map);
         allCustomerOrders.add(order);
       }
-          log('$allCustomerOrders');
-
+    log('$allCustomerOrders');
   }
 
   void addToCart(OrderModel order) {
@@ -77,7 +76,6 @@ class DataLayer {
 
       print("Supabase response: $response");
 
-      // تحقق من أن البيانات المسترجعة ليست null قبل إنشاء CustomerModel
       if (response != null && response is Map<String, dynamic>) {
         final fetchedCustomer = CustomerModel.fromJson({
           'customer_id': response['user_id'] ?? '',
