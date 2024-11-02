@@ -32,9 +32,52 @@ class AdminHome extends StatelessWidget {
     return (response as num).toDouble();
   }
 
+  void _logout(BuildContext context) {
+    Supabase.instance.client.auth.signOut();
+    Navigator.of(context).pushReplacementNamed('/login');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: const BoxDecoration(
+                color: Color(0xFF072D6F),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const [
+                  Text(
+                    'Admin Panel',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    'Manage and monitor data',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.logout, color: Colors.black),
+              title: const Text('Log Out'),
+              onTap: () => _logout(context),
+            ),
+          ],
+        ),
+      ),
       backgroundColor: const Color(0xffF5F5F7),
       body: CustomScrollView(
         slivers: [
@@ -57,9 +100,10 @@ class AdminHome extends StatelessWidget {
               title: const Text(
                 'Welcome Back Admin 👋',
                 style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black),
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black,
+                ),
               ),
             ),
             backgroundColor: Colors.transparent,
