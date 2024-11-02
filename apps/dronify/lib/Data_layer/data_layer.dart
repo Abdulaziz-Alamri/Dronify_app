@@ -123,4 +123,15 @@ class DataLayer {
     customer = customerData;
     print('Customer data saved locally: ${customerData.toJson()}');
   }
+
+  Future<void> updateCustomerProfile({
+    required String name,
+    required String phone,
+  }) async {
+    final userId = supabase.auth.currentUser!.id;
+    await supabase.from('app_user').update({
+      'name': name,
+      'phone': phone,
+    }).eq('user_id', userId);
+  }
 }
