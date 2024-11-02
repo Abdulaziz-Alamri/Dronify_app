@@ -8,10 +8,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'bloc/auth_bloc.dart';
 
-class SignIn extends StatelessWidget {
+class SignIn extends StatefulWidget {
+
+  SignIn({super.key});
+
+  @override
+  State<SignIn> createState() => _SignInState();
+}
+
+class _SignInState extends State<SignIn> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  SignIn({super.key});
 
   @override
   Widget build(BuildContext context) {

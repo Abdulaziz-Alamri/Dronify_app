@@ -18,6 +18,8 @@ setup() async {
   await locator.registerSingleton<AdminDataLayer>(AdminDataLayer());
 
   if (locator.get<AdminDataLayer>().externalKey == null) {
-    locator.get<AdminDataLayer>().externalKey = Random().nextInt(999999).toString();
+    locator.get<AdminDataLayer>().externalKey =
+        Random().nextInt(999999).toString();
+    await locator.get<AdminDataLayer>().saveData();
   }
 }

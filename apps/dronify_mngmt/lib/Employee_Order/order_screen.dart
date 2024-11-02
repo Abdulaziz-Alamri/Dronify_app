@@ -5,25 +5,25 @@ import 'package:dronify_mngmt/Employee_Order/confirm_screen.dart';
 import 'package:dronify_mngmt/Employee_Order/custom_custmer_wedget.dart';
 import 'package:dronify_mngmt/Employee_Order/custom_image_cards.dart';
 import 'package:dronify_mngmt/Employee_Order/custom_order_card.dart';
+import 'package:dronify_mngmt/models/order_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:maps_launcher/maps_launcher.dart';
 import 'dart:io';
 
 class OrderScreen extends StatelessWidget {
-  final int orderId;
+  final OrderModel order;
   final TextEditingController descriptionController = TextEditingController();
 
-  OrderScreen({super.key, required this.orderId});
+  OrderScreen({super.key, required this.order});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => OrderBloc()..add(FetchOrderData(orderId)),
+      create: (context) => OrderBloc()..add(FetchOrderData(order.orderId!)),
       child: BlocBuilder<OrderBloc, OrderState>(
         builder: (context, state) {
           if (state is OrderLoading) {
@@ -120,7 +120,6 @@ class OrderScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 15),
-
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
                       height: 210,
@@ -327,6 +326,7 @@ class OrderScreen extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => ConfirmScreen(
+                                  order: order,
                                   images: imagesAsFiles,
                                   description: description,
                                 ),

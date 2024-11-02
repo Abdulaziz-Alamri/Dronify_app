@@ -1,13 +1,18 @@
 import 'dart:io';
 import 'package:dronify_mngmt/Employee_Order/custom_image_cards.dart';
+import 'package:dronify_mngmt/models/order_model.dart';
+import 'package:dronify_mngmt/utils/db_operations.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ConfirmScreen extends StatelessWidget {
+  final OrderModel order;
   final List<File> images;
   final String description;
 
   const ConfirmScreen({
     super.key,
+    required this.order,
     required this.images,
     required this.description,
   });
@@ -144,7 +149,12 @@ class ConfirmScreen extends StatelessWidget {
           ),
           child: ElevatedButton(
             onPressed: () {
-              
+              final imageFiles =
+                  images.map((image) => XFile(image.path)).toList();
+              setOrderComplete(
+                  order: order,
+                  imageFiles: imageFiles,
+                  description: description);
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.transparent,

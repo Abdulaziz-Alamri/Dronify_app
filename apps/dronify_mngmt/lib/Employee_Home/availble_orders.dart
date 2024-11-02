@@ -121,7 +121,7 @@ class AvailbleOrders extends StatelessWidget {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                          OrderScreen(orderId: order.orderId!),
+                                          OrderScreen(order: order),
                                     ),
                                   );
                                 },
@@ -135,7 +135,7 @@ class AvailbleOrders extends StatelessWidget {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => OrderScreen(
-                                        orderId: order.orderId!,
+                                        order: order,
                                       ),
                                     ),
                                   );

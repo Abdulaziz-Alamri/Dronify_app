@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dronify/src/Bottom_Nav/bottom_nav.dart';
 import 'package:dronify/src/Scrollable_Splash/scrollable_splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +10,7 @@ class FirstScreen extends StatelessWidget {
 
   Future<bool> _isUserLoggedIn() async {
     final user = Supabase.instance.client.auth.currentUser;
+    log('user ${user != null}');
     return user != null;
   }
 
@@ -18,8 +21,7 @@ class FirstScreen extends StatelessWidget {
         future: _isUserLoggedIn(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-                child: Image.asset('assets/custom_loading.gif'));
+            return Center(child: Image.asset('assets/custom_loading.gif'));
           } else if (snapshot.hasError) {
             return const Center(child: Text('Error checking login status.'));
           } else if (snapshot.data == true) {

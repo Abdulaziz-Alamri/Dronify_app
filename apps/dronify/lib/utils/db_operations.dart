@@ -256,5 +256,5 @@ saveSubscription({
 }
 
 updateExternalKey({required String externalKey}) async {
-  await supabase.from('app_user').update({'external_key': externalKey});
+  await supabase.from('app_user').update({'external_key': externalKey}).eq('user_id', supabase.auth.currentUser!.id);
 }

@@ -26,6 +26,7 @@ dependencies:
   flutter_map: ^7.0.2
   geolocator: ^13.0.1
   latlong2: ^0.9.1
+  onesignal_flutter: ^5.2.6
 
 dev_dependencies:
   flutter_test:

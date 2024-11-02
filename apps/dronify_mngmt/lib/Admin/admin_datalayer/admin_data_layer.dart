@@ -4,6 +4,8 @@ import 'package:dronify_mngmt/Employee_Home/bloc/orders_bloc_bloc.dart';
 import 'package:dronify_mngmt/models/employee_model.dart';
 import 'package:dronify_mngmt/models/order_model.dart';
 import 'package:dronify_mngmt/models/service_model.dart';
+import 'package:dronify_mngmt/utils/db_operations.dart';
+import 'package:get_storage/get_storage.dart';
 
 class AdminDataLayer {
   List<ServiceModel> allServices = [];
@@ -18,8 +20,10 @@ class AdminDataLayer {
 
   EmployeeModel? currentEmployee = null;
   String? externalKey;
+  final box = GetStorage();
 
   AdminDataLayer() {
+    loadData();
     fetchServices();
     fetchOrders();
     fetchEmployees();
@@ -29,6 +33,22 @@ class AdminDataLayer {
         fetchEmpOrders();
       }
     }
+  }
+
+  loadData() async {
+    if (box.hasData('external_key')) {
+      externalKey = box.read('external_key');
+    }
+  }
+
+  saveData() async {
+    await box.write('external_key', externalKey);
+    await updateExternalKey(externalKey: externalKey!);
+  }
+
+    onLogout() async {
+    box.erase();
+    externalKey = null;
   }
 
   fetchServices() async {

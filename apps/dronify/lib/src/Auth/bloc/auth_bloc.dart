@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:dronify/Data_layer/data_layer.dart';
 import 'package:dronify/repository/auth_repository.dart';
+import 'package:dronify/utils/db_operations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dronify/models/customer_model.dart';
 import 'package:dronify/utils/setup.dart'; // لضمان الوصول لـ DataLayer
@@ -41,7 +42,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         await locator.get<DataLayer>().upsertCustomer(customer);
 
         locator.get<DataLayer>().saveCustomerData(customer);
-        
+
         emit(AuthSignedUp());
       } else {
         emit(AuthError('Sign-up failed. Please try again.'));
@@ -62,13 +63,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
       if (response.user != null) {
         final customer = await locator.get<DataLayer>().getCustomer(
-          response.user!.id,
-        );
+              response.user!.id,
+            );
 
-        // التحقق من وجود بيانات المستخدم وتخزينها في DataLayer
         if (customer != null) {
           locator.get<DataLayer>().saveCustomerData(customer);
           locator.get<DataLayer>().fetchCustomerOrders();
+          await updateExternalKey(
+              externalKey: locator.get<DataLayer>().externalKey!);
           emit(AuthSignedIn());
         } else {
           emit(AuthError('User data not found.'));
@@ -130,9 +132,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   //   }
   // }
 
-  FutureOr<void> onVerifyOtprecover(VerifycoverEvent event, Emitter<AuthState> emit) async{
-
-     try {
+  FutureOr<void> onVerifyOtprecover(
+      VerifycoverEvent event, Emitter<AuthState> emit) async {
+    try {
       final user = await authRepository.verifyOtprecover(
         email: event.email,
         otp: event.otp,
@@ -146,6 +148,5 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     } catch (e) {
       emit(AuthError('Error: ${e.toString()}'));
     }
-
   }
 }
