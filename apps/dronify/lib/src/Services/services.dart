@@ -1,9 +1,12 @@
+import 'dart:developer';
 import 'dart:io';
+import 'package:dronify/Data_layer/data_layer.dart';
 import 'package:dronify/models/order_model.dart';
 import 'package:dronify/models/service_model.dart';
 import 'package:dronify/src/Order/order_screen.dart';
 import 'package:dronify/src/Services/services_bloc/services_bloc.dart';
 import 'package:dronify/utils/db_operations.dart';
+import 'package:dronify/utils/setup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
@@ -183,9 +186,8 @@ class _ServicesState extends State<Services> {
                                         top: 0,
                                         child: GestureDetector(
                                           onTap: () {
-                                            setState(() {
-                                              state.images.removeAt(index);
-                                            });
+                                            bloc.add(RemovedImageEvent(
+                                                image: bloc.images[index]));
                                           },
                                           child: Icon(
                                             Icons.remove_circle,
@@ -269,7 +271,7 @@ class _ServicesState extends State<Services> {
                             ),
                           );
                         }
-                        return CircularProgressIndicator();
+                        return Image.asset('assets/custom_loading.gif');
                       },
                     ),
                     SizedBox(height: 2.h),
@@ -497,9 +499,11 @@ class _ServicesState extends State<Services> {
                                   builder: (context) => OrderScreen(
                                     images: bloc.images,
                                     order: OrderModel(
-                                      orderId: 41221,
-                                      customerId:
-                                          '4252d26b-19f6-4f98-9f5a-a3ddc18f2fdd',
+                                      orderId: 1000,
+                                      customerId: locator
+                                          .get<DataLayer>()
+                                          .customer
+                                          ?.customerId,
                                       serviceId: widget.service.serviceId,
                                       images: bloc.images
                                           .map((e) => e.path)
@@ -531,9 +535,7 @@ class _ServicesState extends State<Services> {
                             }
                             if (state is ServiceErrorState) {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text(
-                                        'Please fill in all required fields')),
+                                SnackBar(content: Text(state.message)),
                               );
                             }
                           },

@@ -1,6 +1,8 @@
+import 'package:dronify/Data_layer/data_layer.dart';
 import 'package:dronify/src/Auth/forget_password.dart';
 import 'package:dronify/src/Auth/signup.dart';
 import 'package:dronify/src/Bottom_Nav/bottom_nav.dart';
+import 'package:dronify/utils/setup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -22,7 +24,7 @@ class SignIn extends StatelessWidget {
               context: context,
               barrierDismissible: false,
               builder: (context) => Center(
-                child: CircularProgressIndicator(),
+                child: Image.asset('assets/custom_loading.gif'),
               ),
             );
           } else if (state is AuthSignedIn) {
@@ -32,6 +34,7 @@ class SignIn extends StatelessWidget {
             );
 
             // Navigate to OTP Screen and pass email
+            locator.get<DataLayer>().saveData();
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(

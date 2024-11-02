@@ -16,15 +16,15 @@ class SubscriptionScreen extends StatefulWidget {
 }
 
 class _SubscriptionScreenState extends State<SubscriptionScreen> {
-      List months = [3, 6, 9];
-    List descriptions = [
-      'Includes 6 visits (two visits each month) to maintain your building’s appearance.',
-      'Includes 12 visits (two visits each month), perfect for ongoing cleanliness with fewer subscriptions.',
-      'Includes 18 visits (two visits each month), an excellent choice for those needing consistent maintenance at a great value.'
-    ];
-    List<double> prices = [1500, 2500, 4000];
-    TextEditingController squareAreaController = TextEditingController();
-    final _formKey = GlobalKey<FormState>();
+  List months = [3, 6, 9];
+  List descriptions = [
+    'Includes 6 visits (two visits each month) to maintain your building’s appearance.',
+    'Includes 12 visits (two visits each month), perfect for ongoing cleanliness with fewer subscriptions.',
+    'Includes 18 visits (two visits each month), an excellent choice for those needing consistent maintenance at a great value.'
+  ];
+  List<double> prices = [1500, 2500, 4000];
+  TextEditingController squareAreaController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -228,7 +228,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                             ),
                           );
                         }
-                        return CircularProgressIndicator();
+                        return Image.asset('assets/custom_loading.gif');
                       },
                     ),
                     SizedBox(height: 2.h),

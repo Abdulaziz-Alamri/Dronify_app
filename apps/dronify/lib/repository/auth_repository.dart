@@ -22,6 +22,7 @@ class AuthRepository {
         data: {
           'username': username,
           'phone': phone,
+          'role': 'customer'
         },
       );
 

@@ -35,7 +35,7 @@ class ChatMessageBloc extends Bloc<ChatMessageEvent, ChatMessageState> {
                 .from('chat_message')
                 .select('*')
                 .eq('message_id', messageId)
-                .neq('sender_id', 'a581cd5e-c67c-4522-a4bb-01b795c43387')
+                .neq('sender_id', '0cf2efe9-94b7-482b-9c85-de2122e4a675')
                 .eq('chat_id', chatId)
                 .maybeSingle();
 

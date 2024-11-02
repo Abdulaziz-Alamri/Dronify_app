@@ -7,6 +7,7 @@ import 'package:dronify/models/payment_model.dart';
 import 'package:dronify/src/Cart/bloc/cart_event.dart';
 import 'package:dronify/src/Cart/bloc/cart_state.dart';
 import 'package:dronify/utils/db_operations.dart';
+import 'package:dronify/utils/setup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
@@ -28,7 +29,8 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   }
 
   void _loadCartItems(Emitter<CartState> emit) {
-    emit(CartUpdated(cart: dataLayer.cart));
+    cart = dataLayer.cart;
+    emit(CartUpdated(cart: cart));
   }
 
   void _addItemToCart(OrderModel order, Emitter<CartState> emit) {
@@ -139,14 +141,15 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
   void _removeItemFromCart(int orderId, Emitter<CartState> emit) {
     dataLayer.cart.removeItem(orderId);
-    log("Item removed with ID: $orderId");
-
-    emit(CartLoading());
-    emit(CartUpdated(cart: dataLayer.cart));
+    add(LoadCartItemsEvent());
+    // emit(CartUpdated(cart: dataLayer.cart));
   }
 
-  void _submitCart(Emitter<CartState> emit) {
+  void _submitCart(Emitter<CartState> emit) async {
+    locator.get<DataLayer>().fetchCustomerOrders();
     dataLayer.cart.clearCart();
+    cart.clearCart();
     emit(CartSubmitted(cart: dataLayer.cart));
+    add(LoadCartItemsEvent());
   }
 }

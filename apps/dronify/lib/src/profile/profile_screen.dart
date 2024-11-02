@@ -17,15 +17,14 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-          ProfileBloc(locator.get<DataLayer>())
-            ..add(LoadProfileEvent()),
+          ProfileBloc(locator.get<DataLayer>())..add(LoadProfileEvent()),
       child: Builder(builder: (context) {
         return Scaffold(
           backgroundColor: const Color(0xFFF5F5F5),
           body: BlocBuilder<ProfileBloc, ProfileState>(
             builder: (context, state) {
               if (state is ProfileLoading) {
-                return Center(child: CircularProgressIndicator());
+                return Center(child: Image.asset('assets/custom_loading.gif'));
               } else if (state is ProfileLoaded) {
                 return _buildProfileContent(context, state.customer);
               } else if (state is ProfileError) {
@@ -150,7 +149,6 @@ class ProfileScreen extends StatelessWidget {
                       onPressed: () {
                         BlocProvider.of<ProfileBloc>(context)
                             .add(LogoutEvent());
-                            
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(builder: (context) => SignIn()),

@@ -27,7 +27,8 @@ class LiveChat extends StatelessWidget {
             } else if (state is ChatError) {
               return Center(child: Text('Error: ${state.error}'));
             }
-            return const Center(child: CircularProgressIndicator());
+            return Center(
+                child: Image.asset('assets/custom_loading.gif'));
           },
         ),
       ),
@@ -79,7 +80,7 @@ class LiveChat extends StatelessWidget {
   }
 
   Widget buildChat(BuildContext context, List<types.Message> messages) {
-    final adminUserId = 'a581cd5e-c67c-4522-a4bb-01b795c43387';
+    final adminUserId = '0cf2efe9-94b7-482b-9c85-de2122e4a675';
 
     return Chat(
       messages: messages,

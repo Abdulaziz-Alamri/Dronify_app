@@ -33,7 +33,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
                   .from('chat_message')
                   .select('*')
                   .eq('message_id', messageId)
-                  .eq('sender_id', 'a581cd5e-c67c-4522-a4bb-01b795c43387')
+                  .eq('sender_id', '0cf2efe9-94b7-482b-9c85-de2122e4a675')
                   .eq('chat_id', chatId)
                   .maybeSingle();
 
@@ -116,7 +116,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     final currentState = state as ChatLoaded;
 
     final newMessage = types.TextMessage(
-      author: types.User(id: 'a581cd5e-c67c-4522-a4bb-01b795c43387'),
+      author: types.User(id: '0cf2efe9-94b7-482b-9c85-de2122e4a675'),
       createdAt: DateTime.now().millisecondsSinceEpoch,
       id: event.messageId,
       text: event.message,

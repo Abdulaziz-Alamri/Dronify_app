@@ -27,7 +27,8 @@ class OrderScreen extends StatelessWidget {
       child: BlocBuilder<OrderBloc, OrderState>(
         builder: (context, state) {
           if (state is OrderLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return Center(
+                child: Image.asset('assets/custom_loading.gif'));
           } else if (state is OrderLoaded) {
             return Scaffold(
               backgroundColor: const Color(0xffF5F5F7),

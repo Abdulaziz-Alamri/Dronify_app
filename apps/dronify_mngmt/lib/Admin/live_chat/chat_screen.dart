@@ -70,7 +70,8 @@ class ChatScreen extends StatelessWidget {
                     );
                   }
                   return SliverToBoxAdapter(
-                    child: Center(child: CircularProgressIndicator()),
+                    child:
+                        Center(child: Image.asset('assets/custom_loading.gif')),
                   );
                 },
               ),

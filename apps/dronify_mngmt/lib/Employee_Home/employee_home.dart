@@ -1,7 +1,12 @@
+import 'package:dronify_mngmt/Admin/EmployeeDetails/completed_orders_data.dart';
 import 'package:dronify_mngmt/Admin/admin_datalayer/admin_data_layer.dart';
+import 'package:dronify_mngmt/Auth/first_screen.dart';
 import 'package:dronify_mngmt/Employee_Home/bloc/orders_bloc_bloc.dart';
 import 'package:dronify_mngmt/Employee_Home/bloc/orders_bloc_event.dart';
 import 'package:dronify_mngmt/Employee_Home/bloc/orders_bloc_state.dart';
+import 'package:dronify_mngmt/models/employee_model.dart';
+import 'package:dronify_mngmt/repository/auth_repository.dart';
+import 'package:dronify_mngmt/utils/db_operations.dart';
 import 'package:dronify_mngmt/utils/setup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,7 +16,9 @@ import 'order_card.dart';
 import 'availble_orders.dart';
 
 class EmployeeHome extends StatefulWidget {
-  const EmployeeHome({super.key});
+  final EmployeeModel employee;
+
+  const EmployeeHome({super.key, required this.employee});
 
   @override
   State<EmployeeHome> createState() => _EmployeeHomeState();
@@ -19,11 +26,15 @@ class EmployeeHome extends StatefulWidget {
 
 class _EmployeeHomeState extends State<EmployeeHome>
     with SingleTickerProviderStateMixin {
+  final AuthRepository authRepository = AuthRepository();
+  late Future<CompletedOrdersData> completedOrdersData;
   late TabController tabController;
 
   @override
   void initState() {
     tabController = TabController(length: 3, vsync: this);
+    completedOrdersData =
+        getCompletedOrdersData(employeeId: widget.employee.employeeId);
     super.initState();
   }
 
@@ -72,7 +83,16 @@ class _EmployeeHomeState extends State<EmployeeHome>
                 ListTile(
                   leading: Icon(Icons.logout),
                   title: Text('Logout'),
-                  onTap: () {},
+                  onTap: () async {
+                    await authRepository.logout();
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => FirstScreen(),
+                      ),
+                      (route) => false,
+                    );
+                  },
                 ),
               ],
             ),
@@ -87,7 +107,7 @@ class _EmployeeHomeState extends State<EmployeeHome>
             },
             builder: (context, state) {
               if (state is OrderLoading) {
-                return Center(child: CircularProgressIndicator());
+                return Center(child: Image.asset('assets/custom_loading.gif'));
               } else if (state is OrderLoaded) {
                 final ordersBloc = BlocProvider.of<OrdersBloc>(context);
 
@@ -158,21 +178,41 @@ class _EmployeeHomeState extends State<EmployeeHome>
                                 ),
                               ),
                             ),
-                            Container(
-                              height: 2.5.h,
-                              width: 81.w,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(25),
-                                  border: Border.all(
-                                      color: Colors.black.withOpacity(0.4))),
-                              child: LinearProgressIndicator(
-                                minHeight: 2.5.h,
-                                value: 0.75,
-                                borderRadius: BorderRadius.circular(25),
-                                backgroundColor: Colors.white,
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                    Color(0xff072D6F)),
-                              ),
+                            FutureBuilder<CompletedOrdersData>(
+                              future: completedOrdersData,
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return LinearProgressIndicator(
+                                    minHeight: 2.5.h,
+                                    value: 0,
+                                    backgroundColor: Colors.white,
+                                  );
+                                } else if (snapshot.hasError) {
+                                  return Text('Error loading data');
+                                } else {
+                                  return Container(
+                                    height: 2.5.h,
+                                    width: 81.w,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(25),
+                                      border: Border.all(
+                                          color: Colors.black.withOpacity(0.4)),
+                                    ),
+                                    child: LinearProgressIndicator(
+                                      minHeight: 2.5.h,
+                                      value:
+                                          snapshot.data?.completedPercentage ??
+                                              0.0,
+                                      borderRadius: BorderRadius.circular(25),
+                                      backgroundColor: Colors.white,
+                                      valueColor:
+                                          const AlwaysStoppedAnimation<Color>(
+                                              Color(0xff072D6F)),
+                                    ),
+                                  );
+                                }
+                              },
                             ),
                             SizedBox(height: 15),
                             TabBar(

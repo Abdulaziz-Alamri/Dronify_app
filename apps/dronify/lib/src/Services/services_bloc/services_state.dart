@@ -43,10 +43,10 @@ final class IsFromRiyadhToggledState extends ServicesState {
   IsFromRiyadhToggledState({required this.isFromRiyadh});
 }
 
-final class AreaSetState extends ServicesState {
+final class SetAreaState extends ServicesState {
   final double area;
 
-  AreaSetState({required this.area});
+  SetAreaState({required this.area});
 }
 
 final class ShowHintState extends ServicesState {

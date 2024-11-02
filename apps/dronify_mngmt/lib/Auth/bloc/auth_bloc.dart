@@ -1,97 +1,121 @@
+import 'dart:async';
+import 'dart:developer';
+import 'package:dronify_mngmt/Employee_Home/bloc/orders_bloc_bloc.dart';
+import 'package:dronify_mngmt/repository/auth_repository.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+part 'auth_event.dart';
+part 'auth_state.dart';
 
-// import 'package:dronify_mngmt/models/customer_model.dart';
-// import 'package:dronify_mngmt/utils/setup.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
+class AuthBloc extends Bloc<AuthEvent, AuthState> {
+  final AuthRepository authRepository;
 
-// part 'auth_event.dart'; // Event declarations (SignUp, SignIn, VerifyOtp, etc.)
-// part 'auth_state.dart'; // State declarations (Loading, Success, Error, etc.)
+  AuthBloc(this.authRepository) : super(AuthInitial()) {
+    on<SignUpEvent>(onSignUp);
+    on<SignInEvent>(onSignIn);
+    on<VerifyEvent>(onVerifyOtp);
+    on<VerifycoverEvent>(onVerifyOtprecover);
+    on<ForgotPasswordEvent>(onForgotPassword);
+  }
 
-// class AuthBloc extends Bloc<AuthEvent, AuthState> {
-//   final AuthRepository authRepository;
+  Future<void> onSignUp(SignUpEvent event, Emitter<AuthState> emit) async {
+    emit(AuthLoading());
+    try {
+      final response = await authRepository.signUp(
+        email: event.email,
+        password: event.password,
+        username: event.username,
+        phone: event.phone,
+      );
 
-//   AuthBloc(this.authRepository) : super(AuthInitial()) {
-//     on<SignUpEvent>(onSignUp);
-//     on<SignInEvent>(onSignIn);
-//     on<VerifyEvent>(onVerifyOtp);
-//   }
+      if (response.user != null) {
+        // final customer = CustomerModel(
+        //   customerId: response.user!.id,
+        //   name: event.username,
+        //   email: event.email,
+        //   phone: event.phone,
+        // );
+        // await locator.get<DataLayer>().upsertCustomer(customer);
+        // locator.get<DataLayer>().saveCustomerData(customer);
 
-//   Future<void> onSignUp(SignUpEvent event, Emitter<AuthState> emit) async {
-//     emit(AuthLoading());
-//     try {
-//       final response = await authRepository.signUp(
-//         email: event.email,
-//         password: event.password,
-//         username: event.username,
-//         phone: event.phone,
-//       );
+        emit(AuthSignedUp());
+      } else {
+        emit(AuthError('Sign-up failed. Please try again.'));
+      }
+    } catch (e) {
+      emit(AuthError(e.toString()));
+    }
+  }
 
-//       if (response.user != null) {
-//         final customer = CustomerModel(
-//           customerId: response.user!.id,
-//           name: event.username,
-//           email: event.email,
-//           phone: event.phone,
-//         );
+  // Handle Sign-In event
+  Future<void> onSignIn(SignInEvent event, Emitter<AuthState> emit) async {
+    emit(AuthLoading());
+    try {
+      final response = await authRepository.login(
+        email: event.email,
+        password: event.password,
+      );
 
-//         // await locator.get<DataLayer>().upsertCustomer(customer);
+      if (response.user != null) {
+        if (response.user!.userMetadata!['role'] == 'customer') {
+          emit(AuthError('You do not have permission to sign in', isCustomer: true));
+          return;
+        }
+        emit(AuthSignedIn());
+      } else {
+        emit(AuthError('User data not found.'));
+      }
+    } catch (e) {
+      emit(AuthError(e.toString()));
+    }
+  }
 
-//         // locator.get<DataLayer>().saveCustomerData(customer);
-        
-//         emit(AuthSignedUp());
-//       } else {
-//         emit(AuthError('Sign-up failed. Please try again.'));
-//       }
-//     } catch (e) {
-//       emit(AuthError(e.toString()));
-//     }
-//   }
+  // Handle OTP verification event
+  Future<void> onVerifyOtp(VerifyEvent event, Emitter<AuthState> emit) async {
+    emit(AuthLoading());
+    try {
+      final user = await authRepository.verifyOtp(
+        email: event.email,
+        otp: event.otp,
+      );
 
-//   // Handle Sign-In event
-//   Future<void> onSignIn(SignInEvent event, Emitter<AuthState> emit) async {
-//     emit(AuthLoading());
-//     try {
-//       final response = await authRepository.login(
-//         email: event.email,
-//         password: event.password,
-//       );
+      if (user != null) {
+        emit(AuthSignedIn()); // OTP verified successfully
+      } else {
+        emit(AuthError('Invalid OTP. Please try again.'));
+      }
+    } catch (e) {
+      emit(AuthError('Error: ${e.toString()}'));
+    }
+  }
 
-//       if (response.user != null) {
-//         final customer = await locator.get<DataLayer>().getCustomer(
-//          // response.user!.id,
-//         );
+  // Handle Forgot Password event
+  Future<void> onForgotPassword(
+      ForgotPasswordEvent event, Emitter<AuthState> emit) async {
+    emit(AuthLoading());
+    try {
+      await authRepository.forgotPassword(email: event.email);
+      emit(PasswordResetEmailSent()); // Password reset email sent successfully
+    } catch (e) {
+      emit(PasswordResetFailed('Error: ${e.toString()}')); // Handle error
+    }
+  }
 
-//         // التحقق من وجود بيانات المستخدم وتخزينها في DataLayer
-//         if (customer != null) {
-//           locator.get<>().saveCustomerData(customer);
-//           emit(AuthSignedIn());
-//         } else {
-//           emit(AuthError('User data not found.'));
-//         }
-//       } else {
-//         emit(AuthError('Invalid credentials. Please try again.'));
-//       }
-//     } catch (e) {
-//       emit(AuthError(e.toString()));
-//     }
-//   }
+  FutureOr<void> onVerifyOtprecover(
+      VerifycoverEvent event, Emitter<AuthState> emit) async {
+    try {
+      final user = await authRepository.verifyOtprecover(
+        email: event.email,
+        otp: event.otp,
+      );
 
-//   // Handle OTP verification event
-//   Future<void> onVerifyOtp(VerifyEvent event, Emitter<AuthState> emit) async {
-//     emit(AuthLoading());
-//     try {
-//       final user = await authRepository.verifyOtp(
-//         email: event.email,
-//         otp: event.otp,
-//       );
-
-//       if (user != null) {
-//         emit(AuthSignedIn());
-//       } else {
-//         emit(AuthError('Invalid OTP. Please try again.'));
-//       }
-//     } catch (e) {
-//       emit(AuthError('Error: ${e.toString()}'));
-//     }
-//   }
-// }
+      if (user != null) {
+        emit(AuthSignedIn());
+      } else {
+        emit(AuthError('Invalid OTP. Please try again.'));
+      }
+    } catch (e) {
+      emit(AuthError('Error: ${e.toString()}'));
+    }
+  }
+}

@@ -1,17 +1,23 @@
 import 'package:dronify_mngmt/Admin/Admin_Orders/admin_order_card.dart';
+import 'package:dronify_mngmt/Admin/Admin_Orders/admin_orders_cubit/admin_orders_cubit.dart';
 import 'package:dronify_mngmt/Admin/admin_datalayer/admin_data_layer.dart';
-import 'package:dronify_mngmt/utils/db_operations.dart';
 import 'package:dronify_mngmt/models/order_model.dart';
+import 'package:dronify_mngmt/models/service_model.dart';
+import 'package:dronify_mngmt/utils/db_operations.dart';
 import 'package:dronify_mngmt/utils/setup.dart';
 import 'package:flutter/material.dart';
 
 class AdminAvailableCard extends StatelessWidget {
   final OrderModel order;
+  final AdminOrdersCubit cubit;
 
-  const AdminAvailableCard({super.key, required this.order});
+  const AdminAvailableCard(
+      {super.key, required this.order, required this.cubit});
 
   @override
   Widget build(BuildContext context) {
+    final ServiceModel service =
+        locator.get<AdminDataLayer>().allServices[order.serviceId! - 1];
     return InkWell(
       onTap: () {
         Navigator.push(
@@ -55,8 +61,8 @@ class AdminAvailableCard extends StatelessWidget {
                       elevation: 5,
                       shadowColor: Colors.black,
                       color: Colors.white,
-                      child: Image.asset(
-                        'assets/clean.png',
+                      child: Image.network(
+                        service.mainImage,
                         fit: BoxFit.fill,
                       ),
                     ),
@@ -68,16 +74,16 @@ class AdminAvailableCard extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          'Building Cleaning',
+                        Text(
+                          '${service.name}',
                           style: TextStyle(
                               fontSize: 14, fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(
                           height: 5,
                         ),
-                        const Text(
-                          'Description of the services',
+                        Text(
+                          '${service.description}',
                           softWrap: true,
                           style:
                               TextStyle(fontSize: 12, color: Color(0xffA4A4AA)),
@@ -88,54 +94,30 @@ class AdminAvailableCard extends StatelessWidget {
                   ElevatedButton(
                     onPressed: () {
                       showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: const Text('Confirm'),
-                            content:
-                                const Text('Do you want to accept the order?'),
-                            actions: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: const Text('No'),
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                        title: const Text('Confirm'),
-                                        content: const Text(
-                                            'Do you want to accept the order?'),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.of(context).pop();
-                                              cancelOrder(order: order);
-                                            },
-                                            child: const Text('Yes'),
-                                          ),
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.of(context).pop();
-                                              cancelOrder(order: order);
-                                            },
-                                            child: const Text('No'),
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  );
-                                },
-                                child: const Text('Yes'),
-                              ),
-                            ],
-                          );
-                        },
-                      );
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text('Confirm Cancelation'),
+                              content: const Text(
+                                  'Do you want to Cancel the order?'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    cancelOrder(order: order);
+                                    cubit.loadOrders();
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text('Yes'),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text('No'),
+                                ),
+                              ],
+                            );
+                          });
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.black,
@@ -150,8 +132,8 @@ class AdminAvailableCard extends StatelessWidget {
                   ),
                 ],
               ),
-              const Text(
-                'Price: 350 SAR',
+              Text(
+                'Price: ${order.totalPrice} SAR',
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
