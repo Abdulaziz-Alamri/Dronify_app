@@ -4,6 +4,7 @@ import 'package:dronify/models/service_model.dart';
 import 'package:dronify/models/order_model.dart';
 import 'package:dronify/models/cart_model.dart';
 import 'package:dronify/utils/db_operations.dart';
+import 'package:dronify/utils/setup.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -122,5 +123,16 @@ class DataLayer {
   void saveCustomerData(CustomerModel customerData) {
     customer = customerData;
     print('Customer data saved locally: ${customerData.toJson()}');
+  }
+
+  Future<void> updateCustomerProfile({
+    required String name,
+    required String phone,
+  }) async {
+    final userId = supabase.auth.currentUser!.id;
+    await supabase.from('app_user').update({
+      'name': name,
+      'phone': phone,
+    }).eq('user_id', userId);
   }
 }

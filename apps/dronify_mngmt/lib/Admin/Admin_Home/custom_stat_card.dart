@@ -10,8 +10,8 @@ class CustomStatCard extends StatelessWidget {
     return Center(
       child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-          height: 50,
-          width: 110,
+          height: 55,
+          width: 130,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(16),

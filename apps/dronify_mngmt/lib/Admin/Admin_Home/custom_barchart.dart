@@ -1,223 +1,63 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
-class CustomBarchart extends StatefulWidget {
-  CustomBarchart({super.key});
-  final Color leftBarColor = Colors.yellow;
-  final Color rightBarColor = Colors.red;
-  @override
-  State<StatefulWidget> createState() => BarChartSample2State();
-}
+class CustomBarchart extends StatelessWidget {
+  final List<Map<String, dynamic>> data;
 
-class BarChartSample2State extends State<CustomBarchart> {
-  final double width = 7;
-
-  late List<BarChartGroupData> rawBarGroups;
-  late List<BarChartGroupData> showingBarGroups;
-
-  int touchedGroupIndex = -1;
-
-  @override
-  void initState() {
-    super.initState();
-    final barGroup1 = makeGroupData(0, 5, 10, 12);
-    final barGroup2 = makeGroupData(1, 16, 8, 12);
-    final barGroup3 = makeGroupData(2, 18, 12, 5);
-    final barGroup4 = makeGroupData(3, 20, 5, 16);
-    final barGroup5 = makeGroupData(4, 17, 10, 6);
-    final barGroup6 = makeGroupData(5, 19, 7, 1.5);
-    final barGroup7 = makeGroupData(6, 10, 16, 1.5);
-
-    final items = [
-      barGroup1,
-      barGroup2,
-      barGroup3,
-      barGroup4,
-      barGroup5,
-      barGroup6,
-      barGroup7,
-    ];
-
-    rawBarGroups = items;
-
-    showingBarGroups = rawBarGroups;
-  }
+  const CustomBarchart({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 1,
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            const SizedBox(
-              height: 38,
+    return BarChart(
+      BarChartData(
+        maxY: data.isNotEmpty
+            ? data.map((e) => e['order_count'] as double).reduce((a, b) => a > b ? a : b) + 5
+            : 20, // تحديد الحد الأقصى
+        titlesData: FlTitlesData(
+          leftTitles: AxisTitles(
+            sideTitles: SideTitles(
+              showTitles: true,
+              reservedSize: 40,
+              getTitlesWidget: (value, meta) => Text('${value.toInt()}'),
             ),
-            Expanded(
-              child: BarChart(
-                BarChartData(
-                  maxY: 20,
-                  barTouchData: BarTouchData(
-                    touchTooltipData: BarTouchTooltipData(
-                      getTooltipColor: ((group) {
-                        return Colors.grey;
-                      }),
-                      getTooltipItem: (a, b, c, d) => null,
-                    ),
-                  ),
-                  titlesData: FlTitlesData(
-                    show: true,
-                    rightTitles: const AxisTitles(
-                      sideTitles: SideTitles(showTitles: false),
-                    ),
-                    topTitles: const AxisTitles(
-                      sideTitles: SideTitles(showTitles: false),
-                    ),
-                    bottomTitles: AxisTitles(
-                      sideTitles: SideTitles(
-                        showTitles: true,
-                        getTitlesWidget: bottomTitles,
-                        reservedSize: 42,
-                      ),
-                    ),
-                    leftTitles: AxisTitles(
-                      sideTitles: SideTitles(
-                        showTitles: true,
-                        reservedSize: 28,
-                        interval: 1,
-                        getTitlesWidget: leftTitles,
-                      ),
-                    ),
-                  ),
-                  borderData: FlBorderData(
-                    show: false,
-                  ),
-                  barGroups: showingBarGroups,
-                  gridData: const FlGridData(show: false),
-                ),
+          ),
+          bottomTitles: AxisTitles(
+            sideTitles: SideTitles(
+              showTitles: true,
+              reservedSize: 30,
+              getTitlesWidget: (value, meta) {
+                if (value.toInt() < data.length) {
+                  final serviceId = data[value.toInt()]['service_id'];
+                  return Text(serviceId == 1
+                      ? 'Building'
+                      : serviceId == 2
+                          ? 'Nano'
+                          : 'Spot');
+                }
+                return const Text('');
+              },
+            ),
+          ),
+        ),
+        barGroups: data.asMap().entries.map((entry) {
+          final index = entry.key;
+          final item = entry.value;
+          return BarChartGroupData(
+            x: index,
+            barRods: [
+              BarChartRodData(
+                toY: item['order_count'] as double,
+                color: index == 0
+                    ? const Color(0xff072D6F)
+                    : index == 1
+                        ? const Color(0xff0D56D5)
+                        : const Color(0xff73DDFF),
+                width: 15,
               ),
-            ),
-            const SizedBox(
-              height: 12,
-            ),
-          ],
-        ),
+            ],
+          );
+        }).toList(),
       ),
-    );
-  }
-
-  Widget leftTitles(double value, TitleMeta meta) {
-    const style = TextStyle(
-      color: Color(0xff7589a2),
-      fontWeight: FontWeight.bold,
-      fontSize: 14,
-    );
-    String text;
-    if (value == 0) {
-      text = '1K';
-    } else if (value == 10) {
-      text = '5K';
-    } else if (value == 19) {
-      text = '10K';
-    } else {
-      return Container();
-    }
-    return SideTitleWidget(
-      axisSide: meta.axisSide,
-      space: 0,
-      child: Text(text, style: style),
-    );
-  }
-
-  Widget bottomTitles(double value, TitleMeta meta) {
-    final titles = <String>['Mn', 'Te', 'Wd', 'Tu', 'Fr', 'St', 'Su'];
-
-    final Widget text = Text(
-      titles[value.toInt()],
-      style: const TextStyle(
-        color: Color(0xff7589a2),
-        fontWeight: FontWeight.bold,
-        fontSize: 14,
-      ),
-    );
-
-    return SideTitleWidget(
-      axisSide: meta.axisSide,
-      space: 16, //margin top
-      child: text,
-    );
-  }
-
-  BarChartGroupData makeGroupData(int x, double y1, double y2, double y3) {
-    return BarChartGroupData(
-      barsSpace: 4,
-      x: x,
-      barRods: [
-        BarChartRodData(
-          toY: y1,
-          color: Color(0xff072D6F),
-          width: width,
-        ),
-        BarChartRodData(
-          toY: y2,
-          color: Color(0xff0D56D5),
-          width: width,
-        ),
-        BarChartRodData(
-          toY: y3,
-          color: Color(0xff73DDFF),
-          width: width,
-        ),
-      ],
-    );
-  }
-
-  Widget makeTransactionsIcon() {
-    const width = 4.5;
-    const space = 3.5;
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        Container(
-          width: width,
-          height: 10,
-          color: Colors.white.withOpacity(0.4),
-        ),
-        const SizedBox(
-          width: space,
-        ),
-        Container(
-          width: width,
-          height: 28,
-          color: Colors.white.withOpacity(0.8),
-        ),
-        const SizedBox(
-          width: space,
-        ),
-        Container(
-          width: width,
-          height: 42,
-          color: Colors.white.withOpacity(1),
-        ),
-        const SizedBox(
-          width: space,
-        ),
-        Container(
-          width: width,
-          height: 28,
-          color: Colors.white.withOpacity(0.8),
-        ),
-        const SizedBox(
-          width: space,
-        ),
-        Container(
-          width: width,
-          height: 10,
-          color: Colors.white.withOpacity(0.4),
-        ),
-      ],
     );
   }
 }
