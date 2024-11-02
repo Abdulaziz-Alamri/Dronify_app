@@ -1,8 +1,35 @@
+import 'dart:developer';
+
 import 'package:dronify_mngmt/Admin/Admin_Home/custom_barchart.dart';
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class OrdersStats extends StatelessWidget {
   const OrdersStats({super.key});
+
+  Future<List<Map<String, dynamic>>> fetchOrderCountsByService() async {
+    final response =
+        await Supabase.instance.client.rpc('fetch_order_counts_by_service');
+
+    if (response is PostgrestResponse && response != null) {
+      throw Exception('Error fetching data: ${response}');
+    }
+
+    // تأكد من أن response هو قائمة
+    if (response is List) {
+      log('Fetched data: $response');
+      return response.map((e) {
+        return {
+          "service_id": (e["service_id"] as int)
+              .toDouble(), // تحويل service_id إلى double
+          "order_count": (e["order_count"] as int)
+              .toDouble(), // تحويل order_count إلى double
+        };
+      }).toList();
+    } else {
+      throw Exception('Unexpected response format');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,40 +59,22 @@ class OrdersStats extends StatelessWidget {
             ),
             textAlign: TextAlign.center,
           ),
-          RichText(
-            text: TextSpan(
-              children: [
-                TextSpan(
-                  text: 'Building Cleaning',
-                  style: const TextStyle(
-                    color: Color(0xff072D6F),
-                    fontSize: 8,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const TextSpan(text: '   '),
-                TextSpan(
-                  text: 'Nano Protection',
-                  style: const TextStyle(
-                    color: Color(0xff0D56D5),
-                    fontSize: 8,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const TextSpan(text: '   '),
-                TextSpan(
-                  text: 'Spot Painting',
-                  style: const TextStyle(
-                    color: Color(0xff73DDFF),
-                    fontSize: 8,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
+          const SizedBox(height: 8),
+          Expanded(
+            child: FutureBuilder<List<Map<String, dynamic>>>(
+              future: fetchOrderCountsByService(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                } else {
+                  final data = snapshot.data!;
+                  return CustomBarchart(data: data);
+                }
+              },
             ),
           ),
-          const SizedBox(height: 8),
-          Expanded(child: CustomBarchart()),
         ],
       ),
     );
