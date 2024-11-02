@@ -66,88 +66,86 @@ class AdminHome extends StatelessWidget {
             pinned: false,
           ),
           SliverToBoxAdapter(
-            child: Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Column(
-                  children: [
-                    const SizedBox(height: 15),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Flexible(
-                          child: FutureBuilder<double>(
-                            future: fetchUserCount(),
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.waiting) {
-                                return const CircularProgressIndicator();
-                              } else if (snapshot.hasError) {
-                                debugPrint(
-                                    'Error fetching user count: ${snapshot.error}');
-                                return Text('Error: ${snapshot.error}');
-                              } else {
-                                return CustomStatCard(
-                                  title: 'Users',
-                                  value: '${snapshot.data?.toInt()}',
-                                );
-                              }
-                            },
-                          ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                children: [
+                  const SizedBox(height: 15),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Flexible(
+                        child: FutureBuilder<double>(
+                          future: fetchUserCount(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const CircularProgressIndicator();
+                            } else if (snapshot.hasError) {
+                              debugPrint(
+                                  'Error fetching user count: ${snapshot.error}');
+                              return Text('Error: ${snapshot.error}');
+                            } else {
+                              return CustomStatCard(
+                                title: 'Users',
+                                value: '${snapshot.data?.toInt()}',
+                              );
+                            }
+                          },
                         ),
-                        const SizedBox(width: 10),
-                        Flexible(
-                          child: FutureBuilder<double>(
-                            future: fetchOrderCount(),
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.waiting) {
-                                return const CircularProgressIndicator();
-                              } else if (snapshot.hasError) {
-                                debugPrint(
-                                    'Error fetching order count: ${snapshot.error}');
-                                return Text('Error: ${snapshot.error}');
-                              } else {
-                                return CustomStatCard(
-                                  title: 'Orders',
-                                  value: '${snapshot.data?.toInt()}',
-                                );
-                              }
-                            },
-                          ),
+                      ),
+                      const SizedBox(width: 10),
+                      Flexible(
+                        child: FutureBuilder<double>(
+                          future: fetchOrderCount(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const CircularProgressIndicator();
+                            } else if (snapshot.hasError) {
+                              debugPrint(
+                                  'Error fetching order count: ${snapshot.error}');
+                              return Text('Error: ${snapshot.error}');
+                            } else {
+                              return CustomStatCard(
+                                title: 'Orders',
+                                value: '${snapshot.data?.toInt()}',
+                              );
+                            }
+                          },
                         ),
-                        const SizedBox(width: 10),
-                        Flexible(
-                          child: FutureBuilder<double>(
-                            future: fetchTotalProfits(),
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.waiting) {
-                                return const CircularProgressIndicator();
-                              } else if (snapshot.hasError) {
-                                debugPrint(
-                                    'Error fetching total profits: ${snapshot.error}');
-                                return Text('Error: ${snapshot.error}');
-                              } else {
-                                return CustomStatCard(
-                                  title: 'Profits',
-                                  value: '${snapshot.data?.toStringAsFixed(0)}',
-                                );
-                              }
-                            },
-                          ),
+                      ),
+                      const SizedBox(width: 10),
+                      Flexible(
+                        child: FutureBuilder<double>(
+                          future: fetchTotalProfits(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const CircularProgressIndicator();
+                            } else if (snapshot.hasError) {
+                              debugPrint(
+                                  'Error fetching total profits: ${snapshot.error}');
+                              return Text('Error: ${snapshot.error}');
+                            } else {
+                              return CustomStatCard(
+                                title: 'Profits',
+                                value: '${snapshot.data?.toStringAsFixed(0)}',
+                              );
+                            }
+                          },
                         ),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    const ProfitChart(),
-                    const SizedBox(height: 10),
-                    const EmployeesBarchart(),
-                    const SizedBox(height: 10),
-                    const OrdersStats(),
-                    const SizedBox(height: 120),
-                  ],
-                ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  const ProfitChart(),
+                  const SizedBox(height: 10),
+                  const EmployeesBarchart(),
+                  const SizedBox(height: 10),
+                  const OrdersStats(),
+                  const SizedBox(height: 120),
+                ],
               ),
             ),
           ),

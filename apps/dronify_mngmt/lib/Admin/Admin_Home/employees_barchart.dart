@@ -7,12 +7,12 @@ class EmployeesBarchart extends StatelessWidget {
 
   Future<List<Map<String, dynamic>>> fetchEmployeeRatings() async {
     final response =
-        await Supabase.instance.client.rpc('fetch_employee_ratings').select();
+        await Supabase.instance.client.rpc('fetch_employee_ratings');
 
     if (response is List) {
       return response.map((e) {
         return {
-          "employee_id": e["employee_id"],
+          "employee_name": e["name"], // الحصول على اسم الموظف من `app_user`
           "rating": (e["rating"] as num).toDouble(),
         };
       }).toList();
@@ -89,9 +89,7 @@ class EmployeesBarchart extends StatelessWidget {
                             getTitlesWidget: (value, meta) {
                               if (value.toInt() < ratings.length) {
                                 return Text(
-                                  ratings[value.toInt()]["employee_id"]
-                                      .toString()
-                                      .substring(0, 4),
+                                  ratings[value.toInt()]["employee_name"],
                                   style: const TextStyle(
                                     fontSize: 10,
                                     color: Colors.black,
