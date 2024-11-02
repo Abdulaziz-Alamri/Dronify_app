@@ -85,6 +85,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       );
 
       if (user != null) {
+        await locator.get<AdminDataLayer>().fetchEmpOrders();
         emit(AuthSignedIn()); // OTP verified successfully
       } else {
         emit(AuthError('Invalid OTP. Please try again.'));

@@ -14,8 +14,8 @@ class FirstScreen extends StatelessWidget {
 
   Future<bool> _isUserLoggedIn() async {
     final user = Supabase.instance.client.auth.currentUser;
-    if(user!=null){
-    await locator.get<AdminDataLayer>().fetchEmpOrders();
+    if (user != null) {
+      await locator.get<AdminDataLayer>().fetchEmpOrders();
     }
     return user != null;
   }
@@ -27,8 +27,7 @@ class FirstScreen extends StatelessWidget {
         future: _isUserLoggedIn(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-                child: Image.asset('assets/custom_loading.gif'));
+            return Center(child: Image.asset('assets/custom_loading.gif'));
           } else if (snapshot.hasError) {
             return const Center(child: Text('Error checking login status.'));
           } else if (snapshot.data == true) {
@@ -43,6 +42,8 @@ class FirstScreen extends StatelessWidget {
                 );
               } else if (supabase.auth.currentUser!.userMetadata?['role'] ==
                   'employee') {
+                if (locator.get<AdminDataLayer>().currentEmployee == null)
+                  locator.get<AdminDataLayer>().fetchEmpOrders();
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(

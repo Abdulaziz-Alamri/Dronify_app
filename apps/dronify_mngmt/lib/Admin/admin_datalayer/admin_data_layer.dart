@@ -19,7 +19,7 @@ class AdminDataLayer {
   List<EmployeeModel> allEmployees = [];
 
   EmployeeModel? currentEmployee = null;
-  
+
   String? externalKey;
   final box = GetStorage();
 
@@ -44,10 +44,9 @@ class AdminDataLayer {
 
   saveData() async {
     await box.write('external_key', externalKey);
-    await updateExternalKey(externalKey: externalKey!);
   }
 
-    onLogout() async {
+  onLogout() async {
     box.erase();
     externalKey = null;
   }

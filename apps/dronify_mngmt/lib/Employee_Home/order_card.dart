@@ -68,8 +68,8 @@ class OrderCard extends StatelessWidget {
                       elevation: 5,
                       shadowColor: Colors.black,
                       color: Colors.white,
-                      child: Image.file(
-                        File(service.mainImage),
+                      child: Image.network(
+                        service.mainImage,
                         fit: BoxFit.fill,
                       ),
                     ),

@@ -68,7 +68,6 @@ class OtpScreen extends StatelessWidget {
               ),
             );
           } else if (state is AuthSignedIn) {
-            locator.get<AdminDataLayer>().fetchEmpOrders();
             Navigator.pop(context);
             Navigator.pushReplacement(
               context,
