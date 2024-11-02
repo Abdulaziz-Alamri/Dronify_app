@@ -2,9 +2,8 @@ import 'package:dronify/src/Subscription/subscription_screen.dart';
 import 'package:flutter/material.dart';
 
 class WelcomeCard extends StatelessWidget {
-  const WelcomeCard({
-    super.key,
-  });
+  final String name;
+  WelcomeCard({super.key, required this.name});
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +25,9 @@ class WelcomeCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Welcome Back User 👋',
-            style: TextStyle(fontSize: 14, color: Color(0xff666C89)),
+          Text(
+            'Welcome Back $name 👋',
+            style: const TextStyle(fontSize: 14, color: Color(0xff666C89)),
           ),
           const SizedBox(
             height: 15,
@@ -36,9 +35,10 @@ class WelcomeCard extends StatelessWidget {
           const Text(
             'What you are looking for today?',
             style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Color(0xff172B4D)),
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Color(0xff172B4D),
+            ),
           ),
           const SizedBox(
             height: 20,
@@ -46,25 +46,28 @@ class WelcomeCard extends StatelessWidget {
           InkWell(
             onTap: () {
               Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => SubscriptionScreen()));
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SubscriptionScreen(),
+                ),
+              );
             },
             child: Container(
               height: 50,
               decoration: BoxDecoration(
-                  border: Border.all(color: const Color(0xff072D6F)),
-                  borderRadius: BorderRadius.circular(360),
-                  color: const Color(0xff072D6F).withOpacity(0.28)),
+                border: Border.all(color: const Color(0xff072D6F)),
+                borderRadius: BorderRadius.circular(360),
+                color: const Color(0xff072D6F).withOpacity(0.28),
+              ),
               child: const Center(
                 child: Text(
-                  'subscribe for Flexible Cleaning Schedules and Exclusive Pricing',
+                  'Subscribe for Flexible Cleaning Schedules and Exclusive Pricing',
                   style: TextStyle(fontSize: 12, color: Color(0xff072D6F)),
                   textAlign: TextAlign.center,
                 ),
               ),
             ),
-          )
+          ),
         ],
       ),
     );

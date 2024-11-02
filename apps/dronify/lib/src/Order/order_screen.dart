@@ -27,6 +27,8 @@ class OrderScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dataLayer = GetIt.instance<DataLayer>();
+    final customerName = dataLayer.customer?.name ?? "Customer";
+    final customerPhone = dataLayer.customer?.phone ?? "Customer";
 
     return Scaffold(
       backgroundColor: const Color(0xffF5F5F7),
@@ -62,10 +64,10 @@ class OrderScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                child: const CustomOrderCard(
+                child: CustomOrderCard(
                   imageUrl: 'assets/drone12.png',
-                  title: 'Customer Name',
-                  subTitle: '0512341234',
+                  title: customerName,
+                  subTitle: customerPhone,
                 ),
               ),
             ),
@@ -199,7 +201,10 @@ class OrderScreen extends StatelessWidget {
                     dataLayer.addToCart(order);
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                         content: Text('Order added to cart successfully!')));
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>BottomNav(index: 1)));
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => BottomNav(index: 1)));
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.transparent,
