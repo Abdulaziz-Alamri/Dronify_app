@@ -4,6 +4,7 @@ import 'package:dronify/src/profile/Profile_Item.dart';
 import 'package:dronify/src/profile/bloc/profile_bloc.dart';
 import 'package:dronify/src/profile/bloc/profile_event.dart';
 import 'package:dronify/src/profile/bloc/profile_state.dart';
+import 'package:dronify/src/profile/edit_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -86,7 +87,13 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => EditProfile(),
+                            ));
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF072D6F),
                       ),
