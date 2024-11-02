@@ -222,7 +222,7 @@ class CartScreen extends StatelessWidget {
                                               ),
                                               child: ElevatedButton(
                                                 onPressed: () {
-                                                  log('${bloc.cart.items}');
+                                                  if(bloc.cart.items.isNotEmpty)
                                                   showModalBottomSheet(
                                                     context: context,
                                                     isScrollControlled: true,

@@ -31,6 +31,19 @@ class Services extends StatefulWidget {
 class _ServicesState extends State<Services> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController squareAreaController = TextEditingController();
+  late final int? orderId;
+
+  
+
+  @override
+  void initState() {
+    super.initState();
+    initializeOrderId();
+  }
+
+  initializeOrderId()async{
+    orderId = await getOrderId();
+  }
 
   String convertToDMS(double coordinate) {
     int degrees = coordinate.floor();
@@ -39,12 +52,6 @@ class _ServicesState extends State<Services> {
     double seconds = (minutesWithDecimal - minutes) * 60;
 
     return '$degrees° $minutes\' ${seconds.toStringAsFixed(2)}"';
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    // _getCurrentLocation();
   }
 
   @override
@@ -499,7 +506,7 @@ class _ServicesState extends State<Services> {
                                   builder: (context) => OrderScreen(
                                     images: bloc.images,
                                     order: OrderModel(
-                                      orderId: 1000,
+                                      orderId: orderId,
                                       customerId: locator
                                           .get<DataLayer>()
                                           .customer

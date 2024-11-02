@@ -86,6 +86,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
           order.images?.map((imagePath) => XFile(imagePath)).toList() ?? [];
 
       saveOrder(
+        orderId: order.orderId!,
         customerId: order.customerId!,
         serviceId: order.serviceId!,
         squareMeters: order.squareMeters!,
