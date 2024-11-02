@@ -68,7 +68,7 @@ setOrderComplete({
       .single();
 
   final String externalKey = externalKeyResponse['external_key'].toString();
-  sendNotification(externalKey: externalKey);
+  sendNotification(externalKey: externalKey, userId: userResponse['user_id'], orderId: order.orderId!);
 }
 
 cancelOrder({required OrderModel order}) async {
@@ -106,5 +106,6 @@ Future<CompletedOrdersData> getCompletedOrdersData(
 }
 
 updateExternalKey({required String externalKey}) async {
-  await supabase.from('app_user').update({'external_key': externalKey}).eq('user_id', supabase.auth.currentUser!.id);
+  await supabase.from('app_user').update({'external_key': externalKey}).eq(
+      'user_id', supabase.auth.currentUser!.id);
 }

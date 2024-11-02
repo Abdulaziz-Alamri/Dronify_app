@@ -25,7 +25,6 @@ Future<void> saveOrder({
   required List<XFile> imageFiles,
 }) async {
   try {
-    log('im here');
     final orderResponse = await supabase
         .from('orders')
         .insert({
@@ -43,7 +42,6 @@ Future<void> saveOrder({
 
     if (orderResponse['order_id'] != null) {
       final orderId = orderResponse['order_id'];
-      log('$orderId');
 
       for (var imageFile in imageFiles) {
         final fileName =
@@ -75,18 +73,72 @@ Future<void> saveOrder({
         'longitude': longitude,
       });
 
-      print("Order saved successfully.");
-       await supabase.from('payment').insert({
+      await supabase.from('payment').insert({
         'order_id': orderId,
         'user_id': customerId,
         'amount': totalPrice,
       });
+
+      print("Order saved successfully.");
     } else {
       throw Exception("Failed to insert the order.");
     }
   } catch (error) {
     print("Error saving order: $error");
     throw error;
+  }
+}
+
+Future<void> rateOrder(
+    {required int rating, required int orderId, required String review}) async {
+  try {
+    // Fetch order data
+    final orderResponse = await supabase
+        .from('orders')
+        .select('user_id, employee_id')
+        .eq('order_id', orderId)
+        .single();
+
+    final userId = orderResponse['user_id'];
+    final employeeId = orderResponse['employee_id'];
+
+    // Insert the rating into the rating table
+    await supabase.from('rating').insert({
+      'user_id': userId,
+      'employee_id': employeeId,
+      'order_id': orderId,
+      'rating': rating,
+      'review': review
+    });
+
+    // Update the order's rating
+    await supabase
+        .from('orders')
+        .update({'order_rating': rating}).eq('order_id', orderId);
+
+    // Calculate the employee's new average rating
+    final ratingsResponse = await supabase
+        .from('rating')
+        .select('rating')
+        .eq('employee_id', employeeId);
+
+    if (ratingsResponse.isEmpty) {
+      log('Failed to fetch employee ratings');
+      return;
+    }
+
+    final averageRating =
+        ratingsResponse.fold(0.0, (sum, rating) => sum + rating['rating']) /
+            ratingsResponse.length;
+
+    // Update the employee's rating
+    await supabase
+        .from('employee')
+        .update({'rating': averageRating}).eq('employee_id', employeeId);
+
+    log('Rating added successfully, order and employee updated.');
+  } catch (e) {
+    log('Error in rateOrder: $e');
   }
 }
 
@@ -256,5 +308,6 @@ saveSubscription({
 }
 
 updateExternalKey({required String externalKey}) async {
-  await supabase.from('app_user').update({'external_key': externalKey}).eq('user_id', supabase.auth.currentUser!.id);
+  await supabase.from('app_user').update({'external_key': externalKey}).eq(
+      'user_id', supabase.auth.currentUser!.id);
 }

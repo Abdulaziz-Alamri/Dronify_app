@@ -39,19 +39,19 @@ class _ScrollableSplashScreenState extends State<ScrollableSplashScreen> {
                           imagePath: 'assets/splash_drone.png',
                           title: 'Clean your Building',
                           description:
-                              'Lorem ipsum is a placeholder text commonly used to demonstrate the visual.',
+                              'Experience effortless facade cleaning with our state-of-the-art drone technology, ensuring your building looks pristine without the hassle.',
                         ),
                         const SplashContent(
                           imagePath: 'assets/splash_drone2.png',
                           title: 'Nano Protection',
                           description:
-                              'Keep your building protected for the long term.',
+                              'Safeguard your surfaces with our advanced nano protection treatments. Our drones apply cutting-edge solutions that repel dirt and grime, keeping your building looking newer for longer.',
                         ),
                         const SplashContent(
-                          imagePath: 'assets/splash_drone.png',
+                          imagePath: 'assets/drone13.png',
                           title: 'Drone Services',
                           description:
-                              'Automated and safe solutions for facade cleaning.',
+                              'Harness the power of drones for a variety of maintenance solutions, combining efficiency with exceptional results. Whether it\'s cleaning or protective coatings, we offer a seamless, eco-friendly approach to building maintenance.',
                         ),
                       ],
                     );

@@ -1,6 +1,7 @@
 class RatingModel {
   final int ratingId;
   final String customerId;
+  final String employeeId;
   final int orderId;
   final double rating;
   final String review;
@@ -9,6 +10,7 @@ class RatingModel {
   RatingModel({
     required this.ratingId,
     required this.customerId,
+    required this.employeeId,
     required this.orderId,
     required this.rating,
     required this.review,
@@ -19,6 +21,7 @@ class RatingModel {
     return RatingModel(
       ratingId: json['rating_id'],
       customerId: json['customer_id'],
+      employeeId: json['employee_id'],
       orderId: json['order_id'],
       rating: json['rating'].toDouble(),
       review: json['review'],
@@ -30,6 +33,7 @@ class RatingModel {
     return {
       'rating_id': ratingId,
       'customer_id': customerId,
+      'employee_id': customerId,
       'order_id': orderId,
       'rating': rating,
       'review': review,

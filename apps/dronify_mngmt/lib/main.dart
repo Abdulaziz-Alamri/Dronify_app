@@ -17,11 +17,6 @@ void main() async {
   OneSignal.initialize('${dotenv.env['onesignal_key']}');
   OneSignal.Notifications.requestPermission(true);
 
-  // OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
-  // OneSignal.login('555');
-  // OneSignal.initialize("onesignal_key");
-  // OneSignal.Notifications.requestPermission(true);
-  // await supabase.auth.signOut();
   runApp(
     MultiBlocProvider(
       providers: [

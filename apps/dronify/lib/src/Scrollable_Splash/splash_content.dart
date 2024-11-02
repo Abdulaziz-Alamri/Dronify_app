@@ -53,10 +53,13 @@ class SplashContent extends StatelessWidget {
           ),
         ),
         SizedBox(height: 10),
-        Text(
-          description,
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 16, color: Colors.grey),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Text(
+            description,
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 16, color: Colors.grey),
+          ),
         ),
       ],
     );

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dronify_mngmt/Admin/Admin_Orders/admin_order_card.dart';
 import 'package:dronify_mngmt/Admin/admin_datalayer/admin_data_layer.dart';
 import 'package:dronify_mngmt/Employee_Order/order_screen.dart';
@@ -66,8 +68,8 @@ class OrderCard extends StatelessWidget {
                       elevation: 5,
                       shadowColor: Colors.black,
                       color: Colors.white,
-                      child: Image.asset(
-                        'assets/clean.png',
+                      child: Image.file(
+                        File(service.mainImage),
                         fit: BoxFit.fill,
                       ),
                     ),
