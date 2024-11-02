@@ -141,9 +141,15 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   }
 
   void _removeItemFromCart(int orderId, Emitter<CartState> emit) {
+    emit(CartLoading());
+
     dataLayer.cart.removeItem(orderId);
+
+    cart = dataLayer.cart;
+
+    emit(CartUpdated(cart: cart));
+
     add(LoadCartItemsEvent());
-    // emit(CartUpdated(cart: dataLayer.cart));
   }
 
   void _submitCart(Emitter<CartState> emit) async {

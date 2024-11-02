@@ -61,7 +61,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       );
 
       if (response.user != null) {
-        // جلب بيانات المستخدم من قاعدة البيانات
         final customer = await locator.get<DataLayer>().getCustomer(
           response.user!.id,
         );

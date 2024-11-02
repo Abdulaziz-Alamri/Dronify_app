@@ -85,8 +85,7 @@ class CartScreen extends StatelessWidget {
                         BlocBuilder<CartBloc, CartState>(
                           builder: (context, state) {
                             if (state is CartLoading) {
-                              return  Image.asset(
-                                  'assets/custom_loading.gif');
+                              return Image.asset('assets/custom_loading.gif');
                             } else if (state is CartUpdated) {
                               return Column(
                                 children: [
@@ -222,79 +221,84 @@ class CartScreen extends StatelessWidget {
                                               ),
                                               child: ElevatedButton(
                                                 onPressed: () {
-                                                  if(bloc.cart.items.isNotEmpty)
-                                                  showModalBottomSheet(
-                                                    context: context,
-                                                    isScrollControlled: true,
-                                                    backgroundColor:
-                                                        Colors.white,
-                                                    shape:
-                                                        const RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.vertical(
-                                                        top: Radius.circular(
-                                                            25.0),
+                                                  if (bloc
+                                                      .cart.items.isNotEmpty)
+                                                    showModalBottomSheet(
+                                                      context: context,
+                                                      isScrollControlled: true,
+                                                      backgroundColor:
+                                                          Colors.white,
+                                                      shape:
+                                                          const RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .vertical(
+                                                          top: Radius.circular(
+                                                              25.0),
+                                                        ),
                                                       ),
-                                                    ),
-                                                    builder:
-                                                        (BuildContext context) {
-                                                      return Padding(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                          top: 12,
-                                                          left: 12,
-                                                          right: 12,
-                                                          bottom: MediaQuery.of(
-                                                                  context)
-                                                              .viewInsets
-                                                              .bottom,
-                                                        ),
-                                                        child:
-                                                            SingleChildScrollView(
-                                                          child: Column(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .min,
-                                                            children: [
-                                                              CreditCard(
-                                                                config:
-                                                                    bloc.pay(),
-                                                                onPaymentResult:
-                                                                    (result) async {
-                                                                  bloc.onPaymentResult(
-                                                                      result,
-                                                                      context,
-                                                                      state.cart
-                                                                          .items);
-                                                                  Navigator.pop(
-                                                                      context,
-                                                                      'Payment successful');
-                                                                },
-                                                              ),
-                                                            ],
+                                                      builder: (BuildContext
+                                                          context) {
+                                                        return Padding(
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                            top: 12,
+                                                            left: 12,
+                                                            right: 12,
+                                                            bottom:
+                                                                MediaQuery.of(
+                                                                        context)
+                                                                    .viewInsets
+                                                                    .bottom,
                                                           ),
-                                                        ),
-                                                      );
-                                                    },
-                                                  ).then((value) async {
-                                                    if (value ==
-                                                        'Payment successful') {
-                                                      bloc.cart.clearCart();
-                                                      bloc.add(
-                                                          LoadCartItemsEvent());
-                                                      await Future.delayed(
-                                                          const Duration(
-                                                              seconds: 2));
-                                                      Navigator.pushReplacement(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                const BottomNav(
-                                                                  index: 1,
-                                                                )),
-                                                      );
-                                                    }
-                                                  });
+                                                          child:
+                                                              SingleChildScrollView(
+                                                            child: Column(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .min,
+                                                              children: [
+                                                                CreditCard(
+                                                                  config: bloc
+                                                                      .pay(),
+                                                                  onPaymentResult:
+                                                                      (result) async {
+                                                                    bloc.onPaymentResult(
+                                                                        result,
+                                                                        context,
+                                                                        state
+                                                                            .cart
+                                                                            .items);
+                                                                    Navigator.pop(
+                                                                        context,
+                                                                        'Payment successful');
+                                                                  },
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        );
+                                                      },
+                                                    ).then((value) async {
+                                                      if (value ==
+                                                          'Payment successful') {
+                                                        bloc.cart.clearCart();
+                                                        bloc.add(
+                                                            LoadCartItemsEvent());
+                                                        await Future.delayed(
+                                                            const Duration(
+                                                                seconds: 2));
+                                                        Navigator
+                                                            .pushReplacement(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  const BottomNav(
+                                                                    index: 1,
+                                                                  )),
+                                                        );
+                                                      }
+                                                    });
                                                 },
                                                 style: ElevatedButton.styleFrom(
                                                   backgroundColor:
