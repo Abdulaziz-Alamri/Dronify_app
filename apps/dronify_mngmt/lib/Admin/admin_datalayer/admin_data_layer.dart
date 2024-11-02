@@ -26,7 +26,6 @@ class AdminDataLayer {
 
     if (supabase.auth.currentUser != null) {
       if (supabase.auth.currentUser!.userMetadata?['role'] == 'employee') {
-        log('fetched');
         fetchEmpOrders();
       }
     }

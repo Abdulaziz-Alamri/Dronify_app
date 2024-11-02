@@ -1,7 +1,9 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:dronify/Data_layer/data_layer.dart';
 import 'package:dronify/models/customer_model.dart';
+import 'package:dronify/utils/setup.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -10,6 +12,7 @@ import 'package:path/path.dart';
 final supabase = Supabase.instance.client;
 
 Future<void> saveOrder({
+  required int orderId,
   required String customerId,
   required int serviceId,
   required double squareMeters,
@@ -26,6 +29,7 @@ Future<void> saveOrder({
     final orderResponse = await supabase
         .from('orders')
         .insert({
+          'order_id': orderId,
           'user_id': customerId,
           'service_id': serviceId,
           'square_meters': squareMeters,
@@ -79,6 +83,30 @@ Future<void> saveOrder({
     print("Error saving order: $error");
     throw error;
   }
+}
+
+Future<int?> getOrderId() async {
+  final response = await supabase
+      .from('orders')
+      .select('order_id')
+      .order('order_id', ascending: false)
+      .limit(1)
+      .single();
+
+  if (response.isEmpty) {
+    print("Error fetching last order_id");
+    return null;
+  }
+  final int? orderId;
+  if (locator.get<DataLayer>().cart.items.isEmpty) {
+    orderId = response['order_id'] + 1 as int?;
+  } else {
+    orderId = response['order_id'] +
+        1 +
+        locator.get<DataLayer>().cart.items.length as int?;
+  }
+
+  return orderId;
 }
 
 checkChat({required String chatId}) async {
