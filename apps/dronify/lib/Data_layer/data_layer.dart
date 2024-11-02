@@ -19,6 +19,7 @@ class DataLayer {
   final supabase = Supabase.instance.client;
 
   DataLayer() {
+    loadData();
     fetchServices();
     if (supabase.auth.currentUser != null) {
       fetchCustomerOrders();
@@ -33,7 +34,10 @@ class DataLayer {
 
   saveData() async {
     await box.write('external_key', externalKey);
-    await updateExternalKey(externalKey: externalKey!);
+  }
+
+  onLogout() async {
+    box.erase();
   }
 
   Future<List<OrderModel>> fetchCustomerOrders() async {

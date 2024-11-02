@@ -68,10 +68,9 @@ class AuthRepository {
 
       if (response.user != null) {
         OneSignal.login(locator.get<AdminDataLayer>().externalKey!);
-    await supabase
-        .from('app_user')
-        .update({'external_key': locator.get<AdminDataLayer>().externalKey!}).eq(
-            'user_id', response.user!.id);
+        await supabase.from('app_user').update({
+          'external_key': locator.get<AdminDataLayer>().externalKey!
+        }).eq('user_id', response.user!.id);
         return response;
       } else {
         throw Exception('Login failed: Invalid credentials.');
@@ -95,6 +94,7 @@ class AuthRepository {
   // Logout function
   Future logout() async {
     try {
+      locator.get<AdminDataLayer>().onLogout();
       await supabase.auth.signOut();
       log('User logged out successfully');
     } catch (error) {

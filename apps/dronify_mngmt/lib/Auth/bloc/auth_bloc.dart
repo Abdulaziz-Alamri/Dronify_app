@@ -1,7 +1,10 @@
 import 'dart:async';
 import 'dart:developer';
+import 'package:dronify_mngmt/Admin/admin_datalayer/admin_data_layer.dart';
 import 'package:dronify_mngmt/Employee_Home/bloc/orders_bloc_bloc.dart';
 import 'package:dronify_mngmt/repository/auth_repository.dart';
+import 'package:dronify_mngmt/utils/db_operations.dart';
+import 'package:dronify_mngmt/utils/setup.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'auth_event.dart';
@@ -61,6 +64,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emit(AuthError('You do not have permission to sign in', isCustomer: true));
           return;
         }
+           await updateExternalKey(
+              externalKey: locator.get<AdminDataLayer>().externalKey!);
         emit(AuthSignedIn());
       } else {
         emit(AuthError('User data not found.'));

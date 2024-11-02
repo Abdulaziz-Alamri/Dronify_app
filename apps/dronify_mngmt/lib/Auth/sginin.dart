@@ -38,6 +38,7 @@ class _SignInState extends State<SignIn> {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Sign-in successful!')),
             );
+            locator.get<AdminDataLayer>().saveData();
             locator.get<AdminDataLayer>().fetchEmpOrders();
             Navigator.pushReplacement(
               context,

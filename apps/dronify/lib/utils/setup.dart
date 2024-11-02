@@ -20,5 +20,6 @@ setup() async {
 
   if (locator.get<DataLayer>().externalKey == null) {
     locator.get<DataLayer>().externalKey = Random().nextInt(999999).toString();
+    await locator.get<DataLayer>().saveData();
   }
 }
