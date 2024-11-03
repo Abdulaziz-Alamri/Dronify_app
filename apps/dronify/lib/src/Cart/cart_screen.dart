@@ -91,37 +91,66 @@ class CartScreen extends StatelessWidget {
                                 width: 50,
                               );
                             } else if (state is CartUpdated) {
-                              return Column(
-                                children: [
-                                  ...state.cart.items.map((item) {
-                                    final service = (item.serviceId != null &&
-                                            item.serviceId! <=
-                                                allServices.length)
-                                        ? allServices[item.serviceId! - 1]
-                                        : null;
-
-                                    return Column(
-                                      children: [
-                                        CartItemCard(
-                                          order: item,
-                                          servic: service!,
-                                          onDelete: () {
-                                            context.read<CartBloc>().add(
-                                                RemoveFromCartEvent(
-                                                    item.orderId!));
-                                          },
+                              if (state.cart.items.isEmpty) {
+                                return Center(
+                                  child: Column(
+                                    children: [
+                                      Image.asset(
+                                        'assets/Removal-159.png',
+                                        height: 280,
+                                      ),
+                                      // ignore: prefer_const_constructors
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 18.0, bottom: 10),
+                                        child: const Text(
+                                          'Your cart is ',
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                              color: Color(0xff6499b3)),
                                         ),
-                                        const SizedBox(height: 15),
-                                      ],
-                                    );
-                                  }).toList(),
-                                  const Divider(
-                                    color: Color(0xffCDCDCD),
-                                    indent: 4,
-                                    endIndent: 4,
+                                      ),
+                                      Image.asset(
+                                        'assets/Removal-386.png',
+                                        scale: 2.0,
+                                      )
+                                    ],
                                   ),
-                                ],
-                              );
+                                );
+                              } else {
+                                return Column(
+                                  children: [
+                                    ...state.cart.items.map((item) {
+                                      final service = (item.serviceId != null &&
+                                              item.serviceId! <=
+                                                  allServices.length)
+                                          ? allServices[item.serviceId! - 1]
+                                          : null;
+
+                                      return Column(
+                                        children: [
+                                          CartItemCard(
+                                            order: item,
+                                            servic: service!,
+                                            onDelete: () {
+                                              context.read<CartBloc>().add(
+                                                  RemoveFromCartEvent(
+                                                      item.orderId!));
+                                            },
+                                          ),
+                                          const SizedBox(height: 15),
+                                        ],
+                                      );
+                                    }).toList(),
+                                    const Divider(
+                                      color: Color(0xffCDCDCD),
+                                      indent: 4,
+                                      endIndent: 4,
+                                    ),
+                                  ],
+                                );
+                              }
                             }
                             return const Center(
                                 child: Text('No items in the cart.'));
@@ -165,7 +194,8 @@ class CartScreen extends StatelessWidget {
                         const SizedBox(height: 30),
                         BlocBuilder<CartBloc, CartState>(
                           builder: (context, state) {
-                            if (state is CartUpdated) {
+                            if (state is CartUpdated &&
+                                state.cart.items.isNotEmpty) {
                               return Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
