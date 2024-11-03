@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
+import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:dronify/utils/db_operations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -85,15 +86,42 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
   FutureOr<void> pickDate(
       PickDateEvent event, Emitter<SubscriptionState> emit) async {
     emit(Loadedstate());
-    DateTime? picked = await showDatePicker(
-      context: event.context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2100),
+
+    const primaryColor = Color(0xFF152381);
+    const highlightColor = Color(0xFF73DDFF);
+    const weekdayLabelColor = Color(0xFF0A7995);
+
+    final config = CalendarDatePicker2WithActionButtonsConfig(
+      calendarViewScrollPhysics: const NeverScrollableScrollPhysics(),
+      dayTextStyle:
+          const TextStyle(color: primaryColor, fontWeight: FontWeight.w600),
+      calendarType: CalendarDatePicker2Type.single,
+      selectedDayHighlightColor: highlightColor,
+      closeDialogOnCancelTapped: true,
+      daySplashColor: highlightColor,
+      weekdayLabelTextStyle: TextStyle(
+        color: weekdayLabelColor,
+        fontWeight: FontWeight.bold,
+      ),
+      controlsTextStyle: const TextStyle(
+        color: primaryColor,
+        fontSize: 15,
+        fontWeight: FontWeight.bold,
+      ),
+      selectedDayTextStyle: const TextStyle(color: Colors.white),
     );
 
-    if (picked != null) {
-      selectedDate = DateFormat('yyyy-MM-dd').format(picked);
+    // show dialog
+    final picked = await showCalendarDatePicker2Dialog(
+      context: event.context,
+      config: config,
+      dialogSize: const Size(400, 200),
+      borderRadius: BorderRadius.circular(12),
+    );
+
+    // update state
+    if (picked != null && picked.isNotEmpty && picked[0] != null) {
+      selectedDate = DateFormat('yyyy-MM-dd').format(picked[0]!);
       emit(DateSelectedState(selectedDate: selectedDate!));
     }
   }
@@ -105,7 +133,6 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
       currentLocation = LatLng(position.latitude, position.longitude);
     }
     if (selectedLocation == null) {
-      print('here');
       emit(LocationFetchedState(location: currentLocation!));
     } else {
       emit(LocationFetchedState(location: selectedLocation!));

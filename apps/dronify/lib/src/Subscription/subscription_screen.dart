@@ -5,6 +5,7 @@ import 'package:dronify/src/Subscription/subscription_bloc/subscription_bloc.dar
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:moyasar/moyasar.dart';
 import 'package:sizer/sizer.dart';
 
@@ -105,13 +106,26 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                         width: 60,
                         height: 60,
                         decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          borderRadius: BorderRadius.circular(10),
+                          gradient: LinearGradient(
+                            colors: [Color(0xff0A7995), Color(0xff73DDFF)],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                          borderRadius: BorderRadius.circular(12),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.15),
+                              blurRadius: 10,
+                              offset: Offset(0, 4),
+                            ),
+                          ],
                         ),
-                        child: Icon(
-                          Icons.add,
-                          size: 30,
-                          color: Colors.grey[700],
+                        child: Center(
+                          child: FaIcon(
+                            FontAwesomeIcons.plus,
+                            size: 24,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),
@@ -182,49 +196,55 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                       builder: (context, state) {
                         if (state is LocationFetchedState) {
                           return Container(
-                            height: 300,
-                            width: double.infinity,
+                            height: 210,
+                            width: 345,
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(16),
+                              border: Border.all(
+                                  width: 2, color: Color(0xff73DDFF)),
                             ),
-                            child: FlutterMap(
-                              options: MapOptions(
-                                initialCenter: state.location,
-                                maxZoom: 15.0,
-                                onTap: (tapPosition, point) {
-                                  bloc.add(PinLocationEvent(
-                                      tapPosition: tapPosition, point: point));
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(
-                                          'Selected Location: Latitude: ${convertToDMS(point.latitude)}, Longitude: ${convertToDMS(point.longitude)}'),
-                                    ),
-                                  );
-                                },
-                              ),
-                              children: [
-                                TileLayer(
-                                  urlTemplate:
-                                      "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-                                  subdomains: const ['a', 'b', 'c'],
-                                ),
-                                if (bloc.selectedLocation != null)
-                                  MarkerLayer(
-                                    markers: [
-                                      Marker(
-                                        point: bloc.selectedLocation!,
-                                        width: 80.0,
-                                        height: 80.0,
-                                        child: Icon(
-                                          Icons.location_on,
-                                          color: Colors.red,
-                                          size: 40,
-                                        ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(14),
+                              child: FlutterMap(
+                                options: MapOptions(
+                                  initialCenter: state.location,
+                                  maxZoom: 15.0,
+                                  onTap: (tapPosition, point) {
+                                    bloc.add(PinLocationEvent(
+                                        tapPosition: tapPosition,
+                                        point: point));
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                            'Selected Location: Latitude: ${convertToDMS(point.latitude)}, Longitude: ${convertToDMS(point.longitude)}'),
                                       ),
-                                    ],
+                                    );
+                                  },
+                                ),
+                                children: [
+                                  TileLayer(
+                                    urlTemplate:
+                                        "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                                    subdomains: const ['a', 'b', 'c'],
                                   ),
-                              ],
+                                  if (bloc.selectedLocation != null)
+                                    MarkerLayer(
+                                      markers: [
+                                        Marker(
+                                          point: bloc.selectedLocation!,
+                                          width: 80.0,
+                                          height: 80.0,
+                                          child: const Icon(
+                                            Icons.location_on,
+                                            color: Colors.red,
+                                            size: 40,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                ],
+                              ),
                             ),
                           );
                         }
@@ -248,23 +268,35 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                       ),
                     ),
                     GestureDetector(
-                      onTap: () {
-                        bloc.add(PickDateEvent(context: context));
-                      },
-                      child: Container(
-                        width: 60,
-                        height: 60,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Icon(
-                          Icons.calendar_today,
-                          size: 30,
-                          color: Colors.grey[700],
-                        ),
-                      ),
-                    ),
+                        onTap: () {
+                          bloc.add(PickDateEvent(context: context));
+                        },
+                        child: Container(
+                          width: 60,
+                          height: 60,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [Color(0xff0A7995), Color(0xff73DDFF)],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                            ),
+                            borderRadius: BorderRadius.circular(12),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.15),
+                                blurRadius: 10,
+                                offset: Offset(0, 4),
+                              ),
+                            ],
+                          ),
+                          child: Center(
+                            child: FaIcon(
+                              FontAwesomeIcons.calendarDays,
+                              size: 24,
+                              color: Colors.white,
+                            ),
+                          ),
+                        )),
                     SizedBox(height: 2.h),
                     BlocBuilder<SubscriptionBloc, SubscriptionState>(
                       buildWhen: (previous, current) =>
