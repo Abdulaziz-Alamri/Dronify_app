@@ -6,6 +6,7 @@ class OrderModel {
   final String? employeeId;
   final int? serviceId;
   final List<String>? images;
+  final List<String>? afterImages;
   final List<Map<String, dynamic>>? address;
   final double? squareMeters;
   final DateTime? reservationDate;
@@ -21,6 +22,7 @@ class OrderModel {
     this.employeeId,
     required this.serviceId,
     required this.images,
+    required this.afterImages,
     required this.address,
     required this.squareMeters,
     required this.reservationDate,
@@ -39,9 +41,16 @@ class OrderModel {
           : null,
       employeeId: json['employee_id'] ?? '',
       serviceId: json['service_id'] ?? 0,
-      images: (json['images'] != null && json['images'] is List)
-          ? List<String>.from(json['images'].map((img) => img['image_url']))
-          : [],
+     images: (json['images'] != null && json['images'] is List)
+    ? List<String>.from(json['images']
+        .where((img) => img['type'] == 'before')
+        .map((img) => img['image_url']))
+    : [],
+     afterImages: (json['images'] != null && json['images'] is List)
+    ? List<String>.from(json['images']
+        .where((img) => img['type'] == 'after')
+        .map((img) => img['image_url']))
+    : [],
       address: (json['address'] != null && json['address'] is List)
           ? List<Map<String, dynamic>>.from(json['address'])
           : [],

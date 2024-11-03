@@ -90,7 +90,7 @@ class AdminHome extends StatelessWidget {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            expandedHeight: 80.0,
+            expandedHeight: 110.0,
             flexibleSpace: FlexibleSpaceBar(
               background: Container(
                 decoration: const BoxDecoration(
@@ -108,7 +108,7 @@ class AdminHome extends StatelessWidget {
               title: const Text(
                 'Welcome Back Admin 👋',
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 14,
                   fontWeight: FontWeight.w500,
                   color: Colors.black,
                 ),

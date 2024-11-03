@@ -13,7 +13,8 @@ class CompleteOrderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<ServiceModel> allServices = locator.get<AdminDataLayer>().allServices;
+    ServiceModel service =
+        locator.get<AdminDataLayer>().allServices[order.serviceId! - 1];
     return Row(
       children: [
         SizedBox(
@@ -25,8 +26,8 @@ class CompleteOrderCard extends StatelessWidget {
             elevation: 5,
             shadowColor: Colors.black,
             color: Colors.white,
-            child: Image.asset(
-              allServices[order.serviceId!-1].mainImage,
+            child: Image.network(
+              service.mainImage,
               fit: BoxFit.cover,
             ),
           ),
@@ -39,12 +40,12 @@ class CompleteOrderCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                allServices[order.serviceId!-1].name,
+               service.name,
                 style:
                     const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
               ),
               Text(
-                allServices[order.serviceId!-1].description,
+                service.description,
                 style: const TextStyle(fontSize: 12, color: Colors.grey),
               ),
             ],

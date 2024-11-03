@@ -22,7 +22,8 @@ class AvailbleOrders extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<ServiceModel> allServices = locator.get<AdminDataLayer>().allServices;
+    ServiceModel service =
+        locator.get<AdminDataLayer>().allServices[order.serviceId! - 1];
     return InkWell(
       onTap: () {
         Navigator.push(
@@ -66,8 +67,8 @@ class AvailbleOrders extends StatelessWidget {
                       elevation: 5,
                       shadowColor: Colors.black,
                       color: Colors.white,
-                      child: Image.asset(
-                        'assets/clean.png',
+                      child: Image.network(
+                        service.mainImage,
                         fit: BoxFit.fill,
                       ),
                     ),
@@ -80,7 +81,7 @@ class AvailbleOrders extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          allServices[order.serviceId! - 1].name,
+                          service.name,
                           style: const TextStyle(
                               fontSize: 14, fontWeight: FontWeight.bold),
                         ),
@@ -88,7 +89,7 @@ class AvailbleOrders extends StatelessWidget {
                           height: 5,
                         ),
                         Text(
-                          allServices[order.serviceId! - 1].description,
+                          service.description,
                           softWrap: true,
                           style: const TextStyle(
                               fontSize: 12, color: Color(0xffA4A4AA)),
