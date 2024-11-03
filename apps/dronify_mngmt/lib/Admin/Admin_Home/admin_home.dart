@@ -2,6 +2,7 @@ import 'package:dronify_mngmt/Admin/Admin_Home/custom_stat_card.dart';
 import 'package:dronify_mngmt/Admin/Admin_Home/employees_barchart.dart';
 import 'package:dronify_mngmt/Admin/Admin_Home/orders_stats.dart';
 import 'package:dronify_mngmt/Admin/Admin_Home/profit_chart.dart';
+import 'package:dronify_mngmt/Auth/sginin.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -33,8 +34,11 @@ class AdminHome extends StatelessWidget {
   }
 
   void _logout(BuildContext context) {
-    Supabase.instance.client.auth.signOut();
-    Navigator.of(context).pushReplacementNamed('/login');
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (context) => SignIn(),
+      ),
+    );
   }
 
   @override
