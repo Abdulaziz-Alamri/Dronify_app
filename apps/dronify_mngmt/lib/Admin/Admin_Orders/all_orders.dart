@@ -154,60 +154,65 @@ class _AllOrdersState extends State<AllOrders>
                       ),
                       BlocBuilder<AdminOrdersCubit, AdminOrdersState>(
                         builder: (context, state) {
-                           if (state is OrdersLoadedState)
-                            
-                          return SizedBox(
-                            height: MediaQuery.of(context).size.height,
-                            child: TabBarView(
-                              controller: tabController,
-                              children: [
-                                // Complete Orders Tab
-                                SingleChildScrollView(
-                                  child: Column(
-                                    children: cubit.completeOrders.map((order) {
-                                      return Column(
-                                        children: [
-                                          OrderCard(
-                                              order: order, isAdmin: true),
-                                          SizedBox(height: 15),
-                                        ],
-                                      );
-                                    }).toList(),
+                          if (state is OrdersLoadedState)
+                            return SizedBox(
+                              height: MediaQuery.of(context).size.height,
+                              child: TabBarView(
+                                controller: tabController,
+                                children: [
+                                  // Complete Orders Tab
+                                  SingleChildScrollView(
+                                    child: Column(
+                                      children:
+                                          cubit.completeOrders.map((order) {
+                                        return Column(
+                                          children: [
+                                            OrderCard(
+                                                order: order, isAdmin: true),
+                                            SizedBox(height: 15),
+                                          ],
+                                        );
+                                      }).toList(),
+                                    ),
                                   ),
-                                ),
-                                // Incomplete Orders Tab
-                                SingleChildScrollView(
-                                  child: Column(
-                                    children:
-                                        cubit.incompleteOrders.map((order) {
-                                      return Column(
-                                        children: [
-                                          OrderCard(
-                                              order: order, isAdmin: true),
-                                          SizedBox(height: 15),
-                                        ],
-                                      );
-                                    }).toList(),
+                                  // Incomplete Orders Tab
+                                  SingleChildScrollView(
+                                    child: Column(
+                                      children:
+                                          cubit.incompleteOrders.map((order) {
+                                        return Column(
+                                          children: [
+                                            OrderCard(
+                                                order: order, isAdmin: true),
+                                            SizedBox(height: 15),
+                                          ],
+                                        );
+                                      }).toList(),
+                                    ),
                                   ),
-                                ),
-                                // Available Orders Tab
-                                SingleChildScrollView(
-                                  child: Column(
-                                    children:
-                                        cubit.availableOrders.map((order) {
-                                      return Column(
-                                        children: [
-                                          AdminAvailableCard(order: order, cubit: cubit),
-                                          SizedBox(height: 15),
-                                        ],
-                                      );
-                                    }).toList(),
+                                  // Available Orders Tab
+                                  SingleChildScrollView(
+                                    child: Column(
+                                      children:
+                                          cubit.availableOrders.map((order) {
+                                        return Column(
+                                          children: [
+                                            AdminAvailableCard(
+                                                order: order, cubit: cubit),
+                                            SizedBox(height: 15),
+                                          ],
+                                        );
+                                      }).toList(),
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
+                                ],
+                              ),
+                            );
+                          return Image.asset(
+                            'assets/drone.gif',
+                            height: 50,
+                            width: 50,
                           );
-                          return Image.asset('assets/custom_loading.gif');
                         },
                       )
                     ],

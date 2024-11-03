@@ -85,7 +85,11 @@ class CartScreen extends StatelessWidget {
                         BlocBuilder<CartBloc, CartState>(
                           builder: (context, state) {
                             if (state is CartLoading) {
-                              return Image.asset('assets/custom_loading.gif');
+                              return Image.asset(
+                                'assets/drone.gif',
+                                height: 50,
+                                width: 50,
+                              );
                             } else if (state is CartUpdated) {
                               return Column(
                                 children: [

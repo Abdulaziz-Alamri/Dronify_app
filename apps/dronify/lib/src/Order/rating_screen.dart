@@ -48,7 +48,7 @@ class RatingScreen extends StatelessWidget {
                               );
                             }),
                           ),
-                           const SizedBox(height: 16),
+                          const SizedBox(height: 16),
                           TextField(
                             controller: reviewController,
                             decoration: const InputDecoration(
@@ -86,7 +86,6 @@ class RatingScreen extends StatelessWidget {
                     )
                   ],
                 );
-                // return Image.asset('assets/custom_loading.gif');
               },
             ),
           ),

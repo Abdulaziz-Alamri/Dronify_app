@@ -104,7 +104,11 @@ class Wallet extends StatelessWidget {
                           builder: (context, state) {
                             if (state is WalletLoading) {
                               return Center(
-                                child: Image.asset('assets/custom_loading.gif'),
+                                child: Image.asset(
+                                  'assets/drone.gif',
+                                  height: 50,
+                                  width: 50,
+                                ),
                               );
                             } else if (state is WalletLoaded) {
                               return Column(

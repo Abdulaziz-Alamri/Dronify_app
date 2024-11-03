@@ -37,7 +37,7 @@ class WelcomeCard extends StatelessWidget {
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: Color(0xff172B4D),
+              color: Color(0xff072D6F),
             ),
           ),
           const SizedBox(
@@ -57,12 +57,15 @@ class WelcomeCard extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border.all(color: const Color(0xff072D6F)),
                 borderRadius: BorderRadius.circular(360),
-                color: const Color(0xff072D6F).withOpacity(0.28),
+                color: const Color(0xff072D6F),
               ),
               child: const Center(
                 child: Text(
-                  'Subscribe for Flexible Cleaning Schedules and Exclusive Pricing',
-                  style: TextStyle(fontSize: 12, color: Color(0xff072D6F)),
+                  'subscribe now',
+                  style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,
                 ),
               ),
