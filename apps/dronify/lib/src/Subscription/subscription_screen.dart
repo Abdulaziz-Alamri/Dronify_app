@@ -20,8 +20,8 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
   List months = [3, 6, 9];
   List descriptions = [
     'Includes 6 visits (two visits each month) to maintain your building’s appearance.',
-    'Includes 12 visits (two visits each month), perfect for ongoing cleanliness with fewer subscriptions.',
-    'Includes 18 visits (two visits each month), an excellent choice for those needing consistent maintenance at a great value.'
+    'Includes 12 visits (two visits each month) to maintain your building’s appearance.',
+    'Includes 18 visits (two visits each month) to maintain your building’s appearance.'
   ];
   List<double> prices = [1500, 2500, 4000];
   TextEditingController squareAreaController = TextEditingController();
@@ -196,8 +196,8 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                       builder: (context, state) {
                         if (state is LocationFetchedState) {
                           return Container(
-                            height: 210,
-                            width: 345,
+                            height: 250,
+                            width: 450,
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(16),
@@ -459,11 +459,14 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                             ),
                             Text(
                               'Are you from Riyadh?',
-                              style: TextStyle(fontSize: 14.sp),
+                              style: TextStyle(fontSize: 16.sp),
                             ),
                           ],
                         );
                       },
+                    ),
+                    SizedBox(
+                      height: 20,
                     ),
                     Center(
                       child: Container(

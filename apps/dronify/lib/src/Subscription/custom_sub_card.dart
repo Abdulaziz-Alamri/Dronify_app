@@ -10,24 +10,25 @@ class CustomSubCard extends StatelessWidget {
   final int selectedIndex;
   final bool value;
   final SubscriptionBloc bloc;
-  const CustomSubCard(
-      {super.key,
-      required this.duration,
-      required this.description,
-      required this.price,
-      required this.index,
-      required this.selectedIndex,
-      required this.value,
-      required this.bloc});
+
+  const CustomSubCard({
+    super.key,
+    required this.duration,
+    required this.description,
+    required this.price,
+    required this.index,
+    required this.selectedIndex,
+    required this.value,
+    required this.bloc,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          height: 67,
-          width: 308,
+          height: 110,
+          width: 390,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(16),
@@ -42,49 +43,66 @@ class CustomSubCard extends StatelessWidget {
           child: Row(
             children: [
               Radio(
-                  value: index,
-                  groupValue: selectedIndex,
-                  activeColor: const Color(0xff072D6F),
-                  onChanged: (value) {
-                    bloc.add(
-                        SelectRadioEvent(selectedIndex: index, value: true));
-                  }),
+                value: index,
+                groupValue: selectedIndex,
+                activeColor: const Color(0xff072D6F),
+                onChanged: (value) {
+                  bloc.add(SelectRadioEvent(selectedIndex: index, value: true));
+                },
+              ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('$duration-Months',
-                      style: const TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w900,
-                          color: Color(0xff072D6F))),
+                  Text(
+                    '$duration-Months',
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w900,
+                      color: Color(0xff072D6F),
+                    ),
+                  ),
                   SizedBox(
                     width: 150,
                     child: Text(
                       description,
                       softWrap: true,
                       style: const TextStyle(
-                          fontSize: 7, color: Color(0xff072D6F)),
+                        fontSize: 12,
+                        color: Color(0xff072D6F),
+                      ),
                     ),
                   ),
                 ],
               ),
-              const VerticalDivider(),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'SAR $price',
-                    style: const TextStyle(
-                        fontSize: 10,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xff072D6F)),
-                  ),
-                  Text('/ $duration months',
-                      style: const TextStyle(
-                          fontSize: 8,
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: const Color(0xff73ddff),
+                      borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(16),
+                          bottomRight: Radius.circular(16))),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'SAR $price',
+                        style: const TextStyle(
+                          fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: Color(0xff072D6F)))
-                ],
+                          color: Colors.white,
+                        ),
+                      ),
+                      Text(
+                        '/ $duration months',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ],
           ),

@@ -59,10 +59,6 @@ class BottomNav extends StatelessWidget {
               return Container(
                 decoration: const BoxDecoration(
                   color: Colors.black,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(32),
-                    topRight: Radius.circular(32),
-                  ),
                 ),
                 child: AnimatedBottomNavigationBar.builder(
                   itemCount: iconList.length,
