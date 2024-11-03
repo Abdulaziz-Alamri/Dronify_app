@@ -2,7 +2,9 @@ import 'package:dronify_mngmt/Admin/Admin_Home/custom_stat_card.dart';
 import 'package:dronify_mngmt/Admin/Admin_Home/employees_barchart.dart';
 import 'package:dronify_mngmt/Admin/Admin_Home/orders_stats.dart';
 import 'package:dronify_mngmt/Admin/Admin_Home/profit_chart.dart';
+import 'package:dronify_mngmt/Auth/first_screen.dart';
 import 'package:dronify_mngmt/Auth/sginin.dart';
+import 'package:dronify_mngmt/repository/auth_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -33,16 +35,9 @@ class AdminHome extends StatelessWidget {
     return (response as num).toDouble();
   }
 
-  void _logout(BuildContext context) {
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (context) => SignIn(),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
+    final AuthRepository authRepository = AuthRepository();
     return Scaffold(
       drawer: Drawer(
         child: ListView(
@@ -77,7 +72,16 @@ class AdminHome extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.logout, color: Colors.black),
               title: const Text('Log Out'),
-              onTap: () => _logout(context),
+              onTap: () async {
+                await authRepository.logout();
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => FirstScreen(),
+                  ),
+                  (route) => false,
+                );
+              },
             ),
           ],
         ),
