@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:dronify/Data_layer/data_layer.dart';
+import 'package:dronify/layer/data_layer.dart';
 import 'package:dronify/repository/auth_repository.dart';
 import 'package:dronify/splash/splash_screen.dart';
 import 'package:dronify/src/Auth/bloc/auth_bloc.dart';
@@ -20,7 +20,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await setup();
   await Future.delayed(Duration(seconds: 2));
-  log('external: ${locator.get<DataLayer>().externalKey!}');
 
   OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
   OneSignal.initialize('${dotenv.env['onesignal_key']}');

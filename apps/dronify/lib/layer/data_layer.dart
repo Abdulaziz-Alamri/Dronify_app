@@ -1,10 +1,7 @@
-import 'dart:developer';
 import 'package:dronify/models/customer_model.dart';
 import 'package:dronify/models/service_model.dart';
 import 'package:dronify/models/order_model.dart';
 import 'package:dronify/models/cart_model.dart';
-import 'package:dronify/utils/db_operations.dart';
-import 'package:dronify/utils/setup.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 

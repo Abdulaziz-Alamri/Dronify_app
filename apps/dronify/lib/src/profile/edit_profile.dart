@@ -1,5 +1,5 @@
 import 'package:dronify/utils/setup.dart';
-import 'package:dronify/Data_layer/data_layer.dart';
+import 'package:dronify/layer/data_layer.dart';
 import 'package:flutter/material.dart';
 
 class EditProfile extends StatelessWidget {
