@@ -148,6 +148,11 @@ class AdminOrderCard extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 10),
+                    Text(
+                      'Before Images',
+                      style: const TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
                     Container(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 16, vertical: 16),
@@ -169,6 +174,38 @@ class AdminOrderCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 15),
+                    if (order.afterImages!.isNotEmpty)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'after Images',
+                            style: const TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 16),
+                            height: 100,
+                            width: 345,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(16),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.05),
+                                  blurRadius: 3,
+                                  offset: const Offset(0, 1),
+                                ),
+                              ],
+                            ),
+                            child: CustomImageCards(
+                              imageUrls: order.afterImages!,
+                            ),
+                          ),
+                          const SizedBox(height: 15),
+                        ],
+                      ),
                     Container(
                         height: 210,
                         width: 345,
