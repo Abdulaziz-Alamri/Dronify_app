@@ -27,8 +27,7 @@ class OrderScreen extends StatelessWidget {
       child: BlocBuilder<OrderBloc, OrderState>(
         builder: (context, state) {
           if (state is OrderLoading) {
-            return Center(
-                child: Image.asset('assets/custom_loading.gif'));
+            return Center(child: Image.asset('assets/custom_loading.gif'));
           } else if (state is OrderLoaded) {
             return Scaffold(
               backgroundColor: const Color(0xffF5F5F7),
@@ -116,68 +115,78 @@ class OrderScreen extends StatelessWidget {
                                     child: Text('No images available'),
                                   ),
                           ),
+                          const SizedBox(height: 15),
+                          Text(
+                            'Location',
+                            style: const TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(height: 15),
+                          Container(
+                            height: 210,
+                            width: 345,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            child: GestureDetector(
+                              onTap: () {
+                                if (state.location != null) {
+                                  MapsLauncher.launchCoordinates(
+                                    state.location!.latitude,
+                                    state.location!.longitude,
+                                  );
+                                }
+                              },
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(14),
+                                child: FlutterMap(
+                                  options: MapOptions(
+                                    initialCenter:
+                                        state.location ?? LatLng(0.0, 0.0),
+                                    maxZoom: 15.0,
+                                  ),
+                                  children: [
+                                    TileLayer(
+                                      urlTemplate:
+                                          "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                                    ),
+                                    if (state.location != null)
+                                      MarkerLayer(
+                                        markers: [
+                                          Marker(
+                                            width: 80.0,
+                                            height: 80.0,
+                                            point: state.location!,
+                                            child: IconButton(
+                                              icon: Icon(
+                                                Icons.location_on,
+                                                color: Colors.red,
+                                                size: 40,
+                                              ),
+                                              onPressed: () {
+                                                if (state.location != null) {
+                                                  MapsLauncher
+                                                      .launchCoordinates(
+                                                    state.location!.latitude,
+                                                    state.location!.longitude,
+                                                  );
+                                                }
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 15),
                         ],
                       ),
                     ),
                     const SizedBox(height: 15),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      height: 210,
-                      width: 345,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: GestureDetector(
-                        onTap: () {
-                          if (state.location != null) {
-                            MapsLauncher.launchCoordinates(
-                              state.location!.latitude,
-                              state.location!.longitude,
-                            );
-                          }
-                        },
-                        child: FlutterMap(
-                          options: MapOptions(
-                            initialCenter: state.location ?? LatLng(0.0, 0.0),
-                            maxZoom: 15.0,
-                          ),
-                          children: [
-                            TileLayer(
-                              urlTemplate:
-                                  "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-                            ),
-                            if (state.location != null)
-                              MarkerLayer(
-                                markers: [
-                                  Marker(
-                                    width: 80.0,
-                                    height: 80.0,
-                                    point: state.location!,
-                                    child: IconButton(
-                                      icon: Icon(
-                                        Icons.location_on,
-                                        color: Colors.red,
-                                        size: 40,
-                                      ),
-                                      onPressed: () {
-                                        if (state.location != null) {
-                                          MapsLauncher.launchCoordinates(
-                                            state.location!.latitude,
-                                            state.location!.longitude,
-                                          );
-                                        }
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 15),
-
                     // Description section
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
