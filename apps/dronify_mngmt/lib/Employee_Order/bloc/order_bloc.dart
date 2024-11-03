@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:dronify_mngmt/Employee_Order/bloc/order_event.dart';
 import 'package:dronify_mngmt/Employee_Order/bloc/order_state.dart';
@@ -21,11 +23,11 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
       final response = await supabase
           .from('orders')
           .select(
-              '*, app_user!inner(name, phone), service(name, description), address(latitude, longitude), images(image_url)')
+              '*, app_user!inner(name, phone), service(name, description), address(latitude, longitude), images(image_url, type)')
           .eq('order_id', event.orderId)
           .maybeSingle();
 
-      print('Supabase response: $response');
+      log('Supabase response: $response');
 
       if (response == null) {
         emit(OrderError('Order data not found'));

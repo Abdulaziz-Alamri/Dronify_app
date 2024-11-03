@@ -20,7 +20,7 @@ class OrderCard extends StatelessWidget {
         locator.get<AdminDataLayer>().allServices[order.serviceId! - 1];
     return GestureDetector(
       onTap: () {
-        if (isAdmin) {
+        if (isAdmin || order.status == 'complete') {
           Navigator.push(
             context,
             MaterialPageRoute(
