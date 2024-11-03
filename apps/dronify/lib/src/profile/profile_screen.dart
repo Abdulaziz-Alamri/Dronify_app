@@ -32,7 +32,11 @@ class ProfileScreen extends StatelessWidget {
                 builder: (context, state) {
                   if (state is ProfileLoading) {
                     return Center(
-                        child: Image.asset('assets/custom_loading.gif'));
+                        child: Image.asset(
+                      'assets/drone.gif',
+                      height: 50,
+                      width: 50,
+                    ));
                   } else if (state is ProfileLoaded) {
                     return _buildProfileContent(context, state.customer);
                   } else if (state is ProfileError) {

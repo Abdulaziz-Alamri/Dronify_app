@@ -31,7 +31,11 @@ class _SignInState extends State<SignIn> {
               context: context,
               barrierDismissible: false,
               builder: (context) => Center(
-                child: Image.asset('assets/custom_loading.gif'),
+                child: Image.asset(
+                  'assets/drone.gif',
+                  height: 50,
+                  width: 50,
+                ),
               ),
             );
           } else if (state is AuthSignedIn) {

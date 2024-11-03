@@ -28,7 +28,11 @@ class LiveChat extends StatelessWidget {
               return Center(child: Text('Error: ${state.error}'));
             }
             return Center(
-                child: Image.asset('assets/custom_loading.gif'));
+                child: Image.asset(
+              'assets/drone.gif',
+              height: 50,
+              width: 50,
+            ));
           },
         ),
       ),

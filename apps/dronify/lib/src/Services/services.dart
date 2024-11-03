@@ -18,10 +18,11 @@ import 'package:geolocator/geolocator.dart';
 
 class Services extends StatefulWidget {
   final ServiceModel service;
-
+  final String iconpath;
   const Services({
     super.key,
     required this.service,
+    required this.iconpath,
   });
 
   @override
@@ -33,15 +34,13 @@ class _ServicesState extends State<Services> {
   TextEditingController squareAreaController = TextEditingController();
   late final int? orderId;
 
-  
-
   @override
   void initState() {
     super.initState();
     initializeOrderId();
   }
 
-  initializeOrderId()async{
+  initializeOrderId() async {
     orderId = await getOrderId();
   }
 
@@ -79,7 +78,7 @@ class _ServicesState extends State<Services> {
                         Row(
                           children: [
                             Image.asset(
-                              widget.service.mainImage,
+                              widget.iconpath,
                               height: 18.sp,
                             ),
                             SizedBox(width: 1.h),
@@ -278,7 +277,11 @@ class _ServicesState extends State<Services> {
                             ),
                           );
                         }
-                        return Image.asset('assets/custom_loading.gif');
+                        return Image.asset(
+                          'assets/drone.gif',
+                          height: 50,
+                          width: 50,
+                        );
                       },
                     ),
                     SizedBox(height: 2.h),

@@ -228,7 +228,11 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                             ),
                           );
                         }
-                        return Image.asset('assets/custom_loading.gif');
+                        return Image.asset(
+                          'assets/drone.gif',
+                          height: 50,
+                          width: 50,
+                        );
                       },
                     ),
                     SizedBox(height: 2.h),

@@ -9,7 +9,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class BottomNav extends StatelessWidget {
   final int index;
-  const BottomNav({super.key, this.index=0});
+  const BottomNav({super.key, this.index = 0});
 
   @override
   Widget build(BuildContext context) {
@@ -67,10 +67,6 @@ class BottomNav extends StatelessWidget {
               return Container(
                 decoration: const BoxDecoration(
                   color: Colors.black,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(50),
-                    topRight: Radius.circular(50),
-                  ),
                 ),
                 child: AnimatedBottomNavigationBar.builder(
                   itemCount: iconList.length,

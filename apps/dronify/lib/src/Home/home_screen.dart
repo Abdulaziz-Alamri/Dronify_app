@@ -29,7 +29,7 @@ class HomeScreen extends StatelessWidget {
           CustomScrollView(
             slivers: [
               SliverAppBar(
-                expandedHeight: 140.0,
+                expandedHeight: 80.0,
                 flexibleSpace: FlexibleSpaceBar(
                   background: Container(
                     decoration: const BoxDecoration(
@@ -58,7 +58,13 @@ class HomeScreen extends StatelessWidget {
                   future: fetchUserName(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(child: CircularProgressIndicator());
+                      return Center(
+                        child: Image.asset(
+                          'assets/drone.gif',
+                          height: 50,
+                          width: 50,
+                        ),
+                      );
                     } else if (snapshot.hasError) {
                       return Center(child: Text('Error: ${snapshot.error}'));
                     }
@@ -86,31 +92,11 @@ class HomeScreen extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 20),
-                        Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: SizedBox(
-                            height: 150,
-                            child: ListView(
-                              clipBehavior: Clip.none,
-                              scrollDirection: Axis.horizontal,
-                              children: const [
-                                SpecialOfferCard(
-                                  imageUrl: 'assets/drone.png',
-                                  title: 'Offer Cleaning Service',
-                                  description: 'Get 25%',
-                                ),
-                                SpecialOfferCard(
-                                  imageUrl: 'assets/drone.png',
-                                  title: 'Offer Cleaning Service',
-                                  description: 'Get 25%',
-                                ),
-                                SpecialOfferCard(
-                                  imageUrl: 'assets/drone.png',
-                                  title: 'Offer Cleaning Service',
-                                  description: 'Get 25%',
-                                ),
-                              ],
-                            ),
+                        Center(
+                          child: const SpecialOfferCard(
+                            imageUrl: 'assets/Group_34606-removebg-preview.png',
+                            title: 'Offer Cleaning Service',
+                            description: 'Get 25%',
                           ),
                         ),
                         const SizedBox(height: 10),
@@ -127,10 +113,21 @@ class HomeScreen extends StatelessWidget {
                         const SizedBox(
                           height: 10,
                         ),
+                        Center(
+                          child: ServiceCard(
+                            serviceId: 1,
+                            imageUrl:
+                                'assets/Dasu-pulizia-facciata-con-drone-Milano 1.png',
+                            title: 'Building Cleaning',
+                            description:
+                                'Professional cleaning service for tall buildings using advanced drones.',
+                            iconPath: 'assets/Vector (12).png',
+                          ),
+                        ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: SizedBox(
-                            height: 500,
+                            height: 180,
                             child: GridView(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 8),
@@ -141,16 +138,8 @@ class HomeScreen extends StatelessWidget {
                                       childAspectRatio: 1,
                                       mainAxisSpacing: 20,
                                       crossAxisSpacing: 40,
-                                      mainAxisExtent: 220),
+                                      mainAxisExtent: 180),
                               children: const [
-                                ServiceCard(
-                                  serviceId: 1,
-                                  imageUrl: 'assets/clean.png',
-                                  title: 'Building Cleaning',
-                                  description:
-                                      'Professional cleaning service for tall buildings using advanced drones.',
-                                  iconPath: 'assets/Vector (12).png',
-                                ),
                                 ServiceCard(
                                   serviceId: 2,
                                   imageUrl: 'assets/nano.jpg',
