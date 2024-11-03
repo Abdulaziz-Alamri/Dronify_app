@@ -48,7 +48,6 @@ class AdminDataLayer {
 
   onLogout() async {
     box.erase();
-    externalKey = null;
   }
 
   fetchServices() async {

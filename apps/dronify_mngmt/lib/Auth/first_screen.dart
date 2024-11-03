@@ -13,7 +13,7 @@ class FirstScreen extends StatelessWidget {
   const FirstScreen({Key? key}) : super(key: key);
 
   Future<bool> _isUserLoggedIn() async {
-    final user = Supabase.instance.client.auth.currentUser;
+    final user = supabase.auth.currentUser;
     if (user != null) {
       await locator.get<AdminDataLayer>().fetchEmpOrders();
     }

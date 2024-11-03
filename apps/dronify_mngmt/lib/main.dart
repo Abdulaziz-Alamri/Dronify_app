@@ -1,7 +1,6 @@
 import 'package:dronify_mngmt/Auth/bloc/auth_bloc.dart';
 import 'package:dronify_mngmt/Auth/first_screen.dart';
 import 'package:dronify_mngmt/repository/auth_repository.dart';
-import 'package:dronify_mngmt/utils/db_operations.dart';
 import 'package:dronify_mngmt/utils/setup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
