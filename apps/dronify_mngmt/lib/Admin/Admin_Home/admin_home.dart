@@ -42,13 +42,13 @@ class AdminHome extends StatelessWidget {
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            DrawerHeader(
-              decoration: const BoxDecoration(
+            const DrawerHeader(
+              decoration: BoxDecoration(
                 color: Color(0xFF072D6F),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
+                children: [
                   Text(
                     'Admin Panel',
                     style: TextStyle(
@@ -76,7 +76,7 @@ class AdminHome extends StatelessWidget {
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => FirstScreen(),
+                    builder: (context) => const FirstScreen(),
                   ),
                   (route) => false,
                 );

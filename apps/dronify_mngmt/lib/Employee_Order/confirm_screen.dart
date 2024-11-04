@@ -37,7 +37,7 @@ class ConfirmScreen extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           child: Column(
             children: [
-              Align(
+              const Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   'Images',
@@ -77,7 +77,7 @@ class ConfirmScreen extends StatelessWidget {
                                 height: 80,
                                 fit: BoxFit.cover,
                                 errorBuilder: (context, error, stackTrace) {
-                                  return Icon(Icons.broken_image);
+                                  return const Icon(Icons.broken_image);
                                 },
                               ),
                             ),
@@ -89,7 +89,7 @@ class ConfirmScreen extends StatelessWidget {
                       ),
               ),
               const SizedBox(height: 50),
-              Align(
+              const Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   'Description',
@@ -116,7 +116,7 @@ class ConfirmScreen extends StatelessWidget {
                 child: SingleChildScrollView(
                   child: Text(
                     description,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w500,
                       color: Color(0xffA4A4AA),

@@ -16,7 +16,7 @@ setup() async {
     anonKey: '${dotenv.env['anon_key']}',
   );
 
-  await locator.registerSingleton<AdminDataLayer>(AdminDataLayer());
+  locator.registerSingleton<AdminDataLayer>(AdminDataLayer());
 
   if (locator.get<AdminDataLayer>().externalKey == null) {
     locator.get<AdminDataLayer>().externalKey =

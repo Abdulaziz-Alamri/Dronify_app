@@ -97,7 +97,7 @@ class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
       selectedDayHighlightColor: highlightColor,
       closeDialogOnCancelTapped: true,
       daySplashColor: highlightColor,
-      weekdayLabelTextStyle: TextStyle(
+      weekdayLabelTextStyle: const TextStyle(
         color: weekdayLabelColor,
         fontWeight: FontWeight.bold,
       ),

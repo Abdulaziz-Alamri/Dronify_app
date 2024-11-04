@@ -118,7 +118,7 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
                       backgroundColor: Colors.white,
                     );
                   } else if (snapshot.hasError) {
-                    return Text('Error loading data');
+                    return const Text('Error loading data');
                   } else {
                     return Container(
                       height: 2.5.h,
@@ -181,7 +181,7 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
                       width: 50,
                     );
                   } else if (snapshot.hasError) {
-                    return Text('Error loading data');
+                    return const Text('Error loading data');
                   } else {
                     return Column(
                       children: List.generate(
@@ -248,8 +248,8 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
           ),
           child: Text(
             placeholder,
-            style: TextStyle(
-              color: const Color.fromARGB(255, 56, 56, 56),
+            style: const TextStyle(
+              color: Color.fromARGB(255, 56, 56, 56),
               fontSize: 16,
             ),
           ),

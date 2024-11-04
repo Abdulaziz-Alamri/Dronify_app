@@ -56,21 +56,21 @@ class _EmployeeHomeState extends State<EmployeeHome>
               padding: EdgeInsets.zero,
               children: [
                 DrawerHeader(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Color(0xff072D6F),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      CircleAvatar(
+                      const CircleAvatar(
                         radius: 30,
                         backgroundColor: Colors.white,
                         backgroundImage: AssetImage('assets/pfp_emp.png'),
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Text(
                         '${locator.get<AdminDataLayer>().currentEmployee?.name}',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 18,
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -135,7 +135,7 @@ class _EmployeeHomeState extends State<EmployeeHome>
                           centerTitle: true,
                           title: Text(
                             'Welcome Back ${locator.get<AdminDataLayer>().currentEmployee?.name} 👋',
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
                                 color: Colors.black),
@@ -157,7 +157,7 @@ class _EmployeeHomeState extends State<EmployeeHome>
                               ),
                               Text(
                                 '${locator.get<AdminDataLayer>().currentEmployee?.name}',
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold,
                                     color: Color(0xff072D6F)),

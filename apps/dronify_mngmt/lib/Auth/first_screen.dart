@@ -7,7 +7,7 @@ import 'package:dronify_mngmt/utils/setup.dart';
 import 'package:flutter/material.dart';
 
 class FirstScreen extends StatelessWidget {
-  const FirstScreen({Key? key}) : super(key: key);
+  const FirstScreen({super.key});
 
   Future<bool> _isUserLoggedIn() async {
     final user = supabase.auth.currentUser;
@@ -39,13 +39,14 @@ class FirstScreen extends StatelessWidget {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => BottomNav(),
+                    builder: (context) => const BottomNav(),
                   ),
                 );
               } else if (supabase.auth.currentUser!.userMetadata?['role'] ==
                   'employee') {
-                if (locator.get<AdminDataLayer>().currentEmployee == null)
+                if (locator.get<AdminDataLayer>().currentEmployee == null) {
                   locator.get<AdminDataLayer>().fetchEmpOrders();
+                }
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(

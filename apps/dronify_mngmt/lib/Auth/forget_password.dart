@@ -3,7 +3,7 @@ import 'package:dronify_mngmt/repository/auth_repository.dart';
 import 'package:flutter/material.dart';
 
 class ForgetPassword extends StatefulWidget {
-  ForgetPassword({super.key});
+  const ForgetPassword({super.key});
 
   @override
   State<ForgetPassword> createState() => _ForgetPasswordState();

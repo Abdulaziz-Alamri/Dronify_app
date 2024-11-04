@@ -10,7 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'bloc/auth_bloc.dart';
 
 class SignIn extends StatefulWidget {
-  SignIn({super.key});
+  const SignIn({super.key});
 
   @override
   State<SignIn> createState() => _SignInState();
@@ -51,7 +51,7 @@ class _SignInState extends State<SignIn> {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => FirstScreen(),
+                builder: (context) => const FirstScreen(),
               ),
             );
           } else if (state is AuthError) {

@@ -5,7 +5,7 @@ class SplashContent extends StatelessWidget {
   final String title;
   final String description;
 
-  const SplashContent({
+  const SplashContent({super.key, 
     required this.imagePath,
     required this.title,
     required this.description,
@@ -48,21 +48,21 @@ class SplashContent extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
         Text(
           title,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
           ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Text(
             description,
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 16, color: Colors.grey),
+            style: const TextStyle(fontSize: 16, color: Colors.grey),
           ),
         ),
       ],

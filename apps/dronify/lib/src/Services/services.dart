@@ -88,7 +88,7 @@ class _ServicesState extends State<Services> {
                             ),
                           ],
                         ),
-                        Icon(
+                        const Icon(
                           Icons.circle,
                           color: Colors.transparent,
                         )
@@ -152,7 +152,7 @@ class _ServicesState extends State<Services> {
                         width: 60,
                         height: 60,
                         decoration: BoxDecoration(
-                          gradient: LinearGradient(
+                          gradient: const LinearGradient(
                             colors: [Color(0xff0A7995), Color(0xff73DDFF)],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
@@ -162,11 +162,11 @@ class _ServicesState extends State<Services> {
                             BoxShadow(
                               color: Colors.black.withOpacity(0.15),
                               blurRadius: 10,
-                              offset: Offset(0, 4),
+                              offset: const Offset(0, 4),
                             ),
                           ],
                         ),
-                        child: Center(
+                        child: const Center(
                           child: FaIcon(
                             FontAwesomeIcons.plus,
                             size: 24,
@@ -205,7 +205,7 @@ class _ServicesState extends State<Services> {
                                             bloc.add(RemovedImageEvent(
                                                 image: bloc.images[index]));
                                           },
-                                          child: Icon(
+                                          child: const Icon(
                                             Icons.remove_circle,
                                             color: Colors.red,
                                           ),
@@ -218,7 +218,7 @@ class _ServicesState extends State<Services> {
                             ),
                           );
                         }
-                        return SizedBox.shrink();
+                        return const SizedBox.shrink();
                       },
                     ),
                     SizedBox(height: 2.h),
@@ -247,7 +247,7 @@ class _ServicesState extends State<Services> {
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(16),
                               border: Border.all(
-                                  width: 2, color: Color(0xff73DDFF)),
+                                  width: 2, color: const Color(0xff73DDFF)),
                             ),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(14),
@@ -320,7 +320,7 @@ class _ServicesState extends State<Services> {
                         width: 60,
                         height: 60,
                         decoration: BoxDecoration(
-                          gradient: LinearGradient(
+                          gradient: const LinearGradient(
                             colors: [Color(0xff0A7995), Color(0xff73DDFF)],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
@@ -330,11 +330,11 @@ class _ServicesState extends State<Services> {
                             BoxShadow(
                               color: Colors.black.withOpacity(0.15),
                               blurRadius: 10,
-                              offset: Offset(0, 4),
+                              offset: const Offset(0, 4),
                             ),
                           ],
                         ),
-                        child: Center(
+                        child: const Center(
                           child: FaIcon(
                             FontAwesomeIcons.calendarDays,
                             size: 24,
@@ -355,7 +355,7 @@ class _ServicesState extends State<Services> {
                                 TextStyle(fontSize: 16.sp, color: Colors.black),
                           );
                         }
-                        return SizedBox.shrink();
+                        return const SizedBox.shrink();
                       },
                     ),
                     SizedBox(height: 4.h),
@@ -374,9 +374,10 @@ class _ServicesState extends State<Services> {
                           children: [
                             GestureDetector(
                               onTapDown: (_) {
-                                if (bloc.unitCount > 1)
+                                if (bloc.unitCount > 1) {
                                   bloc.add(SetUnitCountEvent(
                                       count: --bloc.unitCount));
+                                }
                               },
                               child: Container(
                                 width: 40,
@@ -473,7 +474,7 @@ class _ServicesState extends State<Services> {
                           ),
                           BlocBuilder<ServicesBloc, ServicesState>(
                             builder: (context, state) {
-                              if (bloc.isHintShow) if (state is ShowHintState)
+                              if (bloc.isHintShow) if (state is ShowHintState) {
                                 return Padding(
                                   padding:
                                       EdgeInsets.symmetric(horizontal: 5.w),
@@ -484,7 +485,8 @@ class _ServicesState extends State<Services> {
                                         color: Colors.grey[600]),
                                   ),
                                 );
-                              return SizedBox.shrink();
+                              }
+                              return const SizedBox.shrink();
                             },
                           ),
                         ],
@@ -511,7 +513,7 @@ class _ServicesState extends State<Services> {
                         );
                       },
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Center(

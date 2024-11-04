@@ -30,11 +30,11 @@ class CartScreen extends StatelessWidget {
         child: Builder(builder: (context) {
           final bloc = context.read<CartBloc>();
           return Scaffold(
-            backgroundColor: const Color(0xffF5F5F7),
+            backgroundColor: const Color.fromARGB(255, 250, 250, 250),
             body: CustomScrollView(
               slivers: [
                 SliverAppBar(
-                  expandedHeight: 80.0,
+                  expandedHeight: 130.0,
                   flexibleSpace: FlexibleSpaceBar(
                     background: Container(
                       decoration: const BoxDecoration(
@@ -48,8 +48,11 @@ class CartScreen extends StatelessWidget {
                         ),
                       ),
                     ),
+                    // centerTitle: true, // Centers the title in the AppBar
+
                     title: const Text(
                       'Cart',
+                      textAlign: TextAlign.right,
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -64,7 +67,7 @@ class CartScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Column(
                       children: [
-                        const SizedBox(height: 40),
+                        const SizedBox(height: 20),
                         const Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
@@ -75,12 +78,13 @@ class CartScreen extends StatelessWidget {
                             ),
                           ),
                         ),
+                        const SizedBox(height: 20),
                         const Divider(
                           color: Color(0xffCDCDCD),
                           indent: 4,
                           endIndent: 4,
                         ),
-                        const SizedBox(height: 15),
+                        const SizedBox(height: 20),
                         BlocBuilder<CartBloc, CartState>(
                           builder: (context, state) {
                             if (state is CartLoading) {
@@ -94,26 +98,31 @@ class CartScreen extends StatelessWidget {
                                 return Center(
                                   child: Column(
                                     children: [
-                                      Image.asset(
-                                        'assets/Removal-159.png',
-                                        height: 280,
+                                      Opacity(
+                                        opacity:
+                                            0.3, // Adjust the opacity level (0.0 to 1.0)
+                                        child: Image.asset(
+                                          'assets/Removal-159.png',
+                                          height: 200,
+                                        ),
                                       ),
+                                      const SizedBox(height: 20),
+
                                       // ignore: prefer_const_constructors
                                       Padding(
                                         padding: const EdgeInsets.only(
                                             left: 18.0, bottom: 10),
                                         child: const Text(
-                                          'Your cart is ',
+                                          'Empty cart ',
                                           style: TextStyle(
-                                              fontSize: 20,
+                                              fontSize: 25,
                                               fontWeight: FontWeight.bold,
-                                              color: Color(0xff6499b3)),
+                                              color: Color.fromARGB(
+                                                  255, 199, 213, 220)),
                                         ),
                                       ),
-                                      Image.asset(
-                                        'assets/Removal-386.png',
-                                        scale: 2.0,
-                                      )
+                                      // Image.asset('assets/Removal-386.png',
+                                      //     scale: 2.0)
                                     ],
                                   ),
                                 );
@@ -141,7 +150,8 @@ class CartScreen extends StatelessWidget {
                                           const SizedBox(height: 15),
                                         ],
                                       );
-                                    }).toList(),
+                                    }),
+                                    const SizedBox(height: 20),
                                     const Divider(
                                       color: Color(0xffCDCDCD),
                                       indent: 4,
@@ -166,6 +176,7 @@ class CartScreen extends StatelessWidget {
                             ),
                           ),
                         ),
+                        const SizedBox(height: 25),
                         Container(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 10, vertical: 8),
@@ -255,7 +266,7 @@ class CartScreen extends StatelessWidget {
                                               child: ElevatedButton(
                                                 onPressed: () {
                                                   if (bloc
-                                                      .cart.items.isNotEmpty)
+                                                      .cart.items.isNotEmpty) {
                                                     showModalBottomSheet(
                                                       context: context,
                                                       isScrollControlled: true,
@@ -332,6 +343,7 @@ class CartScreen extends StatelessWidget {
                                                         );
                                                       }
                                                     });
+                                                  }
                                                 },
                                                 style: ElevatedButton.styleFrom(
                                                   backgroundColor:

@@ -28,7 +28,7 @@ class CustomStatCard extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
                     color: Color(0xff072D6F)),

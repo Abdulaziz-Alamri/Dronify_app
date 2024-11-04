@@ -11,7 +11,7 @@ import 'package:sizer/sizer.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await setup();
-  await Future.delayed(Duration(seconds: 2));
+  await Future.delayed(const Duration(seconds: 2));
 
   OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
   OneSignal.initialize('${dotenv.env['onesignal_key']}');
@@ -36,7 +36,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Sizer(
       builder: (context, orientation, deviceType) {
-        return MaterialApp(
+        return const MaterialApp(
             debugShowCheckedModeBanner: false, home: FirstScreen());
       },
     );

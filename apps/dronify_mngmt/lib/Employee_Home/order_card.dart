@@ -36,7 +36,7 @@ class OrderCard extends StatelessWidget {
       },
       child: Center(
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           height: 130,
           width: 400,
           decoration: BoxDecoration(
@@ -72,7 +72,7 @@ class OrderCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 15,
                   ),
                   Column(
@@ -80,10 +80,10 @@ class OrderCard extends StatelessWidget {
                     children: [
                       Text(
                         service.name,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 14, fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       SizedBox(
@@ -92,7 +92,7 @@ class OrderCard extends StatelessWidget {
                           service.description,
                           softWrap: true,
                           style:
-                              TextStyle(fontSize: 12, color: Color(0xffA4A4AA)),
+                              const TextStyle(fontSize: 12, color: Color(0xffA4A4AA)),
                         ),
                       ),
                     ],
@@ -101,7 +101,7 @@ class OrderCard extends StatelessWidget {
               ),
               Text(
                 'Price: ${order.totalPrice} SAR',
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
                     color: Color(0xff072D6F)),

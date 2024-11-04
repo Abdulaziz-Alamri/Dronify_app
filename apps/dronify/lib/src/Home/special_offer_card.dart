@@ -52,7 +52,7 @@ class SpecialOfferCard extends StatelessWidget {
                     children: [
                       Text(
                         description,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 36,
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
@@ -97,7 +97,7 @@ class SpecialOfferCard extends StatelessWidget {
                         Clipboard.setData(
                             const ClipboardData(text: "dronify2030"));
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
+                          const SnackBar(
                             duration: Duration(seconds: 1),
                             content: Text(
                               '✔ copied!',

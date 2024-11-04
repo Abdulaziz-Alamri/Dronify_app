@@ -93,7 +93,7 @@ class OrderScreen extends StatelessWidget {
                             'Status: ${state.orderData.status ?? 'N/A'}',
                             style: const TextStyle(color: Color(0xffA4A4AA)),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 15,
                           ),
                           Container(
@@ -122,9 +122,9 @@ class OrderScreen extends StatelessWidget {
                                   ),
                           ),
                           const SizedBox(height: 15),
-                          Text(
+                          const Text(
                             'Location',
-                            style: const TextStyle(
+                            style: TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(height: 15),
@@ -149,7 +149,7 @@ class OrderScreen extends StatelessWidget {
                                 child: FlutterMap(
                                   options: MapOptions(
                                     initialCenter:
-                                        state.location ?? LatLng(0.0, 0.0),
+                                        state.location ?? const LatLng(0.0, 0.0),
                                     maxZoom: 15.0,
                                   ),
                                   children: [
@@ -165,7 +165,7 @@ class OrderScreen extends StatelessWidget {
                                             height: 80.0,
                                             point: state.location!,
                                             child: IconButton(
-                                              icon: Icon(
+                                              icon: const Icon(
                                                 Icons.location_on,
                                                 color: Colors.red,
                                                 size: 40,
@@ -240,7 +240,7 @@ class OrderScreen extends StatelessWidget {
                         width: 60,
                         height: 60,
                         decoration: BoxDecoration(
-                          gradient: LinearGradient(
+                          gradient: const LinearGradient(
                             colors: [Color(0xff0A7995), Color(0xff73DDFF)],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
@@ -250,11 +250,11 @@ class OrderScreen extends StatelessWidget {
                             BoxShadow(
                               color: Colors.black.withOpacity(0.15),
                               blurRadius: 10,
-                              offset: Offset(0, 4),
+                              offset: const Offset(0, 4),
                             ),
                           ],
                         ),
-                        child: Center(
+                        child: const Center(
                           child: FaIcon(
                             FontAwesomeIcons.plus,
                             size: 24,

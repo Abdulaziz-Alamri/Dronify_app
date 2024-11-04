@@ -75,18 +75,18 @@ class AdminAvailableCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '${service.name}',
-                          style: TextStyle(
+                          service.name,
+                          style: const TextStyle(
                               fontSize: 14, fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(
                           height: 5,
                         ),
                         Text(
-                          '${service.description}',
+                          service.description,
                           softWrap: true,
                           style:
-                              TextStyle(fontSize: 12, color: Color(0xffA4A4AA)),
+                              const TextStyle(fontSize: 12, color: Color(0xffA4A4AA)),
                         ),
                       ],
                     ),
@@ -134,7 +134,7 @@ class AdminAvailableCard extends StatelessWidget {
               ),
               Text(
                 'Price: ${order.totalPrice} SAR',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
                   color: Color(0xff072D6F),

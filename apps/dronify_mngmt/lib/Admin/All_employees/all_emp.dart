@@ -48,7 +48,7 @@ class AllEmp extends StatelessWidget {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => Signup()));
                   },
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.add,
                     color: Colors.black,
                   ),

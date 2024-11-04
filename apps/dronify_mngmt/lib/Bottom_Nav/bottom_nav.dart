@@ -40,7 +40,7 @@ class BottomNav extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ChatScreen()),
+                MaterialPageRoute(builder: (context) => const ChatScreen()),
               );
             },
             backgroundColor: Colors.black,

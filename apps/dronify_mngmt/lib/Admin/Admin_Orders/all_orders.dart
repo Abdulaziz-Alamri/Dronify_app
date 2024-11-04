@@ -62,7 +62,7 @@ class _AllOrdersState extends State<AllOrders>
               ),
               SliverToBoxAdapter(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: Column(
                     children: [
                       const SizedBox(
@@ -170,12 +170,12 @@ class _AllOrdersState extends State<AllOrders>
                                                   OrderCard(
                                                       order: order,
                                                       isAdmin: true),
-                                                  SizedBox(height: 15),
+                                                  const SizedBox(height: 15),
                                                 ],
                                               );
                                             }).toList(),
                                           )
-                                        : EmptyTabImage(
+                                        : const EmptyTabImage(
                                             imagePath:
                                                 'assets/empty_orders.png',
                                             message: 'No incomplete orders.'),
@@ -191,12 +191,12 @@ class _AllOrdersState extends State<AllOrders>
                                                   OrderCard(
                                                       order: order,
                                                       isAdmin: true),
-                                                  SizedBox(height: 15),
+                                                  const SizedBox(height: 15),
                                                 ],
                                               );
                                             }).toList(),
                                           )
-                                        : EmptyTabImage(
+                                        : const EmptyTabImage(
                                             imagePath:
                                                 'assets/empty_orders.png',
                                             message: 'No incomplete orders.'),
@@ -212,12 +212,12 @@ class _AllOrdersState extends State<AllOrders>
                                                   AdminAvailableCard(
                                                       order: order,
                                                       cubit: cubit),
-                                                  SizedBox(height: 15),
+                                                  const SizedBox(height: 15),
                                                 ],
                                               );
                                             }).toList(),
                                           )
-                                        : EmptyTabImage(
+                                        : const EmptyTabImage(
                                             imagePath:
                                                 'assets/empty_orders.png',
                                             message: 'No incomplete orders.'),

@@ -7,12 +7,11 @@ class EditProfile extends StatelessWidget {
   final TextEditingController phoneController;
 
   EditProfile({
-    Key? key,
+    super.key,
     required String name,
     required String phone,
   })  : nameController = TextEditingController(text: name),
-        phoneController = TextEditingController(text: phone),
-        super(key: key);
+        phoneController = TextEditingController(text: phone);
 
   @override
   Widget build(BuildContext context) {

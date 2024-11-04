@@ -89,7 +89,7 @@ class OrderScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CustomOrderCard(
-                    imageUrl: '${service.mainImage}',
+                    imageUrl: service.mainImage,
                     title:
                         'Date: ${DateFormat.yMMMd().format(order.reservationDate!)}',
                     subTitle:
@@ -98,7 +98,7 @@ class OrderScreen extends StatelessWidget {
                   const Divider(color: Color(0xffEDEDED), height: 30),
                   Text(
                     'Price: ${order.totalPrice} SAR',
-                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
                   ),
                   const Divider(color: Color(0xffEDEDED), height: 30),
                   Column(
@@ -106,13 +106,13 @@ class OrderScreen extends StatelessWidget {
                     children: [
                       Text(
                         service.name,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(height: 5),
+                      const SizedBox(height: 5),
                       Text(
                         service.description,
-                        style: TextStyle(color: Color(0xffA4A4AA)),
+                        style: const TextStyle(color: Color(0xffA4A4AA)),
                       ),
                     ],
                   ),
@@ -123,7 +123,7 @@ class OrderScreen extends StatelessWidget {
                       const SizedBox(width: 10),
                       Text(
                         service.name,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 12, fontWeight: FontWeight.bold),
                       ),
                     ],
@@ -131,12 +131,12 @@ class OrderScreen extends StatelessWidget {
                   const SizedBox(height: 10),
                   Row(
                     children: [
-                      Icon(Icons.track_changes_outlined,
+                      const Icon(Icons.track_changes_outlined,
                           color: Color(0xff072D6F)),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       Text(
                         '${order.address}',
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 12, fontWeight: FontWeight.bold),
                       ),
                     ],
@@ -144,12 +144,12 @@ class OrderScreen extends StatelessWidget {
                   const SizedBox(height: 10),
                   Row(
                     children: [
-                      Icon(Icons.access_time_filled_outlined,
+                      const Icon(Icons.access_time_filled_outlined,
                           color: Color(0xff072D6F)),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       Text(
                         '${order.reservationTime!.hour}:${order.reservationTime!.minute}',
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 12, fontWeight: FontWeight.bold),
                       ),
                     ],
@@ -197,12 +197,12 @@ class OrderScreen extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () {
                     dataLayer.addToCart(order);
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                         content: Text('Order added to cart successfully!')));
                     Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => BottomNav(index: 1)));
+                            builder: (context) => const BottomNav(index: 1)));
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.transparent,

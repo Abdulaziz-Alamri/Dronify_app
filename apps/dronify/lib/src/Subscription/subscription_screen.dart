@@ -106,7 +106,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                         width: 60,
                         height: 60,
                         decoration: BoxDecoration(
-                          gradient: LinearGradient(
+                          gradient: const LinearGradient(
                             colors: [Color(0xff0A7995), Color(0xff73DDFF)],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
@@ -116,11 +116,11 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                             BoxShadow(
                               color: Colors.black.withOpacity(0.15),
                               blurRadius: 10,
-                              offset: Offset(0, 4),
+                              offset: const Offset(0, 4),
                             ),
                           ],
                         ),
-                        child: Center(
+                        child: const Center(
                           child: FaIcon(
                             FontAwesomeIcons.plus,
                             size: 24,
@@ -160,7 +160,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                                             bloc.add(RemovedImageEvent(
                                                 images: state.images));
                                           },
-                                          child: Icon(
+                                          child: const Icon(
                                             Icons.remove_circle,
                                             color: Colors.red,
                                           ),
@@ -173,7 +173,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                             ),
                           );
                         }
-                        return Text('No Images Chosen');
+                        return const Text('No Images Chosen');
                       },
                     ),
                     SizedBox(height: 2.h),
@@ -202,7 +202,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(16),
                               border: Border.all(
-                                  width: 2, color: Color(0xff73DDFF)),
+                                  width: 2, color: const Color(0xff73DDFF)),
                             ),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(14),
@@ -275,7 +275,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                           width: 60,
                           height: 60,
                           decoration: BoxDecoration(
-                            gradient: LinearGradient(
+                            gradient: const LinearGradient(
                               colors: [Color(0xff0A7995), Color(0xff73DDFF)],
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight,
@@ -285,11 +285,11 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                               BoxShadow(
                                 color: Colors.black.withOpacity(0.15),
                                 blurRadius: 10,
-                                offset: Offset(0, 4),
+                                offset: const Offset(0, 4),
                               ),
                             ],
                           ),
-                          child: Center(
+                          child: const Center(
                             child: FaIcon(
                               FontAwesomeIcons.calendarDays,
                               size: 24,
@@ -309,7 +309,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                                 TextStyle(fontSize: 16.sp, color: Colors.black),
                           );
                         }
-                        return SizedBox.shrink();
+                        return const SizedBox.shrink();
                       },
                     ),
                     SizedBox(height: 4.h),
@@ -328,9 +328,10 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                           children: [
                             GestureDetector(
                               onTapDown: (_) {
-                                if (bloc.unitCount > 1)
+                                if (bloc.unitCount > 1) {
                                   bloc.add(SetUnitCountEvent(
                                       count: --bloc.unitCount));
+                                }
                               },
                               child: Container(
                                 width: 40,
@@ -427,7 +428,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                           ),
                           BlocBuilder<SubscriptionBloc, SubscriptionState>(
                             builder: (context, state) {
-                              if (bloc.isHintShow) if (state is ShowHintState)
+                              if (bloc.isHintShow) if (state is ShowHintState) {
                                 return Padding(
                                   padding:
                                       EdgeInsets.symmetric(horizontal: 5.w),
@@ -438,7 +439,8 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                                         color: Colors.grey[600]),
                                   ),
                                 );
-                              return SizedBox.shrink();
+                              }
+                              return const SizedBox.shrink();
                             },
                           ),
                         ],
@@ -465,7 +467,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                         );
                       },
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Center(

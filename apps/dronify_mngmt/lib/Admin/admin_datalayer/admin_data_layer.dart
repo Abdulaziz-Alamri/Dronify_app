@@ -15,7 +15,7 @@ class AdminDataLayer {
   List<OrderModel> empAvailableOrders = [];
   List<EmployeeModel> allEmployees = [];
 
-  EmployeeModel? currentEmployee = null;
+  EmployeeModel? currentEmployee;
 
   String? externalKey;
   final box = GetStorage();

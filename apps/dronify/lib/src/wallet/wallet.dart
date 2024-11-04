@@ -37,14 +37,14 @@ class Wallet extends StatelessWidget {
                         bottomRight: Radius.circular(20),
                       ),
                     ),
-                    child: Align(
+                    child: const Align(
                       alignment: Alignment.bottomCenter,
                     ),
                   ),
                 ),
                 backgroundColor: Colors.transparent,
                 pinned: true,
-                title: Text(
+                title: const Text(
                   'Wallet',
                   style: TextStyle(
                       fontSize: 28,

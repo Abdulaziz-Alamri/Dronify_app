@@ -2,6 +2,8 @@ import 'package:dronify/src/Auth/first_screen.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
@@ -15,10 +17,10 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void _navigateToHome() async {
     // Display splash screen for 5 seconds before navigating
-    await Future.delayed(Duration(seconds: 4));
+    await Future.delayed(const Duration(seconds: 4));
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
-        builder: (context) => FirstScreen(),
+        builder: (context) => const FirstScreen(),
       ),
     );
   }

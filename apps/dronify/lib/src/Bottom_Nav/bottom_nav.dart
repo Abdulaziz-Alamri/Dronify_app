@@ -77,7 +77,7 @@ class BottomNav extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Padding(
-                          padding: EdgeInsets.only(top: 15),
+                          padding: const EdgeInsets.only(top: 15),
                           child: Icon(
                             iconList[index],
                             size: 23,

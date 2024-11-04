@@ -13,6 +13,8 @@ import 'package:dronify/src/wallet/wallet.dart';
 import 'package:dronify/utils/setup.dart';
 
 class ProfileScreen extends StatelessWidget {
+  const ProfileScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -41,7 +43,7 @@ class ProfileScreen extends StatelessWidget {
                   } else if (state is ProfileError) {
                     return Center(child: Text(state.message));
                   } else {
-                    return Center(child: Text("Press button to load profile."));
+                    return const Center(child: Text("Press button to load profile."));
                   }
                 },
               ),
@@ -156,7 +158,7 @@ class ProfileScreen extends StatelessWidget {
               icon: Icons.phone,
               text: customer.phone,
             ),
-            ProfileItem(
+            const ProfileItem(
               icon: Icons.location_on,
               text: 'Location information here',
             ),
@@ -179,7 +181,7 @@ class ProfileScreen extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => Wallet(),
+              builder: (context) => const Wallet(),
             ),
           );
         },

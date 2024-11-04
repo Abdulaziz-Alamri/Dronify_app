@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class FirstScreen extends StatelessWidget {
-  const FirstScreen({Key? key}) : super(key: key);
+  const FirstScreen({super.key});
 
   Future<bool> _isUserLoggedIn() async {
     final user = Supabase.instance.client.auth.currentUser;
@@ -40,7 +40,7 @@ class FirstScreen extends StatelessWidget {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => ScrollableSplashScreen()),
+                    builder: (context) => const ScrollableSplashScreen()),
               );
             });
           }

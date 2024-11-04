@@ -32,20 +32,20 @@ class _ScrollableSplashScreenState extends State<ScrollableSplashScreen> {
                       onPageChanged: (index) {
                         bloc.add(ChangeIndexEvent(currentIndex: index));
                       },
-                      children: [
-                        const SplashContent(
+                      children: const [
+                        SplashContent(
                           imagePath: 'assets/splash_drone.png',
                           title: 'Clean your Building',
                           description:
                               'Experience effortless facade cleaning with our state-of-the-art drone technology, ensuring your building looks pristine without the hassle.',
                         ),
-                        const SplashContent(
+                        SplashContent(
                           imagePath: 'assets/splash_drone2.png',
                           title: 'Nano Protection',
                           description:
                               'Safeguard your surfaces with our advanced nano protection treatments. Our drones apply cutting-edge solutions that repel dirt and grime, keeping your building looking newer for longer.',
                         ),
-                        const SplashContent(
+                        SplashContent(
                           imagePath: 'assets/drone13.png',
                           title: 'Drone Services',
                           description:

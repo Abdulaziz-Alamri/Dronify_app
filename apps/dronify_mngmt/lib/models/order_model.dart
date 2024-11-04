@@ -77,14 +77,10 @@ class OrderModel {
       'images': images,
       'address': address,
       'square_meters': squareMeters,
-      'reservation_date': reservationDate != null
-          ? reservationDate!.toIso8601String().split('T').first
-          : null,
+      'reservation_date': reservationDate?.toIso8601String().split('T').first,
       'reservation_time': reservationTime,
       'total_price': totalPrice,
-      'order_date': orderDate != null
-          ? orderDate!.toIso8601String().split('T').first
-          : null,
+      'order_date': orderDate?.toIso8601String().split('T').first,
       'status': status,
       'order_rating': orderRating,
     };

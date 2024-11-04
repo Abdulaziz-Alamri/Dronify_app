@@ -3,7 +3,7 @@ import 'package:dronify/src/Auth/otp_reset.dart';
 import 'package:flutter/material.dart';
 
 class ForgetPassword extends StatefulWidget {
-  ForgetPassword({super.key});
+  const ForgetPassword({super.key});
 
   @override
   State<ForgetPassword> createState() => _ForgetPasswordState();

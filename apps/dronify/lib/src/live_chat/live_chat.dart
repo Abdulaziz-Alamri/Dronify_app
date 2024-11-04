@@ -112,7 +112,7 @@ class ChatScreen extends StatelessWidget {
   }
 
   Widget buildChat(BuildContext context, List<types.Message> messages) {
-    final currentUserId = '4252d26b-19f6-4f98-9f5a-a3ddc18f2fdd';
+    const currentUserId = '4252d26b-19f6-4f98-9f5a-a3ddc18f2fdd';
 
     return Chat(
       messages: messages,

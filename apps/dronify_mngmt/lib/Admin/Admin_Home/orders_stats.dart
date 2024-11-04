@@ -10,7 +10,7 @@ class OrdersStats extends StatelessWidget {
         await Supabase.instance.client.rpc('fetch_order_counts_by_service');
 
     if (response is PostgrestResponse) {
-      throw Exception('Error fetching data: ${response}');
+      throw Exception('Error fetching data: $response');
     }
 
     if (response is List) {

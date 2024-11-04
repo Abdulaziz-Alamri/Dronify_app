@@ -96,7 +96,7 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
       selectedDayHighlightColor: highlightColor,
       closeDialogOnCancelTapped: true,
       daySplashColor: highlightColor,
-      weekdayLabelTextStyle: TextStyle(
+      weekdayLabelTextStyle: const TextStyle(
         color: weekdayLabelColor,
         fontWeight: FontWeight.bold,
       ),

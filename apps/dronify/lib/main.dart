@@ -14,8 +14,13 @@ final GlobalKey<NavigatorState> navKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
+  OneSignal.login('555');
+  OneSignal.initialize("onesignal_key");
+  OneSignal.Notifications.requestPermission(true);
+
   await setup();
-  await Future.delayed(Duration(seconds: 2));
+  await Future.delayed(const Duration(seconds: 2));
 
   OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
   OneSignal.initialize('${dotenv.env['onesignal_key']}');

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Signup extends StatefulWidget {
-  Signup({super.key});
+  const Signup({super.key});
 
   @override
   State<Signup> createState() => _SignupState();

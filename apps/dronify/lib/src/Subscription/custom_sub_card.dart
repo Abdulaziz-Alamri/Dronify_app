@@ -76,8 +76,8 @@ class CustomSubCard extends StatelessWidget {
               ),
               Expanded(
                 child: Container(
-                  decoration: BoxDecoration(
-                      color: const Color(0xff73ddff),
+                  decoration: const BoxDecoration(
+                      color: Color(0xff73ddff),
                       borderRadius: BorderRadius.only(
                           topRight: Radius.circular(16),
                           bottomRight: Radius.circular(16))),

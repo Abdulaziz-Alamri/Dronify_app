@@ -15,7 +15,7 @@ class ChatScreen extends StatelessWidget {
           return CustomScrollView(
             slivers: [
               SliverAppBar(
-                leading: BackButton(
+                leading: const BackButton(
                   color: Colors.white,
                 ),
                 expandedHeight: 80.0,
@@ -55,13 +55,13 @@ class ChatScreen extends StatelessWidget {
                           if (chat['status'] == 'started') {
                             return ChatItem(chatId: chat['chat_id'].toString());
                           }
-                          return SizedBox.shrink();
+                          return const SizedBox.shrink();
                         },
                         childCount: state.chats.length,
                       ),
                     );
                   } else if (state is NoChatsState) {
-                    return SliverToBoxAdapter(
+                    return const SliverToBoxAdapter(
                       child: Center(child: Text('No Chats Yet!!')),
                     );
                   } else if (state is ChatError) {

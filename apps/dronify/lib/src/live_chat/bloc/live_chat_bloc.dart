@@ -116,7 +116,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     final currentState = state as ChatLoaded;
 
     final newMessage = types.TextMessage(
-      author: types.User(id: '0cf2efe9-94b7-482b-9c85-de2122e4a675'),
+      author: const types.User(id: '0cf2efe9-94b7-482b-9c85-de2122e4a675'),
       createdAt: DateTime.now().millisecondsSinceEpoch,
       id: event.messageId,
       text: event.message,
@@ -127,6 +127,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 }
 
 
+  @override
   Future<void> close() {
     channel.unsubscribe();
     return super.close();

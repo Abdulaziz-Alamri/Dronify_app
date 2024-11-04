@@ -83,7 +83,7 @@ Future<void> saveOrder({
     }
   } catch (error) {
     print("Error saving order: $error");
-    throw error;
+    rethrow;
   }
 }
 
@@ -261,7 +261,7 @@ saveSubscription({
     }
   } catch (error) {
     print("Error saving Subscription: $error");
-    throw error;
+    rethrow;
   }
 }
 

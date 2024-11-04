@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 
 
 class ProfileScreen extends StatelessWidget {
+  const ProfileScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     late String userName = 'John Doe';
@@ -52,7 +54,7 @@ class ProfileScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
                     children: [
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       Text(
                         'WELCOME $userName',
                         style: const TextStyle(
@@ -116,7 +118,7 @@ class ProfileScreen extends StatelessWidget {
                     Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => FirstScreen(),
+                        builder: (context) => const FirstScreen(),
                       ),
                       (route) => false,
                     );

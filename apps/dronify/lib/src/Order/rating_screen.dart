@@ -64,7 +64,7 @@ class RatingScreen extends StatelessWidget {
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => BottomNav()));
+                                    builder: (context) => const BottomNav()));
                           },
                           child: const Text('Cancel'),
                         ),
@@ -77,7 +77,7 @@ class RatingScreen extends StatelessWidget {
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => BottomNav()));
+                                    builder: (context) => const BottomNav()));
                           },
                           child: const Text('Submit'),
                         ),

@@ -93,7 +93,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 backgroundColor: Colors.transparent,
                 pinned: false,
               ),
-              SliverToBoxAdapter(
+              const SliverToBoxAdapter(
                 child: SizedBox(height: 20),
               ),
               SliverToBoxAdapter(

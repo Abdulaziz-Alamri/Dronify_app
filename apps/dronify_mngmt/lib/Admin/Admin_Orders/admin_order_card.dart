@@ -148,9 +148,9 @@ class AdminOrderCard extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 15),
-                    Text(
+                    const Text(
                       'Before Images',
-                      style: const TextStyle(
+                      style: TextStyle(
                           fontSize: 16, fontWeight: FontWeight.bold),
                     ),
                     Container(
@@ -178,9 +178,9 @@ class AdminOrderCard extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          const Text(
                             'after Images',
-                            style: const TextStyle(
+                            style: TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.bold),
                           ),
                           Container(
@@ -206,9 +206,9 @@ class AdminOrderCard extends StatelessWidget {
                           const SizedBox(height: 15),
                         ],
                       ),
-                    Text(
+                    const Text(
                       'Location',
-                      style: const TextStyle(
+                      style: TextStyle(
                           fontSize: 16, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 15),
@@ -218,7 +218,7 @@ class AdminOrderCard extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(16),
-                        border: Border.all(width: 2, color: Color(0xff73DDFF)),
+                        border: Border.all(width: 2, color: const Color(0xff73DDFF)),
                       ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(14),

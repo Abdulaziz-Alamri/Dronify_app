@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 class CustomImageCards extends StatelessWidget {
   final List<String> imageUrls;
 
-  CustomImageCards({super.key, required this.imageUrls});
+  const CustomImageCards({super.key, required this.imageUrls});
 
   void zoom(BuildContext context, String imageUrl) {
     showDialog(
       context: context,
       builder: (context) => Dialog(
         backgroundColor: Colors.transparent,
-        insetPadding: EdgeInsets.all(10),
+        insetPadding: const EdgeInsets.all(10),
         child: GestureDetector(
           onTap: () => Navigator.of(context).pop(),
           child: InteractiveViewer(
@@ -50,7 +50,7 @@ class CustomImageCards extends StatelessWidget {
                     imageUrls[index],
                     fit: BoxFit.cover,
                     errorBuilder: (context, error, stackTrace) {
-                      return Icon(Icons.broken_image);
+                      return const Icon(Icons.broken_image);
                     },
                   ),
                 ),

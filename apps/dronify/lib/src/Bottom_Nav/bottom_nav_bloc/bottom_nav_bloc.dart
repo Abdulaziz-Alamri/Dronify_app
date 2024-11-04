@@ -9,7 +9,7 @@ part 'bottom_nav_event.dart';
 part 'bottom_nav_state.dart';
 
 class BottomNavBloc extends Bloc<BottomNavEvent, BottomNavState> {
-  List<Widget> views = [HomeScreen(), CartScreen(), ProfileScreen()];
+  List<Widget> views = [const HomeScreen(), const CartScreen(), ProfileScreen()];
   int currentIndex = 0;
 
   BottomNavBloc() : super(BottomNavInitial()) {

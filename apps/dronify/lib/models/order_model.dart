@@ -60,7 +60,7 @@ class OrderModel {
       'address': address,
       'square_meters': squareMeters,
       'reservation_date': reservationDate?.toIso8601String(),
-      'reservation_time': reservationTime != null ? reservationTime!.toIso8601String().split('T').last : null,
+      'reservation_time': reservationTime?.toIso8601String().split('T').last,
       'total_price': totalPrice,
       'order_date': orderDate?.toIso8601String(),
       'status': status,
