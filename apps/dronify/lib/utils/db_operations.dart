@@ -77,12 +77,10 @@ Future<void> saveOrder({
         'amount': totalPrice,
       });
 
-      print("Order saved successfully.");
     } else {
       throw Exception("Failed to insert the order.");
     }
   } catch (error) {
-    print("Error saving order: $error");
     rethrow;
   }
 }
@@ -146,7 +144,6 @@ Future<int?> getOrderId() async {
       .single();
 
   if (response.isEmpty) {
-    print("Error fetching last order_id");
     return null;
   }
   final int? orderId;
@@ -255,12 +252,10 @@ saveSubscription({
         'longitude': longitude,
       });
 
-      print("Subscription saved successfully.");
     } else {
       throw Exception("Failed to insert the Subscription.");
     }
   } catch (error) {
-    print("Error saving Subscription: $error");
     rethrow;
   }
 }
@@ -277,7 +272,6 @@ Future<void> upsertCustomer(CustomerModel customer) async {
       throw Exception(response.error!.message);
     }
   } catch (e) {
-    print('Error upserting customer: $e');
   }
 }
 
@@ -299,7 +293,6 @@ Future<CustomerModel?> getCustomer(String customerId) async {
 
     return null;
   } catch (e) {
-    print('Error fetching customer: $e');
     return null;
   }
 }

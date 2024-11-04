@@ -17,20 +17,25 @@ class _SignupState extends State<Signup> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: true,
-      body: Stack(
-        clipBehavior: Clip.none,
-        children: [
-          buildHeader(),
-          buildForm(context),
-          SafeArea(
-            child: BackButton(
-              color: Colors.white,
-              onPressed: () => Navigator.pop(context),
+    return GestureDetector(
+      onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+      child: Scaffold(
+        resizeToAvoidBottomInset: true,
+        body: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            buildHeader(),
+            buildForm(context),
+            SafeArea(
+              child: BackButton(
+                color: Colors.white,
+                onPressed: () => Navigator.pop(context),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

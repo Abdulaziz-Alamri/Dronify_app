@@ -15,43 +15,48 @@ class EditProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: buildAppBar(context),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 16),
-            const Text(
-              'User Name',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            buildTextField(controller: nameController),
-            const SizedBox(height: 16),
-            const Text(
-              'Phone Number',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            buildTextField(controller: phoneController),
-            const SizedBox(height: 16),
-          ],
+    return GestureDetector(
+      onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: buildAppBar(context),
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 16),
+              const Text(
+                'User Name',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 8),
+              buildTextField(controller: nameController),
+              const SizedBox(height: 16),
+              const Text(
+                'Phone Number',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 8),
+              buildTextField(controller: phoneController),
+              const SizedBox(height: 16),
+            ],
+          ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          final dataLayer = locator.get<DataLayer>();
-          await dataLayer.updateCustomerProfile(
-            name: nameController.text,
-            phone: phoneController.text,
-          );
-          Navigator.pop(context);
-        },
-        backgroundColor: const Color(0xFF072D6F),
-        child: const Icon(Icons.save, color: Colors.white),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () async {
+            final dataLayer = locator.get<DataLayer>();
+            await dataLayer.updateCustomerProfile(
+              name: nameController.text,
+              phone: phoneController.text,
+            );
+            Navigator.pop(context);
+          },
+          backgroundColor: const Color(0xFF072D6F),
+          child: const Icon(Icons.save, color: Colors.white),
+        ),
       ),
     );
   }

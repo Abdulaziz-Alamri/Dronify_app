@@ -71,7 +71,6 @@ class DataLayer {
         allServices.add(service);
       }
     } catch (e) {
-      print('Error fetching services: $e');
     }
   }
 
@@ -79,9 +78,7 @@ class DataLayer {
   Future<void> upsertCustomer(CustomerModel customer) async {
     try {
       await supabase.from('app_user').upsert(customer.toJson());
-      print('Customer upserted successfully');
     } catch (e) {
-      print('Error upserting customer: $e');
     }
   }
 
@@ -93,7 +90,6 @@ class DataLayer {
           .eq('user_id', customerId)
           .maybeSingle();
 
-      print("Supabase response: $response");
 
       if (response != null) {
         final fetchedCustomer = CustomerModel.fromJson({
@@ -104,22 +100,18 @@ class DataLayer {
           'role': response['role'] ?? 'customer'
         });
 
-        print(
-            'Customer data fetched successfully: ${fetchedCustomer.toJson()}');
+       
         return fetchedCustomer;
       } else {
-        print('No customer data found for user ID: $customerId');
         return null;
       }
     } catch (e) {
-      print('Error fetching customer: $e');
       return null;
     }
   }
 
   void saveCustomerData(CustomerModel customerData) {
     customer = customerData;
-    print('Customer data saved locally: ${customerData.toJson()}');
   }
 
   Future<void> updateCustomerProfile({

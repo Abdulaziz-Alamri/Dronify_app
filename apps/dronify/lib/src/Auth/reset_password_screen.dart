@@ -18,51 +18,56 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white // White background for the entire screen
-      ,
-      resizeToAvoidBottomInset: true,
-      body: Stack(
-        children: [
-          // Background Section
-
-          Align(
-            alignment: Alignment.center,
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(25.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Center(
-                      child: Image.asset(
-                        'assets/5 7.png',
-                        height: 100,
+    return GestureDetector(
+      onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+      child: Scaffold(
+        backgroundColor: Colors.white // White background for the entire screen
+        ,
+        resizeToAvoidBottomInset: true,
+        body: Stack(
+          children: [
+            // Background Section
+      
+            Align(
+              alignment: Alignment.center,
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(25.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Center(
+                        child: Image.asset(
+                          'assets/5 7.png',
+                          height: 100,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 90),
-                    const Text(
-                      'New Password',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                      const SizedBox(height: 90),
+                      const Text(
+                        'New Password',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 40),
-                    _buildPasswordField(), // Build password field with shadow
-                    const SizedBox(height: 90),
-
-                    const SizedBox(height: 40),
-                    Center(
-                      child: buildResetButton(
-                          context, widget.email), // Reset button
-                    ),
-                  ],
+                      const SizedBox(height: 40),
+                      _buildPasswordField(), // Build password field with shadow
+                      const SizedBox(height: 90),
+      
+                      const SizedBox(height: 40),
+                      Center(
+                        child: buildResetButton(
+                            context, widget.email), // Reset button
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

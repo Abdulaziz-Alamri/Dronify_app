@@ -98,7 +98,6 @@ Future<CompletedOrdersData> getCompletedOrdersData(
       completedOrders: completedOrdersList,
     );
   } catch (error) {
-    print("Error fetching completed orders data: $error");
     return CompletedOrdersData(completedPercentage: 0.0, completedOrders: []);
   }
 }

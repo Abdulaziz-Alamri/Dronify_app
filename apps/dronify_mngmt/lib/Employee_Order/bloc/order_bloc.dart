@@ -49,7 +49,6 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
       if (latitude != null && longitude != null) {
         location = LatLng(latitude, longitude);
       } else {
-        print('Warning: Latitude or longitude not found in response.');
       }
 
       emit(OrderLoaded(
@@ -57,7 +56,6 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
         location: location,
       ));
     } catch (error) {
-      print('Error fetching order data from Supabase: $error');
       emit(OrderError('Failed to load order data: $error'));
     }
   }
@@ -73,7 +71,6 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
         ));
       }
     } catch (error) {
-      print("Error picking images: $error");
       emit(OrderError("Failed to pick images"));
     }
   }
