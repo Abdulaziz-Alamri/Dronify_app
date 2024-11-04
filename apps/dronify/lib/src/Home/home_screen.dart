@@ -62,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffF9F9F9),
+      backgroundColor: const Color.fromARGB(255, 250, 250, 250),
       body: Stack(
         clipBehavior: Clip.none,
         children: [
@@ -125,85 +125,137 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                               name: userName,
                             ),
                           ),
-                          const SizedBox(height: 15),
-                          const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 16),
-                            child: Text(
-                              'Special Offers',
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color(0xff172B4D)),
-                            ),
-                          ),
-                          const SizedBox(height: 20),
-                          Center(
-                            child: const SpecialOfferCard(
-                              imageUrl:
-                                  'assets/Group_34606-removebg-preview.png',
-                              title: 'Offer Cleaning Service',
-                              description: 'Get 25%',
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 16),
-                            child: Text(
-                              'Services',
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color(0xff172B4D)),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Center(
-                            child: ServiceCard(
-                              serviceId: 1,
-                              imageUrl:
-                                  'assets/Dasu-pulizia-facciata-con-drone-Milano 1.png',
-                              title: 'Building Cleaning',
-                              description:
-                                  'Professional cleaning service for tall buildings using advanced drones.',
-                              iconPath: 'assets/Vector (12).png',
-                            ),
-                          ),
-                          SizedBox(
+                          const SizedBox(height: 8),
+                          Container(
+                            padding: EdgeInsets.all(16),
+                            margin: const EdgeInsets.all(8),
                             height: 240,
-                            child: GridView(
-                              // padding:
-                              //     const EdgeInsets.symmetric(horizontal: 8),
-                              physics: const NeverScrollableScrollPhysics(),
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 2,
-                                      childAspectRatio: 1,
-                                      mainAxisSpacing: 20,
-                                      crossAxisSpacing: 40,
-                                      mainAxisExtent: 180),
+                            width: 380,
+                            decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(0.8),
+                              borderRadius: BorderRadius.circular(12),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.25),
+                                  blurRadius: 8,
+                                  spreadRadius: 2,
+                                  offset: const Offset(0, 0),
+                                ),
+                              ],
+                            ),
+                            child: Column(
                               children: [
-                                SlideTransition(
-                                  position: _slideAnimation,
-                                  child: const ServiceCard(
-                                    serviceId: 2,
-                                    imageUrl: 'assets/nano.jpg',
-                                    title: 'Nano Protection',
-                                    description:
-                                        'Nano-coating protection for windows, shields from dirt and weather damage.',
-                                    iconPath: 'assets/Group (1).png',
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    'Special Offers',
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Color(0xff172B4D)),
                                   ),
                                 ),
-                                SlideTransition(
-                                  position: _slideAnimation,
-                                  child: const ServiceCard(
-                                    serviceId: 3,
-                                    imageUrl: 'assets/spot.jpg',
-                                    title: 'Spot Painting',
+                                const SizedBox(height: 20),
+                                Center(
+                                  child: const SpecialOfferCard(
+                                    imageUrl:
+                                        'assets/Group_34606-removebg-preview.png',
+                                    title: 'Offer Cleaning Service',
+                                    description: 'Get 25%',
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 8),
+                            margin: const EdgeInsets.all(8),
+                            height: 450,
+                            width: 380,
+                            decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(0.8),
+                              borderRadius: BorderRadius.circular(12),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.25),
+                                  blurRadius: 8,
+                                  spreadRadius: 2,
+                                  offset: const Offset(0, 0),
+                                ),
+                              ],
+                            ),
+                            child: Column(
+                              children: [
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    'Services',
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Color(0xff172B4D)),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Center(
+                                  child: ServiceCard(
+                                    serviceId: 1,
+                                    imageUrl:
+                                        'assets/Dasu-pulizia-facciata-con-drone-Milano 1.png',
+                                    title: 'Building Cleaning',
                                     description:
-                                        'Spot painting services for building exteriors.',
-                                    iconPath: 'assets/Group (2).png',
+                                        'Professional cleaning service for tall buildings using advanced drones.',
+                                    iconPath: 'assets/Vector (12).png',
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                Divider(
+                                  thickness: 2,
+                                ),
+                                SizedBox(
+                                  height: 200,
+                                  child: GridView(
+                                    // padding:
+                                    //     const EdgeInsets.symmetric(horizontal: 8),
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    gridDelegate:
+                                        const SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 2,
+                                            childAspectRatio: 1,
+                                            mainAxisSpacing: 10,
+                                            crossAxisSpacing: 40,
+                                            mainAxisExtent: 160),
+                                    children: [
+                                      SlideTransition(
+                                        position: _slideAnimation,
+                                        child: const ServiceCard(
+                                          serviceId: 2,
+                                          imageUrl: 'assets/nano.jpg',
+                                          title: 'Nano Protection',
+                                          description:
+                                              'Nano-coating protection for windows, shields from dirt and weather damage.',
+                                          iconPath: 'assets/Group (1).png',
+                                        ),
+                                      ),
+                                      SlideTransition(
+                                        position: _slideAnimation,
+                                        child: const ServiceCard(
+                                          serviceId: 3,
+                                          imageUrl: 'assets/spot.jpg',
+                                          title: 'Spot Painting',
+                                          description:
+                                              'Spot painting services for building exteriors.',
+                                          iconPath: 'assets/Group (2).png',
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ],

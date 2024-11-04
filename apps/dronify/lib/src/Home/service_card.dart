@@ -46,13 +46,16 @@ class ServiceCard extends StatelessWidget {
         height: 145,
         width: 380,
         decoration: BoxDecoration(
-          color: const Color(0xfff2f2f2),
+          gradient: LinearGradient(colors: [
+            Color(0xff072D6F),
+            Color.fromARGB(255, 40, 72, 126),
+          ]),
           borderRadius: const BorderRadius.all(Radius.circular(10)),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.3),
+              color: Colors.black.withOpacity(0.5),
               spreadRadius: 2,
-              blurRadius: 5,
+              blurRadius: 3,
               offset: const Offset(0, 3),
             ),
           ],
@@ -81,7 +84,7 @@ class ServiceCard extends StatelessWidget {
                 title,
                 style: const TextStyle(
                   fontSize: 14,
-                  color: Color(0xff172B4D),
+                  color: Color(0xffFFFFFF),
                   fontWeight: FontWeight.w600,
                 ),
                 textAlign: TextAlign.start,

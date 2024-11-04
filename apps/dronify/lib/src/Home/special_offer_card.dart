@@ -15,7 +15,7 @@ class SpecialOfferCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 400,
+      width: 380,
       decoration: BoxDecoration(
         image: DecorationImage(
           image: AssetImage('assets/budling water.png'),
@@ -32,7 +32,7 @@ class SpecialOfferCard extends StatelessWidget {
         child: Stack(
           clipBehavior: Clip.none,
           children: [
-            Positioned(left: 250, bottom: 75, child: Image.asset(imageUrl)),
+            Positioned(left: 240, bottom: 75, child: Image.asset(imageUrl)),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: Column(
