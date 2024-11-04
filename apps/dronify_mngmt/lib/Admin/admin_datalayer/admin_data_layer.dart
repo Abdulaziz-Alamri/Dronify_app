@@ -97,7 +97,6 @@ class AdminDataLayer {
         availableOrders.add(order);
       }
     } catch (error) {
-      print("Error fetching orders: $error");
     }
   }
 
@@ -118,7 +117,6 @@ class AdminDataLayer {
           }
         }
       } catch (e) {
-        print("Error fetching employee: $e");
       }
 
       final completeOrdersResponse = await supabase
@@ -156,7 +154,6 @@ class AdminDataLayer {
         empAvailableOrders.add(order);
       }
     } catch (error) {
-      print("Error fetching orders: $error");
     }
   }
 
@@ -170,7 +167,6 @@ class AdminDataLayer {
         allEmployees.add(emp);
       }
     } catch (error) {
-      print("Error fetching employees: $error");
     }
   }
 }

@@ -5,51 +5,56 @@ class EditProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: 
-      gitbuildAppBar(context),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 16),
-            const Text(
-              'User Name',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            buildTextField(
-              hint: 'your name here',
-            ),
-            const SizedBox(height: 16),
-            const Text(
-              'Phone Number',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            buildTextField(
-              hint: '0966 5xx xxx xxx',
-              readOnly: true,
-            ),
-            const SizedBox(height: 16),
-            const Text(
-              'Location',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            buildTextField(
-              hint: 'your location here',
-            ),
-            const SizedBox(height: 16),
-            const Text(
-              'Date of Birth',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            buildTextField(hint: 'dd/mm/yy', readOnly: true),
-          ],
+    return GestureDetector(
+      onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: 
+        gitbuildAppBar(context),
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 16),
+              const Text(
+                'User Name',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 8),
+              buildTextField(
+                hint: 'your name here',
+              ),
+              const SizedBox(height: 16),
+              const Text(
+                'Phone Number',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 8),
+              buildTextField(
+                hint: '0966 5xx xxx xxx',
+                readOnly: true,
+              ),
+              const SizedBox(height: 16),
+              const Text(
+                'Location',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 8),
+              buildTextField(
+                hint: 'your location here',
+              ),
+              const SizedBox(height: 16),
+              const Text(
+                'Date of Birth',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 8),
+              buildTextField(hint: 'dd/mm/yy', readOnly: true),
+            ],
+          ),
         ),
       ),
     );

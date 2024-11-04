@@ -16,31 +16,36 @@ class ChatScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => ChatBloc(chatId)..add(LoadMessagesEvent(chatId: chatId)),
-      child: Scaffold(
-        appBar: buildAppBar(context),
-        body: BlocConsumer<ChatBloc, custom_state.ChatState>(
-          listener: (context, state) {
-            if (state is custom_state.ChatError) {
-              ScaffoldMessenger.of(context)
-                  .showSnackBar(SnackBar(content: Text(state.error)));
-            }
+      child: GestureDetector(
+        onTap: () {
+            FocusScope.of(context).unfocus();
           },
-          builder: (context, state) {
-            if (state is custom_state.ChatLoading) {
-              return Center(
-                  child: Image.asset(
-                'assets/drone.gif',
-                height: 50,
-                width: 50,
-              ));
-            } else if (state is custom_state.ChatLoaded) {
-              return buildChat(context, state.messages);
-            } else if (state is custom_state.ChatError) {
-              return Center(child: Text('Error: ${state.error}'));
-            } else {
-              return const Center(child: Text('No messages yet.'));
-            }
-          },
+        child: Scaffold(
+          appBar: buildAppBar(context),
+          body: BlocConsumer<ChatBloc, custom_state.ChatState>(
+            listener: (context, state) {
+              if (state is custom_state.ChatError) {
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(SnackBar(content: Text(state.error)));
+              }
+            },
+            builder: (context, state) {
+              if (state is custom_state.ChatLoading) {
+                return Center(
+                    child: Image.asset(
+                  'assets/drone.gif',
+                  height: 50,
+                  width: 50,
+                ));
+              } else if (state is custom_state.ChatLoaded) {
+                return buildChat(context, state.messages);
+              } else if (state is custom_state.ChatError) {
+                return Center(child: Text('Error: ${state.error}'));
+              } else {
+                return const Center(child: Text('No messages yet.'));
+              }
+            },
+          ),
         ),
       ),
     );

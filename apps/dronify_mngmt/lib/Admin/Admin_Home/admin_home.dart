@@ -137,8 +137,6 @@ class AdminHome extends StatelessWidget {
                                 width: 50,
                               );
                             } else if (snapshot.hasError) {
-                              debugPrint(
-                                  'Error fetching user count: ${snapshot.error}');
                               return Text('Error: ${snapshot.error}');
                             } else {
                               return CustomStatCard(
@@ -162,8 +160,6 @@ class AdminHome extends StatelessWidget {
                                 width: 50,
                               );
                             } else if (snapshot.hasError) {
-                              debugPrint(
-                                  'Error fetching order count: ${snapshot.error}');
                               return Text('Error: ${snapshot.error}');
                             } else {
                               return CustomStatCard(
@@ -187,8 +183,6 @@ class AdminHome extends StatelessWidget {
                                 width: 50,
                               );
                             } else if (snapshot.hasError) {
-                              debugPrint(
-                                  'Error fetching total profits: ${snapshot.error}');
                               return Text('Error: ${snapshot.error}');
                             } else {
                               return CustomStatCard(

@@ -21,7 +21,6 @@ class AdminOrderCard extends StatelessWidget {
     final match = dmsPattern.firstMatch(dms);
 
     if (match == null) {
-      print("Invalid DMS format: $dms");
       return null;
     }
 

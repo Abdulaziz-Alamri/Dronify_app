@@ -12,28 +12,33 @@ class LiveChat extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => ChatMessageBloc(chatId: chatId)..add(LoadMessagesEvent()),
-      child: Scaffold(
-        appBar: buildAppBar(context),
-        body: BlocConsumer<ChatMessageBloc, ChatMessageState>(
-          listener: (context, state) {
-            if (state is ChatError) {
-              ScaffoldMessenger.of(context)
-                  .showSnackBar(SnackBar(content: Text(state.error)));
-            }
+      child: GestureDetector(
+        onTap: () {
+            FocusScope.of(context).unfocus();
           },
-          builder: (context, state) {
-            if (state is MessagesLoaded) {
-              return buildChat(context, state.messages);
-            } else if (state is ChatError) {
-              return Center(child: Text('Error: ${state.error}'));
-            }
-            return Center(
-                child: Image.asset(
-              'assets/drone.gif',
-              height: 50,
-              width: 50,
-            ));
-          },
+        child: Scaffold(
+          appBar: buildAppBar(context),
+          body: BlocConsumer<ChatMessageBloc, ChatMessageState>(
+            listener: (context, state) {
+              if (state is ChatError) {
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(SnackBar(content: Text(state.error)));
+              }
+            },
+            builder: (context, state) {
+              if (state is MessagesLoaded) {
+                return buildChat(context, state.messages);
+              } else if (state is ChatError) {
+                return Center(child: Text('Error: ${state.error}'));
+              }
+              return Center(
+                  child: Image.asset(
+                'assets/drone.gif',
+                height: 50,
+                width: 50,
+              ));
+            },
+          ),
         ),
       ),
     );

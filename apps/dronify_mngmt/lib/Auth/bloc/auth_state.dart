@@ -12,10 +12,16 @@ class AuthSignedIn extends AuthState {}
 
 class AuthVerfiy extends AuthState {}
 
+class FailedLoginState extends AuthState {
+  final String message;
+    final bool isCustomer;
+  FailedLoginState(this.message,{this.isCustomer=false});
+}
+
 class AuthError extends AuthState {
   final String message;
-  final bool isCustomer;
-  AuthError(this.message, {this.isCustomer=false});
+
+  AuthError(this.message);
 }
 
 class PasswordResetEmailSent extends AuthState {}
