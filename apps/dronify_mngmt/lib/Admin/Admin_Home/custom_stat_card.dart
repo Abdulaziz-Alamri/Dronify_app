@@ -9,7 +9,7 @@ class CustomStatCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
           height: 55,
           width: 130,
           decoration: BoxDecoration(
@@ -33,13 +33,30 @@ class CustomStatCard extends StatelessWidget {
                     fontWeight: FontWeight.w500,
                     color: Color(0xff072D6F)),
               ),
-              Text(
-                value,
-                style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xff73DDFF)),
-              ),
+              if (int.parse(value) > 1000 && int.parse(value) < 1000000)
+                Text(
+                  '${(double.parse(value) / 1000).toStringAsFixed(1)}K',
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: Color(0xff73DDFF)),
+                )
+              else if (int.parse(value) > 1000000)
+                Text(
+                  '${(double.parse(value) / 1000).toStringAsFixed(1)}M',
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: Color(0xff73DDFF)),
+                )
+              else
+                Text(
+                  value,
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: Color(0xff73DDFF)),
+                )
             ],
           )),
     );

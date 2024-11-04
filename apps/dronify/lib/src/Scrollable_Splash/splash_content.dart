@@ -25,18 +25,22 @@ class SplashContent extends StatelessWidget {
                   'assets/splash_shape.png',
                 ),
               ),
-              if (imagePath != 'assets/splash_drone2.png')
-                Positioned(
-                  bottom: 120,
-                  right: 40,
-                  child: Center(
-                    child: Image.asset(
-                      imagePath,
-                    ),
+              if (imagePath == 'assets/drone13.png')
+                Center(
+                  child: Image.asset(
+                    imagePath,
+                  ),
+                )
+              else if (imagePath == 'assets/splash_drone2.png')
+                Center(
+                  child: Image.asset(
+                    imagePath,
                   ),
                 )
               else
-                Center(
+                Positioned(
+                  bottom: 120,
+                  right: 40,
                   child: Image.asset(
                     imagePath,
                   ),

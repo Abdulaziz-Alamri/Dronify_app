@@ -158,6 +158,8 @@ class _AllOrdersState extends State<AllOrders>
                                 controller: tabController,
                                 children: [
                                   // Complete Orders Tab
+                                  if(cubit.completeOrders.isEmpty)
+                                  Image.asset('name'),
                                   SingleChildScrollView(
                                     child: cubit.completeOrders.isNotEmpty
                                         ? Column(

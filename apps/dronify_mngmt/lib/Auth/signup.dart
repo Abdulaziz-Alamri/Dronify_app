@@ -73,7 +73,7 @@ class _SignupState extends State<Signup> {
               );
             } else if (state is AuthSignedUp) {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Sign-up successful!')),
+                const SnackBar(content: Text('Employee Added successfully!')),
               );
               Navigator.pop(context);
             }
@@ -90,7 +90,7 @@ class _SignupState extends State<Signup> {
                   Center(child: Image.asset('assets/5 7.png')),
                   const SizedBox(height: 10),
                   const Text(
-                    'Sign Up',
+                    'Add Employee',
                     style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 10),

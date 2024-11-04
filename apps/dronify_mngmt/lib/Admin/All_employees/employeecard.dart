@@ -15,12 +15,12 @@ class EmployeeCardWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Card(
-        elevation: 6, // Adjusted shadow elevation
+        elevation: 6,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
         ),
-        shadowColor: Colors.black.withOpacity(0.25), // Darker shadow color
-        color: Colors.white, // Set background to white
+        shadowColor: Colors.black.withOpacity(0.25),
+        color: Colors.white,
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Row(

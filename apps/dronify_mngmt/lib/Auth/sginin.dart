@@ -234,6 +234,84 @@ class _SignInState extends State<SignIn> {
                 ),
               ),
             ),
+            Positioned(
+                top: 20,
+                left: 140,
+                child: SafeArea(
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Text(
+                        'Management',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                          shadows: [
+                            Shadow(
+                              color: Colors.black,
+                              blurRadius: 2.0,
+                              offset: Offset(1, 1),
+                            ),
+                            Shadow(
+                              color: Colors.black,
+                              blurRadius: 2.0,
+                              offset: Offset(-1, -1),
+                            ),
+                            Shadow(
+                              color: Colors.black,
+                              blurRadius: 2.0,
+                              offset: Offset(1, -1),
+                            ),
+                            Shadow(
+                              color: Colors.black,
+                              blurRadius: 2.0,
+                              offset: Offset(-1, 1),
+                            ),
+                            Shadow(
+                              color: Colors.black,
+                              blurRadius: 2.0,
+                              offset: Offset(1, 1),
+                            ),
+                            Shadow(
+                              color: Colors.black,
+                              blurRadius: 2.0,
+                              offset: Offset(-1, -1),
+                            ),
+                            Shadow(
+                              color: Colors.black,
+                              blurRadius: 2.0,
+                              offset: Offset(1, -1),
+                            ),
+                            Shadow(
+                              color: Colors.black,
+                              blurRadius: 2.0,
+                              offset: Offset(-1, 1),
+                            ),
+                            Shadow(
+                              color: Colors.black,
+                              blurRadius: 2.0,
+                              offset: Offset(1, -1),
+                            ),
+                            Shadow(
+                              color: Colors.black,
+                              blurRadius: 2.0,
+                              offset: Offset(-1, 1),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Text(
+                        'Management',
+                        style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                )),
           ],
         ),
       ),
