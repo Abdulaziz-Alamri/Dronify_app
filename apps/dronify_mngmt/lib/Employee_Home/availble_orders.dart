@@ -2,13 +2,11 @@ import 'package:dronify_mngmt/Admin/Admin_Orders/admin_order_card.dart';
 import 'package:dronify_mngmt/Admin/admin_datalayer/admin_data_layer.dart';
 import 'package:dronify_mngmt/Employee_Home/bloc/orders_bloc_bloc.dart';
 import 'package:dronify_mngmt/Employee_Home/bloc/orders_bloc_event.dart';
-import 'package:dronify_mngmt/Employee_Order/order_screen.dart';
 import 'package:dronify_mngmt/models/order_model.dart';
 import 'package:dronify_mngmt/models/service_model.dart';
 import 'package:dronify_mngmt/utils/db_operations.dart';
 import 'package:dronify_mngmt/utils/setup.dart';
 import 'package:flutter/material.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AvailbleOrders extends StatelessWidget {
   final OrderModel order;
@@ -109,37 +107,18 @@ class AvailbleOrders extends StatelessWidget {
                             actions: [
                               TextButton(
                                 onPressed: () {
-                                  ordersBloc.add(
-                                    UpdateOrderStatus(
+                                   ordersBloc.add(UpdateOrderStatus(
                                       orderId: order.orderId!,
                                       newStatus: 'confirmed',
-                                      employeeId: Supabase
-                                          .instance.client.auth.currentUser!.id,
-                                    ),
-                                  );
+                                      employeeId:
+                                          supabase.auth.currentUser!.id));
                                   Navigator.of(context).pop();
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          OrderScreen(order: order),
-                                    ),
-                                  );
                                 },
                                 child: const Text('Yes'),
                               ),
                               TextButton(
                                 onPressed: () {
-                                  setOrderAccepted();
                                   Navigator.of(context).pop();
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => OrderScreen(
-                                        order: order,
-                                      ),
-                                    ),
-                                  );
                                 },
                                 child: const Text('No'),
                               ),

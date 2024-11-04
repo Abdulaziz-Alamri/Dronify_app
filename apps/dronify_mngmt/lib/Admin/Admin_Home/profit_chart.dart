@@ -9,7 +9,7 @@ class ProfitChart extends StatelessWidget {
     final response =
         await Supabase.instance.client.rpc('fetch_daily_profits').select();
 
-    if (response is List) {
+    if (response.isNotEmpty) {
       return response.map((e) {
         return {
           "day": e["day"],

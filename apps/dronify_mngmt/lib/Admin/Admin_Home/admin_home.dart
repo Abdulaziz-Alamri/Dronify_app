@@ -3,7 +3,6 @@ import 'package:dronify_mngmt/Admin/Admin_Home/employees_barchart.dart';
 import 'package:dronify_mngmt/Admin/Admin_Home/orders_stats.dart';
 import 'package:dronify_mngmt/Admin/Admin_Home/profit_chart.dart';
 import 'package:dronify_mngmt/Auth/first_screen.dart';
-import 'package:dronify_mngmt/Auth/sginin.dart';
 import 'package:dronify_mngmt/repository/auth_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -132,7 +131,11 @@ class AdminHome extends StatelessWidget {
                           builder: (context, snapshot) {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
-                              return const CircularProgressIndicator();
+                              return Image.asset(
+                                'assets/drone.gif',
+                                height: 50,
+                                width: 50,
+                              );
                             } else if (snapshot.hasError) {
                               debugPrint(
                                   'Error fetching user count: ${snapshot.error}');
@@ -153,7 +156,11 @@ class AdminHome extends StatelessWidget {
                           builder: (context, snapshot) {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
-                              return const CircularProgressIndicator();
+                              return Image.asset(
+                                'assets/drone.gif',
+                                height: 50,
+                                width: 50,
+                              );
                             } else if (snapshot.hasError) {
                               debugPrint(
                                   'Error fetching order count: ${snapshot.error}');
@@ -174,7 +181,11 @@ class AdminHome extends StatelessWidget {
                           builder: (context, snapshot) {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
-                              return const CircularProgressIndicator();
+                              return Image.asset(
+                                'assets/drone.gif',
+                                height: 50,
+                                width: 50,
+                              );
                             } else if (snapshot.hasError) {
                               debugPrint(
                                   'Error fetching total profits: ${snapshot.error}');

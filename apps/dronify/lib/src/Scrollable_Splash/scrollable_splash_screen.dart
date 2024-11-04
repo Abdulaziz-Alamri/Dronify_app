@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dronify/src/Auth/sginin.dart';
 import 'package:dronify/src/Scrollable_Splash/bloc/scrollsplash_bloc.dart';
 import 'package:dronify/src/Scrollable_Splash/splash_content.dart';

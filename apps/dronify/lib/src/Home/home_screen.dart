@@ -54,6 +54,9 @@ class HomeScreen extends StatelessWidget {
                 pinned: false,
               ),
               SliverToBoxAdapter(
+                child: SizedBox(height: 20),
+              ),
+              SliverToBoxAdapter(
                 child: FutureBuilder<String>(
                   future: fetchUserName(),
                   builder: (context, snapshot) {
@@ -80,7 +83,7 @@ class HomeScreen extends StatelessWidget {
                             name: userName,
                           ),
                         ),
-                        const SizedBox(height: 10),
+                        const SizedBox(height: 15),
                         const Padding(
                           padding: EdgeInsets.symmetric(horizontal: 16),
                           child: Text(
@@ -160,7 +163,7 @@ class HomeScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-                        SizedBox(height: 10.h),
+                        SizedBox(height: 14.h),
                       ],
                     );
                   },

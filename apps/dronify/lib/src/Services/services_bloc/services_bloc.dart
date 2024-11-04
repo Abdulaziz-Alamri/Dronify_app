@@ -1,10 +1,12 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:meta/meta.dart';
 
@@ -81,18 +83,44 @@ class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
 
   FutureOr<void> pickDate(
       PickDateEvent event, Emitter<ServicesState> emit) async {
-    DateTime? pickedDate = await showDatePicker(
-      context: event.context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime.now(),
-      lastDate: DateTime(2100),
+    emit(Loadedstate());
+
+    const primaryColor = Color(0xFF152381);
+    const highlightColor = Color(0xFF73DDFF);
+    const weekdayLabelColor = Color(0xFF0A7995);
+
+    final config = CalendarDatePicker2WithActionButtonsConfig(
+      calendarViewScrollPhysics: const NeverScrollableScrollPhysics(),
+      dayTextStyle:
+          const TextStyle(color: primaryColor, fontWeight: FontWeight.w600),
+      calendarType: CalendarDatePicker2Type.single,
+      selectedDayHighlightColor: highlightColor,
+      closeDialogOnCancelTapped: true,
+      daySplashColor: highlightColor,
+      weekdayLabelTextStyle: TextStyle(
+        color: weekdayLabelColor,
+        fontWeight: FontWeight.bold,
+      ),
+      controlsTextStyle: const TextStyle(
+        color: primaryColor,
+        fontSize: 15,
+        fontWeight: FontWeight.bold,
+      ),
+      selectedDayTextStyle: const TextStyle(color: Colors.white),
     );
 
-    if (pickedDate != null) {
-      selectedDate = pickedDate.toIso8601String();
+    // show dialog
+    final picked = await showCalendarDatePicker2Dialog(
+      context: event.context,
+      config: config,
+      dialogSize: const Size(400, 200),
+      borderRadius: BorderRadius.circular(12),
+    );
+
+    // update state
+    if (picked != null && picked.isNotEmpty && picked[0] != null) {
+      selectedDate = DateFormat('yyyy-MM-dd').format(picked[0]!);
       emit(DateSelectedState(selectedDate: selectedDate!));
-    } else {
-      emit(ServiceErrorState(message: "No date was selected."));
     }
   }
 

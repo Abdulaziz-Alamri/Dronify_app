@@ -9,6 +9,7 @@ import 'package:dronify_mngmt/models/order_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:maps_launcher/maps_launcher.dart';
@@ -239,13 +240,26 @@ class OrderScreen extends StatelessWidget {
                         width: 60,
                         height: 60,
                         decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          borderRadius: BorderRadius.circular(10),
+                          gradient: LinearGradient(
+                            colors: [Color(0xff0A7995), Color(0xff73DDFF)],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                          borderRadius: BorderRadius.circular(12),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.15),
+                              blurRadius: 10,
+                              offset: Offset(0, 4),
+                            ),
+                          ],
                         ),
-                        child: Icon(
-                          Icons.add,
-                          size: 30,
-                          color: Colors.grey[700],
+                        child: Center(
+                          child: FaIcon(
+                            FontAwesomeIcons.plus,
+                            size: 24,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),

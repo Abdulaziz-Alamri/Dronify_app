@@ -1,6 +1,4 @@
-import 'dart:developer';
 import 'dart:io';
-
 import 'package:dronify/layer/data_layer.dart';
 import 'package:dronify/models/customer_model.dart';
 import 'package:dronify/utils/setup.dart';
@@ -123,7 +121,6 @@ Future<void> rateOrder(
         .eq('employee_id', employeeId);
 
     if (ratingsResponse.isEmpty) {
-      log('Failed to fetch employee ratings');
       return;
     }
 
@@ -135,10 +132,8 @@ Future<void> rateOrder(
     await supabase
         .from('employee')
         .update({'rating': averageRating}).eq('employee_id', employeeId);
-
-    log('Rating added successfully, order and employee updated.');
   } catch (e) {
-    log('Error in rateOrder: $e');
+    throw Exception(e);
   }
 }
 
@@ -245,8 +240,6 @@ saveSubscription({
 
           imageUrls.add(imageUrl);
 
-          log('$subId');
-
           await supabase
               .from('subscription_images')
               .insert({'sub_id': subId, 'image_url': imageUrl});
@@ -270,44 +263,43 @@ saveSubscription({
     print("Error saving Subscription: $error");
     throw error;
   }
-
-  Future<void> upsertCustomer(CustomerModel customer) async {
-    try {
-      final response =
-          await supabase.from('customers').upsert(customer.toJson());
-      if (response.error != null) {
-        throw Exception(response.error!.message);
-      }
-    } catch (e) {
-      print('Error upserting customer: $e');
-    }
-  }
-
-  Future<CustomerModel?> getCustomer(String customerId) async {
-    try {
-      final response = await supabase
-          .from('customers')
-          .select()
-          .eq('customer_id', customerId)
-          .single();
-
-      if (response != null) {
-        throw Exception(response);
-      }
-
-      if (response != null) {
-        return CustomerModel.fromJson(response);
-      }
-
-      return null;
-    } catch (e) {
-      print('Error fetching customer: $e');
-      return null;
-    }
-  }
 }
 
 updateExternalKey({required String externalKey}) async {
   await supabase.from('app_user').update({'external_key': externalKey}).eq(
       'user_id', supabase.auth.currentUser!.id);
+}
+
+Future<void> upsertCustomer(CustomerModel customer) async {
+  try {
+    final response = await supabase.from('customers').upsert(customer.toJson());
+    if (response.error != null) {
+      throw Exception(response.error!.message);
+    }
+  } catch (e) {
+    print('Error upserting customer: $e');
+  }
+}
+
+Future<CustomerModel?> getCustomer(String customerId) async {
+  try {
+    final response = await supabase
+        .from('customers')
+        .select()
+        .eq('customer_id', customerId)
+        .single();
+
+    if (response.isEmpty) {
+      throw Exception(response);
+    }
+
+    if (response.isEmpty) {
+      return CustomerModel.fromJson(response);
+    }
+
+    return null;
+  } catch (e) {
+    print('Error fetching customer: $e');
+    return null;
+  }
 }

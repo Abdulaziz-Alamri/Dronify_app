@@ -20,9 +20,16 @@ class _SignupState extends State<Signup> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: Stack(
+        clipBehavior: Clip.none,
         children: [
           buildHeader(),
           buildForm(context),
+           SafeArea(
+            child: BackButton(
+              color: Colors.white,
+              onPressed: () => Navigator.pop(context),
+            ),
+          ),
         ],
       ),
     );

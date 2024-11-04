@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:dronify_mngmt/Admin/admin_datalayer/admin_data_layer.dart';
 import 'package:dronify_mngmt/models/order_model.dart';
@@ -21,8 +19,6 @@ class AdminOrdersCubit extends Cubit<AdminOrdersState> {
       completeOrders = locator.get<AdminDataLayer>().completeOrders;
       incompleteOrders = locator.get<AdminDataLayer>().incompleteOrders;
       availableOrders = locator.get<AdminDataLayer>().availableOrders;
-      log('locator ${locator.get<AdminDataLayer>().availableOrders.length}');
-      log('${availableOrders.length}');
       emit(OrdersLoadedState());
     } catch (e) {
       emit(ErrorState('Failed to load orders'));

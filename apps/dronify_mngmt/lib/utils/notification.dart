@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
@@ -28,8 +27,6 @@ void sendNotification(
   );
 
   if (response.statusCode == 200) {
-    log('Notification sent successfully!');
   } else {
-    log('Failed to send notification: ${response.body}');
   }
 }

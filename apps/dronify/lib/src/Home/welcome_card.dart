@@ -8,7 +8,7 @@ class WelcomeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 175,
+      height: 150,
       width: 345,
       decoration: BoxDecoration(
         color: Colors.white.withOpacity(0.8),
@@ -33,7 +33,7 @@ class WelcomeCard extends StatelessWidget {
             height: 15,
           ),
           const Text(
-            'What you are looking for today?',
+            'Explore your options today!',
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -41,7 +41,7 @@ class WelcomeCard extends StatelessWidget {
             ),
           ),
           const SizedBox(
-            height: 20,
+            height: 15,
           ),
           InkWell(
             onTap: () {
@@ -53,19 +53,28 @@ class WelcomeCard extends StatelessWidget {
               );
             },
             child: Container(
-              height: 50,
+              height: 40,
               decoration: BoxDecoration(
                 border: Border.all(color: const Color(0xff072D6F)),
                 borderRadius: BorderRadius.circular(360),
                 color: const Color(0xff072D6F),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.2),
+                    spreadRadius: 2,
+                    blurRadius: 8,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
               ),
               child: const Center(
                 child: Text(
                   'subscribe now',
                   style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold),
+                    fontSize: 20,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
                   textAlign: TextAlign.center,
                 ),
               ),

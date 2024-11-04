@@ -1,5 +1,4 @@
 import 'package:dronify_mngmt/models/order_model.dart';
-import 'package:equatable/equatable.dart';
 
 abstract class OrdersState {}
 

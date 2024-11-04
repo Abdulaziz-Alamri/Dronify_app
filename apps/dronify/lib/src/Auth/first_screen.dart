@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dronify/src/Bottom_Nav/bottom_nav.dart';
 import 'package:dronify/src/Scrollable_Splash/scrollable_splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +8,6 @@ class FirstScreen extends StatelessWidget {
 
   Future<bool> _isUserLoggedIn() async {
     final user = Supabase.instance.client.auth.currentUser;
-    log('user ${user != null}');
     return user != null;
   }
 

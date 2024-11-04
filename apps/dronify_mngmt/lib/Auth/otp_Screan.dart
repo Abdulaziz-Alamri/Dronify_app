@@ -1,7 +1,6 @@
 import 'package:dronify_mngmt/Admin/admin_datalayer/admin_data_layer.dart';
 import 'package:dronify_mngmt/Auth/bloc/auth_bloc.dart';
 import 'package:dronify_mngmt/Employee_Home/employee_home.dart';
-import 'package:dronify_mngmt/models/employee_model.dart';
 import 'package:dronify_mngmt/utils/setup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

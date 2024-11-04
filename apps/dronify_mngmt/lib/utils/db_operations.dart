@@ -8,8 +8,6 @@ import 'package:path/path.dart';
 
 final supabase = Supabase.instance.client;
 
-setOrderAccepted() async {}
-
 setOrderComplete({
   required OrderModel order,
   required List<XFile> imageFiles,

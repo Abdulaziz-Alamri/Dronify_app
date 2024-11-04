@@ -13,6 +13,5 @@ class UpdateProfileEvent extends ProfileEvent {
     required this.phone,
   });
 
-  @override
   List<Object> get props => [name, phone];
 }

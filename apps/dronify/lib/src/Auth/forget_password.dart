@@ -1,5 +1,4 @@
 import 'package:dronify/repository/auth_repository.dart';
-import 'package:dronify/src/Auth/otp.dart';
 import 'package:dronify/src/Auth/otp_reset.dart';
 import 'package:flutter/material.dart';
 

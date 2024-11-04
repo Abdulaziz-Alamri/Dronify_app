@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dronify_mngmt/Admin/admin_datalayer/admin_data_layer.dart';
 import 'package:dronify_mngmt/utils/setup.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
@@ -36,7 +34,6 @@ class AuthRepository {
         throw Exception('Sign-up failed. Please try again.');
       }
     } catch (error) {
-      log('Sign-up failed: $error');
       throw Exception('Sign-up failed: ${error.toString()}');
     }
   }
@@ -48,9 +45,7 @@ class AuthRepository {
         type: OtpType.signup,
         email: email,
       );
-      log('OTP resent successfully to $email');
     } catch (error) {
-      log('OTP resend failed: $error');
       throw Exception('OTP resend failed: ${error.toString()}');
     }
   }
@@ -76,7 +71,6 @@ class AuthRepository {
         throw Exception('Login failed: Invalid credentials.');
       }
     } catch (error) {
-      log('Login failed: $error');
       throw Exception('Login failed: ${error.toString()}');
     }
   }
@@ -86,7 +80,6 @@ class AuthRepository {
     try {
       return supabase.auth.currentUser;
     } catch (error) {
-      log('Failed to get current user: $error');
       throw Exception('Failed to get current user: ${error.toString()}');
     }
   }
@@ -96,9 +89,7 @@ class AuthRepository {
     try {
       locator.get<AdminDataLayer>().onLogout();
       await supabase.auth.signOut();
-      log('User logged out successfully');
     } catch (error) {
-      log('Logout failed: $error');
       throw Exception('Logout failed: ${error.toString()}');
     }
   }
@@ -117,13 +108,11 @@ class AuthRepository {
       );
 
       if (response.user != null) {
-        log('OTP verified successfully for $email');
         return response.user!;
       } else {
         throw Exception('OTP verification failed. Please try again.');
       }
     } catch (error) {
-      log('OTP verification failed: $error');
       throw Exception('OTP verification failed: ${error.toString()}');
     }
   }
@@ -141,28 +130,12 @@ class AuthRepository {
       );
 
       if (response.user != null) {
-        log('OTP verified successfully for $email');
         return response.user!;
       } else {
         throw Exception('OTP verification failed. Please try again.');
       }
     } catch (error) {
-      log('OTP verification failed: $error');
       throw Exception('OTP verification failed: ${error.toString()}');
-    }
-  }
-
-  //=======================
-  // sign in with email otp
-  Future signWithOtp({
-    required String email,
-    required String otp,
-  }) async {
-    try {
-      return await supabase.auth.signInWithOtp(email: email);
-    } catch (error) {
-      log('Email OTP sign-in failed: $error');
-      throw Exception('Email OTP sign-in failed: ${error.toString()}');
     }
   }
 
@@ -170,12 +143,12 @@ class AuthRepository {
   Future<void> forgotPassword({required String email}) async {
     try {
       await supabase.auth.resetPasswordForEmail(email);
-      log('Password reset link sent to $email');
     } catch (error) {
-      log('Password reset failed: $error');
       throw Exception('Password reset failed: ${error.toString()}');
     }
-    // Verify OTP and reset password
+  }
+
+   // Verify OTP and reset password
     Future<void> verifyOtpAndResetPassword({
       required String email,
       required String otp,
@@ -197,9 +170,7 @@ class AuthRepository {
           UserAttributes(password: newPassword),
         );
 
-        log('Password reset successfully');
       } catch (error) {
-        log('OTP verification failed: $error');
         throw Exception('OTP verification failed: ${error.toString()}');
       }
     }
@@ -216,11 +187,8 @@ class AuthRepository {
           UserAttributes(password: newPassword), // Set new password
         );
 
-        log('Password updated successfully for $email');
       } catch (error) {
-        log('Password update failed: $error');
         throw Exception('Password update failed: ${error.toString()}');
       }
     }
-  }
 }
