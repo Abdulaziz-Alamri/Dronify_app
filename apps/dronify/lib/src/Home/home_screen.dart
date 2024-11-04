@@ -82,12 +82,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         bottomRight: Radius.circular(20),
                       ),
                     ),
-                    child: Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Image.asset(
-                        'assets/Group 34611.png',
+                    child: Stack(children: [
+                      Positioned(
+                        top: 0,
+                        left: 110,
+                        child: Image.asset(
+                          'assets/Group 34611.png',
+                          height: 220,
+                        ),
                       ),
-                    ),
+                    ]),
                   ),
                 ),
                 backgroundColor: Colors.transparent,

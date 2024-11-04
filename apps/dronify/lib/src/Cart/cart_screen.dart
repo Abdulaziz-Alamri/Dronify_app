@@ -34,7 +34,7 @@ class CartScreen extends StatelessWidget {
             body: CustomScrollView(
               slivers: [
                 SliverAppBar(
-                  expandedHeight: 130.0,
+                  expandedHeight: 80.0,
                   flexibleSpace: FlexibleSpaceBar(
                     background: Container(
                       decoration: const BoxDecoration(

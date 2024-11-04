@@ -26,6 +26,8 @@ class CustomOrderCard extends StatelessWidget {
             color: Colors.white,
             child: Image.asset(
               imageUrl,
+              height: 60,
+              width: 80,
               fit: BoxFit.cover,
             ),
           ),
@@ -42,7 +44,8 @@ class CustomOrderCard extends StatelessWidget {
               style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
             ),
             Text(subTitle,
-                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+                style:
+                    const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
           ],
         )
       ],
