@@ -6,12 +6,52 @@ import 'package:dronify/utils/setup.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
+  late AnimationController _controller;
+  late AnimationController _fadeController;
+  late Animation<Offset> _slideAnimation;
+  late Animation<double> _fadeAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 2),
+    );
+    _fadeController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 2),
+    );
+
+    _slideAnimation = Tween<Offset>(
+      begin: const Offset(0, 0.3),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeOut,
+    ));
+
+    _fadeAnimation = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(
+        parent: _fadeController,
+        curve: Curves.easeIn,
+      ),
+    );
+
+    _controller.forward();
+    _fadeController.forward();
+  }
 
   Future<String> fetchUserName() async {
     final dataLayer = locator<DataLayer>();
-
     final userId = dataLayer.supabase.auth.currentUser?.id;
     if (userId != null) {
       await dataLayer.getCustomer(userId);
@@ -74,19 +114,36 @@ class HomeScreen extends StatelessWidget {
 
                     final userName = snapshot.data ?? "User";
 
+<<<<<<< HEAD
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Align(
+=======
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SlideTransition(
+                          position: _slideAnimation,
+                          child: Align(
+>>>>>>> 296174b7b4b7c702c6423abfd18bee134ad7bd3a
                             alignment: Alignment.topCenter,
                             child: WelcomeCard(
                               name: userName,
                             ),
                           ),
+<<<<<<< HEAD
                           const SizedBox(height: 15),
                           const Padding(
+=======
+                        ),
+                        const SizedBox(height: 15),
+                        FadeTransition(
+                          opacity: _fadeAnimation,
+                          child: const Padding(
+>>>>>>> 296174b7b4b7c702c6423abfd18bee134ad7bd3a
                             padding: EdgeInsets.symmetric(horizontal: 16),
                             child: Text(
                               'Special Offers',
@@ -96,8 +153,16 @@ class HomeScreen extends StatelessWidget {
                                   color: Color(0xff172B4D)),
                             ),
                           ),
+<<<<<<< HEAD
                           const SizedBox(height: 20),
                           Center(
+=======
+                        ),
+                        const SizedBox(height: 20),
+                        Center(
+                          child: FadeTransition(
+                            opacity: _fadeAnimation,
+>>>>>>> 296174b7b4b7c702c6423abfd18bee134ad7bd3a
                             child: const SpecialOfferCard(
                               imageUrl:
                                   'assets/Group_34606-removebg-preview.png',
@@ -105,8 +170,16 @@ class HomeScreen extends StatelessWidget {
                               description: 'Get 25%',
                             ),
                           ),
+<<<<<<< HEAD
                           const SizedBox(height: 10),
                           const Padding(
+=======
+                        ),
+                        const SizedBox(height: 10),
+                        FadeTransition(
+                          opacity: _fadeAnimation,
+                          child: const Padding(
+>>>>>>> 296174b7b4b7c702c6423abfd18bee134ad7bd3a
                             padding: EdgeInsets.symmetric(horizontal: 16),
                             child: Text(
                               'Services',
@@ -116,8 +189,25 @@ class HomeScreen extends StatelessWidget {
                                   color: Color(0xff172B4D)),
                             ),
                           ),
+<<<<<<< HEAD
                           const SizedBox(
                             height: 10,
+=======
+                        ),
+                        const SizedBox(height: 10),
+                        SlideTransition(
+                          position: _slideAnimation,
+                          child: Center(
+                            child: ServiceCard(
+                              serviceId: 1,
+                              imageUrl:
+                                  'assets/Dasu-pulizia-facciata-con-drone-Milano 1.png',
+                              title: 'Building Cleaning',
+                              description:
+                                  'Professional cleaning service for tall buildings using advanced drones.',
+                              iconPath: 'assets/Vector (12).png',
+                            ),
+>>>>>>> 296174b7b4b7c702c6423abfd18bee134ad7bd3a
                           ),
                           Center(
                             child: ServiceCard(
@@ -143,22 +233,28 @@ class HomeScreen extends StatelessWidget {
                                       mainAxisSpacing: 20,
                                       crossAxisSpacing: 40,
                                       mainAxisExtent: 180),
-                              children: const [
-                                ServiceCard(
-                                  serviceId: 2,
-                                  imageUrl: 'assets/nano.jpg',
-                                  title: 'Nano Protection',
-                                  description:
-                                      'Nano-coating protection for windows, shields from dirt and weather damage.',
-                                  iconPath: 'assets/Group (1).png',
+                              children: [
+                                SlideTransition(
+                                  position: _slideAnimation,
+                                  child: const ServiceCard(
+                                    serviceId: 2,
+                                    imageUrl: 'assets/nano.jpg',
+                                    title: 'Nano Protection',
+                                    description:
+                                        'Nano-coating protection for windows, shields from dirt and weather damage.',
+                                    iconPath: 'assets/Group (1).png',
+                                  ),
                                 ),
-                                ServiceCard(
-                                  serviceId: 3,
-                                  imageUrl: 'assets/spot.jpg',
-                                  title: 'Spot Painting',
-                                  description:
-                                      'Spot painting services for building exteriors.',
-                                  iconPath: 'assets/Group (2).png',
+                                SlideTransition(
+                                  position: _slideAnimation,
+                                  child: const ServiceCard(
+                                    serviceId: 3,
+                                    imageUrl: 'assets/spot.jpg',
+                                    title: 'Spot Painting',
+                                    description:
+                                        'Spot painting services for building exteriors.',
+                                    iconPath: 'assets/Group (2).png',
+                                  ),
                                 ),
                               ],
                             ),
@@ -175,5 +271,12 @@ class HomeScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    _fadeController.dispose();
+    super.dispose();
   }
 }
