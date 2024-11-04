@@ -18,8 +18,7 @@ class SpecialOfferCard extends StatelessWidget {
       width: 400,
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage(
-              'assets/DALL·E 2024-11-03 20.54.35 - A high-rise glass building with water spraying gently from the top, cascading down the facade in a light, minimal effect. The water droplets flow down 1.png'),
+          image: AssetImage('assets/budling water.png'),
           fit: BoxFit.cover,
         ),
         borderRadius: BorderRadius.all(Radius.circular(30)),

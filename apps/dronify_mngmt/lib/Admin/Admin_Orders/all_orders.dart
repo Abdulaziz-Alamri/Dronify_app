@@ -1,5 +1,6 @@
 import 'package:dronify_mngmt/Admin/Admin_Orders/admin_available_card.dart';
 import 'package:dronify_mngmt/Admin/Admin_Orders/admin_orders_cubit/admin_orders_cubit.dart';
+import 'package:dronify_mngmt/Admin/Admin_Orders/empty_tab_image.dart';
 import 'package:dronify_mngmt/Employee_Home/order_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -150,64 +151,85 @@ class _AllOrdersState extends State<AllOrders>
                       ),
                       BlocBuilder<AdminOrdersCubit, AdminOrdersState>(
                         builder: (context, state) {
-                          if (state is OrdersLoadedState)
+                          if (state is OrdersLoadedState) {
                             return SizedBox(
-                              height: MediaQuery.of(context).size.height,
+                              height: 660,
                               child: TabBarView(
                                 controller: tabController,
                                 children: [
                                   // Complete Orders Tab
                                   SingleChildScrollView(
-                                    child: Column(
-                                      children:
-                                          cubit.completeOrders.map((order) {
-                                        return Column(
-                                          children: [
-                                            OrderCard(
-                                                order: order, isAdmin: true),
-                                            SizedBox(height: 15),
-                                          ],
-                                        );
-                                      }).toList(),
-                                    ),
+                                    child: cubit.completeOrders.isNotEmpty
+                                        ? Column(
+                                            children: cubit.completeOrders
+                                                .map((order) {
+                                              return Column(
+                                                children: [
+                                                  OrderCard(
+                                                      order: order,
+                                                      isAdmin: true),
+                                                  SizedBox(height: 15),
+                                                ],
+                                              );
+                                            }).toList(),
+                                          )
+                                        : EmptyTabImage(
+                                            imagePath:
+                                                'assets/empty_orders.png',
+                                            message: 'No incomplete orders.'),
                                   ),
                                   // Incomplete Orders Tab
                                   SingleChildScrollView(
-                                    child: Column(
-                                      children:
-                                          cubit.incompleteOrders.map((order) {
-                                        return Column(
-                                          children: [
-                                            OrderCard(
-                                                order: order, isAdmin: true),
-                                            SizedBox(height: 15),
-                                          ],
-                                        );
-                                      }).toList(),
-                                    ),
+                                    child: cubit.incompleteOrders.isNotEmpty
+                                        ? Column(
+                                            children: cubit.incompleteOrders
+                                                .map((order) {
+                                              return Column(
+                                                children: [
+                                                  OrderCard(
+                                                      order: order,
+                                                      isAdmin: true),
+                                                  SizedBox(height: 15),
+                                                ],
+                                              );
+                                            }).toList(),
+                                          )
+                                        : EmptyTabImage(
+                                            imagePath:
+                                                'assets/empty_orders.png',
+                                            message: 'No incomplete orders.'),
                                   ),
                                   // Available Orders Tab
                                   SingleChildScrollView(
-                                    child: Column(
-                                      children:
-                                          cubit.availableOrders.map((order) {
-                                        return Column(
-                                          children: [
-                                            AdminAvailableCard(
-                                                order: order, cubit: cubit),
-                                            SizedBox(height: 15),
-                                          ],
-                                        );
-                                      }).toList(),
-                                    ),
+                                    child: cubit.availableOrders.isNotEmpty
+                                        ? Column(
+                                            children: cubit.availableOrders
+                                                .map((order) {
+                                              return Column(
+                                                children: [
+                                                  AdminAvailableCard(
+                                                      order: order,
+                                                      cubit: cubit),
+                                                  SizedBox(height: 15),
+                                                ],
+                                              );
+                                            }).toList(),
+                                          )
+                                        : EmptyTabImage(
+                                            imagePath:
+                                                'assets/empty_orders.png',
+                                            message: 'No incomplete orders.'),
                                   ),
                                 ],
                               ),
                             );
-                          return Image.asset(
-                            'assets/drone.gif',
-                            height: 50,
-                            width: 50,
+                          }
+                          return Center(
+                            child: Image.asset(
+                              'assets/drone.gif',
+                              height: 50,
+                              width: 50,
+                            ),
                           );
                         },
                       )
