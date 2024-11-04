@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:dronify_mngmt/Admin/admin_datalayer/admin_data_layer.dart';
 import 'package:dronify_mngmt/repository/auth_repository.dart';
 import 'package:dronify_mngmt/utils/db_operations.dart';
@@ -44,23 +45,22 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(AuthLoading());
     try {
       final response = await authRepository.login(
-        email: event.email,
+        email: event.email.toLowerCase(),
         password: event.password,
       );
 
       if (response.user != null) {
         if (response.user!.userMetadata!['role'] == 'customer') {
-          emit(AuthError('You do not have permission to sign in', isCustomer: true));
+          emit(FailedLoginState('You do not have permission to sign in',
+              isCustomer: true));
           return;
         }
-           await updateExternalKey(
-              externalKey: locator.get<AdminDataLayer>().externalKey!);
+        await updateExternalKey(
+            externalKey: locator.get<AdminDataLayer>().externalKey!);
         emit(AuthSignedIn());
-      } else {
-        emit(AuthError('User data not found.'));
       }
     } catch (e) {
-      emit(AuthError(e.toString()));
+      emit(AuthError('An error occurred'));
     }
   }
 

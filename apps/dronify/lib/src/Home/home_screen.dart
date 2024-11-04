@@ -246,7 +246,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                                 childAspectRatio: 1,
                                                 mainAxisSpacing: 10,
                                                 crossAxisSpacing: 40,
-                                                mainAxisExtent: 160),
+                                                mainAxisExtent: 180),
                                         children: [
                                           SlideTransition(
                                             position: _slideAnimation,

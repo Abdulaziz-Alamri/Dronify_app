@@ -80,9 +80,9 @@ setOrderConfrimed(
 
   // send notification to customer
   final userResponse = await supabase
-      .from('app_user')
-      .select('external_key')
-      .eq('role', orderId)
+      .from('orders')
+      .select('user_id')
+      .eq('order_id', orderId)
       .single();
 
   //  fetch external_key
@@ -93,10 +93,8 @@ setOrderConfrimed(
       .single();
 
   final String externalKey = externalKeyResponse['external_key'].toString();
-  sendCompleteOrderNotification(
-      externalKey: externalKey,
-      userId: userResponse['user_id'],
-      orderId: orderId);
+  sendConfirmedOrderNotification(
+      externalKey: externalKey);
 }
 
 cancelOrder({required OrderModel order}) async {

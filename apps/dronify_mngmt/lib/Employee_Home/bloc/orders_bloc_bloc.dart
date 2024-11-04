@@ -29,7 +29,6 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
             if (locator.get<AdminDataLayer>().externalKey != null) {
               sendAvailableOrderNotification(
                   externalKey: locator.get<AdminDataLayer>().externalKey!);
-
               add(FetchOrders());
             }
           },

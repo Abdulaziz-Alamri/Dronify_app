@@ -24,8 +24,8 @@ class _SignInState extends State<SignIn> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-            FocusScope.of(context).unfocus();
-          },
+        FocusScope.of(context).unfocus();
+      },
       child: Scaffold(
         resizeToAvoidBottomInset: true,
         body: BlocListener<AuthBloc, AuthState>(
@@ -42,15 +42,21 @@ class _SignInState extends State<SignIn> {
                   ),
                 ),
               );
-            } else if (state is AuthSignedIn) {
+            } else {
               Navigator.pop(context);
+            }
+
+            if (state is AuthSignedIn) {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('Sign-in successful!')),
               );
               locator.get<AdminDataLayer>().saveData();
+
               if (supabase.auth.currentUser != null) {
                 if (supabase.auth.currentUser!.userMetadata!['role'] ==
-                    'employee') locator.get<AdminDataLayer>().fetchEmpOrders();
+                    'employee') {
+                  locator.get<AdminDataLayer>().fetchEmpOrders();
+                }
               }
               Navigator.pushReplacement(
                 context,
@@ -58,20 +64,29 @@ class _SignInState extends State<SignIn> {
                   builder: (context) => const FirstScreen(),
                 ),
               );
-            } else if (state is AuthError) {
+            } else if (state is FailedLoginState) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(state.message)),
+              );
+
               if (state.isCustomer) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text(state.message)),
-                );
                 Navigator.pushReplacement(
-                    context, MaterialPageRoute(builder: (context) => SignIn()));
+                  context,
+                  MaterialPageRoute(builder: (context) => const SignIn()),
+                );
               } else {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            OtpScreen(email: emailController.text)));
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        OtpScreen(email: emailController.text),
+                  ),
+                );
               }
+            } else if (state is AuthError) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(state.message)),
+              );
             }
           },
           child: Stack(
@@ -198,12 +213,12 @@ class _SignInState extends State<SignIn> {
                               onPressed: () {
                                 final email = emailController.text.trim();
                                 final password = passwordController.text.trim();
-      
+
                                 if (email.isEmpty || password.isEmpty) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
-                                      content:
-                                          Text('Please enter email and password'),
+                                      content: Text(
+                                          'Please enter email and password'),
                                     ),
                                   );
                                   return;
