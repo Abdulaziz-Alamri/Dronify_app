@@ -24,7 +24,7 @@ class _SignupState extends State<Signup> {
         children: [
           buildHeader(),
           buildForm(context),
-           SafeArea(
+          SafeArea(
             child: BackButton(
               color: Colors.white,
               onPressed: () => Navigator.pop(context),
@@ -37,6 +37,7 @@ class _SignupState extends State<Signup> {
 
   Widget buildHeader() {
     return Container(
+      height: MediaQuery.of(context).size.height * 0.35,
       decoration: const BoxDecoration(
         image: DecorationImage(
           image: AssetImage('assets/appbar.png'),
@@ -44,7 +45,9 @@ class _SignupState extends State<Signup> {
         ),
       ),
       child: Center(
-        child: Image.asset('assets/Group 34611.png'),
+        child: Image.asset(
+          'assets/Group 34611.png',
+        ),
       ),
     );
   }
