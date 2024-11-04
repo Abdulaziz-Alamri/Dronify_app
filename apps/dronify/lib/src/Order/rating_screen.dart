@@ -11,7 +11,6 @@ class RatingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextEditingController reviewController = TextEditingController();
-    int rating = 0;
     return BlocProvider(
       create: (context) => OrderBloc(),
       child: Builder(builder: (context) {

@@ -8,7 +8,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:meta/meta.dart';
 
 part 'services_event.dart';
 part 'services_state.dart';
@@ -78,7 +77,8 @@ class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
       }
     }
     return await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
+        // desiredAccuracy: LocationAccuracy.high
+        );
   }
 
   FutureOr<void> pickDate(

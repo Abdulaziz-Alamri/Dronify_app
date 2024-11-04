@@ -145,7 +145,8 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
       }
     }
     return await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
+        // desiredAccuracy: LocationAccuracy.high
+        );
   }
 
   FutureOr<void> getNewLocation(

@@ -41,15 +41,5 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       emit(ProfileError('Logout failed: ${e.toString()}'));
     }
   }
-   Future<void> _onUpdateProfile(
-      UpdateProfileEvent event, Emitter<ProfileState> emit) async {
-    try {
-      // استدعاء عملية التحديث في `dataLayer`
-      await dataLayer.updateCustomerProfile(
-          name: event.name, phone: event.phone);
-      emit(ProfileUpdated());
-    } catch (e) {
-      emit(ProfileError('Update failed: ${e.toString()}'));
-    }
-  }
 }
+ 
