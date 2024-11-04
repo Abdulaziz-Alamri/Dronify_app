@@ -69,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           CustomScrollView(
             slivers: [
               SliverAppBar(
-                expandedHeight: 120.0,
+                expandedHeight: 80.0,
                 flexibleSpace: FlexibleSpaceBar(
                   background: Container(
                     decoration: const BoxDecoration(
@@ -261,9 +261,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                               ],
                             ),
                           ),
-                          SizedBox(height: 14.h),
-                        ],
-                      ),
+                        ),
+                        SizedBox(height: 14.h),
+                      ],
                     );
                   },
                 ),
