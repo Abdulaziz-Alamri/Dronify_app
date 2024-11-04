@@ -24,6 +24,7 @@ class Wallet extends StatelessWidget {
           body: CustomScrollView(
             slivers: [
               SliverAppBar(
+                iconTheme: IconThemeData(color: Colors.white),
                 expandedHeight: 80.0,
                 flexibleSpace: FlexibleSpaceBar(
                   background: Container(

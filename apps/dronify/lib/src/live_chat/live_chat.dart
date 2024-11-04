@@ -1,8 +1,10 @@
+import 'package:dronify/main.dart';
 import 'package:dronify/utils/db_operations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
+import 'package:sizer/sizer.dart';
 
 import 'bloc/live_chat_bloc.dart';
 import 'bloc/live_chat_event.dart';
@@ -18,8 +20,8 @@ class ChatScreen extends StatelessWidget {
       create: (_) => ChatBloc(chatId)..add(LoadMessagesEvent(chatId: chatId)),
       child: GestureDetector(
         onTap: () {
-            FocusScope.of(context).unfocus();
-          },
+          FocusScope.of(context).unfocus();
+        },
         child: Scaffold(
           appBar: buildAppBar(context),
           body: BlocConsumer<ChatBloc, custom_state.ChatState>(
@@ -53,7 +55,7 @@ class ChatScreen extends StatelessWidget {
 
   PreferredSize buildAppBar(BuildContext context) {
     return PreferredSize(
-      preferredSize: const Size.fromHeight(120),
+      preferredSize: const Size.fromHeight(80),
       child: Stack(
         children: [
           Container(
@@ -82,7 +84,7 @@ class ChatScreen extends StatelessWidget {
           ),
           Positioned(
             left: 10,
-            top: 10,
+            top: 7.5.h,
             child: BackButton(
               color: Colors.white,
               onPressed: () {
@@ -130,18 +132,19 @@ class ChatScreen extends StatelessWidget {
       },
       user: types.User(id: currentUserId),
       theme: const DefaultChatTheme(
-        primaryColor: Color.fromARGB(255, 102, 196, 255),
-        backgroundColor: Colors.white,
-        sentMessageBodyTextStyle: TextStyle(
-          color: Colors.white,
-          fontSize: 16,
-        ),
-        receivedMessageBodyTextStyle: TextStyle(
-          color: Colors.black,
-          fontSize: 16,
-        ),
-        inputTextColor: Color.fromARGB(255, 138, 135, 135),
-      ),
+          primaryColor: Color.fromARGB(255, 102, 196, 255),
+          backgroundColor: Colors.white,
+          sentMessageBodyTextStyle: TextStyle(
+            color: Colors.white,
+            fontSize: 16,
+          ),
+          receivedMessageBodyTextStyle: TextStyle(
+            color: Colors.black,
+            fontSize: 16,
+          ),
+          inputBackgroundColor: Colors.black,
+          inputTextColor: Colors.white,
+          inputBorderRadius: BorderRadius.only(topLeft: Radius.circular(0))),
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:dronify/utils/setup.dart';
 import 'package:dronify/layer/data_layer.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class EditProfile extends StatelessWidget {
   final TextEditingController nameController;
@@ -17,33 +18,79 @@ class EditProfile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-            FocusScope.of(context).unfocus();
-          },
+        FocusScope.of(context).unfocus();
+      },
       child: Scaffold(
         backgroundColor: Colors.white,
-        appBar: buildAppBar(context),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 16),
-              const Text(
-                'User Name',
-                style: TextStyle(fontWeight: FontWeight.bold),
+        body: Stack(
+          children: [
+            CustomScrollView(
+              slivers: [
+                SliverAppBar(
+                  automaticallyImplyLeading: false,
+                  expandedHeight: 80.0,
+                  pinned: true,
+                  flexibleSpace: FlexibleSpaceBar(
+                    title: const Text(
+                      'Edit Profile',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    background: Container(
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('assets/appbar1.png'),
+                          fit: BoxFit.cover,
+                        ),
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(20),
+                          bottomRight: Radius.circular(20),
+                        ),
+                      ),
+                    ),
+                  ),
+                  backgroundColor: Colors.transparent,
+                ),
+                SliverPadding(
+                  padding: const EdgeInsets.all(16.0),
+                  sliver: SliverList(
+                    delegate: SliverChildListDelegate(
+                      [
+                        const SizedBox(height: 16),
+                        const Text(
+                          'User Name',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 8),
+                        buildTextField(controller: nameController),
+                        const SizedBox(height: 16),
+                        const Text(
+                          'Phone Number',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 8),
+                        buildTextField(controller: phoneController),
+                        const SizedBox(height: 16),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Positioned(
+              left: 10,
+              top: 8.5.h,
+              child: BackButton(
+                color: Colors.white,
+                onPressed: () {
+                  Navigator.pop(context);
+                },
               ),
-              const SizedBox(height: 8),
-              buildTextField(controller: nameController),
-              const SizedBox(height: 16),
-              const Text(
-                'Phone Number',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 8),
-              buildTextField(controller: phoneController),
-              const SizedBox(height: 16),
-            ],
-          ),
+            ),
+          ],
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
@@ -57,19 +104,6 @@ class EditProfile extends StatelessWidget {
           backgroundColor: const Color(0xFF072D6F),
           child: const Icon(Icons.save, color: Colors.white),
         ),
-      ),
-    );
-  }
-
-  PreferredSizeWidget buildAppBar(BuildContext context) {
-    return AppBar(
-      title: const Text("Edit Profile"),
-      backgroundColor: const Color(0xFF072D6F),
-      leading: BackButton(
-        color: Colors.white,
-        onPressed: () {
-          Navigator.pop(context);
-        },
       ),
     );
   }
