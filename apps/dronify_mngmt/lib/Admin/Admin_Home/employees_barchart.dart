@@ -55,7 +55,7 @@ class EmployeesBarchart extends StatelessWidget {
               future: fetchEmployeeRatings(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
+                  return  Center(child: Image.asset('assets/drone.gif'));
                 } else if (snapshot.hasError) {
                   return Center(child: Text('Error: ${snapshot.error}'));
                 } else {

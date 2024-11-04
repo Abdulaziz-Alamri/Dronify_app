@@ -1,5 +1,4 @@
 import 'package:dronify/layer/data_layer.dart';
-import 'package:dronify/repository/auth_repository.dart';
 import 'package:dronify/src/profile/Profile_Item.dart';
 import 'package:dronify/src/profile/bloc/profile_bloc.dart';
 import 'package:dronify/src/profile/bloc/profile_event.dart';

@@ -1,9 +1,7 @@
 import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:dronify/src/Cart/cart_screen.dart';
 import 'package:dronify/src/Home/home_screen.dart';
-import 'package:dronify/src/Order/order_screen.dart';
 import 'package:dronify/src/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 

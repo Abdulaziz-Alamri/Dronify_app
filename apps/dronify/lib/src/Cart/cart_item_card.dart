@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dronify/models/service_model.dart';
 import 'package:flutter/material.dart';
 import 'package:dronify/models/order_model.dart';
@@ -68,7 +66,7 @@ class CartItemCard extends StatelessWidget {
                       height: 5,
                     ),
                     Text(
-                      order.squareMeters.toString() ?? 'No status',
+                      order.squareMeters.toString(),
                       style: const TextStyle(
                           fontSize: 12, color: Color(0xffA4A4AA)),
                     ),

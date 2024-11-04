@@ -1,4 +1,3 @@
-import 'package:flutter_chat_ui/flutter_chat_ui.dart' as types;
 
 abstract class ChatEvent {}
 

@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:math';
 import 'package:bloc/bloc.dart';
-import 'package:dronify_mngmt/Employee_Home/bloc/orders_bloc_bloc.dart';
 import 'package:dronify_mngmt/utils/db_operations.dart';
 import 'package:meta/meta.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
@@ -18,7 +17,7 @@ class ChatMessageBloc extends Bloc<ChatMessageEvent, ChatMessageState> {
     on<LoadMessagesEvent>(loadMessages);
     on<NewMessageReceivedEvent>(receiveNewMessage);
     on<SendMessageEvent>(sendMessage);
-    initializeListener(chatId: chatId); // remove chatId if it doesn't work
+    initializeListener(chatId: chatId);
   }
 
   void initializeListener({required String chatId}) {

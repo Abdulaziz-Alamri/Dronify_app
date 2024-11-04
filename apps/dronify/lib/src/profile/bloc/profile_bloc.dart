@@ -2,7 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:dronify/utils/db_operations.dart';
 import 'profile_event.dart';
 import 'profile_state.dart';
-import 'package:dronify/models/customer_model.dart';
 import 'package:dronify/layer/data_layer.dart';
 import 'package:dronify/repository/auth_repository.dart';
 
@@ -42,15 +41,5 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       emit(ProfileError('Logout failed: ${e.toString()}'));
     }
   }
-   Future<void> _onUpdateProfile(
-      UpdateProfileEvent event, Emitter<ProfileState> emit) async {
-    try {
-      // استدعاء عملية التحديث في `dataLayer`
-      await dataLayer.updateCustomerProfile(
-          name: event.name, phone: event.phone);
-      emit(ProfileUpdated());
-    } catch (e) {
-      emit(ProfileError('Update failed: ${e.toString()}'));
-    }
-  }
 }
+ 

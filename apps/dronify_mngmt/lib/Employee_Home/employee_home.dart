@@ -48,17 +48,18 @@ class _EmployeeHomeState extends State<EmployeeHome>
       create: (context) => OrdersBloc(dataLayer: locator.get<AdminDataLayer>())
         ..add(FetchOrders()),
       child: Builder(builder: (context) {
+        final bloc = BlocProvider.of<OrdersBloc>(context);
         return Scaffold(
           backgroundColor: const Color(0xffF5F5F7),
           drawer: Drawer(
             child: ListView(
               padding: EdgeInsets.zero,
               children: [
-                const DrawerHeader(
+                DrawerHeader(
                   decoration: BoxDecoration(
                     color: Color(0xff072D6F),
                   ),
-                  child: const Column(
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       CircleAvatar(
@@ -68,17 +69,11 @@ class _EmployeeHomeState extends State<EmployeeHome>
                       ),
                       SizedBox(height: 10),
                       Text(
-                        'Employee Name',
+                        '${locator.get<AdminDataLayer>().currentEmployee?.name}',
                         style: TextStyle(
                           fontSize: 18,
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        'ID: E-123324',
-                        style: TextStyle(
-                          color: Colors.white70,
                         ),
                       ),
                     ],
@@ -113,14 +108,11 @@ class _EmployeeHomeState extends State<EmployeeHome>
               if (state is OrderLoading) {
                 return Center(
                     child: Image.asset(
-                    'assets/drone.gif',
+                  'assets/drone.gif',
                   height: 50,
                   width: 50,
-              
                 ));
               } else if (state is OrderLoaded) {
-                final ordersBloc = BlocProvider.of<OrdersBloc>(context);
-
                 return RefreshIndicator(
                   onRefresh: () => _refreshOrders(context),
                   child: CustomScrollView(
@@ -141,10 +133,10 @@ class _EmployeeHomeState extends State<EmployeeHome>
                             ),
                           ),
                           centerTitle: true,
-                          title: const Text(
-                            'Welcome Back Emp 👋',
+                          title: Text(
+                            'Welcome Back ${locator.get<AdminDataLayer>().currentEmployee?.name} 👋',
                             style: TextStyle(
-                                fontSize: 20,
+                                fontSize: 14,
                                 fontWeight: FontWeight.w500,
                                 color: Colors.black),
                           ),
@@ -163,19 +155,19 @@ class _EmployeeHomeState extends State<EmployeeHome>
                                 backgroundImage:
                                     AssetImage('assets/pfp_emp.png'),
                               ),
-                              const Text(
-                                'Employee Name',
+                              Text(
+                                '${locator.get<AdminDataLayer>().currentEmployee?.name}',
                                 style: TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold,
                                     color: Color(0xff072D6F)),
                               ),
-                              const Text(
-                                'ID: E-123324',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                ),
-                              ),
+                              // Text(
+                              //   'ID: ${locator.get<AdminDataLayer>().currentEmployee?.employeeId}',
+                              //   style: TextStyle(
+                              //     fontSize: 12,
+                              //   ),
+                              // ),
                               const SizedBox(height: 10),
                               const Padding(
                                 padding: EdgeInsets.symmetric(
@@ -183,7 +175,7 @@ class _EmployeeHomeState extends State<EmployeeHome>
                                 child: Align(
                                   alignment: Alignment.centerLeft,
                                   child: Text(
-                                    'Complete Orders',
+                                    'Progress',
                                     style: TextStyle(
                                         fontSize: 15,
                                         fontWeight: FontWeight.bold,
@@ -228,7 +220,7 @@ class _EmployeeHomeState extends State<EmployeeHome>
                                   }
                                 },
                               ),
-                              const SizedBox(height: 15),
+                              const SizedBox(height: 20),
                               TabBar(
                                 controller: tabController,
                                 indicator: BoxDecoration(
@@ -356,7 +348,7 @@ class _EmployeeHomeState extends State<EmployeeHome>
                                                   bottom: 15),
                                               child: AvailbleOrders(
                                                   order: order,
-                                                  ordersBloc: ordersBloc),
+                                                  ordersBloc: bloc),
                                             );
                                           }).toList(),
                                         ),

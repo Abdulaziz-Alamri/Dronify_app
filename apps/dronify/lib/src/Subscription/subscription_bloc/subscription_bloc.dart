@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:dronify/utils/db_operations.dart';
@@ -11,7 +9,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:meta/meta.dart';
 import 'package:moyasar/moyasar.dart';
 
 part 'subscription_event.dart';
@@ -148,7 +145,8 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
       }
     }
     return await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
+        // desiredAccuracy: LocationAccuracy.high
+        );
   }
 
   FutureOr<void> getNewLocation(

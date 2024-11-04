@@ -1,15 +1,11 @@
-import 'dart:developer';
 import 'package:dronify_mngmt/Admin/admin_datalayer/admin_data_layer.dart';
 import 'package:dronify_mngmt/utils/db_operations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'orders_bloc_event.dart';
 import 'orders_bloc_state.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
-
-// final supabase = Supabase.instance.client;
 
 class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
-  final AdminDataLayer dataLayer; // تعريف AdminDataLayer
+  final AdminDataLayer dataLayer;
 
   OrdersBloc({required this.dataLayer}) : super(OrderLoading()) {
     on<FetchOrders>(_onFetchOrders);
@@ -20,7 +16,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
       FetchOrders event, Emitter<OrdersState> emit) async {
     try {
       emit(OrderLoading());
-      await dataLayer.fetchOrders();
+      await dataLayer.fetchEmpOrders();
 
       emit(OrderLoaded(
         completeOrders: dataLayer.empCompleteOrders,
@@ -31,7 +27,6 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
         isAvailableOrdersEmpty: dataLayer.empAvailableOrders.isEmpty,
       ));
     } catch (error) {
-      log('Error: $error');
       emit(OrderError(message: "Error fetching orders: $error"));
     }
   }
@@ -46,7 +41,15 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
         'status': event.newStatus
       }).eq('order_id', event.orderId);
 
-      add(FetchOrders());
+      await dataLayer.fetchEmpOrders();
+       emit(OrderLoaded(
+        completeOrders: dataLayer.empCompleteOrders,
+        incompleteOrders: dataLayer.empIncompleteOrders,
+        availableOrders: dataLayer.empAvailableOrders,
+        isCompleteOrdersEmpty: dataLayer.empCompleteOrders.isEmpty,
+        isIncompleteOrdersEmpty: dataLayer.empIncompleteOrders.isEmpty,
+        isAvailableOrdersEmpty: dataLayer.empAvailableOrders.isEmpty,
+      ));
     } catch (error) {
       emit(OrderError(message: "Failed to update order status: $error"));
     }

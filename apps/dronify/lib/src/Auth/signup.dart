@@ -12,11 +12,8 @@ class Signup extends StatefulWidget {
 
 class _SignupState extends State<Signup> {
   final TextEditingController emailController = TextEditingController();
-
   final TextEditingController passwordController = TextEditingController();
-
   final TextEditingController nameController = TextEditingController();
-
   final TextEditingController phoneController = TextEditingController();
 
   @override
@@ -24,18 +21,24 @@ class _SignupState extends State<Signup> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: Stack(
+        clipBehavior: Clip.none,
         children: [
-          
           buildHeader(),
           buildForm(context),
+          SafeArea(
+            child: BackButton(
+              color: Colors.white,
+              onPressed: () => Navigator.pop(context),
+            ),
+          ),
         ],
       ),
     );
   }
 
-  Widget 
-  buildHeader() {
+  Widget buildHeader() {
     return Container(
+      height: MediaQuery.of(context).size.height * 0.35,
       decoration: const BoxDecoration(
         image: DecorationImage(
           image: AssetImage('assets/appbar.png'),
@@ -43,7 +46,9 @@ class _SignupState extends State<Signup> {
         ),
       ),
       child: Center(
-        child: Image.asset('assets/Group 34611.png'),
+        child: Image.asset(
+          'assets/Group 34611.png',
+        ),
       ),
     );
   }

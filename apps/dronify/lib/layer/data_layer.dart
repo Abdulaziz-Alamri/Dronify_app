@@ -95,7 +95,7 @@ class DataLayer {
 
       print("Supabase response: $response");
 
-      if (response != null && response is Map<String, dynamic>) {
+      if (response != null) {
         final fetchedCustomer = CustomerModel.fromJson({
           'customer_id': response['user_id'] ?? '',
           'name': response['name'] ?? 'Unknown',

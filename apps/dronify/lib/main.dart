@@ -1,11 +1,7 @@
-import 'dart:developer';
-
-import 'package:dronify/layer/data_layer.dart';
 import 'package:dronify/repository/auth_repository.dart';
 import 'package:dronify/splash/splash_screen.dart';
 import 'package:dronify/src/Auth/bloc/auth_bloc.dart';
 import 'package:dronify/src/Order/rating_screen.dart';
-import 'package:dronify/test.dart';
 import 'package:dronify/utils/db_operations.dart';
 import 'package:dronify/utils/setup.dart';
 import 'package:flutter/material.dart';

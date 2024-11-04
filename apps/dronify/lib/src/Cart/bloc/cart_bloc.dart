@@ -3,7 +3,6 @@ import 'package:bloc/bloc.dart';
 import 'package:dronify/layer/data_layer.dart';
 import 'package:dronify/models/cart_model.dart';
 import 'package:dronify/models/order_model.dart';
-import 'package:dronify/models/payment_model.dart';
 import 'package:dronify/src/Cart/bloc/cart_event.dart';
 import 'package:dronify/src/Cart/bloc/cart_state.dart';
 import 'package:dronify/utils/db_operations.dart';
@@ -96,44 +95,14 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         imageUrls: [],
         latitude: order.address![0],
         longitude: order.address![1],
-        imageFiles: imageFiles ?? [],
+        imageFiles: imageFiles,
       );
 
-      //   await _savePayment(
-      //       orderId: order.orderId!,
-      //       customerId: order.customerId!,
-      //       amount: order.totalPrice!);
     }
 
     add(LoadCartItemsEvent());
     _showSnackBar(context, 'Payment successful!');
   }
-
-  // Future<void> _savePayment({
-  //   required int orderId,
-  //   required String customerId,
-  //   required double amount,
-  // }) async {
-  //   try {
-  //     // final payment = PaymentModel(
-  //     //   orderId: orderId,
-  //     //   userId: customerId,
-  //     //   amount: amount,
-  //     // );
-
-  //     // final paymentData = payment.toJson();
-  //     //   paymentData.remove('payment_id');
-  //     //  log('$paymentData');
-  //     await supabase.from('payment').insert({
-  //       'order_id': orderId,
-  //       'user_id': customerId,
-  //       'amount': amount,
-  //     });
-  //     log("Payment saved for order ID: $orderId");
-  //   } catch (error) {
-  //     log("Error saving payment: $error");
-  //   }
-  // }
 
   void _showSnackBar(BuildContext context, String message) {
     ScaffoldMessenger.of(context)

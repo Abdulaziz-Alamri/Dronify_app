@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 import 'package:dronify/layer/data_layer.dart';
 import 'package:dronify/models/order_model.dart';
@@ -9,12 +8,10 @@ import 'package:dronify/utils/db_operations.dart';
 import 'package:dronify/utils/setup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sizer/sizer.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:latlong2/latlong.dart';
-import 'package:geolocator/geolocator.dart';
+
 
 class Services extends StatefulWidget {
   final ServiceModel service;
@@ -155,13 +152,26 @@ class _ServicesState extends State<Services> {
                         width: 60,
                         height: 60,
                         decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          borderRadius: BorderRadius.circular(10),
+                          gradient: LinearGradient(
+                            colors: [Color(0xff0A7995), Color(0xff73DDFF)],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                          borderRadius: BorderRadius.circular(12),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.15),
+                              blurRadius: 10,
+                              offset: Offset(0, 4),
+                            ),
+                          ],
                         ),
-                        child: Icon(
-                          Icons.add,
-                          size: 30,
-                          color: Colors.grey[700],
+                        child: Center(
+                          child: FaIcon(
+                            FontAwesomeIcons.plus,
+                            size: 24,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),
@@ -215,7 +225,7 @@ class _ServicesState extends State<Services> {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        'Your location',
+                        'Your Location',
                         style: TextStyle(
                           fontSize: 16.sp,
                           color: Colors.black,
@@ -231,49 +241,55 @@ class _ServicesState extends State<Services> {
                       builder: (context, state) {
                         if (state is LocationFetchedState) {
                           return Container(
-                            height: 300,
-                            width: double.infinity,
+                            height: 210,
+                            width: 345,
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(16),
+                              border: Border.all(
+                                  width: 2, color: Color(0xff73DDFF)),
                             ),
-                            child: FlutterMap(
-                              options: MapOptions(
-                                initialCenter: state.location,
-                                maxZoom: 15.0,
-                                onTap: (tapPosition, point) {
-                                  bloc.add(PinLocationEvent(
-                                      tapPosition: tapPosition, point: point));
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(
-                                          'Selected Location: Latitude: ${convertToDMS(point.latitude)}, Longitude: ${convertToDMS(point.longitude)}'),
-                                    ),
-                                  );
-                                },
-                              ),
-                              children: [
-                                TileLayer(
-                                  urlTemplate:
-                                      "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-                                  subdomains: const ['a', 'b', 'c'],
-                                ),
-                                if (bloc.selectedLocation != null)
-                                  MarkerLayer(
-                                    markers: [
-                                      Marker(
-                                        point: bloc.selectedLocation!,
-                                        width: 80.0,
-                                        height: 80.0,
-                                        child: Icon(
-                                          Icons.location_on,
-                                          color: Colors.red,
-                                          size: 40,
-                                        ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(14),
+                              child: FlutterMap(
+                                options: MapOptions(
+                                  initialCenter: state.location,
+                                  maxZoom: 15.0,
+                                  onTap: (tapPosition, point) {
+                                    bloc.add(PinLocationEvent(
+                                        tapPosition: tapPosition,
+                                        point: point));
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                            'Selected Location: Latitude: ${convertToDMS(point.latitude)}, Longitude: ${convertToDMS(point.longitude)}'),
                                       ),
-                                    ],
+                                    );
+                                  },
+                                ),
+                                children: [
+                                  TileLayer(
+                                    urlTemplate:
+                                        "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                                    subdomains: const ['a', 'b', 'c'],
                                   ),
-                              ],
+                                  if (bloc.selectedLocation != null)
+                                    MarkerLayer(
+                                      markers: [
+                                        Marker(
+                                          point: bloc.selectedLocation!,
+                                          width: 80.0,
+                                          height: 80.0,
+                                          child: const Icon(
+                                            Icons.location_on,
+                                            color: Colors.red,
+                                            size: 40,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                ],
+                              ),
                             ),
                           );
                         }
@@ -304,13 +320,26 @@ class _ServicesState extends State<Services> {
                         width: 60,
                         height: 60,
                         decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          borderRadius: BorderRadius.circular(10),
+                          gradient: LinearGradient(
+                            colors: [Color(0xff0A7995), Color(0xff73DDFF)],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                          borderRadius: BorderRadius.circular(12),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.15),
+                              blurRadius: 10,
+                              offset: Offset(0, 4),
+                            ),
+                          ],
                         ),
-                        child: Icon(
-                          Icons.calendar_today,
-                          size: 30,
-                          color: Colors.grey[700],
+                        child: Center(
+                          child: FaIcon(
+                            FontAwesomeIcons.calendarDays,
+                            size: 24,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),
@@ -476,11 +505,14 @@ class _ServicesState extends State<Services> {
                             ),
                             Text(
                               'Are you from Riyadh?',
-                              style: TextStyle(fontSize: 14.sp),
+                              style: TextStyle(fontSize: 16.sp),
                             ),
                           ],
                         );
                       },
+                    ),
+                    SizedBox(
+                      height: 20,
                     ),
                     Center(
                       child: Container(

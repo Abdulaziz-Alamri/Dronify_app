@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dronify_mngmt/Admin/Admin_Home/custom_barchart.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -11,19 +9,17 @@ class OrdersStats extends StatelessWidget {
     final response =
         await Supabase.instance.client.rpc('fetch_order_counts_by_service');
 
-    if (response is PostgrestResponse && response != null) {
+    if (response is PostgrestResponse) {
       throw Exception('Error fetching data: ${response}');
     }
 
-    // تأكد من أن response هو قائمة
     if (response is List) {
-      log('Fetched data: $response');
       return response.map((e) {
         return {
           "service_id": (e["service_id"] as int)
-              .toDouble(), // تحويل service_id إلى double
+              .toDouble(),
           "order_count": (e["order_count"] as int)
-              .toDouble(), // تحويل order_count إلى double
+              .toDouble(),
         };
       }).toList();
     } else {
@@ -65,7 +61,7 @@ class OrdersStats extends StatelessWidget {
               future: fetchOrderCountsByService(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
+                  return  Center(child: Image.asset('assets/drone.gif'));
                 } else if (snapshot.hasError) {
                   return Center(child: Text('Error: ${snapshot.error}'));
                 } else {

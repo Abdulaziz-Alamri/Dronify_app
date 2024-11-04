@@ -9,7 +9,7 @@ class ProfitChart extends StatelessWidget {
     final response =
         await Supabase.instance.client.rpc('fetch_daily_profits').select();
 
-    if (response is List) {
+    if (response.isNotEmpty) {
       return response.map((e) {
         return {
           "day": e["day"],
@@ -55,7 +55,7 @@ class ProfitChart extends StatelessWidget {
               future: fetchDailyProfits(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
+                  return  Center(child: Image.asset('assets/drone.gif'));
                 } else if (snapshot.hasError) {
                   return Center(child: Text('Error: ${snapshot.error}'));
                 } else {

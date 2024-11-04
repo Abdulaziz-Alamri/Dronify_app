@@ -5,10 +5,10 @@ import 'package:dronify/repository/auth_repository.dart';
 import 'package:dronify/utils/db_operations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dronify/models/customer_model.dart';
-import 'package:dronify/utils/setup.dart'; // لضمان الوصول لـ DataLayer
+import 'package:dronify/utils/setup.dart';
 
-part 'auth_event.dart'; // Event declarations
-part 'auth_state.dart'; // State declarations
+part 'auth_event.dart';
+part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthRepository authRepository;
@@ -92,8 +92,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         otp: event.otp,
       );
 
-      if (user != null) {
-        emit(AuthSignedIn()); // OTP verified successfully
+      if (user.id.isNotEmpty) {
+        emit(AuthSignedIn());
       } else {
         emit(AuthError('Invalid OTP. Please try again.'));
       }
@@ -113,25 +113,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(PasswordResetFailed('Error: ${e.toString()}')); // Handle error
     }
   }
-
-  // FutureOr<void> onVerifyOtprecover(
-  //     VerifycoverEvent event, Emitter<AuthState> emit) async {
-  //   try {
-  //     final user = await authRepository.verifyOtprecover(
-  //       email: event.email,
-  //       otp: event.otp,
-  //     );
-
-  //     if (user != null) {
-  //       emit(AuthSignedIn());
-  //     } else {
-  //       emit(AuthError('Invalid OTP. Please try again.'));
-  //     }
-  //   } catch (e) {
-  //     emit(AuthError('Error: ${e.toString()}'));
-  //   }
-  // }
-
   FutureOr<void> onVerifyOtprecover(
       VerifycoverEvent event, Emitter<AuthState> emit) async {
     try {
@@ -140,7 +121,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         otp: event.otp,
       );
 
-      if (user != null) {
+      if (user.id.isNotEmpty) {
         emit(AuthSignedIn());
       } else {
         emit(AuthError('Invalid OTP. Please try again.'));

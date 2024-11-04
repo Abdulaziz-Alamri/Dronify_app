@@ -1,7 +1,5 @@
 import 'dart:async';
-import 'dart:developer';
 import 'package:dronify_mngmt/Admin/admin_datalayer/admin_data_layer.dart';
-import 'package:dronify_mngmt/Employee_Home/bloc/orders_bloc_bloc.dart';
 import 'package:dronify_mngmt/repository/auth_repository.dart';
 import 'package:dronify_mngmt/utils/db_operations.dart';
 import 'package:dronify_mngmt/utils/setup.dart';
@@ -32,15 +30,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       );
 
       if (response.user != null) {
-        // final customer = CustomerModel(
-        //   customerId: response.user!.id,
-        //   name: event.username,
-        //   email: event.email,
-        //   phone: event.phone,
-        // );
-        // await locator.get<DataLayer>().upsertCustomer(customer);
-        // locator.get<DataLayer>().saveCustomerData(customer);
-
         emit(AuthSignedUp());
       } else {
         emit(AuthError('Sign-up failed. Please try again.'));
@@ -84,7 +73,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         otp: event.otp,
       );
 
-      if (user != null) {
+      if (user.id.isNotEmpty) {
         await locator.get<AdminDataLayer>().fetchEmpOrders();
         emit(AuthSignedIn()); // OTP verified successfully
       } else {
@@ -115,7 +104,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         otp: event.otp,
       );
 
-      if (user != null) {
+      if (user.id.isNotEmpty) {
         emit(AuthSignedIn());
       } else {
         emit(AuthError('Invalid OTP. Please try again.'));
