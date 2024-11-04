@@ -69,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           CustomScrollView(
             slivers: [
               SliverAppBar(
-                expandedHeight: 120.0,
+                expandedHeight: 80.0,
                 flexibleSpace: FlexibleSpaceBar(
                   background: Container(
                     decoration: const BoxDecoration(
@@ -114,36 +114,22 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
                     final userName = snapshot.data ?? "User";
 
-<<<<<<< HEAD
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Align(
-=======
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SlideTransition(
                           position: _slideAnimation,
                           child: Align(
->>>>>>> 296174b7b4b7c702c6423abfd18bee134ad7bd3a
                             alignment: Alignment.topCenter,
                             child: WelcomeCard(
                               name: userName,
                             ),
                           ),
-<<<<<<< HEAD
-                          const SizedBox(height: 15),
-                          const Padding(
-=======
                         ),
                         const SizedBox(height: 15),
                         FadeTransition(
                           opacity: _fadeAnimation,
                           child: const Padding(
->>>>>>> 296174b7b4b7c702c6423abfd18bee134ad7bd3a
                             padding: EdgeInsets.symmetric(horizontal: 16),
                             child: Text(
                               'Special Offers',
@@ -153,16 +139,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                   color: Color(0xff172B4D)),
                             ),
                           ),
-<<<<<<< HEAD
-                          const SizedBox(height: 20),
-                          Center(
-=======
                         ),
                         const SizedBox(height: 20),
                         Center(
                           child: FadeTransition(
                             opacity: _fadeAnimation,
->>>>>>> 296174b7b4b7c702c6423abfd18bee134ad7bd3a
                             child: const SpecialOfferCard(
                               imageUrl:
                                   'assets/Group_34606-removebg-preview.png',
@@ -170,16 +151,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                               description: 'Get 25%',
                             ),
                           ),
-<<<<<<< HEAD
-                          const SizedBox(height: 10),
-                          const Padding(
-=======
                         ),
                         const SizedBox(height: 10),
                         FadeTransition(
                           opacity: _fadeAnimation,
                           child: const Padding(
->>>>>>> 296174b7b4b7c702c6423abfd18bee134ad7bd3a
                             padding: EdgeInsets.symmetric(horizontal: 16),
                             child: Text(
                               'Services',
@@ -189,10 +165,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                   color: Color(0xff172B4D)),
                             ),
                           ),
-<<<<<<< HEAD
-                          const SizedBox(
-                            height: 10,
-=======
                         ),
                         const SizedBox(height: 10),
                         SlideTransition(
@@ -207,24 +179,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                   'Professional cleaning service for tall buildings using advanced drones.',
                               iconPath: 'assets/Vector (12).png',
                             ),
->>>>>>> 296174b7b4b7c702c6423abfd18bee134ad7bd3a
                           ),
-                          Center(
-                            child: ServiceCard(
-                              serviceId: 1,
-                              imageUrl:
-                                  'assets/Dasu-pulizia-facciata-con-drone-Milano 1.png',
-                              title: 'Building Cleaning',
-                              description:
-                                  'Professional cleaning service for tall buildings using advanced drones.',
-                              iconPath: 'assets/Vector (12).png',
-                            ),
-                          ),
-                          SizedBox(
-                            height: 240,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: SizedBox(
+                            height: 180,
                             child: GridView(
-                              // padding:
-                              //     const EdgeInsets.symmetric(horizontal: 8),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8),
                               physics: const NeverScrollableScrollPhysics(),
                               gridDelegate:
                                   const SliverGridDelegateWithFixedCrossAxisCount(
@@ -259,9 +222,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                               ],
                             ),
                           ),
-                          SizedBox(height: 14.h),
-                        ],
-                      ),
+                        ),
+                        SizedBox(height: 14.h),
+                      ],
                     );
                   },
                 ),
