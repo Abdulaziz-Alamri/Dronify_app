@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 import 'package:dronify_mngmt/Admin/admin_datalayer/admin_data_layer.dart';
 import 'package:dronify_mngmt/repository/auth_repository.dart';
 import 'package:dronify_mngmt/utils/db_operations.dart';
@@ -19,7 +18,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<VerifyEvent>(onVerifyOtp);
     on<VerifycoverEvent>(onVerifyOtprecover);
     on<ForgotPasswordEvent>(onForgotPassword);
-    on<RequestOtpEmail>(sendOtp); // تأكد من إضافة هذا السطر
+    on<RequestOtpEmail>(sendOtp);
   }
 
   Future<void> onSignUp(SignUpEvent event, Emitter<AuthState> emit) async {
