@@ -29,7 +29,7 @@ class HomeScreen extends StatelessWidget {
           CustomScrollView(
             slivers: [
               SliverAppBar(
-                expandedHeight: 80.0,
+                expandedHeight: 120.0,
                 flexibleSpace: FlexibleSpaceBar(
                   background: Container(
                     decoration: const BoxDecoration(
@@ -74,66 +74,67 @@ class HomeScreen extends StatelessWidget {
 
                     final userName = snapshot.data ?? "User";
 
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Align(
-                          alignment: Alignment.topCenter,
-                          child: WelcomeCard(
-                            name: userName,
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Align(
+                            alignment: Alignment.topCenter,
+                            child: WelcomeCard(
+                              name: userName,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 15),
-                        const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 16),
-                          child: Text(
-                            'Special Offers',
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xff172B4D)),
+                          const SizedBox(height: 15),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 16),
+                            child: Text(
+                              'Special Offers',
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xff172B4D)),
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 20),
-                        Center(
-                          child: const SpecialOfferCard(
-                            imageUrl: 'assets/Group_34606-removebg-preview.png',
-                            title: 'Offer Cleaning Service',
-                            description: 'Get 25%',
+                          const SizedBox(height: 20),
+                          Center(
+                            child: const SpecialOfferCard(
+                              imageUrl:
+                                  'assets/Group_34606-removebg-preview.png',
+                              title: 'Offer Cleaning Service',
+                              description: 'Get 25%',
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 10),
-                        const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 16),
-                          child: Text(
-                            'Services',
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xff172B4D)),
+                          const SizedBox(height: 10),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 16),
+                            child: Text(
+                              'Services',
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xff172B4D)),
+                            ),
                           ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Center(
-                          child: ServiceCard(
-                            serviceId: 1,
-                            imageUrl:
-                                'assets/Dasu-pulizia-facciata-con-drone-Milano 1.png',
-                            title: 'Building Cleaning',
-                            description:
-                                'Professional cleaning service for tall buildings using advanced drones.',
-                            iconPath: 'assets/Vector (12).png',
+                          const SizedBox(
+                            height: 10,
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: SizedBox(
-                            height: 180,
+                          Center(
+                            child: ServiceCard(
+                              serviceId: 1,
+                              imageUrl:
+                                  'assets/Dasu-pulizia-facciata-con-drone-Milano 1.png',
+                              title: 'Building Cleaning',
+                              description:
+                                  'Professional cleaning service for tall buildings using advanced drones.',
+                              iconPath: 'assets/Vector (12).png',
+                            ),
+                          ),
+                          SizedBox(
+                            height: 240,
                             child: GridView(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8),
+                              // padding:
+                              //     const EdgeInsets.symmetric(horizontal: 8),
                               physics: const NeverScrollableScrollPhysics(),
                               gridDelegate:
                                   const SliverGridDelegateWithFixedCrossAxisCount(
@@ -162,9 +163,9 @@ class HomeScreen extends StatelessWidget {
                               ],
                             ),
                           ),
-                        ),
-                        SizedBox(height: 14.h),
-                      ],
+                          SizedBox(height: 14.h),
+                        ],
+                      ),
                     );
                   },
                 ),
