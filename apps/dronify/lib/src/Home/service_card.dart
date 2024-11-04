@@ -102,7 +102,7 @@ class ServiceCard extends StatelessWidget {
                   color: Color(0xffFFFFFF),
                   fontWeight: FontWeight.w600,
                 ),
-                textAlign: TextAlign.start,
+                textAlign: TextAlign.center,
               ),
             ),
           ],

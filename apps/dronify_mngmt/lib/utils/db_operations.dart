@@ -51,7 +51,6 @@ setOrderComplete({
   }
 
   // send notification to customer
-
   final userResponse = await supabase
       .from('orders')
       .select('user_id')
@@ -66,7 +65,38 @@ setOrderComplete({
       .single();
 
   final String externalKey = externalKeyResponse['external_key'].toString();
-  sendNotification(externalKey: externalKey, userId: userResponse['user_id'], orderId: order.orderId!);
+  sendCompleteOrderNotification(
+      externalKey: externalKey,
+      userId: userResponse['user_id'],
+      orderId: order.orderId!);
+}
+
+setOrderConfrimed(
+    {required String employeeId,
+    required String newStatus,
+    required int orderId}) async {
+  await supabase.from('orders').update(
+      {'employee_id': employeeId, 'status': newStatus}).eq('order_id', orderId);
+
+  // send notification to customer
+  final userResponse = await supabase
+      .from('app_user')
+      .select('external_key')
+      .eq('role', orderId)
+      .single();
+
+  //  fetch external_key
+  final externalKeyResponse = await supabase
+      .from('app_user')
+      .select('external_key')
+      .eq('user_id', userResponse['user_id'])
+      .single();
+
+  final String externalKey = externalKeyResponse['external_key'].toString();
+  sendCompleteOrderNotification(
+      externalKey: externalKey,
+      userId: userResponse['user_id'],
+      orderId: orderId);
 }
 
 cancelOrder({required OrderModel order}) async {
