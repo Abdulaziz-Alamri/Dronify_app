@@ -133,14 +133,23 @@ class _EmployeeHomeState extends State<EmployeeHome>
                               ),
                             ),
                           ),
-                          title: Text(
-                            'Welcome Back ${locator.get<AdminDataLayer>().currentEmployee?.name} 👋',
-                            style: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.white),
+                          title: Container(
+                            child: Stack(children: [
+                              Positioned(
+                                top: 9.4.h,
+                                left: 5.h,
+                                child: Text(
+                                  'Welcome Back ${locator.get<AdminDataLayer>().currentEmployee?.name} 👋',
+                                  style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.white),
+                                ),
+                              ),
+                            ]),
                           ),
                         ),
+                        centerTitle: true,
                         backgroundColor: Colors.transparent,
                         pinned: false,
                       ),
