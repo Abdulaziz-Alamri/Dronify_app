@@ -9,11 +9,9 @@ class OtpScreen extends StatelessWidget {
   const OtpScreen({
     super.key,
     required this.email,
- 
   });
 
   final String email;
- 
 
   @override
   Widget build(BuildContext context) {
@@ -62,8 +60,12 @@ class OtpScreen extends StatelessWidget {
             showDialog(
               barrierDismissible: false,
               context: context,
-              builder: (context) => const Center(
-                child: CircularProgressIndicator(),
+              builder: (context) => Center(
+                child: Image.asset(
+                  'assets/drone.gif',
+                  height: 50,
+                  width: 50,
+                ),
               ),
             );
           } else if (state is AuthSignedIn) {

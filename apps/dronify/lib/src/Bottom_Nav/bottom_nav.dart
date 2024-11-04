@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:dronify/src/Bottom_Nav/bottom_nav_bloc/bottom_nav_bloc.dart';
 import 'package:dronify/src/live_chat/live_chat.dart';
@@ -10,7 +9,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class BottomNav extends StatelessWidget {
   final int index;
-  const BottomNav({super.key, this.index=0});
+  const BottomNav({super.key, this.index = 0});
 
   @override
   Widget build(BuildContext context) {
@@ -68,10 +67,6 @@ class BottomNav extends StatelessWidget {
               return Container(
                 decoration: const BoxDecoration(
                   color: Colors.black,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(50),
-                    topRight: Radius.circular(50),
-                  ),
                 ),
                 child: AnimatedBottomNavigationBar.builder(
                   itemCount: iconList.length,
@@ -82,7 +77,7 @@ class BottomNav extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Padding(
-                          padding: EdgeInsets.only(top: 15),
+                          padding: const EdgeInsets.only(top: 15),
                           child: Icon(
                             iconList[index],
                             size: 23,

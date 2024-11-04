@@ -1,23 +1,95 @@
-import 'dart:math';
-
-import 'package:dronify_mngmt/Admin/Admin_Home/custom_barchart.dart';
 import 'package:dronify_mngmt/Admin/Admin_Home/custom_stat_card.dart';
-import 'package:fl_chart/fl_chart.dart';
+import 'package:dronify_mngmt/Admin/Admin_Home/employees_barchart.dart';
+import 'package:dronify_mngmt/Admin/Admin_Home/orders_stats.dart';
+import 'package:dronify_mngmt/Admin/Admin_Home/profit_chart.dart';
+import 'package:dronify_mngmt/Auth/first_screen.dart';
+import 'package:dronify_mngmt/repository/auth_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AdminHome extends StatelessWidget {
   const AdminHome({super.key});
 
+  Future<double> fetchUserCount() async {
+    final response = await Supabase.instance.client.rpc('count_users');
+    if (response == null) {
+      throw Exception('Failed to load user count');
+    }
+    return (response as int).toDouble();
+  }
+
+  Future<double> fetchOrderCount() async {
+    final response = await Supabase.instance.client.rpc('count_orders');
+    if (response == null) {
+      throw Exception('Failed to load order count');
+    }
+    return (response as int).toDouble();
+  }
+
+  Future<double> fetchTotalProfits() async {
+    final response = await Supabase.instance.client.rpc('total_profits');
+    if (response == null) {
+      throw Exception('Failed to load total profits');
+    }
+    return (response as num).toDouble();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final List<int> profits = [0, 500, 1500, 1000, 4000];
-
+    final AuthRepository authRepository = AuthRepository();
     return Scaffold(
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Color(0xFF072D6F),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Admin Panel',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    'Manage and monitor data',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.logout, color: Colors.black),
+              title: const Text('Log Out'),
+              onTap: () async {
+                await authRepository.logout();
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const FirstScreen(),
+                  ),
+                  (route) => false,
+                );
+              },
+            ),
+          ],
+        ),
+      ),
       backgroundColor: const Color(0xffF5F5F7),
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            expandedHeight: 80.0,
+            expandedHeight: 110.0,
             flexibleSpace: FlexibleSpaceBar(
               background: Container(
                 decoration: const BoxDecoration(
@@ -35,9 +107,10 @@ class AdminHome extends StatelessWidget {
               title: const Text(
                 'Welcome Back Admin 👋',
                 style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black),
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black,
+                ),
               ),
             ),
             backgroundColor: Colors.transparent,
@@ -49,202 +122,92 @@ class AdminHome extends StatelessWidget {
               child: Column(
                 children: [
                   const SizedBox(height: 15),
-                  const Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      CustomStatCard(title: 'Users', value: '10K'),
-                      CustomStatCard(title: 'Orders', value: '10K'),
-                      CustomStatCard(title: 'Profits', value: '10K'),
+                      Flexible(
+                        child: FutureBuilder<double>(
+                          future: fetchUserCount(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return Image.asset(
+                                'assets/drone.gif',
+                                height: 50,
+                                width: 50,
+                              );
+                            } else if (snapshot.hasError) {
+                              debugPrint(
+                                  'Error fetching user count: ${snapshot.error}');
+                              return Text('Error: ${snapshot.error}');
+                            } else {
+                              return CustomStatCard(
+                                title: 'Users',
+                                value: '${snapshot.data?.toInt()}',
+                              );
+                            }
+                          },
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Flexible(
+                        child: FutureBuilder<double>(
+                          future: fetchOrderCount(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return Image.asset(
+                                'assets/drone.gif',
+                                height: 50,
+                                width: 50,
+                              );
+                            } else if (snapshot.hasError) {
+                              debugPrint(
+                                  'Error fetching order count: ${snapshot.error}');
+                              return Text('Error: ${snapshot.error}');
+                            } else {
+                              return CustomStatCard(
+                                title: 'Orders',
+                                value: '${snapshot.data?.toInt()}',
+                              );
+                            }
+                          },
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Flexible(
+                        child: FutureBuilder<double>(
+                          future: fetchTotalProfits(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return Image.asset(
+                                'assets/drone.gif',
+                                height: 50,
+                                width: 50,
+                              );
+                            } else if (snapshot.hasError) {
+                              debugPrint(
+                                  'Error fetching total profits: ${snapshot.error}');
+                              return Text('Error: ${snapshot.error}');
+                            } else {
+                              return CustomStatCard(
+                                title: 'Profits',
+                                value: '${snapshot.data?.toStringAsFixed(0)}',
+                              );
+                            }
+                          },
+                        ),
+                      ),
                     ],
                   ),
                   const SizedBox(height: 10),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 16),
-                    height: 300,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(16),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.05),
-                          blurRadius: 3,
-                          offset: const Offset(0, 1),
-                        ),
-                      ],
-                    ),
-                    child: LineChart(
-                      LineChartData(
-                        titlesData: FlTitlesData(
-                          leftTitles: AxisTitles(
-                            sideTitles: SideTitles(
-                              showTitles: true,
-                              reservedSize: 40,
-                              getTitlesWidget: (value, meta) {
-                                return Text(
-                                  value.toInt().toString(),
-                                  style: const TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.black,
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                          bottomTitles: AxisTitles(
-                            sideTitles: SideTitles(
-                              showTitles: true,
-                              reservedSize: 30,
-                              getTitlesWidget: (value, meta) {
-                                switch (value.toInt()) {
-                                  case 0:
-                                    return const Text('Oct');
-                                  case 1:
-                                    return const Text('Nov');
-                                  case 2:
-                                    return const Text('Dec');
-                                  case 3:
-                                    return const Text('Jan');
-                                  case 4:
-                                    return const Text('Feb');
-                                  default:
-                                    return const Text('');
-                                }
-                              },
-                            ),
-                          ),
-                          topTitles: const AxisTitles(
-                            sideTitles: SideTitles(showTitles: false),
-                          ),
-                          rightTitles: const AxisTitles(
-                            sideTitles: SideTitles(showTitles: false),
-                          ),
-                        ),
-                        lineBarsData: [
-                          LineChartBarData(
-                            preventCurveOverShooting: true,
-                            spots: profits.asMap().entries.map((entry) {
-                              int index = entry.key;
-                              double value = entry.value.toDouble();
-                              return FlSpot(index.toDouble(), value);
-                            }).toList(),
-                            isCurved: true,
-                            color: Colors.blue,
-                            dotData: const FlDotData(show: true),
-                            belowBarData: BarAreaData(
-                              show: true,
-                              gradient: const LinearGradient(colors: [
-                                Color(0xff73DDFF),
-                                Color(0xff072D6F),
-                              ]),
-                            ),
-                          ),
-                        ],
-                        gridData: const FlGridData(show: true),
-                        borderData: FlBorderData(show: false),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 16),
-                    height: 160,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(16),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.05),
-                          blurRadius: 3,
-                          offset: const Offset(0, 1),
-                        ),
-                      ],
-                    ),
-                    child: BarChart(BarChartData(
-                        borderData: FlBorderData(show: false),
-                        barGroups: [
-                          BarChartGroupData(
-                            x: 1,
-                            barRods: [
-                              BarChartRodData(
-                                  toY: 5.5,
-                                  gradient: const LinearGradient(
-                                    colors: [
-                                      Color(0xff072D6F),
-                                      Color(0xff0D56D5),
-                                    ],
-                                    begin: FractionalOffset.bottomCenter,
-                                    end: FractionalOffset.topCenter,
-                                  )),
-                            ],
-                          ),
-                          BarChartGroupData(x: 1, barRods: [
-                            BarChartRodData(
-                                toY: 2.5,
-                                gradient: const LinearGradient(
-                                  colors: [
-                                    Color(0xff072D6F),
-                                    Color(0xff0D56D5),
-                                  ],
-                                  begin: FractionalOffset.bottomCenter,
-                                  end: FractionalOffset.topCenter,
-                                )),
-                          ]),
-                          BarChartGroupData(x: 1, barRods: [
-                            BarChartRodData(
-                                toY: 3.5,
-                                gradient: const LinearGradient(
-                                  colors: [
-                                    Color(0xff072D6F),
-                                    Color(0xff0D56D5),
-                                  ],
-                                  begin: FractionalOffset.bottomCenter,
-                                  end: FractionalOffset.topCenter,
-                                )),
-                          ]),
-                          BarChartGroupData(x: 1, barRods: [
-                            BarChartRodData(
-                                toY: 8.5,
-                                gradient: const LinearGradient(
-                                  colors: [
-                                    Color(0xff072D6F),
-                                    Color(0xff0D56D5),
-                                  ],
-                                  begin: FractionalOffset.bottomCenter,
-                                  end: FractionalOffset.topCenter,
-                                )),
-                          ]),
-                        ])),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 16),
-                    height: 380,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(16),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.05),
-                          blurRadius: 3,
-                          offset: const Offset(0, 1),
-                        ),
-                      ],
-                    ),
-                    child: CustomBarchart(),
-                  ),
-                  const SizedBox(
-                    height: 70,
-                  ),
+                  const ProfitChart(),
+                  const SizedBox(height: 10),
+                  const EmployeesBarchart(),
+                  const SizedBox(height: 10),
+                  const OrdersStats(),
+                  const SizedBox(height: 120),
                 ],
               ),
             ),

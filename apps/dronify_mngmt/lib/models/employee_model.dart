@@ -27,7 +27,7 @@ class EmployeeModel {
       phone: json['app_user']['phone'],
       position: json['position'],
       rating: json['rating'] ?? 0,
-      imageUrl: json['image_url']);
+      imageUrl: json['image_url'] ?? 'assets/pfp_emp.png');
   }
 
   Map<String, dynamic> toJson() {

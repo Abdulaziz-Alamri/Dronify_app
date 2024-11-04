@@ -1,19 +1,22 @@
 import 'dart:developer';
 import 'package:bloc/bloc.dart';
-import 'package:dronify/Data_layer/data_layer.dart';
+import 'package:dronify/layer/data_layer.dart';
 import 'package:dronify/models/cart_model.dart';
 import 'package:dronify/models/order_model.dart';
 import 'package:dronify/src/Cart/bloc/cart_event.dart';
 import 'package:dronify/src/Cart/bloc/cart_state.dart';
 import 'package:dronify/utils/db_operations.dart';
+import 'package:dronify/utils/setup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:moyasar/moyasar.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class CartBloc extends Bloc<CartEvent, CartState> {
   final DataLayer dataLayer = GetIt.instance<DataLayer>();
+  final SupabaseClient supabase = Supabase.instance.client;
   CartModel cart = CartModel();
 
   CartBloc() : super(CartLoading()) {
@@ -25,7 +28,8 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   }
 
   void _loadCartItems(Emitter<CartState> emit) {
-    emit(CartUpdated(cart: dataLayer.cart));
+    cart = dataLayer.cart;
+    emit(CartUpdated(cart: cart));
   }
 
   void _addItemToCart(OrderModel order, Emitter<CartState> emit) {
@@ -74,12 +78,14 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     }
   }
 
-  void _handleSuccessfulPayment(BuildContext context, List<OrderModel> orders) {
+  Future<void> _handleSuccessfulPayment(
+      BuildContext context, List<OrderModel> orders) async {
     for (var order in orders) {
       List<XFile> imageFiles =
           order.images?.map((imagePath) => XFile(imagePath)).toList() ?? [];
 
       saveOrder(
+        orderId: order.orderId!,
         customerId: order.customerId!,
         serviceId: order.serviceId!,
         squareMeters: order.squareMeters!,
@@ -89,11 +95,11 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         imageUrls: [],
         latitude: order.address![0],
         longitude: order.address![1],
-        imageFiles: imageFiles ?? [],
+        imageFiles: imageFiles,
       );
+
     }
 
-    //  dataLayer.cart.clearCart();
     add(LoadCartItemsEvent());
     _showSnackBar(context, 'Payment successful!');
   }
@@ -104,12 +110,22 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   }
 
   void _removeItemFromCart(int orderId, Emitter<CartState> emit) {
+    emit(CartLoading());
+
     dataLayer.cart.removeItem(orderId);
-    emit(CartUpdated(cart: dataLayer.cart));
+
+    cart = dataLayer.cart;
+
+    emit(CartUpdated(cart: cart));
+
+    add(LoadCartItemsEvent());
   }
 
-  void _submitCart(Emitter<CartState> emit) {
+  void _submitCart(Emitter<CartState> emit) async {
+    locator.get<DataLayer>().fetchCustomerOrders();
     dataLayer.cart.clearCart();
+    cart.clearCart();
     emit(CartSubmitted(cart: dataLayer.cart));
+    add(LoadCartItemsEvent());
   }
 }

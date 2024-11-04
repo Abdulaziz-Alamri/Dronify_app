@@ -147,7 +147,12 @@ class AdminOrderCard extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 15),
+                    const Text(
+                      'Before Images',
+                      style: TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
                     Container(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 16, vertical: 16),
@@ -169,18 +174,60 @@ class AdminOrderCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 15),
+                    if (order.afterImages!.isNotEmpty)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'after Images',
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 16),
+                            height: 100,
+                            width: 345,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(16),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.05),
+                                  blurRadius: 3,
+                                  offset: const Offset(0, 1),
+                                ),
+                              ],
+                            ),
+                            child: CustomImageCards(
+                              imageUrls: order.afterImages!,
+                            ),
+                          ),
+                          const SizedBox(height: 15),
+                        ],
+                      ),
+                    const Text(
+                      'Location',
+                      style: TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 15),
                     Container(
-                        height: 210,
-                        width: 345,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(16),
-                        ),
+                      height: 210,
+                      width: 345,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(width: 2, color: const Color(0xff73DDFF)),
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(14),
                         child: FlutterMap(
                           options: MapOptions(
                             initialCenter: LatLng(
-                                _dmsToDecimal(order.address?[0]['latitude'])!,
-                                _dmsToDecimal(order.address?[0]['longitude'])!),
+                              _dmsToDecimal(order.address?[0]['latitude'])!,
+                              _dmsToDecimal(order.address?[0]['longitude'])!,
+                            ),
                             maxZoom: 15.0,
                           ),
                           children: [
@@ -194,10 +241,11 @@ class AdminOrderCard extends StatelessWidget {
                                   width: 80.0,
                                   height: 80.0,
                                   point: LatLng(
-                                      _dmsToDecimal(
-                                          order.address?[0]['latitude'])!,
-                                      _dmsToDecimal(
-                                          order.address?[0]['longitude'])!),
+                                    _dmsToDecimal(
+                                        order.address?[0]['latitude'])!,
+                                    _dmsToDecimal(
+                                        order.address?[0]['longitude'])!,
+                                  ),
                                   child: const Icon(
                                     Icons.location_on,
                                     color: Colors.red,
@@ -207,7 +255,9 @@ class AdminOrderCard extends StatelessWidget {
                               ],
                             ),
                           ],
-                        )),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),

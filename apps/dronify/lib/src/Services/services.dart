@@ -1,24 +1,25 @@
 import 'dart:io';
+import 'package:dronify/layer/data_layer.dart';
 import 'package:dronify/models/order_model.dart';
 import 'package:dronify/models/service_model.dart';
 import 'package:dronify/src/Order/order_screen.dart';
 import 'package:dronify/src/Services/services_bloc/services_bloc.dart';
 import 'package:dronify/utils/db_operations.dart';
+import 'package:dronify/utils/setup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sizer/sizer.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:latlong2/latlong.dart';
-import 'package:geolocator/geolocator.dart';
+
 
 class Services extends StatefulWidget {
   final ServiceModel service;
-
+  final String iconpath;
   const Services({
     super.key,
     required this.service,
+    required this.iconpath,
   });
 
   @override
@@ -28,6 +29,17 @@ class Services extends StatefulWidget {
 class _ServicesState extends State<Services> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController squareAreaController = TextEditingController();
+  late final int? orderId;
+
+  @override
+  void initState() {
+    super.initState();
+    initializeOrderId();
+  }
+
+  initializeOrderId() async {
+    orderId = await getOrderId();
+  }
 
   String convertToDMS(double coordinate) {
     int degrees = coordinate.floor();
@@ -36,12 +48,6 @@ class _ServicesState extends State<Services> {
     double seconds = (minutesWithDecimal - minutes) * 60;
 
     return '$degrees° $minutes\' ${seconds.toStringAsFixed(2)}"';
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    // _getCurrentLocation();
   }
 
   @override
@@ -69,7 +75,7 @@ class _ServicesState extends State<Services> {
                         Row(
                           children: [
                             Image.asset(
-                              widget.service.mainImage,
+                              widget.iconpath,
                               height: 18.sp,
                             ),
                             SizedBox(width: 1.h),
@@ -82,7 +88,7 @@ class _ServicesState extends State<Services> {
                             ),
                           ],
                         ),
-                        Icon(
+                        const Icon(
                           Icons.circle,
                           color: Colors.transparent,
                         )
@@ -146,13 +152,26 @@ class _ServicesState extends State<Services> {
                         width: 60,
                         height: 60,
                         decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          borderRadius: BorderRadius.circular(10),
+                          gradient: const LinearGradient(
+                            colors: [Color(0xff0A7995), Color(0xff73DDFF)],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                          borderRadius: BorderRadius.circular(12),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.15),
+                              blurRadius: 10,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
                         ),
-                        child: Icon(
-                          Icons.add,
-                          size: 30,
-                          color: Colors.grey[700],
+                        child: const Center(
+                          child: FaIcon(
+                            FontAwesomeIcons.plus,
+                            size: 24,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),
@@ -183,11 +202,10 @@ class _ServicesState extends State<Services> {
                                         top: 0,
                                         child: GestureDetector(
                                           onTap: () {
-                                            setState(() {
-                                              state.images.removeAt(index);
-                                            });
+                                            bloc.add(RemovedImageEvent(
+                                                image: bloc.images[index]));
                                           },
-                                          child: Icon(
+                                          child: const Icon(
                                             Icons.remove_circle,
                                             color: Colors.red,
                                           ),
@@ -200,14 +218,14 @@ class _ServicesState extends State<Services> {
                             ),
                           );
                         }
-                        return SizedBox.shrink();
+                        return const SizedBox.shrink();
                       },
                     ),
                     SizedBox(height: 2.h),
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        'Your location',
+                        'Your Location',
                         style: TextStyle(
                           fontSize: 16.sp,
                           color: Colors.black,
@@ -223,53 +241,63 @@ class _ServicesState extends State<Services> {
                       builder: (context, state) {
                         if (state is LocationFetchedState) {
                           return Container(
-                            height: 300,
-                            width: double.infinity,
+                            height: 210,
+                            width: 345,
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(16),
+                              border: Border.all(
+                                  width: 2, color: const Color(0xff73DDFF)),
                             ),
-                            child: FlutterMap(
-                              options: MapOptions(
-                                initialCenter: state.location,
-                                maxZoom: 15.0,
-                                onTap: (tapPosition, point) {
-                                  bloc.add(PinLocationEvent(
-                                      tapPosition: tapPosition, point: point));
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(
-                                          'Selected Location: Latitude: ${convertToDMS(point.latitude)}, Longitude: ${convertToDMS(point.longitude)}'),
-                                    ),
-                                  );
-                                },
-                              ),
-                              children: [
-                                TileLayer(
-                                  urlTemplate:
-                                      "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-                                  subdomains: const ['a', 'b', 'c'],
-                                ),
-                                if (bloc.selectedLocation != null)
-                                  MarkerLayer(
-                                    markers: [
-                                      Marker(
-                                        point: bloc.selectedLocation!,
-                                        width: 80.0,
-                                        height: 80.0,
-                                        child: Icon(
-                                          Icons.location_on,
-                                          color: Colors.red,
-                                          size: 40,
-                                        ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(14),
+                              child: FlutterMap(
+                                options: MapOptions(
+                                  initialCenter: state.location,
+                                  maxZoom: 15.0,
+                                  onTap: (tapPosition, point) {
+                                    bloc.add(PinLocationEvent(
+                                        tapPosition: tapPosition,
+                                        point: point));
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                            'Selected Location: Latitude: ${convertToDMS(point.latitude)}, Longitude: ${convertToDMS(point.longitude)}'),
                                       ),
-                                    ],
+                                    );
+                                  },
+                                ),
+                                children: [
+                                  TileLayer(
+                                    urlTemplate:
+                                        "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                                    subdomains: const ['a', 'b', 'c'],
                                   ),
-                              ],
+                                  if (bloc.selectedLocation != null)
+                                    MarkerLayer(
+                                      markers: [
+                                        Marker(
+                                          point: bloc.selectedLocation!,
+                                          width: 80.0,
+                                          height: 80.0,
+                                          child: const Icon(
+                                            Icons.location_on,
+                                            color: Colors.red,
+                                            size: 40,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                ],
+                              ),
                             ),
                           );
                         }
-                        return CircularProgressIndicator();
+                        return Image.asset(
+                          'assets/drone.gif',
+                          height: 50,
+                          width: 50,
+                        );
                       },
                     ),
                     SizedBox(height: 2.h),
@@ -292,13 +320,26 @@ class _ServicesState extends State<Services> {
                         width: 60,
                         height: 60,
                         decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          borderRadius: BorderRadius.circular(10),
+                          gradient: const LinearGradient(
+                            colors: [Color(0xff0A7995), Color(0xff73DDFF)],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                          borderRadius: BorderRadius.circular(12),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.15),
+                              blurRadius: 10,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
                         ),
-                        child: Icon(
-                          Icons.calendar_today,
-                          size: 30,
-                          color: Colors.grey[700],
+                        child: const Center(
+                          child: FaIcon(
+                            FontAwesomeIcons.calendarDays,
+                            size: 24,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),
@@ -314,7 +355,7 @@ class _ServicesState extends State<Services> {
                                 TextStyle(fontSize: 16.sp, color: Colors.black),
                           );
                         }
-                        return SizedBox.shrink();
+                        return const SizedBox.shrink();
                       },
                     ),
                     SizedBox(height: 4.h),
@@ -333,9 +374,10 @@ class _ServicesState extends State<Services> {
                           children: [
                             GestureDetector(
                               onTapDown: (_) {
-                                if (bloc.unitCount > 1)
+                                if (bloc.unitCount > 1) {
                                   bloc.add(SetUnitCountEvent(
                                       count: --bloc.unitCount));
+                                }
                               },
                               child: Container(
                                 width: 40,
@@ -432,7 +474,7 @@ class _ServicesState extends State<Services> {
                           ),
                           BlocBuilder<ServicesBloc, ServicesState>(
                             builder: (context, state) {
-                              if (bloc.isHintShow) if (state is ShowHintState)
+                              if (bloc.isHintShow) if (state is ShowHintState) {
                                 return Padding(
                                   padding:
                                       EdgeInsets.symmetric(horizontal: 5.w),
@@ -443,7 +485,8 @@ class _ServicesState extends State<Services> {
                                         color: Colors.grey[600]),
                                   ),
                                 );
-                              return SizedBox.shrink();
+                              }
+                              return const SizedBox.shrink();
                             },
                           ),
                         ],
@@ -464,11 +507,14 @@ class _ServicesState extends State<Services> {
                             ),
                             Text(
                               'Are you from Riyadh?',
-                              style: TextStyle(fontSize: 14.sp),
+                              style: TextStyle(fontSize: 16.sp),
                             ),
                           ],
                         );
                       },
+                    ),
+                    const SizedBox(
+                      height: 20,
                     ),
                     Center(
                       child: Container(
@@ -497,9 +543,11 @@ class _ServicesState extends State<Services> {
                                   builder: (context) => OrderScreen(
                                     images: bloc.images,
                                     order: OrderModel(
-                                      orderId: 41221,
-                                      customerId:
-                                          '4252d26b-19f6-4f98-9f5a-a3ddc18f2fdd',
+                                      orderId: orderId,
+                                      customerId: locator
+                                          .get<DataLayer>()
+                                          .customer
+                                          ?.customerId,
                                       serviceId: widget.service.serviceId,
                                       images: bloc.images
                                           .map((e) => e.path)
@@ -531,9 +579,7 @@ class _ServicesState extends State<Services> {
                             }
                             if (state is ServiceErrorState) {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text(
-                                        'Please fill in all required fields')),
+                                SnackBar(content: Text(state.message)),
                               );
                             }
                           },

@@ -1,13 +1,17 @@
 import 'dart:io';
-import 'package:dronify_mngmt/Employee_Order/custom_image_cards.dart';
+import 'package:dronify_mngmt/models/order_model.dart';
+import 'package:dronify_mngmt/utils/db_operations.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ConfirmScreen extends StatelessWidget {
+  final OrderModel order;
   final List<File> images;
   final String description;
 
   const ConfirmScreen({
     super.key,
+    required this.order,
     required this.images,
     required this.description,
   });
@@ -33,7 +37,7 @@ class ConfirmScreen extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           child: Column(
             children: [
-              Align(
+              const Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   'Images',
@@ -73,7 +77,7 @@ class ConfirmScreen extends StatelessWidget {
                                 height: 80,
                                 fit: BoxFit.cover,
                                 errorBuilder: (context, error, stackTrace) {
-                                  return Icon(Icons.broken_image);
+                                  return const Icon(Icons.broken_image);
                                 },
                               ),
                             ),
@@ -85,7 +89,7 @@ class ConfirmScreen extends StatelessWidget {
                       ),
               ),
               const SizedBox(height: 50),
-              Align(
+              const Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   'Description',
@@ -112,7 +116,7 @@ class ConfirmScreen extends StatelessWidget {
                 child: SingleChildScrollView(
                   child: Text(
                     description,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w500,
                       color: Color(0xffA4A4AA),
@@ -144,6 +148,12 @@ class ConfirmScreen extends StatelessWidget {
           ),
           child: ElevatedButton(
             onPressed: () {
+              final imageFiles =
+                  images.map((image) => XFile(image.path)).toList();
+              setOrderComplete(
+                  order: order,
+                  imageFiles: imageFiles,
+                  description: description);
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.transparent,

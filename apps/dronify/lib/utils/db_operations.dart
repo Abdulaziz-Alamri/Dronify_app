@@ -1,7 +1,7 @@
-import 'dart:developer';
 import 'dart:io';
-
+import 'package:dronify/layer/data_layer.dart';
 import 'package:dronify/models/customer_model.dart';
+import 'package:dronify/utils/setup.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -10,6 +10,7 @@ import 'package:path/path.dart';
 final supabase = Supabase.instance.client;
 
 Future<void> saveOrder({
+  required int orderId,
   required String customerId,
   required int serviceId,
   required double squareMeters,
@@ -22,10 +23,10 @@ Future<void> saveOrder({
   required List<XFile> imageFiles,
 }) async {
   try {
-    log('im here');
     final orderResponse = await supabase
         .from('orders')
         .insert({
+          'order_id': orderId,
           'user_id': customerId,
           'service_id': serviceId,
           'square_meters': squareMeters,
@@ -70,14 +71,94 @@ Future<void> saveOrder({
         'longitude': longitude,
       });
 
+      await supabase.from('payment').insert({
+        'order_id': orderId,
+        'user_id': customerId,
+        'amount': totalPrice,
+      });
+
       print("Order saved successfully.");
     } else {
       throw Exception("Failed to insert the order.");
     }
   } catch (error) {
     print("Error saving order: $error");
-    throw error;
+    rethrow;
   }
+}
+
+Future<void> rateOrder(
+    {required int rating, required int orderId, required String review}) async {
+  try {
+    // Fetch order data
+    final orderResponse = await supabase
+        .from('orders')
+        .select('user_id, employee_id')
+        .eq('order_id', orderId)
+        .single();
+
+    final userId = orderResponse['user_id'];
+    final employeeId = orderResponse['employee_id'];
+
+    // Insert the rating into the rating table
+    await supabase.from('rating').insert({
+      'user_id': userId,
+      'employee_id': employeeId,
+      'order_id': orderId,
+      'rating': rating,
+      'review': review
+    });
+
+    // Update the order's rating
+    await supabase
+        .from('orders')
+        .update({'order_rating': rating}).eq('order_id', orderId);
+
+    // Calculate the employee's new average rating
+    final ratingsResponse = await supabase
+        .from('rating')
+        .select('rating')
+        .eq('employee_id', employeeId);
+
+    if (ratingsResponse.isEmpty) {
+      return;
+    }
+
+    final averageRating =
+        ratingsResponse.fold(0.0, (sum, rating) => sum + rating['rating']) /
+            ratingsResponse.length;
+
+    // Update the employee's rating
+    await supabase
+        .from('employee')
+        .update({'rating': averageRating}).eq('employee_id', employeeId);
+  } catch (e) {
+    throw Exception(e);
+  }
+}
+
+Future<int?> getOrderId() async {
+  final response = await supabase
+      .from('orders')
+      .select('order_id')
+      .order('order_id', ascending: false)
+      .limit(1)
+      .single();
+
+  if (response.isEmpty) {
+    print("Error fetching last order_id");
+    return null;
+  }
+  final int? orderId;
+  if (locator.get<DataLayer>().cart.items.isEmpty) {
+    orderId = response['order_id'] + 1 as int?;
+  } else {
+    orderId = response['order_id'] +
+        1 +
+        locator.get<DataLayer>().cart.items.length as int?;
+  }
+
+  return orderId;
 }
 
 checkChat({required String chatId}) async {
@@ -94,11 +175,11 @@ checkChat({required String chatId}) async {
     await supabase.from('live_chat').insert({
       'chat_id': chatId,
       'user_id': supabase.auth.currentUser!.id,
-      'admin_id': 'a581cd5e-c67c-4522-a4bb-01b795c43387',
+      'admin_id': '0cf2efe9-94b7-482b-9c85-de2122e4a675',
     });
     await supabase.from('chat_message').insert({
       'chat_id': chatId,
-      'sender_id': 'a581cd5e-c67c-4522-a4bb-01b795c43387',
+      'sender_id': '0cf2efe9-94b7-482b-9c85-de2122e4a675',
       'message': 'How may I assist you?',
     });
     return chatId;
@@ -159,8 +240,6 @@ saveSubscription({
 
           imageUrls.add(imageUrl);
 
-          log('$subId');
-
           await supabase
               .from('subscription_images')
               .insert({'sub_id': subId, 'image_url': imageUrl});
@@ -182,41 +261,45 @@ saveSubscription({
     }
   } catch (error) {
     print("Error saving Subscription: $error");
-    throw error;
+    rethrow;
   }
-  
-  Future<void> upsertCustomer(CustomerModel customer) async {
-    try {
-      final response = await supabase.from('customers').upsert(customer.toJson());
-      if (response.error != null) {
-        throw Exception(response.error!.message);
-      }
-    } catch (e) {
-      print('Error upserting customer: $e');
+}
+
+updateExternalKey({required String externalKey}) async {
+  await supabase.from('app_user').update({'external_key': externalKey}).eq(
+      'user_id', supabase.auth.currentUser!.id);
+}
+
+Future<void> upsertCustomer(CustomerModel customer) async {
+  try {
+    final response = await supabase.from('customers').upsert(customer.toJson());
+    if (response.error != null) {
+      throw Exception(response.error!.message);
     }
+  } catch (e) {
+    print('Error upserting customer: $e');
   }
+}
 
-  Future<CustomerModel?> getCustomer(String customerId) async {
-    try {
-      final response = await supabase
-          .from('customers')
-          .select()
-          .eq('customer_id', customerId)
-          .single();
+Future<CustomerModel?> getCustomer(String customerId) async {
+  try {
+    final response = await supabase
+        .from('customers')
+        .select()
+        .eq('customer_id', customerId)
+        .single();
 
-      if (response != null) {
-        throw Exception(response);
-      }
-
-      if (response != null) {
-        return CustomerModel.fromJson(response);
-      }
-      
-      return null;
-    } catch (e) {
-      print('Error fetching customer: $e');
-      return null;
+    if (response.isEmpty) {
+      throw Exception(response);
     }
-  }
 
+    if (response.isEmpty) {
+      return CustomerModel.fromJson(response);
+    }
+
+    return null;
+  } catch (e) {
+    print('Error fetching customer: $e');
+    return null;
+  }
 }

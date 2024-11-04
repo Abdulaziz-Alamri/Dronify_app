@@ -1,9 +1,8 @@
-import 'dart:developer';
-
-import 'package:dronify_mngmt/Employee_Home/bloc/orders_bloc_bloc.dart';
 import 'package:dronify_mngmt/models/employee_model.dart';
 import 'package:dronify_mngmt/models/order_model.dart';
 import 'package:dronify_mngmt/models/service_model.dart';
+import 'package:dronify_mngmt/utils/db_operations.dart';
+import 'package:get_storage/get_storage.dart';
 
 class AdminDataLayer {
   List<ServiceModel> allServices = [];
@@ -11,17 +10,41 @@ class AdminDataLayer {
   List<OrderModel> incompleteOrders = [];
   List<OrderModel> availableOrders = [];
 
-  List<OrderModel> emoCompleteOrders = [];
+  List<OrderModel> empCompleteOrders = [];
   List<OrderModel> empIncompleteOrders = [];
   List<OrderModel> empAvailableOrders = [];
   List<EmployeeModel> allEmployees = [];
 
+  EmployeeModel? currentEmployee;
+
+  String? externalKey;
+  final box = GetStorage();
+
   AdminDataLayer() {
+    loadData();
     fetchServices();
     fetchOrders();
     fetchEmployees();
 
-    fetchEmpOrders();
+    if (supabase.auth.currentUser != null) {
+      if (supabase.auth.currentUser!.userMetadata?['role'] == 'employee') {
+        fetchEmpOrders();
+      }
+    }
+  }
+
+  loadData() async {
+    if (box.hasData('external_key')) {
+      externalKey = box.read('external_key');
+    }
+  }
+
+  saveData() async {
+    await box.write('external_key', externalKey);
+  }
+
+  onLogout() async {
+    box.erase();
   }
 
   fetchServices() async {
@@ -37,10 +60,14 @@ class AdminDataLayer {
   }
 
   fetchOrders() async {
+    completeOrders.clear();
+    incompleteOrders.clear();
+    availableOrders.clear();
     try {
       final completeOrdersResponse = await supabase
           .from('orders')
-          .select('*, app_user!inner(name, phone), service(name), images(image_url), address(latitude, longitude)')
+          .select(
+              '*, app_user!inner(name, phone), service(name), images(image_url, type), address(latitude, longitude)')
           .eq('status', 'complete');
 
       for (var element in completeOrdersResponse) {
@@ -51,7 +78,7 @@ class AdminDataLayer {
       final incompleteOrdersResponse = await supabase
           .from('orders')
           .select(
-              '*, app_user!inner(name, phone), service(name), images(image_url), address(latitude, longitude)')
+              '*, app_user!inner(name, phone), service(name), images(image_url, type), address(latitude, longitude)')
           .eq('status', 'confirmed');
 
       for (var element in incompleteOrdersResponse) {
@@ -61,7 +88,8 @@ class AdminDataLayer {
 
       final availableOrdersResponse = await supabase
           .from('orders')
-          .select('*, app_user!inner(name, phone), service(name), images(image_url), address(latitude, longitude)')
+          .select(
+              '*, app_user!inner(name, phone), service(name), images(image_url, type), address(latitude, longitude)')
           .eq('status', 'pending');
 
       for (var element in availableOrdersResponse) {
@@ -74,38 +102,58 @@ class AdminDataLayer {
   }
 
   fetchEmpOrders() async {
+    empCompleteOrders.clear();
+    empIncompleteOrders.clear();
+    empAvailableOrders.clear();
     try {
+      try {
+        if (supabase.auth.currentUser != null) {
+          if (supabase.auth.currentUser!.userMetadata?['role'] == 'employee') {
+            final employeeData = await supabase
+                .from('employee')
+                .select('*, app_user(name, email, phone, role)')
+                .eq('employee_id', supabase.auth.currentUser!.id);
+
+            currentEmployee = EmployeeModel.fromJson(employeeData[0]);
+          }
+        }
+      } catch (e) {
+        print("Error fetching employee: $e");
+      }
+
       final completeOrdersResponse = await supabase
           .from('orders')
-          .select('*, app_user!inner(name, phone), service(name)')
+          .select(
+              '*, app_user!inner(name, phone), service(name),address(latitude, longitude), images(image_url, type)')
           .eq('status', 'complete')
-          .eq('user_id', '4252d26b-19f6-4f98-9f5a-a3ddc18f2fdd');
+          .eq('employee_id', supabase.auth.currentUser!.id);
 
       for (var element in completeOrdersResponse) {
         OrderModel order = OrderModel.fromJson(element);
-        completeOrders.add(order);
+        empCompleteOrders.add(order);
       }
 
       final incompleteOrdersResponse = await supabase
           .from('orders')
           .select(
-              '*, app_user!inner(name, phone), service(name), address(latitude, longitude), images(image_url)')
+              '*, app_user!inner(name, phone), service(name), address(latitude, longitude), images(image_url, type)')
           .eq('status', 'confirmed')
-          .eq('user_id', '4252d26b-19f6-4f98-9f5a-a3ddc18f2fdd');
+          .eq('employee_id', supabase.auth.currentUser!.id);
 
       for (var element in incompleteOrdersResponse) {
         OrderModel order = OrderModel.fromJson(element);
-        incompleteOrders.add(order);
+        empIncompleteOrders.add(order);
       }
 
       final availableOrdersResponse = await supabase
           .from('orders')
-          .select('*, app_user!inner(name, phone), service(name)')
+          .select(
+              '*, app_user!inner(name, phone), service(name),address(latitude, longitude), images(image_url,type)')
           .eq('status', 'pending');
 
       for (var element in availableOrdersResponse) {
         OrderModel order = OrderModel.fromJson(element);
-        availableOrders.add(order);
+        empAvailableOrders.add(order);
       }
     } catch (error) {
       print("Error fetching orders: $error");

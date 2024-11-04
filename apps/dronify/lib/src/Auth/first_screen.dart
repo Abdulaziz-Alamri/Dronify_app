@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class FirstScreen extends StatelessWidget {
-  const FirstScreen({Key? key}) : super(key: key);
+  const FirstScreen({super.key});
 
   Future<bool> _isUserLoggedIn() async {
     final user = Supabase.instance.client.auth.currentUser;
@@ -18,7 +18,12 @@ class FirstScreen extends StatelessWidget {
         future: _isUserLoggedIn(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return Center(
+                child: Image.asset(
+              'assets/drone.gif',
+              height: 50,
+              width: 50,
+            ));
           } else if (snapshot.hasError) {
             return const Center(child: Text('Error checking login status.'));
           } else if (snapshot.data == true) {
@@ -35,7 +40,7 @@ class FirstScreen extends StatelessWidget {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => ScrollableSplashScreen()),
+                    builder: (context) => const ScrollableSplashScreen()),
               );
             });
           }

@@ -5,29 +5,35 @@ import 'package:dronify_mngmt/Employee_Order/confirm_screen.dart';
 import 'package:dronify_mngmt/Employee_Order/custom_custmer_wedget.dart';
 import 'package:dronify_mngmt/Employee_Order/custom_image_cards.dart';
 import 'package:dronify_mngmt/Employee_Order/custom_order_card.dart';
+import 'package:dronify_mngmt/models/order_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:maps_launcher/maps_launcher.dart';
 import 'dart:io';
 
 class OrderScreen extends StatelessWidget {
-  final int orderId;
+  final OrderModel order;
   final TextEditingController descriptionController = TextEditingController();
 
-  OrderScreen({super.key, required this.orderId});
+  OrderScreen({super.key, required this.order});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => OrderBloc()..add(FetchOrderData(orderId)),
+      create: (context) => OrderBloc()..add(FetchOrderData(order.orderId!)),
       child: BlocBuilder<OrderBloc, OrderState>(
         builder: (context, state) {
           if (state is OrderLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return Center(
+                child: Image.asset(
+              'assets/drone.gif',
+              height: 50,
+              width: 50,
+            ));
           } else if (state is OrderLoaded) {
             return Scaffold(
               backgroundColor: const Color(0xffF5F5F7),
@@ -87,7 +93,7 @@ class OrderScreen extends StatelessWidget {
                             'Status: ${state.orderData.status ?? 'N/A'}',
                             style: const TextStyle(color: Color(0xffA4A4AA)),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 15,
                           ),
                           Container(
@@ -115,69 +121,78 @@ class OrderScreen extends StatelessWidget {
                                     child: Text('No images available'),
                                   ),
                           ),
+                          const SizedBox(height: 15),
+                          const Text(
+                            'Location',
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(height: 15),
+                          Container(
+                            height: 210,
+                            width: 345,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            child: GestureDetector(
+                              onTap: () {
+                                if (state.location != null) {
+                                  MapsLauncher.launchCoordinates(
+                                    state.location!.latitude,
+                                    state.location!.longitude,
+                                  );
+                                }
+                              },
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(14),
+                                child: FlutterMap(
+                                  options: MapOptions(
+                                    initialCenter:
+                                        state.location ?? const LatLng(0.0, 0.0),
+                                    maxZoom: 15.0,
+                                  ),
+                                  children: [
+                                    TileLayer(
+                                      urlTemplate:
+                                          "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                                    ),
+                                    if (state.location != null)
+                                      MarkerLayer(
+                                        markers: [
+                                          Marker(
+                                            width: 80.0,
+                                            height: 80.0,
+                                            point: state.location!,
+                                            child: IconButton(
+                                              icon: const Icon(
+                                                Icons.location_on,
+                                                color: Colors.red,
+                                                size: 40,
+                                              ),
+                                              onPressed: () {
+                                                if (state.location != null) {
+                                                  MapsLauncher
+                                                      .launchCoordinates(
+                                                    state.location!.latitude,
+                                                    state.location!.longitude,
+                                                  );
+                                                }
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 15),
                         ],
                       ),
                     ),
                     const SizedBox(height: 15),
-
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      height: 210,
-                      width: 345,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: GestureDetector(
-                        onTap: () {
-                          if (state.location != null) {
-                            MapsLauncher.launchCoordinates(
-                              state.location!.latitude,
-                              state.location!.longitude,
-                            );
-                          }
-                        },
-                        child: FlutterMap(
-                          options: MapOptions(
-                            initialCenter: state.location ?? LatLng(0.0, 0.0),
-                            maxZoom: 15.0,
-                          ),
-                          children: [
-                            TileLayer(
-                              urlTemplate:
-                                  "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-                            ),
-                            if (state.location != null)
-                              MarkerLayer(
-                                markers: [
-                                  Marker(
-                                    width: 80.0,
-                                    height: 80.0,
-                                    point: state.location!,
-                                    child: IconButton(
-                                      icon: Icon(
-                                        Icons.location_on,
-                                        color: Colors.red,
-                                        size: 40,
-                                      ),
-                                      onPressed: () {
-                                        if (state.location != null) {
-                                          MapsLauncher.launchCoordinates(
-                                            state.location!.latitude,
-                                            state.location!.longitude,
-                                          );
-                                        }
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 15),
-
                     // Description section
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -225,13 +240,26 @@ class OrderScreen extends StatelessWidget {
                         width: 60,
                         height: 60,
                         decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          borderRadius: BorderRadius.circular(10),
+                          gradient: const LinearGradient(
+                            colors: [Color(0xff0A7995), Color(0xff73DDFF)],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                          borderRadius: BorderRadius.circular(12),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.15),
+                              blurRadius: 10,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
                         ),
-                        child: Icon(
-                          Icons.add,
-                          size: 30,
-                          color: Colors.grey[700],
+                        child: const Center(
+                          child: FaIcon(
+                            FontAwesomeIcons.plus,
+                            size: 24,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),
@@ -326,6 +354,7 @@ class OrderScreen extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => ConfirmScreen(
+                                  order: order,
                                   images: imagesAsFiles,
                                   description: description,
                                 ),

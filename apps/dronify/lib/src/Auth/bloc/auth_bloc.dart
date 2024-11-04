@@ -1,13 +1,14 @@
 import 'dart:async';
 
-import 'package:dronify/Data_layer/data_layer.dart';
+import 'package:dronify/layer/data_layer.dart';
 import 'package:dronify/repository/auth_repository.dart';
+import 'package:dronify/utils/db_operations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dronify/models/customer_model.dart';
-import 'package:dronify/utils/setup.dart'; // لضمان الوصول لـ DataLayer
+import 'package:dronify/utils/setup.dart';
 
-part 'auth_event.dart'; // Event declarations
-part 'auth_state.dart'; // State declarations
+part 'auth_event.dart';
+part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthRepository authRepository;
@@ -17,8 +18,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<SignInEvent>(onSignIn);
     on<VerifyEvent>(onVerifyOtp);
     on<VerifycoverEvent>(onVerifyOtprecover);
-    on<ForgotPasswordEvent>(onForgotPassword); // Forgot password handler
-    on<VerifyEvent>(onVerifyOtp);
+    on<ForgotPasswordEvent>(onForgotPassword);
   }
 
   Future<void> onSignUp(SignUpEvent event, Emitter<AuthState> emit) async {
@@ -42,7 +42,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         await locator.get<DataLayer>().upsertCustomer(customer);
 
         locator.get<DataLayer>().saveCustomerData(customer);
-        
+
         emit(AuthSignedUp());
       } else {
         emit(AuthError('Sign-up failed. Please try again.'));
@@ -62,15 +62,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       );
 
       if (response.user != null) {
-        // جلب بيانات المستخدم من قاعدة البيانات
         final customer = await locator.get<DataLayer>().getCustomer(
-          response.user!.id,
-        );
+              response.user!.id,
+            );
 
-        // التحقق من وجود بيانات المستخدم وتخزينها في DataLayer
         if (customer != null) {
           locator.get<DataLayer>().saveCustomerData(customer);
           locator.get<DataLayer>().fetchCustomerOrders();
+          await updateExternalKey(
+              externalKey: locator.get<DataLayer>().externalKey!);
           emit(AuthSignedIn());
         } else {
           emit(AuthError('User data not found.'));
@@ -92,8 +92,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         otp: event.otp,
       );
 
-      if (user != null) {
-        emit(AuthSignedIn()); // OTP verified successfully
+      if (user.id.isNotEmpty) {
+        emit(AuthSignedIn());
       } else {
         emit(AuthError('Invalid OTP. Please try again.'));
       }
@@ -113,34 +113,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(PasswordResetFailed('Error: ${e.toString()}')); // Handle error
     }
   }
-
-  // FutureOr<void> onVerifyOtprecover(
-  //     VerifycoverEvent event, Emitter<AuthState> emit) async {
-  //   try {
-  //     final user = await authRepository.verifyOtprecover(
-  //       email: event.email,
-  //       otp: event.otp,
-  //     );
-
-  //     if (user != null) {
-  //       emit(AuthSignedIn());
-  //     } else {
-  //       emit(AuthError('Invalid OTP. Please try again.'));
-  //     }
-  //   } catch (e) {
-  //     emit(AuthError('Error: ${e.toString()}'));
-  //   }
-  // }
-
-  FutureOr<void> onVerifyOtprecover(VerifycoverEvent event, Emitter<AuthState> emit) async{
-
-     try {
+  FutureOr<void> onVerifyOtprecover(
+      VerifycoverEvent event, Emitter<AuthState> emit) async {
+    try {
       final user = await authRepository.verifyOtprecover(
         email: event.email,
         otp: event.otp,
       );
 
-      if (user != null) {
+      if (user.id.isNotEmpty) {
         emit(AuthSignedIn());
       } else {
         emit(AuthError('Invalid OTP. Please try again.'));
@@ -148,6 +129,5 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     } catch (e) {
       emit(AuthError('Error: ${e.toString()}'));
     }
-
   }
 }

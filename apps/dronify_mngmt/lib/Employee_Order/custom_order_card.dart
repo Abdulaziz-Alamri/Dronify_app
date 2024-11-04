@@ -5,7 +5,7 @@ class CustomOrderCard extends StatelessWidget {
   final String title;
   final String subTitle;
 
-  CustomOrderCard(
+  const CustomOrderCard(
       {super.key,
       required this.imageUrl,
       required this.title,
@@ -30,7 +30,7 @@ class CustomOrderCard extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           width: 30,
         ),
         Column(
@@ -39,10 +39,10 @@ class CustomOrderCard extends StatelessWidget {
           children: [
             Text(
               title,
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
             ),
             Text(subTitle,
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
           ],
         )
       ],

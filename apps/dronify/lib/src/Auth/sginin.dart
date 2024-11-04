@@ -1,15 +1,23 @@
+import 'package:dronify/layer/data_layer.dart';
 import 'package:dronify/src/Auth/forget_password.dart';
 import 'package:dronify/src/Auth/signup.dart';
 import 'package:dronify/src/Bottom_Nav/bottom_nav.dart';
+import 'package:dronify/utils/setup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'bloc/auth_bloc.dart';
 
-class SignIn extends StatelessWidget {
+class SignIn extends StatefulWidget {
+  const SignIn({super.key});
+
+  @override
+  State<SignIn> createState() => _SignInState();
+}
+
+class _SignInState extends State<SignIn> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  SignIn({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +30,11 @@ class SignIn extends StatelessWidget {
               context: context,
               barrierDismissible: false,
               builder: (context) => Center(
-                child: CircularProgressIndicator(),
+                child: Image.asset(
+                  'assets/drone.gif',
+                  height: 50,
+                  width: 50,
+                ),
               ),
             );
           } else if (state is AuthSignedIn) {
@@ -32,10 +44,11 @@ class SignIn extends StatelessWidget {
             );
 
             // Navigate to OTP Screen and pass email
+            locator.get<DataLayer>().saveData();
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => BottomNav(),
+                builder: (context) => const BottomNav(),
               ),
             );
           } else if (state is AuthError) {

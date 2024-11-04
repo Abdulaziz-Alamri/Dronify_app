@@ -1,6 +1,5 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:dronify_mngmt/Admin/live_chat/chat_screen.dart';
-import 'package:dronify_mngmt/Admin/live_chat/live_chat.dart';
 import 'package:dronify_mngmt/Bottom_Nav/bottom_nav_bloc/bottom_nav_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,7 +14,6 @@ class BottomNav extends StatelessWidget {
       FontAwesomeIcons.house,
       FontAwesomeIcons.rectangleList,
       FontAwesomeIcons.users,
-      Icons.person,
     ];
 
     return BlocProvider(
@@ -40,8 +38,10 @@ class BottomNav extends StatelessWidget {
           ),
           floatingActionButton: FloatingActionButton(
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => ChatScreen()));
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ChatScreen()),
+              );
             },
             backgroundColor: Colors.black,
             child: const Icon(Icons.message, size: 25, color: Colors.white),
@@ -55,13 +55,10 @@ class BottomNav extends StatelessWidget {
               if (state is SuccessChangeViewState) {
                 currentPageIndex = state.currentPageIndex;
               }
+
               return Container(
                 decoration: const BoxDecoration(
                   color: Colors.black,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(32),
-                    topRight: Radius.circular(32),
-                  ),
                 ),
                 child: AnimatedBottomNavigationBar.builder(
                   itemCount: iconList.length,
@@ -90,17 +87,15 @@ class BottomNav extends StatelessWidget {
                     );
                   },
                   backgroundColor: Colors.transparent,
-                  height: 50,
+                  height: 60,
                   activeIndex: currentPageIndex,
-                  gapLocation: GapLocation.center,
-                  gapWidth: 40,
+                  gapLocation: GapLocation.none,
                   leftCornerRadius: 32,
                   rightCornerRadius: 32,
                   splashRadius: 30,
-                  notchSmoothness: NotchSmoothness.softEdge,
+                  notchSmoothness: NotchSmoothness.smoothEdge,
                   onTap: (index) {
-                    BlocProvider.of<BottomNavBloc>(context)
-                        .add(ChangeEvent(index: index));
+                    bloc.add(ChangeEvent(index: index));
                   },
                 ),
               );

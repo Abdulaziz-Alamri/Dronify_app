@@ -21,11 +21,9 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
       final response = await supabase
           .from('orders')
           .select(
-              '*, app_user!inner(name, phone), service(name, description), address(latitude, longitude), images(image_url)')
+              '*, app_user!inner(name, phone), service(name, description), address(latitude, longitude), images(image_url, type)')
           .eq('order_id', event.orderId)
           .maybeSingle();
-
-      print('Supabase response: $response');
 
       if (response == null) {
         emit(OrderError('Order data not found'));
@@ -67,7 +65,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
   Future<void> _onPickImages(PickImages event, Emitter<OrderState> emit) async {
     try {
       final pickedFiles = await _picker.pickMultiImage(limit: 4);
-      if (pickedFiles != null) {
+      if (pickedFiles.isNotEmpty) {
         emit(OrderLoaded(
           orderData: (state as OrderLoaded).orderData,
           location: (state as OrderLoaded).location,

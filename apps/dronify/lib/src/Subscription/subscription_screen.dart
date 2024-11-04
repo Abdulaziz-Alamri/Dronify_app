@@ -5,6 +5,7 @@ import 'package:dronify/src/Subscription/subscription_bloc/subscription_bloc.dar
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:moyasar/moyasar.dart';
 import 'package:sizer/sizer.dart';
 
@@ -16,15 +17,15 @@ class SubscriptionScreen extends StatefulWidget {
 }
 
 class _SubscriptionScreenState extends State<SubscriptionScreen> {
-      List months = [3, 6, 9];
-    List descriptions = [
-      'Includes 6 visits (two visits each month) to maintain your building’s appearance.',
-      'Includes 12 visits (two visits each month), perfect for ongoing cleanliness with fewer subscriptions.',
-      'Includes 18 visits (two visits each month), an excellent choice for those needing consistent maintenance at a great value.'
-    ];
-    List<double> prices = [1500, 2500, 4000];
-    TextEditingController squareAreaController = TextEditingController();
-    final _formKey = GlobalKey<FormState>();
+  List months = [3, 6, 9];
+  List descriptions = [
+    'Includes 6 visits (two visits each month) to maintain your building’s appearance.',
+    'Includes 12 visits (two visits each month) to maintain your building’s appearance.',
+    'Includes 18 visits (two visits each month) to maintain your building’s appearance.'
+  ];
+  List<double> prices = [1500, 2500, 4000];
+  TextEditingController squareAreaController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -105,13 +106,26 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                         width: 60,
                         height: 60,
                         decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          borderRadius: BorderRadius.circular(10),
+                          gradient: const LinearGradient(
+                            colors: [Color(0xff0A7995), Color(0xff73DDFF)],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                          borderRadius: BorderRadius.circular(12),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.15),
+                              blurRadius: 10,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
                         ),
-                        child: Icon(
-                          Icons.add,
-                          size: 30,
-                          color: Colors.grey[700],
+                        child: const Center(
+                          child: FaIcon(
+                            FontAwesomeIcons.plus,
+                            size: 24,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),
@@ -146,7 +160,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                                             bloc.add(RemovedImageEvent(
                                                 images: state.images));
                                           },
-                                          child: Icon(
+                                          child: const Icon(
                                             Icons.remove_circle,
                                             color: Colors.red,
                                           ),
@@ -159,7 +173,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                             ),
                           );
                         }
-                        return Text('No Images Chosen');
+                        return const Text('No Images Chosen');
                       },
                     ),
                     SizedBox(height: 2.h),
@@ -182,53 +196,63 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                       builder: (context, state) {
                         if (state is LocationFetchedState) {
                           return Container(
-                            height: 300,
-                            width: double.infinity,
+                            height: 250,
+                            width: 450,
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(16),
+                              border: Border.all(
+                                  width: 2, color: const Color(0xff73DDFF)),
                             ),
-                            child: FlutterMap(
-                              options: MapOptions(
-                                initialCenter: state.location,
-                                maxZoom: 15.0,
-                                onTap: (tapPosition, point) {
-                                  bloc.add(PinLocationEvent(
-                                      tapPosition: tapPosition, point: point));
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(
-                                          'Selected Location: Latitude: ${convertToDMS(point.latitude)}, Longitude: ${convertToDMS(point.longitude)}'),
-                                    ),
-                                  );
-                                },
-                              ),
-                              children: [
-                                TileLayer(
-                                  urlTemplate:
-                                      "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-                                  subdomains: const ['a', 'b', 'c'],
-                                ),
-                                if (bloc.selectedLocation != null)
-                                  MarkerLayer(
-                                    markers: [
-                                      Marker(
-                                        point: bloc.selectedLocation!,
-                                        width: 80.0,
-                                        height: 80.0,
-                                        child: Icon(
-                                          Icons.location_on,
-                                          color: Colors.red,
-                                          size: 40,
-                                        ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(14),
+                              child: FlutterMap(
+                                options: MapOptions(
+                                  initialCenter: state.location,
+                                  maxZoom: 15.0,
+                                  onTap: (tapPosition, point) {
+                                    bloc.add(PinLocationEvent(
+                                        tapPosition: tapPosition,
+                                        point: point));
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                            'Selected Location: Latitude: ${convertToDMS(point.latitude)}, Longitude: ${convertToDMS(point.longitude)}'),
                                       ),
-                                    ],
+                                    );
+                                  },
+                                ),
+                                children: [
+                                  TileLayer(
+                                    urlTemplate:
+                                        "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                                    subdomains: const ['a', 'b', 'c'],
                                   ),
-                              ],
+                                  if (bloc.selectedLocation != null)
+                                    MarkerLayer(
+                                      markers: [
+                                        Marker(
+                                          point: bloc.selectedLocation!,
+                                          width: 80.0,
+                                          height: 80.0,
+                                          child: const Icon(
+                                            Icons.location_on,
+                                            color: Colors.red,
+                                            size: 40,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                ],
+                              ),
                             ),
                           );
                         }
-                        return CircularProgressIndicator();
+                        return Image.asset(
+                          'assets/drone.gif',
+                          height: 50,
+                          width: 50,
+                        );
                       },
                     ),
                     SizedBox(height: 2.h),
@@ -244,23 +268,35 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                       ),
                     ),
                     GestureDetector(
-                      onTap: () {
-                        bloc.add(PickDateEvent(context: context));
-                      },
-                      child: Container(
-                        width: 60,
-                        height: 60,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Icon(
-                          Icons.calendar_today,
-                          size: 30,
-                          color: Colors.grey[700],
-                        ),
-                      ),
-                    ),
+                        onTap: () {
+                          bloc.add(PickDateEvent(context: context));
+                        },
+                        child: Container(
+                          width: 60,
+                          height: 60,
+                          decoration: BoxDecoration(
+                            gradient: const LinearGradient(
+                              colors: [Color(0xff0A7995), Color(0xff73DDFF)],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                            ),
+                            borderRadius: BorderRadius.circular(12),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.15),
+                                blurRadius: 10,
+                                offset: const Offset(0, 4),
+                              ),
+                            ],
+                          ),
+                          child: const Center(
+                            child: FaIcon(
+                              FontAwesomeIcons.calendarDays,
+                              size: 24,
+                              color: Colors.white,
+                            ),
+                          ),
+                        )),
                     SizedBox(height: 2.h),
                     BlocBuilder<SubscriptionBloc, SubscriptionState>(
                       buildWhen: (previous, current) =>
@@ -273,7 +309,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                                 TextStyle(fontSize: 16.sp, color: Colors.black),
                           );
                         }
-                        return SizedBox.shrink();
+                        return const SizedBox.shrink();
                       },
                     ),
                     SizedBox(height: 4.h),
@@ -292,9 +328,10 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                           children: [
                             GestureDetector(
                               onTapDown: (_) {
-                                if (bloc.unitCount > 1)
+                                if (bloc.unitCount > 1) {
                                   bloc.add(SetUnitCountEvent(
                                       count: --bloc.unitCount));
+                                }
                               },
                               child: Container(
                                 width: 40,
@@ -391,7 +428,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                           ),
                           BlocBuilder<SubscriptionBloc, SubscriptionState>(
                             builder: (context, state) {
-                              if (bloc.isHintShow) if (state is ShowHintState)
+                              if (bloc.isHintShow) if (state is ShowHintState) {
                                 return Padding(
                                   padding:
                                       EdgeInsets.symmetric(horizontal: 5.w),
@@ -402,7 +439,8 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                                         color: Colors.grey[600]),
                                   ),
                                 );
-                              return SizedBox.shrink();
+                              }
+                              return const SizedBox.shrink();
                             },
                           ),
                         ],
@@ -423,11 +461,14 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                             ),
                             Text(
                               'Are you from Riyadh?',
-                              style: TextStyle(fontSize: 14.sp),
+                              style: TextStyle(fontSize: 16.sp),
                             ),
                           ],
                         );
                       },
+                    ),
+                    const SizedBox(
+                      height: 20,
                     ),
                     Center(
                       child: Container(

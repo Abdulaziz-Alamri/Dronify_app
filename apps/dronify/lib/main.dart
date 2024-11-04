@@ -1,11 +1,16 @@
 import 'package:dronify/repository/auth_repository.dart';
 import 'package:dronify/splash/splash_screen.dart';
 import 'package:dronify/src/Auth/bloc/auth_bloc.dart';
+import 'package:dronify/src/Order/rating_screen.dart';
+import 'package:dronify/utils/db_operations.dart';
 import 'package:dronify/utils/setup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:sizer/sizer.dart';
+
+final GlobalKey<NavigatorState> navKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,6 +20,11 @@ void main() async {
   OneSignal.Notifications.requestPermission(true);
 
   await setup();
+  await Future.delayed(const Duration(seconds: 2));
+
+  OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
+  OneSignal.initialize('${dotenv.env['onesignal_key']}');
+  OneSignal.Notifications.requestPermission(true);
 
   runApp(
     MultiBlocProvider(
@@ -33,10 +43,19 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    OneSignal.Notifications.addClickListener((event) {
+      if (event.notification.additionalData!['user_id'] ==
+          supabase.auth.currentUser!.id) {
+        navKey.currentState!
+            .push(MaterialPageRoute(builder: (context) => RatingScreen(orderId: event.notification.additionalData!['order_id'])));
+      }
+    });
     return Sizer(
       builder: (context, orientation, deviceType) {
         return MaterialApp(
-            debugShowCheckedModeBanner: false, home: SplashScreen());
+            navigatorKey: navKey,
+            debugShowCheckedModeBanner: false,
+            home: SplashScreen());
       },
     );
   }

@@ -8,9 +8,9 @@ final class LoadEvent extends ServicesEvent {}
 final class PickImageEvent extends ServicesEvent {}
 
 final class RemovedImageEvent extends ServicesEvent {
-  final List<XFile> images;
+  final XFile image;
 
-  RemovedImageEvent({required this.images});
+  RemovedImageEvent({required this.image});
 }
 
 final class FetchLocationEvent extends ServicesEvent {}

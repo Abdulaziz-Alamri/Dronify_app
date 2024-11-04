@@ -1,6 +1,7 @@
 import 'package:dronify_mngmt/Admin/EmployeeDetails/employee_details_screen.dart';
 import 'package:dronify_mngmt/Admin/All_employees/employeecard.dart';
 import 'package:dronify_mngmt/Admin/admin_datalayer/admin_data_layer.dart';
+import 'package:dronify_mngmt/Auth/signup.dart';
 import 'package:dronify_mngmt/utils/setup.dart';
 import 'package:flutter/material.dart';
 
@@ -43,8 +44,11 @@ class AllEmp extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 24),
                 child: IconButton(
-                  onPressed: () {},
-                  icon: Icon(
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Signup()));
+                  },
+                  icon: const Icon(
                     Icons.add,
                     color: Colors.black,
                   ),

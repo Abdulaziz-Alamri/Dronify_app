@@ -1,5 +1,4 @@
-import 'dart:developer';
-import 'package:dronify/Data_layer/data_layer.dart';
+import 'package:dronify/layer/data_layer.dart';
 import 'package:dronify/models/service_model.dart';
 import 'package:dronify/src/Bottom_Nav/bottom_nav.dart';
 import 'package:dronify/src/Cart/bloc/cart_bloc.dart';
@@ -31,11 +30,11 @@ class CartScreen extends StatelessWidget {
         child: Builder(builder: (context) {
           final bloc = context.read<CartBloc>();
           return Scaffold(
-            backgroundColor: const Color(0xffF5F5F7),
+            backgroundColor: const Color.fromARGB(255, 250, 250, 250),
             body: CustomScrollView(
               slivers: [
                 SliverAppBar(
-                  expandedHeight: 80.0,
+                  expandedHeight: 130.0,
                   flexibleSpace: FlexibleSpaceBar(
                     background: Container(
                       decoration: const BoxDecoration(
@@ -49,8 +48,11 @@ class CartScreen extends StatelessWidget {
                         ),
                       ),
                     ),
+                    // centerTitle: true, // Centers the title in the AppBar
+
                     title: const Text(
                       'Cart',
+                      textAlign: TextAlign.right,
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -65,7 +67,7 @@ class CartScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Column(
                       children: [
-                        const SizedBox(height: 40),
+                        const SizedBox(height: 20),
                         const Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
@@ -76,48 +78,88 @@ class CartScreen extends StatelessWidget {
                             ),
                           ),
                         ),
+                        const SizedBox(height: 20),
                         const Divider(
                           color: Color(0xffCDCDCD),
                           indent: 4,
                           endIndent: 4,
                         ),
-                        const SizedBox(height: 15),
+                        const SizedBox(height: 20),
                         BlocBuilder<CartBloc, CartState>(
                           builder: (context, state) {
                             if (state is CartLoading) {
-                              return const CircularProgressIndicator();
-                            } else if (state is CartUpdated) {
-                              return Column(
-                                children: [
-                                  ...state.cart.items.map((item) {
-                                    final service = (item.serviceId != null &&
-                                            item.serviceId! <=
-                                                allServices.length)
-                                        ? allServices[item.serviceId! - 1]
-                                        : null;
-
-                                    return Column(
-                                      children: [
-                                        CartItemCard(
-                                          order: item,
-                                          servic: service!,
-                                          onDelete: () {
-                                            context.read<CartBloc>().add(
-                                                RemoveFromCartEvent(
-                                                    item.orderId!));
-                                          },
-                                        ),
-                                        const SizedBox(height: 15),
-                                      ],
-                                    );
-                                  }).toList(),
-                                  const Divider(
-                                    color: Color(0xffCDCDCD),
-                                    indent: 4,
-                                    endIndent: 4,
-                                  ),
-                                ],
+                              return Image.asset(
+                                'assets/drone.gif',
+                                height: 50,
+                                width: 50,
                               );
+                            } else if (state is CartUpdated) {
+                              if (state.cart.items.isEmpty) {
+                                return Center(
+                                  child: Column(
+                                    children: [
+                                      Opacity(
+                                        opacity:
+                                            0.3, // Adjust the opacity level (0.0 to 1.0)
+                                        child: Image.asset(
+                                          'assets/Removal-159.png',
+                                          height: 200,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 20),
+
+                                      // ignore: prefer_const_constructors
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 18.0, bottom: 10),
+                                        child: const Text(
+                                          'Empty cart ',
+                                          style: TextStyle(
+                                              fontSize: 25,
+                                              fontWeight: FontWeight.bold,
+                                              color: Color.fromARGB(
+                                                  255, 199, 213, 220)),
+                                        ),
+                                      ),
+                                      // Image.asset('assets/Removal-386.png',
+                                      //     scale: 2.0)
+                                    ],
+                                  ),
+                                );
+                              } else {
+                                return Column(
+                                  children: [
+                                    ...state.cart.items.map((item) {
+                                      final service = (item.serviceId != null &&
+                                              item.serviceId! <=
+                                                  allServices.length)
+                                          ? allServices[item.serviceId! - 1]
+                                          : null;
+
+                                      return Column(
+                                        children: [
+                                          CartItemCard(
+                                            order: item,
+                                            servic: service!,
+                                            onDelete: () {
+                                              context.read<CartBloc>().add(
+                                                  RemoveFromCartEvent(
+                                                      item.orderId!));
+                                            },
+                                          ),
+                                          const SizedBox(height: 15),
+                                        ],
+                                      );
+                                    }),
+                                    const SizedBox(height: 20),
+                                    const Divider(
+                                      color: Color(0xffCDCDCD),
+                                      indent: 4,
+                                      endIndent: 4,
+                                    ),
+                                  ],
+                                );
+                              }
                             }
                             return const Center(
                                 child: Text('No items in the cart.'));
@@ -134,6 +176,7 @@ class CartScreen extends StatelessWidget {
                             ),
                           ),
                         ),
+                        const SizedBox(height: 25),
                         Container(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 10, vertical: 8),
@@ -161,7 +204,8 @@ class CartScreen extends StatelessWidget {
                         const SizedBox(height: 30),
                         BlocBuilder<CartBloc, CartState>(
                           builder: (context, state) {
-                            if (state is CartUpdated) {
+                            if (state is CartUpdated &&
+                                state.cart.items.isNotEmpty) {
                               return Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
@@ -221,75 +265,85 @@ class CartScreen extends StatelessWidget {
                                               ),
                                               child: ElevatedButton(
                                                 onPressed: () {
-                                                  log('${bloc.cart.items}');
-                                                  showModalBottomSheet(
-                                                    context: context,
-                                                    isScrollControlled:
-                                                        true,
-                                                    backgroundColor:
-                                                        Colors.white,
-                                                    shape:
-                                                        const RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.vertical(
-                                                        top: Radius.circular(
-                                                            25.0),
+                                                  if (bloc
+                                                      .cart.items.isNotEmpty) {
+                                                    showModalBottomSheet(
+                                                      context: context,
+                                                      isScrollControlled: true,
+                                                      backgroundColor:
+                                                          Colors.white,
+                                                      shape:
+                                                          const RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .vertical(
+                                                          top: Radius.circular(
+                                                              25.0),
+                                                        ),
                                                       ),
-                                                    ),
-                                                    builder:
-                                                        (BuildContext context) {
-                                                      return Padding(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                          top: 12,
-                                                          left: 12,
-                                                          right: 12,
-                                                          bottom: MediaQuery.of(
-                                                                  context)
-                                                              .viewInsets
-                                                              .bottom,
-                                                        ),
-                                                        child:
-                                                            SingleChildScrollView(
-                                                          child: Column(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .min,
-                                                            children: [
-                                                              CreditCard(
-                                                                config:
-                                                                    bloc.pay(),
-                                                                onPaymentResult:
-                                                                    (result) async {
-                                                                  bloc.onPaymentResult(
-                                                                      result,
-                                                                      context,
-                                                                      state.cart
-                                                                          .items);
-                                                                  Navigator.pop(
-                                                                      context,
-                                                                      'Payment successful');
-                                                                },
-                                                              ),
-                                                            ],
+                                                      builder: (BuildContext
+                                                          context) {
+                                                        return Padding(
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                            top: 12,
+                                                            left: 12,
+                                                            right: 12,
+                                                            bottom:
+                                                                MediaQuery.of(
+                                                                        context)
+                                                                    .viewInsets
+                                                                    .bottom,
                                                           ),
-                                                        ),
-                                                      );
-                                                    },
-                                                  ).then((value) async {
-                                                    if (value ==
-                                                        'Payment successful') {
-                                                      await Future.delayed(
-                                                          const Duration(
-                                                              seconds: 5));
-                                                      Navigator.pushReplacement(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                const BottomNav()),
-                                                      );
-                                                    }
-                                                  });
+                                                          child:
+                                                              SingleChildScrollView(
+                                                            child: Column(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .min,
+                                                              children: [
+                                                                CreditCard(
+                                                                  config: bloc
+                                                                      .pay(),
+                                                                  onPaymentResult:
+                                                                      (result) async {
+                                                                    bloc.onPaymentResult(
+                                                                        result,
+                                                                        context,
+                                                                        state
+                                                                            .cart
+                                                                            .items);
+                                                                    Navigator.pop(
+                                                                        context,
+                                                                        'Payment successful');
+                                                                  },
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        );
+                                                      },
+                                                    ).then((value) async {
+                                                      if (value ==
+                                                          'Payment successful') {
+                                                        bloc.cart.clearCart();
+                                                        bloc.add(
+                                                            LoadCartItemsEvent());
+                                                        await Future.delayed(
+                                                            const Duration(
+                                                                seconds: 2));
+                                                        Navigator
+                                                            .pushReplacement(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  const BottomNav(
+                                                                    index: 1,
+                                                                  )),
+                                                        );
+                                                      }
+                                                    });
+                                                  }
                                                 },
                                                 style: ElevatedButton.styleFrom(
                                                   backgroundColor:
@@ -332,23 +386,6 @@ class CartScreen extends StatelessWidget {
             ),
           );
         }),
-      ),
-    );
-  }
-
-  Widget _buildTextField(String hint, IconData icon, Size size) {
-    return TextField(
-      style: const TextStyle(color: Colors.black),
-      decoration: InputDecoration(
-        hintText: hint,
-        hintStyle: const TextStyle(color: Colors.black54),
-        filled: true,
-        fillColor: Colors.grey[200],
-        prefixIcon: Icon(icon, color: Colors.black),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide.none,
-        ),
       ),
     );
   }

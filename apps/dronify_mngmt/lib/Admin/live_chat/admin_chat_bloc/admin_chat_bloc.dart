@@ -1,11 +1,8 @@
 import 'dart:async';
-
-import 'package:dronify_mngmt/Employee_Home/bloc/orders_bloc_bloc.dart';
-import 'package:dronify_mngmt/Employee_Home/employee_home.dart';
+import 'package:dronify_mngmt/utils/db_operations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:flutter_chat_ui/flutter_chat_ui.dart' as types;
 
 part 'admin_chat_event.dart';
 part 'admin_chat_state.dart';
@@ -35,6 +32,19 @@ class AdminChatBloc extends Bloc<AdminChatEvent, AdminChatState> {
             }
           },
         )
+        .onPostgresChanges(
+          event: PostgresChangeEvent.update,
+          schema: 'public',
+          table: 'live_chat',
+          callback: (payload) async {
+            if (payload.newRecord.isNotEmpty) {
+              final status = payload.newRecord['status'];
+              if (status == 'ended') {
+                add(LoadChatsEvent());
+              }
+            }
+          },
+        )
         .subscribe();
   }
 
@@ -52,15 +62,16 @@ class AdminChatBloc extends Bloc<AdminChatEvent, AdminChatState> {
     }
   }
 
-  FutureOr<void> receiveNewChat(
-      NewChatEvent event, Emitter<AdminChatState> emit) async {
-    if (state is ChatsLoaded) {
-      final updatedChats =
-          List<Map<String, dynamic>>.from((state as ChatsLoaded).chats)
-            ..add(event.newChat);
-      emit(ChatsLoaded(chats: updatedChats));
-    }
+FutureOr<void> receiveNewChat(
+    NewChatEvent event, Emitter<AdminChatState> emit) async {
+  if (state is ChatsLoaded) {
+    final updatedChats = List<Map<String, dynamic>>.from((state as ChatsLoaded).chats);
+    
+    updatedChats.insert(0, event.newChat);
+    
+    emit(ChatsLoaded(chats: updatedChats));
   }
+}
 
   @override
   Future<void> close() {

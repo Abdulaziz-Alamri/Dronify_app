@@ -7,7 +7,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 class ResetPasswordScreen extends StatefulWidget {
   final String email;
 
-  ResetPasswordScreen({super.key, required this.email});
+  const ResetPasswordScreen({super.key, required this.email});
 
   @override
   State<ResetPasswordScreen> createState() => _ResetPasswordScreenState();
