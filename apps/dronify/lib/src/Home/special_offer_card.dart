@@ -15,8 +15,9 @@ class SpecialOfferCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 400,
-      decoration: const BoxDecoration(
+      margin: EdgeInsets.only(bottom: 8),
+      width: 380,
+      decoration: BoxDecoration(
         image: DecorationImage(
           image: AssetImage('assets/budling water.png'),
           fit: BoxFit.cover,

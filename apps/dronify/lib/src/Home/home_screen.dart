@@ -17,6 +17,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   late AnimationController _controller;
   late AnimationController _fadeController;
   late Animation<Offset> _slideAnimation;
+  late Animation<double> _fadeAnimation;
 
   @override
   void initState() {
@@ -37,6 +38,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       parent: _controller,
       curve: Curves.easeOut,
     ));
+
+  
 
     _controller.forward();
     _fadeController.forward();
@@ -223,7 +226,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                               childAspectRatio: 1,
                                               mainAxisSpacing: 10,
                                               crossAxisSpacing: 40,
-                                              mainAxisExtent: 170),
+                                              mainAxisExtent: 160),
                                       children: [
                                         SlideTransition(
                                           position: _slideAnimation,

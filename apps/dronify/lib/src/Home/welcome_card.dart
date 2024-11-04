@@ -9,7 +9,8 @@ class WelcomeCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 150,
-      width: 345,
+      width: 375,
+      margin: EdgeInsets.only(bottom: 18),
       decoration: BoxDecoration(
         color: Colors.white.withOpacity(0.8),
         borderRadius: BorderRadius.circular(8),
