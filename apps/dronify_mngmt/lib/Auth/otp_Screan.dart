@@ -55,8 +55,8 @@ class OtpScreen extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-            FocusScope.of(context).unfocus();
-          },
+        FocusScope.of(context).unfocus();
+      },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
@@ -75,7 +75,7 @@ class OtpScreen extends StatelessWidget {
                 ),
               );
             } else if (state is AuthSignedIn) {
-              Navigator.pop(context);
+              Navigator.pop(context); // Close loading dialog
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
@@ -84,92 +84,87 @@ class OtpScreen extends StatelessWidget {
                 ),
               );
             } else if (state is AuthError) {
-              Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text(state.message)),
               );
+            } else if (state is OtpSentSuccessfully) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('OTP Resent!')),
+              );
             }
           },
-          child: GestureDetector(
-            onTap: () {
-              FocusScope.of(context).unfocus();
-            },
-            child: Column(
-              children: [
-                Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.only(top: 10.h, bottom: 5.h),
-                  child: Image.asset(
-                    'assets/5 7.png',
-                    height: 12.h,
+          child: Column(
+            children: [
+              Container(
+                width: double.infinity,
+                padding: EdgeInsets.only(top: 10.h, bottom: 5.h),
+                child: Image.asset(
+                  'assets/5 7.png',
+                  height: 12.h,
+                ),
+              ),
+              SizedBox(height: 4.h),
+              Text(
+                'Verification Code',
+                style: TextStyle(
+                  fontSize: 2.5.h,
+                  fontWeight: FontWeight.bold,
+                  color: const Color(0xff73DDFF),
+                ),
+              ),
+              SizedBox(height: 4.h),
+              Text(
+                'We have sent the OTP code to',
+                style: TextStyle(
+                  fontSize: 1.6.h,
+                  fontWeight: FontWeight.bold,
+                  color: const Color(0xff535763),
+                ),
+              ),
+              Text(
+                email,
+                style: TextStyle(
+                  fontSize: 1.6.h,
+                  fontWeight: FontWeight.bold,
+                  color: const Color(0xff535763),
+                ),
+              ),
+              SizedBox(height: 10.h),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8.w),
+                child: Center(
+                  child: Pinput(
+                    length: 6,
+                    defaultPinTheme: defaultPinTheme,
+                    submittedPinTheme: submittedPinTheme,
+                    showCursor: true,
+                    onCompleted: (pin) {
+                      context.read<AuthBloc>().add(
+                            VerifyEvent(
+                              email: email,
+                              otp: pin,
+                            ),
+                          );
+                    },
                   ),
                 ),
-                SizedBox(height: 4.h),
-                Text(
-                  'Verification Code',
+              ),
+              SizedBox(height: 5.h),
+              GestureDetector(
+                onTap: () {
+                  context.read<AuthBloc>().add(RequestOtpEmail( email));
+                },
+                child: Text(
+                  'Resend OTP',
                   style: TextStyle(
-                    fontSize: 2.5.h,
-                    fontWeight: FontWeight.bold,
+                    fontSize: 2.h,
                     color: const Color(0xff73DDFF),
-                  ),
-                ),
-                SizedBox(height: 4.h),
-                Text(
-                  'We have sent the OTP code to',
-                  style: TextStyle(
-                    fontSize: 1.6.h,
                     fontWeight: FontWeight.bold,
-                    color: const Color(0xff535763),
                   ),
                 ),
-                Text(
-                  email,
-                  style: TextStyle(
-                    fontSize: 1.6.h,
-                    fontWeight: FontWeight.bold,
-                    color: const Color(0xff535763),
-                  ),
-                ),
-                SizedBox(height: 10.h),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8.w),
-                  child: Center(
-                    child: Pinput(
-                      length: 6,
-                      defaultPinTheme: defaultPinTheme,
-                      submittedPinTheme: submittedPinTheme,
-                      showCursor: true,
-                      onCompleted: (pin) {
-                        context.read<AuthBloc>().add(
-                              VerifyEvent(
-                                email: email,
-                                otp: pin,
-                              ),
-                            );
-                      },
-                    ),
-                  ),
-                ),
-                SizedBox(height: 5.h),
-                GestureDetector(
-                  onTap: () {
-                    context.read<AuthBloc>().add(RequestOtpEmail(email));
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('OTP Resent!')),
-                    );
-                  },
-                  child: Text(
-                    'Resend OTP',
-                    style: TextStyle(
-                      fontSize: 2.h,
-                      color: const Color(0xff73DDFF),
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 5.h),
-              ],
-            ),
+              ),
+              SizedBox(height: 5.h),
+            ],
           ),
         ),
       ),

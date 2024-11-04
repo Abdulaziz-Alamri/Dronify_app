@@ -118,6 +118,7 @@ class _EmployeeHomeState extends State<EmployeeHome>
                   child: CustomScrollView(
                     slivers: [
                       SliverAppBar(
+                        iconTheme: IconThemeData(color: Colors.white),
                         expandedHeight: 80.0,
                         flexibleSpace: FlexibleSpaceBar(
                           background: Container(
@@ -132,13 +133,12 @@ class _EmployeeHomeState extends State<EmployeeHome>
                               ),
                             ),
                           ),
-                          centerTitle: true,
                           title: Text(
                             'Welcome Back ${locator.get<AdminDataLayer>().currentEmployee?.name} 👋',
                             style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
-                                color: Colors.black),
+                                color: Colors.white),
                           ),
                         ),
                         backgroundColor: Colors.transparent,

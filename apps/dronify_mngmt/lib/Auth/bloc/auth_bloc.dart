@@ -5,6 +5,7 @@ import 'package:dronify_mngmt/repository/auth_repository.dart';
 import 'package:dronify_mngmt/utils/db_operations.dart';
 import 'package:dronify_mngmt/utils/setup.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -18,6 +19,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<VerifyEvent>(onVerifyOtp);
     on<VerifycoverEvent>(onVerifyOtprecover);
     on<ForgotPasswordEvent>(onForgotPassword);
+    on<RequestOtpEmail>(sendOtp); // تأكد من إضافة هذا السطر
   }
 
   Future<void> onSignUp(SignUpEvent event, Emitter<AuthState> emit) async {
@@ -60,7 +62,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(AuthSignedIn());
       }
     } catch (e) {
-      emit(AuthError('An error occurred'));
+      final errorMessage = e.toString().toLowerCase();
+      if (errorMessage.contains('confirmed')) {
+        emit(FailedLoginState('Confirm Your Email'));
+      } else {
+        emit(AuthError('An error occurred'));
+      }
     }
   }
 
@@ -111,6 +118,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       }
     } catch (e) {
       emit(AuthError('Error: ${e.toString()}'));
+    }
+  }
+
+  FutureOr<void> sendOtp(RequestOtpEmail event, Emitter<AuthState> emit) async {
+    try {
+      await supabase.auth.resend(
+        type: OtpType.signup,
+        email: event.email.toLowerCase(),
+      );
+      emit(OtpSentSuccessfully()); 
+    } catch (e) {
+      emit(AuthError('Error sending OTP: ${e.toString()}'));
     }
   }
 }

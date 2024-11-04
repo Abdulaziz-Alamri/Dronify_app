@@ -14,8 +14,8 @@ class AuthVerfiy extends AuthState {}
 
 class FailedLoginState extends AuthState {
   final String message;
-    final bool isCustomer;
-  FailedLoginState(this.message,{this.isCustomer=false});
+  final bool isCustomer;
+  FailedLoginState(this.message, {this.isCustomer = false});
 }
 
 class AuthError extends AuthState {
@@ -36,3 +36,4 @@ class AuthPasswordResetSuccess extends AuthState {} // Password reset success
 
 class OtpResent extends AuthState {} // OTP resend success
 
+class OtpSentSuccessfully extends AuthState {}
