@@ -47,6 +47,10 @@ class CustomImageCards extends StatelessWidget {
                   shadowColor: Colors.black,
                   color: Colors.white,
                   child: Image.network(
+                    loadingBuilder: (context, child, loadingProgress) {
+ if (loadingProgress == null) return child;
+        return Image.asset('assets/drone.gif');
+                    },
                     imageUrls[index],
                     fit: BoxFit.cover,
                     errorBuilder: (context, error, stackTrace) {
