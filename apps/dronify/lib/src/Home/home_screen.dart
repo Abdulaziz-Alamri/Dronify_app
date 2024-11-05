@@ -186,8 +186,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 16, vertical: 8),
                                 margin: const EdgeInsets.all(8),
-                                height: 440,
-                                width: 380,
+                                width: double.infinity,
                                 decoration: BoxDecoration(
                                   color: Colors.white.withOpacity(0.8),
                                   borderRadius: BorderRadius.circular(12),
@@ -233,13 +232,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                       ),
                                     ),
                                     SizedBox(
-                                      height: 15,
+                                      height: 10,
                                     ),
                                     Divider(
                                       thickness: 2,
                                     ),
                                     SizedBox(
-                                      height: 198,
+                                      height: 22.h,
                                       child: GridView(
                                         physics:
                                             const NeverScrollableScrollPhysics(),

@@ -58,13 +58,10 @@ class ServiceCard extends StatelessWidget {
       },
       child: Container(
         margin: const EdgeInsets.all(8),
-        height: 145,
+        height: 160,
         width: 380,
         decoration: BoxDecoration(
-          gradient: LinearGradient(colors: [
-            Color(0xff072D6F),
-            Color.fromARGB(255, 40, 72, 126),
-          ]),
+          color: Colors.white,
           borderRadius: const BorderRadius.all(Radius.circular(10)),
           boxShadow: [
             BoxShadow(
@@ -79,7 +76,7 @@ class ServiceCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              height: 100, // تقليل ارتفاع الصورة إلى 100
+              height: 100,
               width: double.infinity,
               decoration: BoxDecoration(
                 image: DecorationImage(
@@ -94,17 +91,82 @@ class ServiceCard extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 14,
-                  color: Color(0xffFFFFFF),
-                  fontWeight: FontWeight.w600,
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Container(
+                height: 40,
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.4),
+                      spreadRadius: 2,
+                      blurRadius: 8,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                  gradient: const LinearGradient(
+                    colors: [
+                      Color(0xff072D6F),
+                      Color.fromARGB(255, 40, 72, 126),
+                    ],
+                  ),
+                  borderRadius: BorderRadius.circular(8),
                 ),
-                textAlign: TextAlign.center,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.transparent,
+                    shadowColor: Colors.transparent,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) =>
+                            Services(
+                          service: ServiceModel.fromJson(
+                            {
+                              'service_id': serviceId,
+                              'name': title,
+                              'description': description,
+                              'main_image': imageUrl,
+                              'price_per_sqm': 3,
+                              'icon_path': iconPath,
+                            },
+                          ),
+                          iconpath: iconPath,
+                        ),
+                        transitionsBuilder:
+                            (context, animation, secondaryAnimation, child) {
+                          const begin = Offset(1.0, 0.0);
+                          const end = Offset.zero;
+                          const curve = Curves.easeInExpo;
+
+                          var tween = Tween(begin: begin, end: end)
+                              .chain(CurveTween(curve: curve));
+                          var offsetAnimation = animation.drive(tween);
+
+                          return SlideTransition(
+                            position: offsetAnimation,
+                            child: child,
+                          );
+                        },
+                      ),
+                    );
+                  },
+                  child: Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 13,
+                      color: Color(0xffFFFFFF),
+                      fontWeight: FontWeight.w600,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
               ),
-            ),
+            )
           ],
         ),
       ),

@@ -31,12 +31,15 @@ class EditProfile extends StatelessWidget {
                   expandedHeight: 80.0,
                   pinned: true,
                   flexibleSpace: FlexibleSpaceBar(
-                    title: const Text(
-                      'Edit Profile',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                    title: Padding(
+                      padding: EdgeInsets.only(left: 10.w),
+                      child: const Text(
+                        'Edit Profile',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                     background: Container(
@@ -81,8 +84,8 @@ class EditProfile extends StatelessWidget {
               ],
             ),
             Positioned(
-              left: 10,
-              top: 8.5.h,
+              left: 3.w,
+              top: 6.h,
               child: BackButton(
                 color: Colors.white,
                 onPressed: () {

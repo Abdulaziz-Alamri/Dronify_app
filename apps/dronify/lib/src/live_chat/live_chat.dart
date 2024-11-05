@@ -69,9 +69,9 @@ class ChatScreen extends StatelessWidget {
               ),
             ),
           ),
-          const Positioned(
-            left: 70,
-            bottom: 30,
+          Positioned(
+            left: 17.w,
+            bottom: 1.8.h,
             child: Text(
               'Live Chat',
               style: TextStyle(
@@ -82,8 +82,8 @@ class ChatScreen extends StatelessWidget {
             ),
           ),
           Positioned(
-            left: 10,
-            top: 7.5.h,
+            left: 3.w,
+            top: 6.h,
             child: BackButton(
               color: Colors.white,
               onPressed: () {
@@ -92,8 +92,8 @@ class ChatScreen extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: 70,
-            right: 10,
+            top: 6.h,
+            right: 5.w,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.black,

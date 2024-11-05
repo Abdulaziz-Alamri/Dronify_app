@@ -61,7 +61,7 @@ class WelcomeCard extends StatelessWidget {
                 color: const Color(0xff072D6F),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.2),
+                    color: Colors.black.withOpacity(0.4),
                     spreadRadius: 2,
                     blurRadius: 8,
                     offset: const Offset(0, 4),
