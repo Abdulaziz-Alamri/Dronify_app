@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dronify/src/Auth/sginin.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -120,7 +118,6 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       child: ElevatedButton(
         onPressed: () async {
           final newPassword = passwordController.text.trim();
-          log(newPassword);
           if (newPassword.isEmpty) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
@@ -131,8 +128,6 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
           }
 
           try {
-            log("newPassword");
-
             // Update the user's password using Supabase
             await Supabase.instance.client.auth.updateUser(
               UserAttributes(password: newPassword, email: email),

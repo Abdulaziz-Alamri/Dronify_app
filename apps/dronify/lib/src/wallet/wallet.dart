@@ -87,7 +87,7 @@ class Wallet extends StatelessWidget {
                             if (state is WalletLoaded)
                               return Text(
                                 cubit.balance != 0
-                                    ? 'Your balance is: ${cubit.balance}'
+                                    ? 'Your balance is: ${cubit.balance} SAR'
                                     : 'Empty Balance',
                                 style: TextStyle(
                                   fontSize: 18,

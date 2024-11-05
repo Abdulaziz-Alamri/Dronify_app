@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:dronify/layer/data_layer.dart';
 import 'package:dronify/models/cart_model.dart';
@@ -47,10 +46,6 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
   PaymentConfig pay() {
     final amount = (totalPrice * 100).toInt();
-
-    if (amount <= 0) {
-      log("Error: Total price must be positive for payment.");
-    }
 
     return PaymentConfig(
       publishableApiKey: dotenv.env['moyasar_test_key']!,

@@ -116,6 +116,7 @@ class _EmployeeHomeState extends State<EmployeeHome>
                 return RefreshIndicator(
                   onRefresh: () => _refreshOrders(context),
                   child: CustomScrollView(
+                    physics: NeverScrollableScrollPhysics(),
                     slivers: [
                       SliverAppBar(
                         iconTheme: IconThemeData(color: Colors.white),
@@ -137,11 +138,11 @@ class _EmployeeHomeState extends State<EmployeeHome>
                             child: Stack(children: [
                               Positioned(
                                 top: 9.4.h,
-                                left: 5.h,
+                                left: 3.w,
                                 child: Text(
                                   'Welcome Back ${locator.get<AdminDataLayer>().currentEmployee?.name} 👋',
                                   style: const TextStyle(
-                                      fontSize: 18,
+                                      fontSize: 14,
                                       fontWeight: FontWeight.w500,
                                       color: Colors.white),
                                 ),
@@ -171,13 +172,6 @@ class _EmployeeHomeState extends State<EmployeeHome>
                                     fontWeight: FontWeight.bold,
                                     color: Color(0xff072D6F)),
                               ),
-                              // Text(
-                              //   'ID: ${locator.get<AdminDataLayer>().currentEmployee?.employeeId}',
-                              //   style: TextStyle(
-                              //     fontSize: 12,
-                              //   ),
-                              // ),
-                              const SizedBox(height: 10),
                               const Padding(
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 24, vertical: 8),
@@ -310,7 +304,7 @@ class _EmployeeHomeState extends State<EmployeeHome>
                               ),
                               const SizedBox(height: 10),
                               SizedBox(
-                                height: MediaQuery.of(context).size.height,
+                                height: MediaQuery.of(context).size.height / 2,
                                 child: TabBarView(
                                   controller: tabController,
                                   children: [
@@ -337,21 +331,22 @@ class _EmployeeHomeState extends State<EmployeeHome>
                                                 )),
                                           ),
                                         ],
-                                      )else
-                                    SingleChildScrollView(
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children:
-                                            state.completeOrders.map((order) {
-                                          return Padding(
-                                            padding: const EdgeInsets.only(
-                                                bottom: 10),
-                                            child: OrderCard(order: order),
-                                          );
-                                        }).toList(),
+                                      )
+                                    else
+                                      SingleChildScrollView(
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children:
+                                              state.completeOrders.map((order) {
+                                            return Padding(
+                                              padding: const EdgeInsets.only(
+                                                  bottom: 10),
+                                              child: OrderCard(order: order),
+                                            );
+                                          }).toList(),
+                                        ),
                                       ),
-                                    ),
                                     // Incomplete Orders Tab
                                     if (state.incompleteOrders.isEmpty)
                                       Column(
@@ -375,21 +370,22 @@ class _EmployeeHomeState extends State<EmployeeHome>
                                                 )),
                                           ),
                                         ],
-                                      )else
-                                    SingleChildScrollView(
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children:
-                                            state.incompleteOrders.map((order) {
-                                          return Padding(
-                                            padding: const EdgeInsets.only(
-                                                bottom: 10),
-                                            child: OrderCard(order: order),
-                                          );
-                                        }).toList(),
+                                      )
+                                    else
+                                      SingleChildScrollView(
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: state.incompleteOrders
+                                              .map((order) {
+                                            return Padding(
+                                              padding: const EdgeInsets.only(
+                                                  bottom: 10),
+                                              child: OrderCard(order: order),
+                                            );
+                                          }).toList(),
+                                        ),
                                       ),
-                                    ),
                                     // Available Orders Tab with spacing
                                     if (state.availableOrders.isEmpty)
                                       Column(
@@ -415,25 +411,26 @@ class _EmployeeHomeState extends State<EmployeeHome>
                                                 )),
                                           ),
                                         ],
-                                      )else
-                                    SingleChildScrollView(
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 10),
-                                        child: Column(
-                                          children: state.availableOrders
-                                              .map((order) {
-                                            return Padding(
-                                              padding: const EdgeInsets.only(
-                                                  bottom: 15),
-                                              child: AvailbleOrders(
-                                                  order: order,
-                                                  ordersBloc: bloc),
-                                            );
-                                          }).toList(),
+                                      )
+                                    else
+                                      SingleChildScrollView(
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 10),
+                                          child: Column(
+                                            children: state.availableOrders
+                                                .map((order) {
+                                              return Padding(
+                                                padding: const EdgeInsets.only(
+                                                    bottom: 15),
+                                                child: AvailbleOrders(
+                                                    order: order,
+                                                    ordersBloc: bloc),
+                                              );
+                                            }).toList(),
+                                          ),
                                         ),
                                       ),
-                                    ),
                                   ],
                                 ),
                               ),

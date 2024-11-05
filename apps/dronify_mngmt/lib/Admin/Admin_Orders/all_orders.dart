@@ -162,8 +162,8 @@ class _AllOrdersState extends State<AllOrders>
                                     Image.asset('name'),
                                   SingleChildScrollView(
                                     child: cubit.completeOrders.isNotEmpty
-                                        ? Column(
-                                            children: cubit.completeOrders
+                                        ? Column(children: [
+                                            ...cubit.completeOrders
                                                 .map((order) {
                                               return Column(
                                                 children: [
@@ -174,7 +174,8 @@ class _AllOrdersState extends State<AllOrders>
                                                 ],
                                               );
                                             }).toList(),
-                                          )
+                                            const SizedBox(height: 100),
+                                          ])
                                         : const EmptyTabImage(
                                             imagePath:
                                                 'assets/empty_orders.png',
@@ -183,8 +184,8 @@ class _AllOrdersState extends State<AllOrders>
                                   // Incomplete Orders Tab
                                   SingleChildScrollView(
                                     child: cubit.incompleteOrders.isNotEmpty
-                                        ? Column(
-                                            children: cubit.incompleteOrders
+                                        ? Column(children: [
+                                            ...cubit.incompleteOrders
                                                 .map((order) {
                                               return Column(
                                                 children: [
@@ -195,7 +196,8 @@ class _AllOrdersState extends State<AllOrders>
                                                 ],
                                               );
                                             }).toList(),
-                                          )
+                                            const SizedBox(height: 100),
+                                          ])
                                         : const EmptyTabImage(
                                             imagePath:
                                                 'assets/empty_orders.png',
@@ -204,8 +206,8 @@ class _AllOrdersState extends State<AllOrders>
                                   // Available Orders Tab
                                   SingleChildScrollView(
                                     child: cubit.availableOrders.isNotEmpty
-                                        ? Column(
-                                            children: cubit.availableOrders
+                                        ? Column(children: [
+                                            ...cubit.availableOrders
                                                 .map((order) {
                                               return Column(
                                                 children: [
@@ -216,7 +218,8 @@ class _AllOrdersState extends State<AllOrders>
                                                 ],
                                               );
                                             }).toList(),
-                                          )
+                                            const SizedBox(height: 100),
+                                          ])
                                         : const EmptyTabImage(
                                             imagePath:
                                                 'assets/empty_orders.png',
@@ -234,7 +237,7 @@ class _AllOrdersState extends State<AllOrders>
                             ),
                           );
                         },
-                      )
+                      ),
                     ],
                   ),
                 ),

@@ -541,7 +541,7 @@ class _ServicesState extends State<Services> {
                           child: BlocListener<ServicesBloc, ServicesState>(
                             listener: (context, state) {
                               if (state is ServiceSubmittedState) {
-                                Navigator.push(
+                                Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => OrderScreen(
