@@ -5,7 +5,7 @@
 
     <application
      
-        android:label="dronify_mngmt"
+        android:label="Dronify Manager"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

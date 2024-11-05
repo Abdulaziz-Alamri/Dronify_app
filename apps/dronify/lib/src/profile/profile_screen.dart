@@ -9,7 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:dronify/models/customer_model.dart';
 import 'package:dronify/src/Auth/sginin.dart';
-import 'package:dronify/src/wallet/wallet.dart';
+import 'package:dronify/src/Wallet/wallet.dart';
 import 'package:dronify/utils/setup.dart';
 
 class ProfileScreen extends StatelessWidget {

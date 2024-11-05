@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:dronify_mngmt/Employee_Order/bloc/order_event.dart';
-import 'package:dronify_mngmt/Employee_Order/bloc/order_state.dart';
+import 'package:dronify_mngmt/Employee%20screens/Employee_Order/bloc/order_event.dart';
+import 'package:dronify_mngmt/Employee%20screens/Employee_Order/bloc/order_state.dart';
 import 'package:dronify_mngmt/models/order_model.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:latlong2/latlong.dart';
