@@ -1,4 +1,3 @@
-import 'package:dronify/main.dart';
 import 'package:dronify/utils/db_operations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -119,7 +118,7 @@ class ChatScreen extends StatelessWidget {
   }
 
   Widget buildChat(BuildContext context, List<types.Message> messages) {
-    const currentUserId = '4252d26b-19f6-4f98-9f5a-a3ddc18f2fdd';
+    final currentUserId = supabase.auth.currentUser!.id;
 
     return Chat(
       messages: messages,

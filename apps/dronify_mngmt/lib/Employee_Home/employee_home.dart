@@ -315,6 +315,29 @@ class _EmployeeHomeState extends State<EmployeeHome>
                                   controller: tabController,
                                   children: [
                                     // Complete Orders Tab
+                                    if (state.completeOrders.isEmpty)
+                                      Column(
+                                        children: [
+                                          Opacity(
+                                            opacity: 0.6,
+                                            child: Image.asset(
+                                              'assets/empty_orders.png',
+                                              height: 140,
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(left: 16),
+                                            child: const Text(
+                                                'No Orders Found ',
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Color(0xffa2b9c4),
+                                                )),
+                                          ),
+                                        ],
+                                      )else
                                     SingleChildScrollView(
                                       child: Column(
                                         mainAxisAlignment:
@@ -330,6 +353,29 @@ class _EmployeeHomeState extends State<EmployeeHome>
                                       ),
                                     ),
                                     // Incomplete Orders Tab
+                                    if (state.incompleteOrders.isEmpty)
+                                      Column(
+                                        children: [
+                                          Opacity(
+                                            opacity: 0.6,
+                                            child: Image.asset(
+                                              'assets/empty_orders.png',
+                                              height: 140,
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(left: 16),
+                                            child: const Text(
+                                                'No Orders Found ',
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Color(0xffa2b9c4),
+                                                )),
+                                          ),
+                                        ],
+                                      )else
                                     SingleChildScrollView(
                                       child: Column(
                                         mainAxisAlignment:
@@ -345,6 +391,31 @@ class _EmployeeHomeState extends State<EmployeeHome>
                                       ),
                                     ),
                                     // Available Orders Tab with spacing
+                                    if (state.availableOrders.isEmpty)
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Opacity(
+                                            opacity: 0.6,
+                                            child: Image.asset(
+                                              'assets/empty_orders.png',
+                                              height: 140,
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(left: 16),
+                                            child: const Text(
+                                                'No Orders Found ',
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Color(0xffa2b9c4),
+                                                )),
+                                          ),
+                                        ],
+                                      )else
                                     SingleChildScrollView(
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(

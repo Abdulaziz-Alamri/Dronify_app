@@ -84,11 +84,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     ),
                     child: Stack(children: [
                       Positioned(
-                        top: 0,
-                        left: 110,
+                        top: -1.h,
+                        left: 10.9.h,
                         child: Image.asset(
                           'assets/Group 34611.png',
-                          height: 220,
+                          height: 25.h,
                         ),
                       ),
                     ]),
