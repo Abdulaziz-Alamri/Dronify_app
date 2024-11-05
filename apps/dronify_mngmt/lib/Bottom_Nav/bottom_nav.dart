@@ -1,5 +1,5 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
-import 'package:dronify_mngmt/Admin/live_chat/chat_screen.dart';
+import 'package:dronify_mngmt/Admin_Screens/live_chat/chat_screen.dart';
 import 'package:dronify_mngmt/Bottom_Nav/bottom_nav_bloc/bottom_nav_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

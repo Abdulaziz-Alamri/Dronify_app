@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:dronify_mngmt/Admin/admin_datalayer/admin_data_layer.dart';
+import 'package:dronify_mngmt/Admin_Screens/admin_datalayer/admin_data_layer.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 import 'package:get_storage/get_storage.dart';

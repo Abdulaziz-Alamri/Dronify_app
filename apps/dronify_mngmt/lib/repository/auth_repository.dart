@@ -1,4 +1,4 @@
-import 'package:dronify_mngmt/Admin/admin_datalayer/admin_data_layer.dart';
+import 'package:dronify_mngmt/Admin_Screens/admin_datalayer/admin_data_layer.dart';
 import 'package:dronify_mngmt/utils/setup.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';

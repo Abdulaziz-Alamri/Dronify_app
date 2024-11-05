@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:dronify_mngmt/Admin/EmployeeDetails/completed_orders_data.dart';
+import 'package:dronify_mngmt/Admin_Screens/EmployeeDetails/completed_orders_data.dart';
 import 'package:dronify_mngmt/models/order_model.dart';
 import 'package:dronify_mngmt/utils/notification.dart';
 import 'package:image_picker/image_picker.dart';

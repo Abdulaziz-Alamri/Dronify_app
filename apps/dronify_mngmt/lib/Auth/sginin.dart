@@ -1,4 +1,4 @@
-import 'package:dronify_mngmt/Admin/admin_datalayer/admin_data_layer.dart';
+import 'package:dronify_mngmt/Admin_Screens/admin_datalayer/admin_data_layer.dart';
 import 'package:dronify_mngmt/Auth/first_screen.dart';
 import 'package:dronify_mngmt/Auth/forget_password.dart';
 import 'package:dronify_mngmt/Auth/otp_Screan.dart';
