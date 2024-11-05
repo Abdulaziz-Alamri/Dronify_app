@@ -19,6 +19,7 @@ class Wallet extends StatelessWidget {
     return BlocProvider(
       create: (context) => WalletCubit()..loadOrders(),
       child: Builder(builder: (context) {
+        final cubit = context.read<WalletCubit>();
         return Scaffold(
           backgroundColor: Colors.white,
           body: CustomScrollView(
@@ -81,12 +82,24 @@ class Wallet extends StatelessWidget {
                             ),
                           ],
                         ),
-                        child: const Text(
-                          'Your balance is: ',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                          ),
+                        child: BlocBuilder<WalletCubit, WalletState>(
+                          builder: (context, state) {
+                            if (state is WalletLoaded)
+                              return Text(
+                                cubit.balance != 0
+                                    ? 'Your balance is: ${cubit.balance}'
+                                    : 'Empty Balance',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              );
+                            return SizedBox(
+                              height: 50,
+                              width: 50,
+                              child: Image.asset('assets/drone.gif'),
+                            );
+                          },
                         ),
                       ),
                       const SizedBox(height: 30),

@@ -42,7 +42,7 @@ class ProfileScreen extends StatelessWidget {
                   } else if (state is ProfileError) {
                     return Center(child: Text(state.message));
                   } else {
-                    return const Center(child: Text("Press button to load profile."));
+                    return Center(child: Image.asset('assets/drone.gif'));
                   }
                 },
               ),
@@ -123,7 +123,7 @@ class ProfileScreen extends StatelessWidget {
                     _buildProfileInfoCard(customer),
                     const SizedBox(height: 10),
                     _buildWalletButton(context),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 30),
                     _buildLogoutButton(context),
                   ],
                 ),
@@ -157,10 +157,10 @@ class ProfileScreen extends StatelessWidget {
               icon: Icons.phone,
               text: customer.phone,
             ),
-            const ProfileItem(
-              icon: Icons.location_on,
-              text: 'Location information here',
-            ),
+            // const ProfileItem(
+            //   icon: Icons.location_on,
+            //   text: 'Location information here',
+            // ),
           ],
         ),
       ),
