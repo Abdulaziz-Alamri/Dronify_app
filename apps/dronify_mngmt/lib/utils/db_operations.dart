@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:dronify_mngmt/Admin/EmployeeDetails/completed_orders_data.dart';
 import 'package:dronify_mngmt/models/order_model.dart';
@@ -93,12 +94,36 @@ setOrderConfrimed(
       .single();
 
   final String externalKey = externalKeyResponse['external_key'].toString();
-  sendConfirmedOrderNotification(
-      externalKey: externalKey);
+  sendConfirmedOrderNotification(externalKey: externalKey);
 }
 
 cancelOrder({required OrderModel order}) async {
-  await supabase.from('orders').delete().eq('order_id', order.orderId!);
+  final userId = await supabase
+      .from('orders')
+      .select('user_id')
+      .eq('order_id', order.orderId!)
+      .single();
+
+  final balance = await supabase
+      .from('app_user')
+      .select('balance')
+      .eq('user_id', userId['user_id'])
+      .single();
+
+  double newBalance = balance['balance'] == null
+      ? order.totalPrice!
+      : (double.parse(balance['balance'].toString()) + order.totalPrice!);
+
+  var data = <Future>[];
+
+  data.addAll([
+    supabase.from('orders').delete().eq('order_id', order.orderId!),
+    supabase
+        .from('app_user')
+        .update({'balance': newBalance}).eq('user_id', userId['user_id'])
+  ]);
+
+  await Future.wait(data);
 }
 
 Future<CompletedOrdersData> getCompletedOrdersData(
