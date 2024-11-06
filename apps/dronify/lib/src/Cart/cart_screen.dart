@@ -26,6 +26,16 @@ class CartScreen extends StatelessWidget {
               const SnackBar(content: Text("Payment successful!")),
             );
           }
+          if (state is CartPaymentSuccessful) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("Payment successful!")),
+            );
+          }
+          if (state is CartPaymentFailed) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("Payment Failed!")),
+            );
+          }
         },
         child: Builder(builder: (context) {
           final bloc = context.read<CartBloc>();
