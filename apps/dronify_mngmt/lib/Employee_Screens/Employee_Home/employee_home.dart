@@ -137,8 +137,8 @@ class _EmployeeHomeState extends State<EmployeeHome>
                           title: Container(
                             child: Stack(children: [
                               Positioned(
-                                top: 9.4.h,
-                                left: 3.w,
+                                top: 9.6.h,
+                                left: 3.5.h,
                                 child: Text(
                                   'Welcome Back ${locator.get<AdminDataLayer>().currentEmployee?.name} 👋',
                                   style: const TextStyle(

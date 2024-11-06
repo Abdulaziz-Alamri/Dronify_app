@@ -14,8 +14,8 @@ class LiveChat extends StatelessWidget {
       create: (_) => ChatMessageBloc(chatId: chatId)..add(LoadMessagesEvent()),
       child: GestureDetector(
         onTap: () {
-            FocusScope.of(context).unfocus();
-          },
+          FocusScope.of(context).unfocus();
+        },
         child: Scaffold(
           appBar: buildAppBar(context),
           body: BlocConsumer<ChatMessageBloc, ChatMessageState>(
@@ -63,7 +63,7 @@ class LiveChat extends StatelessWidget {
           ),
           const Positioned(
             left: 70,
-            bottom: 30,
+            bottom: 50,
             child: Text(
               'Admin Live Chat',
               style: TextStyle(
@@ -74,7 +74,7 @@ class LiveChat extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: 30,
+            bottom: 47,
             left: 10,
             child: BackButton(
               color: Colors.white,

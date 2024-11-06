@@ -71,7 +71,7 @@ class ChatScreen extends StatelessWidget {
           ),
           Positioned(
             left: 17.w,
-            bottom: 2.5 .h,
+            bottom: 3.6.h,
             child: Text(
               'Live Chat',
               style: TextStyle(
