@@ -71,7 +71,7 @@ class ChatScreen extends StatelessWidget {
           ),
           Positioned(
             left: 17.w,
-            bottom: 1.8.h,
+            bottom: 2.5 .h,
             child: Text(
               'Live Chat',
               style: TextStyle(
@@ -83,7 +83,7 @@ class ChatScreen extends StatelessWidget {
           ),
           Positioned(
             left: 3.w,
-            top: 6.h,
+            top: 7.h,
             child: BackButton(
               color: Colors.white,
               onPressed: () {

@@ -85,7 +85,7 @@ class EditProfile extends StatelessWidget {
             ),
             Positioned(
               left: 3.w,
-              top: 6.h,
+              top: 7.h,
               child: BackButton(
                 color: Colors.white,
                 onPressed: () {
