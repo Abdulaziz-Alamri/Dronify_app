@@ -1,6 +1,9 @@
 import 'dart:io';
+import 'package:dronify_mngmt/Admin_Screens/admin_datalayer/admin_data_layer.dart';
+import 'package:dronify_mngmt/Employee_Screens/Employee_Home/employee_home.dart';
 import 'package:dronify_mngmt/models/order_model.dart';
 import 'package:dronify_mngmt/utils/db_operations.dart';
+import 'package:dronify_mngmt/utils/setup.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -147,13 +150,18 @@ class ConfirmScreen extends StatelessWidget {
             ),
           ),
           child: ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
               final imageFiles =
                   images.map((image) => XFile(image.path)).toList();
-              setOrderComplete(
+              await setOrderComplete(
                   order: order,
                   imageFiles: imageFiles,
                   description: description);
+
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => EmployeeHome(employee: locator.get<AdminDataLayer>().currentEmployee!)));
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.transparent,

@@ -1,5 +1,5 @@
 class OrderModel {
-  final int? orderId;
+  int? orderId;
   final String? customerId;
   final String? employeeId;
   final int? serviceId;
@@ -14,7 +14,7 @@ class OrderModel {
   final double? orderRating;
 
   OrderModel({
-    required this.orderId,
+    this.orderId,
     required this.customerId,
     this.employeeId,
     required this.serviceId,
@@ -31,7 +31,8 @@ class OrderModel {
 
   factory OrderModel.fromJson(Map<String, dynamic> json) {
     DateTime parsedReservationDate = DateTime.parse(json['reservation_date']);
-    DateTime parsedReservationTime = DateTime.parse("${json['reservation_date']}T${json['reservation_time']}");
+    DateTime parsedReservationTime = DateTime.parse(
+        "${json['reservation_date']}T${json['reservation_time']}");
 
     return OrderModel(
       orderId: json['order_id'],
@@ -39,14 +40,17 @@ class OrderModel {
       employeeId: json['employee_id'],
       serviceId: json['service_id'],
       images: json['images'] != null ? List<String>.from(json['images']) : [],
-      address: json['address'] != null ? List<String>.from(json['address']) : [],
+      address:
+          json['address'] != null ? List<String>.from(json['address']) : [],
       squareMeters: (json['square_meters'] as num).toDouble(),
       reservationDate: parsedReservationDate,
       reservationTime: parsedReservationTime,
       totalPrice: (json['total_price'] as num).toDouble(),
       orderDate: DateTime.parse(json['order_date']),
       status: json['status'],
-      orderRating: json['order_rating'] != null ? (json['order_rating'] as num).toDouble() : null,
+      orderRating: json['order_rating'] != null
+          ? (json['order_rating'] as num).toDouble()
+          : null,
     );
   }
 
@@ -66,5 +70,9 @@ class OrderModel {
       'status': status,
       'order_rating': orderRating,
     };
+  }
+
+  setOrderId({required int newOrderId}) {
+    orderId = newOrderId;
   }
 }

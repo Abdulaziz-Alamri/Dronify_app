@@ -22,7 +22,9 @@ class WalletCubit extends Cubit<WalletState> {
           .select('balance')
           .eq('user_id', supabase.auth.currentUser!.id)
           .single();
+          if(currentBalance['balance'].toString().toLowerCase() != 'null'){
       balance = double.parse(currentBalance['balance'].toString());
+          }
       emit(WalletLoaded(orders));
     } catch (e) {
       emit(WalletError('Failed to load orders'));

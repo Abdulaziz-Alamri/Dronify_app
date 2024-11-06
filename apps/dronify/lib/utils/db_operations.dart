@@ -76,7 +76,6 @@ Future<void> saveOrder({
         'user_id': customerId,
         'amount': totalPrice,
       });
-
     } else {
       throw Exception("Failed to insert the order.");
     }
@@ -135,13 +134,17 @@ Future<void> rateOrder(
   }
 }
 
-Future<int?> getOrderId() async {
+Future<int?> getOrderId({bool isChecking = false}) async {
   final response = await supabase
       .from('orders')
       .select('order_id')
       .order('order_id', ascending: false)
       .limit(1)
       .single();
+
+  if (isChecking) {
+    return response['order_id'] + 1;
+  }
 
   if (response.isEmpty) {
     return null;
@@ -251,7 +254,6 @@ saveSubscription({
         'latitude': latitude,
         'longitude': longitude,
       });
-
     } else {
       throw Exception("Failed to insert the Subscription.");
     }
@@ -271,8 +273,7 @@ Future<void> upsertCustomer(CustomerModel customer) async {
     if (response.error != null) {
       throw Exception(response.error!.message);
     }
-  } catch (e) {
-  }
+  } catch (e) {}
 }
 
 Future<CustomerModel?> getCustomer(String customerId) async {

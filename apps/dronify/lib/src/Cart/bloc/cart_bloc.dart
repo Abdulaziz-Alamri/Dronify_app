@@ -75,24 +75,31 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
   Future<void> _handleSuccessfulPayment(
       BuildContext context, List<OrderModel> orders) async {
-    for (var order in orders) {
+    bool isDifferent = false;
+    final orderIdData = await getOrderId(isChecking: true);
+    if (orderIdData != orders[0].orderId) {
+      isDifferent = true;
+    }
+    for (int i = 0; i < orders.length; i++) {
+      if (isDifferent) {
+        orders[i].orderId = orderIdData! + i;
+      }
       List<XFile> imageFiles =
-          order.images?.map((imagePath) => XFile(imagePath)).toList() ?? [];
+          orders[i].images?.map((imagePath) => XFile(imagePath)).toList() ?? [];
 
       saveOrder(
-        orderId: order.orderId!,
-        customerId: order.customerId!,
-        serviceId: order.serviceId!,
-        squareMeters: order.squareMeters!,
-        reservationDate: order.reservationDate!,
+        orderId: orders[i].orderId!,
+        customerId: orders[i].customerId!,
+        serviceId: orders[i].serviceId!,
+        squareMeters: orders[i].squareMeters!,
+        reservationDate: orders[i].reservationDate!,
         reservationTime: TimeOfDay.now(),
-        totalPrice: order.totalPrice!,
+        totalPrice: orders[i].totalPrice!,
         imageUrls: [],
-        latitude: order.address![0],
-        longitude: order.address![1],
+        latitude: orders[i].address![0],
+        longitude: orders[i].address![1],
         imageFiles: imageFiles,
       );
-
     }
 
     add(LoadCartItemsEvent());
