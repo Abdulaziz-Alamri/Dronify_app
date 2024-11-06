@@ -43,7 +43,7 @@ class DataLayer {
     final allOrdersResponse = await supabase
         .from('orders')
         .select('*')
-        .eq('user_id', supabase.auth.currentUser!.id);
+        .eq('user_id', supabase.auth.currentUser!.id).order('order_date', ascending: false);
 
     if (allOrdersResponse.isNotEmpty) {
       for (var map in allOrdersResponse) {

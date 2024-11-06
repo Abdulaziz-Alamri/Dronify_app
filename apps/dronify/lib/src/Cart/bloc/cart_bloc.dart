@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:dronify/layer/data_layer.dart';
 import 'package:dronify/models/cart_model.dart';
