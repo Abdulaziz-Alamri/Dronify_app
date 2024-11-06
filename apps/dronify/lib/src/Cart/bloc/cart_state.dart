@@ -25,3 +25,14 @@ class CartSubmitted extends CartState {
   @override
   List<Object?> get props => [cart];
 }
+
+class CartPaymentSuccessful extends CartState {
+  final String message;
+  const CartPaymentSuccessful({required this.message});
+}
+class CartPaymentFailed extends CartState {
+  final String message;
+  const CartPaymentFailed({required this.message});
+}
+
+

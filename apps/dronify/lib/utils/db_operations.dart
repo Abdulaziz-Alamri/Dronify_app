@@ -143,7 +143,7 @@ Future<int?> getOrderId({bool isChecking = false}) async {
       .single();
 
   if (isChecking) {
-    return response['order_id'] + 1;
+    return (response['order_id'] as int) + 1;
   }
 
   if (response.isEmpty) {

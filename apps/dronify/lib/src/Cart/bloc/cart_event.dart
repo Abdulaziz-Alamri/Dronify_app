@@ -27,3 +27,5 @@ class RemoveFromCartEvent extends CartEvent {
 }
 
 class SubmitCart extends CartEvent {}
+class SuccessfulEvent extends CartEvent {}
+class FailedEvent extends CartEvent {}

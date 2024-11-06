@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:dronify/layer/data_layer.dart';
 import 'package:dronify/models/cart_model.dart';
@@ -19,20 +22,22 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   CartModel cart = CartModel();
 
   CartBloc() : super(CartLoading()) {
-    on<LoadCartItemsEvent>((event, emit) => _loadCartItems(emit));
-    on<AddToCartEvent>((event, emit) => _addItemToCart(event.order, emit));
-    on<RemoveFromCartEvent>(
-        (event, emit) => _removeItemFromCart(event.orderId, emit));
-    on<SubmitCart>((event, emit) => _submitCart(emit));
+    on<LoadCartItemsEvent>(loadCartItems);
+    on<AddToCartEvent>(addItemToCart);
+    on<RemoveFromCartEvent>(removeItemFromCart);
+    on<SubmitCart>(submitCart);
+    on<SuccessfulEvent>(successfulPayment);
+    on<FailedEvent>(failedPayment);
   }
 
-  void _loadCartItems(Emitter<CartState> emit) {
+  FutureOr<void> loadCartItems(
+      LoadCartItemsEvent event, Emitter<CartState> emit) {
     cart = dataLayer.cart;
     emit(CartUpdated(cart: cart));
   }
 
-  void _addItemToCart(OrderModel order, Emitter<CartState> emit) {
-    dataLayer.cart.addItem(item: order);
+  FutureOr<void> addItemToCart(AddToCartEvent event, Emitter<CartState> emit) {
+    dataLayer.cart.addItem(item: event.order);
     cart = dataLayer.cart;
     emit(CartUpdated(cart: dataLayer.cart));
   }
@@ -56,14 +61,16 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     );
   }
 
-  void onPaymentResult(result, BuildContext context, List<OrderModel> orders) {
+  void onPaymentResult(
+      result, BuildContext context, List<OrderModel> orders) async {
     if (result is PaymentResponse) {
       switch (result.status) {
         case PaymentStatus.paid:
-          _handleSuccessfulPayment(context, orders);
+          await handleSuccessfulPayment(context, orders);
+          if (!isClosed) add(SuccessfulEvent());
           break;
         case PaymentStatus.failed:
-          _showSnackBar(context, 'Payment failed. Please try again.');
+          if (!isClosed) add(FailedEvent());
           break;
         case PaymentStatus.initiated:
         case PaymentStatus.authorized:
@@ -73,61 +80,63 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     }
   }
 
-  Future<void> _handleSuccessfulPayment(
+  Future<void> handleSuccessfulPayment(
       BuildContext context, List<OrderModel> orders) async {
+    List<OrderModel> processedOrders = List.from(orders);
     bool isDifferent = false;
     final orderIdData = await getOrderId(isChecking: true);
-    if (orderIdData != orders[0].orderId) {
+    if (orderIdData != processedOrders[0].orderId) {
       isDifferent = true;
     }
-    for (int i = 0; i < orders.length; i++) {
+    for (int i = 0; i < processedOrders.length; i++) {
       if (isDifferent) {
-        orders[i].orderId = orderIdData! + i;
+        processedOrders[i].orderId = orderIdData! + i;
       }
-      List<XFile> imageFiles =
-          orders[i].images?.map((imagePath) => XFile(imagePath)).toList() ?? [];
+      List<XFile> imageFiles = processedOrders[i]
+              .images
+              ?.map((imagePath) => XFile(imagePath))
+              .toList() ??
+          [];
 
-      saveOrder(
-        orderId: orders[i].orderId!,
-        customerId: orders[i].customerId!,
-        serviceId: orders[i].serviceId!,
-        squareMeters: orders[i].squareMeters!,
-        reservationDate: orders[i].reservationDate!,
+      await saveOrder(
+        orderId: processedOrders[i].orderId!,
+        customerId: processedOrders[i].customerId!,
+        serviceId: processedOrders[i].serviceId!,
+        squareMeters: processedOrders[i].squareMeters!,
+        reservationDate: processedOrders[i].reservationDate!,
         reservationTime: TimeOfDay.now(),
-        totalPrice: orders[i].totalPrice!,
+        totalPrice: processedOrders[i].totalPrice!,
         imageUrls: [],
-        latitude: orders[i].address![0],
-        longitude: orders[i].address![1],
+        latitude: processedOrders[i].address![0],
+        longitude: processedOrders[i].address![1],
         imageFiles: imageFiles,
       );
     }
-
-    add(LoadCartItemsEvent());
-    _showSnackBar(context, 'Payment successful!');
   }
 
-  void _showSnackBar(BuildContext context, String message) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(message)));
-  }
-
-  void _removeItemFromCart(int orderId, Emitter<CartState> emit) {
+  FutureOr<void> removeItemFromCart(
+      RemoveFromCartEvent event, Emitter<CartState> emit) {
     emit(CartLoading());
-
-    dataLayer.cart.removeItem(orderId);
-
+    dataLayer.cart.removeItem(event.orderId);
     cart = dataLayer.cart;
-
     emit(CartUpdated(cart: cart));
-
     add(LoadCartItemsEvent());
   }
 
-  void _submitCart(Emitter<CartState> emit) async {
+  FutureOr<void> submitCart(SubmitCart event, Emitter<CartState> emit) {
     locator.get<DataLayer>().fetchCustomerOrders();
     dataLayer.cart.clearCart();
     cart.clearCart();
     emit(CartSubmitted(cart: dataLayer.cart));
     add(LoadCartItemsEvent());
+  }
+
+  FutureOr<void> failedPayment(FailedEvent event, Emitter<CartState> emit) {
+    emit(CartPaymentFailed(message: 'Payment Failed'));
+  }
+
+  FutureOr<void> successfulPayment(
+      SuccessfulEvent event, Emitter<CartState> emit) {
+    emit(CartPaymentSuccessful(message: 'Payment Successfull!'));
   }
 }
