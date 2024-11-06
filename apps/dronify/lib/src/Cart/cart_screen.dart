@@ -52,8 +52,6 @@ class CartScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      // centerTitle: true, // Centers the title in the AppBar
-
                       title: const Text(
                         'Cart',
                         textAlign: TextAlign.right,
@@ -103,28 +101,25 @@ class CartScreen extends StatelessWidget {
                                     child: Column(
                                       children: [
                                         Opacity(
-                                          opacity:
-                                              0.6, // Adjust the opacity level (0.0 to 1.0)
+                                          opacity: 0.6,
                                           child: Image.asset(
                                             'assets/empty_orders.png',
                                             height: 140,
                                           ),
                                         ),
                                         const SizedBox(height: 20),
-
-                                        // ignore: prefer_const_constructors
                                         Padding(
                                           padding: const EdgeInsets.only(
                                               left: 15.0, bottom: 10),
-                                          child: const Text('Empty cart ',
-                                              style: TextStyle(
-                                                fontSize: 25,
-                                                fontWeight: FontWeight.bold,
-                                                color: Color(0xffa2b9c4),
-                                              )),
+                                          child: const Text(
+                                            'Empty cart',
+                                            style: TextStyle(
+                                              fontSize: 25,
+                                              fontWeight: FontWeight.bold,
+                                              color: Color(0xffa2b9c4),
+                                            ),
+                                          ),
                                         ),
-                                        // Image.asset('assets/Removal-386.png',
-                                        //     scale: 2.0)
                                       ],
                                     ),
                                   );
@@ -169,42 +164,54 @@ class CartScreen extends StatelessWidget {
                             },
                           ),
                           const SizedBox(height: 20),
-                          const Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              'Discount Codes',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 25),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 8),
-                            width: double.infinity,
-                            height: 50,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(16),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.25),
-                                  blurRadius: 2,
-                                  offset: const Offset(0, 2),
+                          if (BlocProvider.of<CartBloc>(context).state
+                                  is CartUpdated &&
+                              (BlocProvider.of<CartBloc>(context).state
+                                      as CartUpdated)
+                                  .cart
+                                  .items
+                                  .isNotEmpty)
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    'Discount Codes',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                                 ),
+                                const SizedBox(height: 25),
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 8),
+                                  width: double.infinity,
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(16),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.25),
+                                        blurRadius: 2,
+                                        offset: const Offset(0, 2),
+                                      ),
+                                    ],
+                                  ),
+                                  child: const TextField(
+                                    decoration: InputDecoration(
+                                      hintText: 'Enter discount code',
+                                      border: InputBorder.none,
+                                      suffixIcon: Icon(Icons.local_offer),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 30),
                               ],
                             ),
-                            child: const TextField(
-                              decoration: InputDecoration(
-                                hintText: 'Enter discount code',
-                                border: InputBorder.none,
-                                suffixIcon: Icon(Icons.local_offer),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 30),
                           BlocBuilder<CartBloc, CartState>(
                             builder: (context, state) {
                               if (state is CartUpdated &&
