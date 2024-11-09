@@ -69,3 +69,15 @@ The **Dronify** project leverages a variety of packages and tools to provide ric
 
 -Rawan Alriyad
 
+## More details :
+
+-Vidoes in / Vidoes floder 
+
+
+-Membrs CVs in / Cv floder 
+
+
+
+## 
+
+![TA](https://github.com/user-attachments/assets/e8ed286c-e85f-4bb5-8eea-39af780639c4)
